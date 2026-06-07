@@ -1,0 +1,473 @@
+/* =========================================
+   POINT REYES SOUND TERMINAL STYLETHEME
+   ========================================= */
+:root {
+  font-family: "EB Garamond", Garamond, Georgia, serif;
+  color: #35ff82;
+  background: #020503;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 1200px;
+  min-height: 100vh;
+  background-color: #020503;
+  background-image: 
+    linear-gradient(rgba(53, 255, 130, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(53, 255, 130, 0.02) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* =========================================
+   LAYOUT MATRIX STRUCTURE
+   ========================================= */
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  background: #020503;
+}
+
+.binder-spine {
+  position: relative;
+  min-height: 100vh;
+  padding: 44px 24px;
+  border-right: 2px solid #35ff82;
+  background: #020503;
+}
+
+.binder-rings {
+  position: absolute;
+  right: -24px;
+  top: 18%;
+  height: 64%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.binder-rings span {
+  width: 42px;
+  height: 42px;
+  border: 2px solid #35ff82;
+  border-left-color: transparent;
+  border-radius: 50%;
+  background: #020503;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  padding: 60px 70px 56px 88px;
+  transform-origin: left center;
+  display: flex;
+  flex-direction: column;
+  background: #020503;
+}
+
+.page::before {
+  content: "";
+  position: absolute;
+  left: 44px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(53, 255, 130, 0.25);
+}
+
+.page-holes {
+  position: absolute;
+  left: 22px;
+  top: 18%;
+  height: 64%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.page-holes span {
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(53, 255, 130, 0.4);
+  border-radius: 50%;
+  background: #020503;
+}
+
+/* =========================================
+   NAVIGATION & BRANDING DEFINITIONS
+   ========================================= */
+.brand-block {
+  margin-bottom: 48px;
+}
+
+.kicker,
+.eyebrow {
+  color: #35ff82;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.brand-block h1 {
+  margin: 12px 0 14px;
+  font-size: 38px;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: #35ff82;
+}
+
+.brand-block p {
+  margin: 0;
+  color: #35ff82;
+  font-size: 18px;
+  line-height: 1.4;
+  opacity: 0.75;
+}
+
+nav {
+  display: grid;
+  gap: 12px;
+}
+
+.nav-item {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 14px 18px;
+  border: 1px solid rgba(53, 255, 130, 0.3);
+  background: transparent;
+  color: #35ff82;
+  cursor: pointer;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.nav-item:hover {
+  background: rgba(53, 255, 130, 0.08);
+  border-color: #35ff82;
+}
+
+.nav-item.active {
+  background: #35ff82;
+  color: #020503;
+  border-color: #35ff82;
+}
+
+.offline {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 34px;
+  padding: 16px;
+  border: 1px solid #35ff82;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.offline strong {
+  display: block;
+  color: #35ff82;
+  font-size: 15px;
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+
+.offline span {
+  display: block;
+  color: #35ff82;
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0.8;
+}
+
+/* =========================================
+   TYPOGRAPHIC SLIDE ELEMENTS
+   ========================================= */
+h2 {
+  max-width: 1250px;
+  margin: 0;
+  font-size: clamp(48px, 5vw, 84px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  color: #35ff82;
+}
+
+.subtitle {
+  max-width: 1150px;
+  margin: 18px 0 32px;
+  color: #35ff82;
+  font-size: 26px;
+  line-height: 1.3;
+  opacity: 0.85;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 1280px;
+  margin: 24px 0 32px;
+}
+
+.stat,
+.card {
+  border: 1px solid #35ff82;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 24px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 42px;
+  line-height: 1;
+  margin-bottom: 8px;
+  color: #35ff82;
+}
+
+.stat span {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: #35ff82;
+  margin-bottom: 6px;
+}
+
+.stat small {
+  display: block;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 1280px;
+  margin-top: 24px;
+}
+
+.card h3 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  line-height: 1.1;
+  color: #35ff82;
+  border-bottom: 1px dashed rgba(53, 255, 130, 0.4);
+  padding-bottom: 6px;
+}
+
+.card p {
+  margin: 0;
+  color: #35ff82;
+  font-size: 18px;
+  line-height: 1.35;
+  opacity: 0.85;
+}
+
+.talking-point {
+  max-width: 1250px;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #35ff82;
+}
+
+.talking-point strong {
+  display: block;
+  color: #35ff82;
+  font-size: 16px;
+  margin-bottom: 8px;
+  letter-spacing: 0.1em;
+}
+
+.talking-point span {
+  display: block;
+  color: #35ff82;
+  font-size: 22px;
+  line-height: 1.4;
+}
+
+/* =========================================
+   HERO COCKPIT GRID (WIGNER ENGINE PANEL)
+   ========================================= */
+.cockpit {
+  max-width: 1240px;
+  height: 520px; 
+  margin-top: 24px;
+  border: 1px solid #35ff82;
+  background: rgba(53, 255, 130, 0.01);
+  box-shadow: 0 0 30px rgba(53, 255, 130, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.cockpit.embedded {
+  max-width: 100%;
+}
+
+.cockpit-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+.docket-slider-container {
+  border-left: 1px solid #35ff82;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.mini-label {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: #35ff82;
+  opacity: 0.7;
+}
+
+/* =========================================
+   HERO GIF LAYOUT (TAB 1)
+   ========================================= */
+.hero-cockpit {
+  max-width: 1100px;
+  height: 60vh;
+  margin-top: 30px;
+  border: 1px solid #35ff82;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-gif {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(1.2);
+}
+
+/* =========================================
+   PLOT BLENDING FOR FIGURE 7 (TAB 3)
+   ========================================= */
+.plot-cockpit {
+  max-width: 1100px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(53, 255, 130, 0.4);
+  background: #000;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.scientific-plot.inverted-blend {
+  max-width: 100%;
+  height: auto;
+  /* This filter inverts the white background to black, flips the hues back to roughly normal, and creates a seamless dark mode integration */
+  filter: invert(1) hue-rotate(180deg) brightness(1.2) contrast(1.2);
+  mix-blend-mode: screen; 
+  opacity: 0.9;
+}
+
+/* =========================================
+   LATEX EQUATION PANEL
+   ========================================= */
+.equation-panel {
+  margin: 30px 0;
+  padding: 20px;
+  background: rgba(53, 255, 130, 0.05);
+  border: 1px solid #35ff82;
+  text-align: center;
+}
+
+.latex-container {
+  color: #35ff82;
+  font-size: 26px; /* Scales up the LaTeX math slightly */
+}
+
+/* Adjust stats grid for smaller text footprint */
+.stat small {
+  color: #35ff82;
+  opacity: 0.8;
+}
+
+/* =========================================
+   HERO GIF / PLOT LAYOUT (TAB 1)
+   ========================================= */
+.hero-cockpit {
+  max-width: 1100px;
+  height: 340px; /* Restricts the height to force a visual crop */
+  margin-top: 20px;
+  border: 1px solid rgba(53, 255, 130, 0.4);
+  background: #000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* This targets the O2 plot and perfectly bisects it, keeping the bottom */
+.hero-image-crop {
+  width: 100%;
+  height: 200%; 
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.hero-text {
+  max-width: 1100px;
+  margin-top: 24px;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #35ff82;
+  border-left: 3px solid #35ff82;
+  background: rgba(53, 255, 130, 0.05);
+  padding: 16px 24px;
+}
+
+/* =========================================
+   GENERAL PLOT BLENDING (TABS 2, 3, 4)
+   ========================================= */
+.plot-cockpit {
+  max-width: 1100px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(53, 255, 130, 0.4);
+  background: #000;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* The Magic Filter: Inverts white to black, flips hues to normal, 
+  and screens it so the dark background bleeds through 
+*/
+.inverted-blend {
+  max-width: 100%;
+  height: auto;
+  filter: invert(1) hue-rotate(180deg) brightness(1.2) contrast(1.2);
+  mix-blend-mode: screen; 
+  opacity: 0.9;
+}
+
+/* Adjust stats grid for smaller text footprint */
+.stat small {
+  color: #35ff82;
+  opacity: 0.8;
+}
