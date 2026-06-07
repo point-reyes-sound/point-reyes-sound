@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import LandingPage from "./LandingPage";
 
 const phiQuestTabs = [
   {
@@ -59,105 +60,132 @@ const phiQuestTabs = [
 
 export default function App() {
   const [activeTab, setActiveTab] = useState(0);
+  const [showInteractive, setShowInteractive] = useState(true); // The toggle state
+
   const currentData = phiQuestTabs[activeTab];
 
+  // 1. INTERACTIVE LANDING PAGE VIEW
+  if (showInteractive) {
+    return (
+      <>
+        <button 
+          onClick={() => setShowInteractive(false)}
+          style={{ position: "absolute", top: 10, right: 10, zIndex: 9999, padding: "8px", background: "#35ff82", color: "#000", border: "none", cursor: "pointer", fontFamily: "inherit", fontWeight: "bold" }}
+        >
+          Return to Manuscript View
+        </button>
+        <LandingPage />
+      </>
+    );
+  }
+
+  // 2. ORIGINAL MANUSCRIPT VIEW
   return (
-    <main className="app binder terminal-mode">
-      <aside className="binder-spine">
-        <div className="binder-rings" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </div>
-        <div className="brand-block">
-          <div className="kicker">POINT REYES SOUND, Inc.</div>
-          <h1>Φ-QUEST</h1>
-          <p>Autonomous Quantum Fluid Dynamics.</p>
-        </div>
-        <nav>
-          {phiQuestTabs.map((tab, idx) => (
-            <button
-              key={tab.id}
-              className={`nav-item ${idx === activeTab ? "active" : ""}`}
-              onClick={() => setActiveTab(idx)}
-            >
-              <span>{tab.label}</span>
-            </button>
-          ))}
-        </nav>
-        <div className="offline">
-          <strong>SECURE VAULT ACTIVE</strong>
-          <span>Proprietary Architectures Restricted.</span>
-        </div>
-      </aside>
+    <>
+      <button 
+        onClick={() => setShowInteractive(true)}
+        style={{ position: "absolute", top: 10, right: 10, zIndex: 9999, padding: "8px", background: "#35ff82", color: "#000", border: "none", cursor: "pointer", fontFamily: "inherit", fontWeight: "bold" }}
+      >
+        Enter Interactive Mode
+      </button>
 
-      <section className="page">
-        <div className="page-holes" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </div>
+      <main className="app binder terminal-mode">
+        <aside className="binder-spine">
+          <div className="binder-rings" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div className="brand-block">
+            <div className="kicker">POINT REYES SOUND, Inc.</div>
+            <h1>Φ-QUEST</h1>
+            <p>Autonomous Quantum Fluid Dynamics.</p>
+          </div>
+          <nav>
+            {phiQuestTabs.map((tab, idx) => (
+              <button
+                key={tab.id}
+                className={`nav-item ${idx === activeTab ? "active" : ""}`}
+                onClick={() => setActiveTab(idx)}
+              >
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </nav>
+          <div className="offline">
+            <strong>SECURE VAULT ACTIVE</strong>
+            <span>Proprietary Architectures Restricted.</span>
+          </div>
+        </aside>
 
-        <div className="eyebrow">{currentData.eyebrow}</div>
-        <h2>{currentData.title}</h2>
-        <p className="subtitle">{currentData.subtitle}</p>
+        <section className="page">
+          <div className="page-holes" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
 
-        {/* HERO TAB 1: Half-Cropped O2 Plot + Text Block */}
-        {currentData.isHeroLayout && (
-          <>
-            <div className="hero-cockpit">
+          <div className="eyebrow">{currentData.eyebrow}</div>
+          <h2>{currentData.title}</h2>
+          <p className="subtitle">{currentData.subtitle}</p>
+
+          {/* HERO TAB 1: Half-Cropped O2 Plot + Text Block */}
+          {currentData.isHeroLayout && (
+            <>
+              <div className="hero-cockpit">
+                <img 
+                  src={currentData.heroAsset} 
+                  alt="Wigner Phase-Space Tomography" 
+                  className="hero-image-crop"
+                />
+              </div>
+              <div className="hero-text">
+                {currentData.heroText}
+              </div>
+            </>
+          )}
+
+          {/* SHARED PLOT RENDERING (Tabs 2, 3, 4) */}
+          {currentData.hasPlotAsset && (
+            <div className="plot-cockpit">
               <img 
-                src={currentData.heroAsset} 
-                alt="Wigner Phase-Space Tomography" 
-                className="hero-image-crop"
+                src={currentData.plotAsset} 
+                alt="Scientific Plot Data" 
+                className="scientific-plot inverted-blend"
               />
             </div>
-            <div className="hero-text">
-              {currentData.heroText}
+          )}
+
+          {/* QUANTIFIED STATS GRID */}
+          {currentData.stats && (
+            <div className="stats">
+              {currentData.stats.map(([val, lbl, dtl]) => (
+                <div className="stat" key={lbl}>
+                  <strong>{val}</strong>
+                  <span>{lbl}</span>
+                  <small>{dtl}</small>
+                </div>
+              ))}
             </div>
-          </>
-        )}
+          )}
 
-        {/* SHARED PLOT RENDERING (Tabs 2, 3, 4) */}
-        {currentData.hasPlotAsset && (
-          <div className="plot-cockpit">
-            <img 
-              src={currentData.plotAsset} 
-              alt="Scientific Plot Data" 
-              className="scientific-plot inverted-blend"
-            />
-          </div>
-        )}
+          {/* CARDS ARCHITECTURE */}
+          {currentData.cards && (
+            <div className="cards">
+              {currentData.cards.map(([title, text]) => (
+                <article className="card" key={title}>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </article>
+              ))}
+            </div>
+          )}
 
-        {/* QUANTIFIED STATS GRID */}
-        {currentData.stats && (
-          <div className="stats">
-            {currentData.stats.map(([val, lbl, dtl]) => (
-              <div className="stat" key={lbl}>
-                <strong>{val}</strong>
-                <span>{lbl}</span>
-                <small>{dtl}</small>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* CARDS ARCHITECTURE */}
-        {currentData.cards && (
-          <div className="cards">
-            {currentData.cards.map(([title, text]) => (
-              <article className="card" key={title}>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
-            ))}
-          </div>
-        )}
-
-        {/* MOAT BLOCK */}
-        {currentData.talking && (
-          <div className="talking-point">
-            <strong>CORE PARADIGM SHIFT</strong>
-            <span>{currentData.talking}</span>
-          </div>
-        )}
-      </section>
-    </main>
+          {/* MOAT BLOCK */}
+          {currentData.talking && (
+            <div className="talking-point">
+              <strong>CORE PARADIGM SHIFT</strong>
+              <span>{currentData.talking}</span>
+            </div>
+          )}
+        </section>
+      </main>
+    </>
   );
 }
