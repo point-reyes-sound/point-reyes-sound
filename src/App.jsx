@@ -8,7 +8,7 @@ const phiQuestTabs = [
     label: "I. Fluid Ontology",
     eyebrow: "FOUNDATIONAL MANUSCRIPT // REGISTRATION NO. 64/033,274",
     title: "Fluid Phase Space Optimization",
-    subtitle: "Treating electron correlation as an informational fluid to bypass combinatorial walls.",
+    subtitle: "Treating Electron Correlation as an Informational fluid to bypass Combinatorial Walls.",
     isHeroLayout: true,
     heroAsset: "/o2_wigner_dual_slice.png",
     heroText: "The core solver reformulates electronic self-consistency as a kinetic transport process. By propagating the density matrix as a phase-space distribution and relaxing it via a Bhatnagar-Gross-Krook (BGK) collision operator, we replace static eigenvalue diagonalization with the entropic equilibration of an informational fluid. This naturally resolves topological singularities without relying on exponential O(N!) combinatorial scaling."
@@ -72,7 +72,7 @@ export default function App() {
           onClick={() => setShowInteractive(false)}
           style={{ position: "absolute", top: 10, right: 10, zIndex: 9999, padding: "8px", background: "#35ff82", color: "#000", border: "none", cursor: "pointer", fontFamily: "inherit", fontWeight: "bold" }}
         >
-          Return to Manuscript View
+          Manuscripts
         </button>
         <LandingPage />
       </>
@@ -86,7 +86,7 @@ export default function App() {
         onClick={() => setShowInteractive(true)}
         style={{ position: "absolute", top: 10, right: 10, zIndex: 9999, padding: "8px", background: "#35ff82", color: "#000", border: "none", cursor: "pointer", fontFamily: "inherit", fontWeight: "bold" }}
       >
-        Enter Interactive Mode
+        Interactive
       </button>
 
       <main className="app binder terminal-mode">
