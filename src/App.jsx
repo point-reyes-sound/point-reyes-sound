@@ -134,6 +134,7 @@ export default function App() {
   const [copiedBibtexId, setCopiedBibtexId] = useState(null);
   const [showInteractiveLab, setShowInteractiveLab] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
+  const [isVideoEnded, setIsVideoEnded] = useState(false);
   const videoRef = useRef(null);
 
   const toggleSound = () => {
@@ -145,6 +146,14 @@ export default function App() {
         videoRef.current.volume = 1.0;
         videoRef.current.play().catch(() => {});
       }
+    }
+  };
+
+  const handleReplay = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+      setIsVideoEnded(false);
     }
   };
 
@@ -240,14 +249,23 @@ export default function App() {
               ref={videoRef}
               src="/This_previous_version_is_good.mp4" 
               autoPlay 
-              loop 
               muted={isVideoMuted}
               playsInline 
               controls
               className="hero-video-element"
               onVolumeChange={(e) => setIsVideoMuted(e.target.muted)}
+              onEnded={() => setIsVideoEnded(true)}
+              onPlay={() => setIsVideoEnded(false)}
             />
-            {isVideoMuted && (
+            {isVideoEnded ? (
+              <button 
+                onClick={handleReplay} 
+                className="video-replay-overlay-btn"
+                title="Replay Video"
+              >
+                <span className="replay-icon">↺</span> Replay Video
+              </button>
+            ) : isVideoMuted ? (
               <button 
                 onClick={toggleSound} 
                 className="video-audio-toggle-btn"
@@ -255,7 +273,7 @@ export default function App() {
               >
                 <span className="audio-toggle-icon">🔊</span> Click to Enable Audio
               </button>
-            )}
+            ) : null}
           </div>
         </div>
 
