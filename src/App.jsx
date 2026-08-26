@@ -532,7 +532,7 @@ export default function App() {
               </div>
             </div>
             <p className="person-bio">
-              Quantum Chemist specializing in phase-space electronic structure, GPU acceleration, and FTQC.
+              Quantum Chemist.
             </p>
             <div className="person-tags">
               <a 
