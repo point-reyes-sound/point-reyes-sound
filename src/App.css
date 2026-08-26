@@ -388,13 +388,13 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
 }
 
 .spotlight-abstract {
-  font-size: 1.08rem;
-  line-height: 1.65;
-  color: #cbd5e1;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: #e2e8f0;
   font-style: italic;
   margin-bottom: 28px;
   background: rgba(0, 0, 0, 0.35);
-  padding: 18px 22px;
+  padding: 20px 24px;
   border-radius: var(--radius-md);
   border-left: 2px solid var(--accent-cyan);
 }

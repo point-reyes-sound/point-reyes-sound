@@ -282,7 +282,7 @@ export default function App() {
         </h1>
 
         <p className="hero-lead">
-          Point Reyes Sound is a theoretical and computational research pod pioneering kinetic transport methods for quantum chemistry. We reformulate self-consistent field theory as an informational fluid equilibration in phase space, eliminating mean-field singularities and bypassing exponential combinatorial active space barriers.
+          Point Reyes Sound is a theoretical and computational research pod pioneering kinetic transport methods for quantum chemistry.
         </p>
 
         {/* FEATURED PREPRINT CALLOUT BANNER */}
@@ -304,7 +304,7 @@ export default function App() {
           </div>
 
           <p className="spotlight-abstract">
-            "Standard self-consistent field algorithms in quantum chemistry often fail or exhibit catastrophic derivative discontinuities near degenerate or open-shell states. We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. By minimizing the Helmholtz free energy with dynamic algebraic connectivity damping, QBE-SCF achieves smooth entropic regularization across Coulson-Fischer singular cusps and conical intersections without requiring exponential active space expansions."
+            We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. By minimizing the Helmholtz free energy with dynamic algebraic connectivity damping, QBE-SCF achieves smooth entropic regularization across singularities in conventional electronic structure theory.
           </p>
 
           <div className="spotlight-actions">
