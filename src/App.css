@@ -1362,7 +1362,7 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   RESPONSIVENESS
+   RESPONSIVENESS & MOBILE OPTIMIZATIONS
    ========================================================================== */
 @media (max-width: 1024px) {
   .theme-nav-bar {
@@ -1380,22 +1380,175 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
   .footer-inner {
     grid-template-columns: 1fr;
   }
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
+  /* HEADER & TOP BAR */
+  .pod-header {
+    padding: 14px 18px;
+  }
   .header-inner {
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
     align-items: flex-start;
   }
-  .header-nav {
-    flex-wrap: wrap;
-    gap: 12px;
+  .header-brand {
+    gap: 10px;
   }
+  .brand-text {
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
+  }
+  .header-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 18px;
+    width: 100%;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .nav-link {
+    font-size: 1.05rem;
+    padding: 4px 0;
+  }
+  
+  /* HERO & CINEMATIC VIDEO */
+  .hero-section {
+    padding: 24px 16px 36px 16px;
+  }
+  .hero-cinematic-banner {
+    margin-bottom: 32px;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+    margin-bottom: 16px;
+  }
+  .hero-lead {
+    font-size: 1.12rem;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .video-audio-toggle-btn, .video-replay-overlay-btn {
+    bottom: 12px;
+    right: 12px;
+    padding: 7px 14px;
+    font-size: 0.9rem;
+    gap: 6px;
+  }
+  
+  /* PREPRINT SPOTLIGHT CARD */
+  .preprint-spotlight-card {
+    padding: 24px 18px;
+  }
+  .spotlight-title {
+    font-size: 1.5rem;
+  }
+  .spotlight-abstract {
+    font-size: 1.08rem;
+    padding: 14px 16px;
+    margin-bottom: 22px;
+  }
+  .spotlight-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* SECTION BLOCKS */
+  .section-block {
+    padding: 42px 16px;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+  .section-sub {
+    font-size: 1.05rem;
+  }
+
+  /* RESEARCH THEMES */
   .theme-nav-bar {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
+  .theme-nav-item {
+    padding: 14px 16px;
+  }
+  .theme-display-panel {
+    padding: 20px 16px;
+  }
+  .theme-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* PUBLICATIONS & IP */
+  .pub-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .pub-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .pub-btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* ROADMAP */
   .timeline-node {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .phase-marker {
+    padding-bottom: 0;
+  }
+
+  /* PEOPLE / PRINCIPAL RESEARCHER */
+  .people-single-card {
+    padding: 24px 18px;
+  }
+  .person-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+  .person-links-row {
+    justify-content: center;
+  }
+  .person-tags {
+    justify-content: center;
+  }
+  .tag-scholar-btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* CONTACT FORM & INPUTS */
+  .contact-info-card, .contact-form-card {
+    padding: 22px 16px;
+  }
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+  .form-group input, .form-group textarea {
+    font-size: 16px; /* Prevents auto-zoom on iOS */
+    padding: 12px 14px;
+  }
+
+  /* FOOTER */
+  .pod-footer {
+    padding: 42px 16px 24px 16px;
   }
 }
