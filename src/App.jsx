@@ -556,7 +556,7 @@ export default function App() {
               />
               <div className="person-info">
                 <h3>Sayan Chakraborty</h3>
-                <span className="person-role">Research Advisor &mdash; Quantum Information</span>
+                <span className="person-role">Research Advisor</span>
                 <div className="person-links-row">
                   <a 
                     href="https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate" 
@@ -570,7 +570,7 @@ export default function App() {
               </div>
             </div>
             <p className="person-bio">
-              Researcher in quantum information and mathematical physics, with work spanning stabilizer codes, oscillator–qudit systems, noncommutative geometry, and quantum algorithms.
+              Quantum Information and Mathematical Physics.
             </p>
             <div className="person-tags">
               <a 
