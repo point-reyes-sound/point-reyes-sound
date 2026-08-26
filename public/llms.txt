@@ -1,0 +1,21 @@
+# Point Reyes Sound, Inc.
+
+> Point Reyes Sound is a theoretical and computational research pod pioneering kinetic transport methods for quantum chemistry.
+
+## Core Research & Capabilities
+- **Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF)**: Reformulates electronic self-consistency as kinetic relaxation of the one-electron reduced density matrix (1-RDM) via a Bhatnagar-Gross-Krook (BGK) collision operator.
+- **Topological Singularity Regularization**: Resolves Coulson-Fischer singular cusps, conical intersections, and static correlation catastrophes without exponential combinatorial active space expansions.
+- **Hardware Acceleration**: High-performance GPU kernels accelerated via NVIDIA Inception Program and Google Cloud Research Grants.
+- **Fault-Tolerant Quantum Computing (FTQC)**: Phase-space mapping of open-shell molecular dynamics and quantum error mitigation.
+
+## Key Publications & Intellectual Property
+- **Lead Preprint**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities", Romit Chakraborty (arXiv:2608.14979 [quant-ph]). URL: https://arxiv.org/abs/2608.14979
+- **Intellectual Property**: U.S. Provisional Patent Application No. 64/033,274.
+
+## Key People
+- **Romit Chakraborty**: Founder & Principal Researcher (romit@pointreyessound.com). Google Scholar: https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty
+
+## Canonical URLs
+- Portal: https://pointreyessound.com
+- Full LLM Context: https://pointreyessound.com/llms-full.txt
+- GitHub Organization: https://github.com/point-reyes-sound

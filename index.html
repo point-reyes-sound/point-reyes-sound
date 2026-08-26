@@ -5,9 +5,28 @@
     <link rel="icon" type="image/png" href="/prs_favicon.png?v=3" />
     <link rel="apple-touch-icon" href="/prs_favicon.png?v=3" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Point Reyes Sound | Φ-QUEST Quantum Fluid Dynamics Research Pod</title>
-    <meta name="description" content="Autonomous Quantum Fluid Dynamics and Phase-Space Artificial Intelligence for molecules, materials, and mean-field singularity regularization. Research Pod by Point Reyes Sound, Inc." />
+    <title>Point Reyes Sound | Quantum Boltzmann Solver & Electronic Structure Pod</title>
+    <meta name="description" content="Point Reyes Sound is a theoretical and computational research pod pioneering kinetic transport methods and Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) theory for quantum chemistry." />
+    <meta name="keywords" content="Quantum Boltzmann Solver, QBE-SCF, Quantum Chemistry, Electronic Structure, Mean-Field Singularities, Romit Chakraborty, Point Reyes Sound" />
+    <meta name="author" content="Romit Chakraborty" />
+    <link rel="canonical" href="https://pointreyessound.com/" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="google-site-verification" content="Wk88EbDVnwzbIa2KajAvIg4KHCoUxE7sxMHUdWRvhNU" />
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://pointreyessound.com/" />
+    <meta property="og:title" content="Point Reyes Sound | Quantum Boltzmann Solver" />
+    <meta property="og:description" content="Pioneering kinetic transport methods for quantum chemistry and entropic regularization of mean-field singularities." />
+    <meta property="og:image" content="https://pointreyessound.com/PRS_logo_v2.jpeg" />
+    <meta property="og:site_name" content="Point Reyes Sound, Inc." />
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://pointreyessound.com/" />
+    <meta name="twitter:title" content="Point Reyes Sound | Quantum Boltzmann Solver" />
+    <meta name="twitter:description" content="Pioneering kinetic transport methods for quantum chemistry and entropic regularization of mean-field singularities." />
+    <meta name="twitter:image" content="https://pointreyessound.com/PRS_logo_v2.jpeg" />
 
     <!-- Google Fonts: EB Garamond, JetBrains Mono, Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,35 +36,57 @@
     <!-- KaTeX Stylesheet -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
 
+    <!-- Structured Data / JSON-LD for Search Engines & AI Agents -->
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ResearchOrganization",
-  "name": "Point Reyes Sound, Inc.",
-  "url": "https://www.pointreyessound.com",
-  "description": "Autonomous Quantum Fluid Dynamics and Phase-Space Artificial Intelligence for molecules and materials.",
-  "foundingDate": "2026-04-28",
-  "founder": {
-    "@type": "Person",
-    "name": "Romit Chakraborty",
-    "jobTitle": "Founder & Principal Researcher"
-  },
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "2261 Market Street, STE 72927",
-    "addressLocality": "San Francisco",
-    "addressRegion": "CA",
-    "postalCode": "94114",
-    "addressCountry": "US"
-  },
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+1-773-816-8338",
-    "contactType": "Founder & Principal Researcher",
-    "email": "romit@pointreyessound.com"
-  }
-}
-</script>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ResearchOrganization",
+          "@id": "https://pointreyessound.com/#organization",
+          "name": "Point Reyes Sound, Inc.",
+          "url": "https://pointreyessound.com",
+          "logo": "https://pointreyessound.com/PRS_logo_v2.jpeg",
+          "description": "Autonomous theoretical and computational research pod pioneering kinetic transport methods for quantum chemistry.",
+          "foundingDate": "2026-04-28",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "2261 Market Street, STE 72927",
+            "addressLocality": "San Francisco",
+            "addressRegion": "CA",
+            "postalCode": "94114",
+            "addressCountry": "US"
+          },
+          "founder": {
+            "@type": "Person",
+            "@id": "https://pointreyessound.com/#founder",
+            "name": "Romit Chakraborty",
+            "jobTitle": "Founder & Principal Researcher",
+            "email": "romit@pointreyessound.com",
+            "sameAs": [
+              "https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty",
+              "https://github.com/RomitChakraborty"
+            ]
+          }
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "@id": "https://pointreyessound.com/#preprint-2608-14979",
+          "headline": "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities",
+          "name": "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities",
+          "author": {
+            "@id": "https://pointreyessound.com/#founder"
+          },
+          "publisher": {
+            "@id": "https://pointreyessound.com/#organization"
+          },
+          "datePublished": "2026-08-18",
+          "url": "https://arxiv.org/abs/2608.14979",
+          "description": "We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. QBE-SCF achieves entropic regularization across singularities in conventional electronic structure theory."
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

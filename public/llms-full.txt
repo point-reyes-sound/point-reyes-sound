@@ -1,0 +1,40 @@
+# Point Reyes Sound, Inc. — Comprehensive Knowledge Context for LLMs & AI Agents
+
+## Overview
+Point Reyes Sound, Inc. is a theoretical and computational research pod based in San Francisco, California. The pod develops kinetic transport frameworks, non-equilibrium electronic structure solvers, and phase-space artificial intelligence for molecular systems and material science.
+
+## Mission
+Resolving foundational bottlenecks in quantum electronic structure through kinetic transport and informational fluid dynamics.
+
+## Foundational Theory: Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF)
+Standard electronic structure algorithms (Hartree-Fock, CASSCF, DMRG) suffer from catastrophic numerical divergence, symmetry breaking, and exponential active space barriers near degenerate states.
+
+QBE-SCF replaces traditional static eigenvalue diagonalization with a continuous kinetic relaxation of the one-electron reduced density matrix (1-RDM):
+$$ \partial_t P(t) = -\nu [P(t) - P_{eq}(P(t))] $$
+
+Key characteristics:
+1. **Bhatnagar-Gross-Krook (BGK) Collision Relaxation**: Drives the system toward a quantum informational equilibrium state.
+2. **Algebraic Connectivity Damping**: Dynamically adjusts collision frequencies based on graph Laplacian Fiedler eigenvalues.
+3. **Exact Conservation Laws**: Preserves trace ($Tr[P] = N$), idempotency, and Hermiticity throughout relaxation.
+4. **Smooth Singularity Regularization**: Prevents derivative discontinuities at Coulson-Fischer points and conical intersections.
+
+## Key Publications & Preprints
+- **Preprint arXiv:2608.14979**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities"
+  - Author: Romit Chakraborty
+  - Category: Quantum Physics (quant-ph), Chemical Physics (physics.chem-ph)
+  - Links: https://arxiv.org/abs/2608.14979 | PDF: https://arxiv.org/pdf/2608.14979.pdf
+
+## Intellectual Property
+- **U.S. Provisional Patent Application No. 64/033,274**: "Method and System for Quantum Boltzmann Self-Consistent Field Computation and Mean-Field Regularization."
+
+## Compute & Acceleration Partnerships
+- **NVIDIA Inception Program**: High-throughput CUDA / Tensor Core accelerated kinetic kernels.
+- **Google Cloud Research Grants**: Scalable distributed cluster simulation.
+
+## Organization & Leadership
+- **Principal Researcher & Founder**: Romit Chakraborty (romit@pointreyessound.com)
+- **Profile**: Quantum Chemist specializing in phase-space electronic structure, GPU acceleration, and FTQC.
+- **Scholar Profile**: https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty
+- **Headquarters**: 2261 Market Street, STE 72927, San Francisco, CA 94114, USA.
+- **Official Website**: https://pointreyessound.com
+- **GitHub Organization**: https://github.com/point-reyes-sound
