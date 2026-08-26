@@ -499,7 +499,7 @@ export default function App() {
           <div className="section-kicker">POD</div>
           <h2 className="section-title">People</h2>
           <p className="section-sub">
-            The Point Reyes Sound research pod operates as an agile, interdisciplinary theoretical research facility.
+            Point Reyes Sound, Inc. is an agile privately funded research pod.
           </p>
         </div>
 
