@@ -591,9 +591,6 @@ export default function App() {
         <div className="section-head">
           <div className="section-kicker">COMMUNICATIONS & INQUIRIES</div>
           <h2 className="section-title">Contact</h2>
-          <p className="section-sub">
-            Direct inquiries regarding theoretical research collaborations, visiting fellowships, grant partnerships, and computing resources.
-          </p>
         </div>
 
         <div className="contact-grid">
