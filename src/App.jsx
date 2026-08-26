@@ -497,50 +497,91 @@ export default function App() {
       <section id="people" className="section-block">
         <div className="section-head">
           <div className="section-kicker">POD</div>
-          <h2 className="section-title">Principal Researcher</h2>
+          <h2 className="section-title">People</h2>
           <p className="section-sub">
             The Point Reyes Sound research pod operates as an agile, interdisciplinary theoretical research facility.
           </p>
         </div>
 
-        <div className="people-single-card">
-          <div className="person-header">
-            <img 
-              src="/rc_scholar_portrait.jpeg" 
-              alt="Romit Chakraborty" 
-              className="person-avatar-img" 
-            />
-            <div className="person-info">
-              <h3>Romit Chakraborty</h3>
-              <span className="person-role">Founder & Principal Researcher</span>
-              <div className="person-links-row">
-                <a href="mailto:romit@pointreyessound.com" className="person-contact-link">
-                  romit@pointreyessound.com
-                </a>
-                <span className="link-sep">&bull;</span>
-                <a 
-                  href="https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="person-scholar-link"
-                >
-                  Google Scholar &rarr;
-                </a>
+        <div className="people-grid">
+          {/* ROMIT CHAKRABORTY */}
+          <div className="people-card">
+            <div className="person-header">
+              <img 
+                src="/rc_scholar_portrait.jpeg" 
+                alt="Romit Chakraborty" 
+                className="person-avatar-img" 
+              />
+              <div className="person-info">
+                <h3>Romit Chakraborty</h3>
+                <span className="person-role">Founder & Principal Researcher</span>
+                <div className="person-links-row">
+                  <a href="mailto:romit@pointreyessound.com" className="person-contact-link">
+                    romit@pointreyessound.com
+                  </a>
+                  <span className="link-sep">&bull;</span>
+                  <a 
+                    href="https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="person-scholar-link"
+                  >
+                    Google Scholar &rarr;
+                  </a>
+                </div>
               </div>
             </div>
+            <p className="person-bio">
+              Quantum Chemist specializing in phase-space electronic structure, GPU acceleration, and FTQC.
+            </p>
+            <div className="person-tags">
+              <a 
+                href="https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="tag-scholar-btn"
+              >
+                Publications on Google Scholar &rarr;
+              </a>
+            </div>
           </div>
-          <p className="person-bio">
-            Quantum Chemist specializing in phase-space electronic structure, GPU acceleration, and FTQC.
-          </p>
-          <div className="person-tags">
-            <a 
-              href="https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="tag-scholar-btn"
-            >
-              Publications on Google Scholar &rarr;
-            </a>
+
+          {/* SAYAN CHAKRABORTY */}
+          <div className="people-card">
+            <div className="person-header">
+              <img 
+                src="/sayan_chakraborty.jpeg" 
+                alt="Sayan Chakraborty" 
+                className="person-avatar-img" 
+              />
+              <div className="person-info">
+                <h3>Sayan Chakraborty</h3>
+                <span className="person-role">Research Advisor &mdash; Quantum Information</span>
+                <div className="person-links-row">
+                  <a 
+                    href="https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="person-scholar-link"
+                  >
+                    Google Scholar &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+            <p className="person-bio">
+              Researcher in quantum information and mathematical physics, with work spanning stabilizer codes, oscillator–qudit systems, noncommutative geometry, and quantum algorithms.
+            </p>
+            <div className="person-tags">
+              <a 
+                href="https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="tag-scholar-btn"
+              >
+                Publications on Google Scholar &rarr;
+              </a>
+            </div>
           </div>
         </div>
       </section>

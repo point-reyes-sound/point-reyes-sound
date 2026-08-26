@@ -14,6 +14,7 @@
 
 ## Key People
 - **Romit Chakraborty**: Founder & Principal Researcher (romit@pointreyessound.com). Google Scholar: https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty
+- **Sayan Chakraborty**: Research Advisor — Quantum Information. Google Scholar: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
 
 ## Canonical URLs
 - Portal: https://pointreyessound.com

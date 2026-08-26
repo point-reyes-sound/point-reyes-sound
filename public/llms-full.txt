@@ -33,8 +33,11 @@ Key characteristics:
 
 ## Organization & Leadership
 - **Principal Researcher & Founder**: Romit Chakraborty (romit@pointreyessound.com)
-- **Profile**: Quantum Chemist specializing in phase-space electronic structure, GPU acceleration, and FTQC.
-- **Scholar Profile**: https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty
+  - Profile: Quantum Chemist specializing in phase-space electronic structure, GPU acceleration, and FTQC.
+  - Scholar Profile: https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty
+- **Research Advisor — Quantum Information**: Sayan Chakraborty
+  - Profile: Researcher in quantum information and mathematical physics, with work spanning stabilizer codes, oscillator–qudit systems, noncommutative geometry, and quantum algorithms.
+  - Scholar Profile: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
 - **Headquarters**: 2261 Market Street, STE 72927, San Francisco, CA 94114, USA.
 - **Official Website**: https://pointreyessound.com
 - **GitHub Organization**: https://github.com/point-reyes-sound

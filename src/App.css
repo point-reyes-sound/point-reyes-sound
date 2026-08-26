@@ -881,17 +881,20 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 .people-grid {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 32px;
+  max-width: 1240px;
 }
 
-.people-single-card {
+.people-card, .people-single-card {
   background: rgba(7, 18, 10, 0.8);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 44px 48px;
-  max-width: 1240px;
+  padding: 38px 40px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .person-header {
@@ -1513,8 +1516,8 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
     padding-bottom: 0;
   }
 
-  /* PEOPLE / PRINCIPAL RESEARCHER */
-  .people-single-card {
+  /* PEOPLE / RESEARCHERS & ADVISORS */
+  .people-card, .people-single-card {
     padding: 24px 18px;
   }
   .person-header {
