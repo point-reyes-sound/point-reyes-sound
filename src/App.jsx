@@ -457,7 +457,7 @@ export default function App() {
                 <div className="grant-logo-badge">GOOGLE CLOUD RESEARCH</div>
                 <span className="grant-status">Research Grant Track</span>
               </div>
-              <h3>Distributed Phase-Space HPC Scaling</h3>
+              <h3>HPC</h3>
               <p>
                 Scaling molecular Wigner tomography and multi-center transition-metal simulations across Google Cloud A3 Mega GPU clusters and TPU v5p acceleration pods for high-throughput chemical discovery.
               </p>
