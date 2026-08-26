@@ -1,191 +1,670 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import LandingPage from "./LandingPage";
 
-const phiQuestTabs = [
+const researchThemes = [
   {
-    id: "abstract",
-    label: "I. Fluid Ontology",
-    eyebrow: "FOUNDATIONAL MANUSCRIPT // REGISTRATION NO. 64/033,274",
-    title: "Fluid Phase Space Optimization",
-    subtitle: "Treating Electron Correlation as an Informational fluid to bypass Combinatorial Walls.",
-    isHeroLayout: true,
-    heroAsset: "/o2_wigner_dual_slice.png",
-    heroText: "The core solver reformulates electronic self-consistency as a kinetic transport process. By propagating the density matrix as a phase-space distribution and relaxing it via a Bhatnagar-Gross-Krook (BGK) collision operator, we replace static eigenvalue diagonalization with the entropic equilibration of an informational fluid. This naturally resolves topological singularities without relying on exponential O(N!) combinatorial scaling."
-  },
-  {
-    id: "fiedler_markov",
-    label: "II. Fiedler-Markov QBE",
-    eyebrow: "MATHEMATICAL ENGINE // COLLISION OPERATOR",
-    title: "Quantum Boltzmann Kinetic Engine",
-    subtitle: "Bridging kinetic theory and matrix mechanics via trace-preserving matrix propagation.",
-    hasPlotAsset: true,
-    plotAsset: "/c2h4_wigner_phase_space.png",
-    cards: [
-      ["Autonomous BGK Relaxation", "Density matrices rotate toward a Fermi-Dirac equilibrium via a discrete Bhatnagar-Gross-Krook loop."],
-      ["Fiedler Friction", "Collision frequency is dynamically derived from the algebraic connectivity of the HOMO-LUMO graph."],
-      ["Thermodynamic Valve", "Fractional mixing channels open strictly at topological singularities."]
-    ],
-    talking: "Moat: Recovering exact Hartree-Fock stationarity at the zero-temperature limit."
-  },
-  {
-    id: "conical_intersections",
-    label: "III. Conical Intersections",
-    eyebrow: "TOPOLOGICAL REGULARISATION // FIGURE 7",
-    title: "Entropic Regularisation of Singularities",
-    subtitle: "Smoothing derivative discontinuities at symmetry-breaking transitions via Helmholtz free energy minimization.",
-    hasPlotAsset: true,
-    plotAsset: "/figure7.png",
+    id: "qbe_engine",
+    num: "01",
+    label: "Kinetic Transport & QBE-SCF",
+    badge: "FOUNDATIONAL METHODOLOGY",
+    title: "Quantum Boltzmann Equation Self-Consistent Field",
+    summary: "Replacing static eigenvalue diagonalization with non-equilibrium kinetic transport via a Bhatnagar-Gross-Krook (BGK) collision operator.",
+    content: "Standard self-consistent field algorithms formulate electronic structure as an iterative eigenvalue problem prone to catastrophic divergence near degenerate states. The QBE-SCF framework reformulates self-consistency as a continuous kinetic relaxation of the one-electron reduced density matrix (1-RDM) towards a Fermi-Dirac state. By embedding algebraic connectivity metrics (Fiedler friction) directly into the collision operator, the solver autonomously adjusts relaxation rates across multi-orbital manifolds.",
+    asset: "/c2h4_wigner_phase_space.png",
+    assetCaption: "Figure 1: Wigner phase-space kinetic transport map across the frontier orbitals of ethylene (C₂H₄).",
     stats: [
-      ["T = 0", "RHF Limit", "Catastrophic Coulson-Fischer energy cusps."],
-      ["T > 0", "QBE Regime", "Smooth thermodynamic continuation."],
-      ["A = E - TS", "Free Energy", "Fractional occupations emerge as entropy-bearing fixed points."]
+      { label: "Relaxation Mode", value: "Autonomous BGK" },
+      { label: "Trace Conservation", value: "Exact Tr[P] = N" },
+      { label: "Matrix Complexity", value: "O(N³) Scalable" }
+    ],
+    highlights: [
+      "Dynamic collision frequencies derived from the algebraic connectivity of the orbital graph.",
+      "Stationary states rigorously recover exact Hartree-Fock solutions in the zero-temperature limit.",
+      "Intrinsic damping eliminates numerical charge sloshing in narrow-gap chemical systems."
+    ]
+  },
+  {
+    id: "singularities",
+    num: "02",
+    label: "Topological Singularities",
+    badge: "REGULARIZATION THEORY",
+    title: "Entropic Regularization of Conical Intersections & Cusps",
+    summary: "Smoothing Coulson-Fischer energy cusps and derivative discontinuities through Helmholtz free energy minimization.",
+    content: "Mean-field electronic structure suffers from artificial derivative discontinuities at symmetry-breaking transitions. By treating the electronic state as a finite-temperature informational ensemble governed by Helmholtz free energy A = E - TS, fractional occupations emerge naturally as entropy-bearing fixed points. This replaces sharp, non-differentiable energy cusps with smooth, thermodynamically consistent energy surfaces.",
+    asset: "/figure7.png",
+    assetCaption: "Figure 2: Entropic regularization of Coulson-Fischer singular cusps across symmetric molecular stretching regimes.",
+    stats: [
+      { label: "Zero-T Limit", value: "RHF Singularity" },
+      { label: "Finite-T (QBE)", value: "C¹ Smooth Path" },
+      { label: "Free Energy Target", value: "min (E - TS)" }
+    ],
+    highlights: [
+      "Natural analytic continuation across conical intersections and avoided crossings.",
+      "Elimination of manual spin-symmetry breaking artifacts in homolytic bond fission.",
+      "Direct evaluation of analytic nuclear gradients on regularized potential energy surfaces."
     ]
   },
   {
     id: "active_space",
-    label: "IV. Active Space Replacement",
-    eyebrow: "COMPLEXITY BARRIER BYPASS // N2 DISSOCIATION",
-    title: "Extensive Thermodynamic Equilibration",
-    subtitle: "Combinatorial scaling replaced by kinetic transport.",
-    hasPlotAsset: true,
-    plotAsset: "/n2_final_publication_plot.png",
-    cards: [
-      ["Target", "N2 Dissociation & O2 Singlet-Triplet Gap."],
-      ["Method", "Relaxation of the Wigner distribution."],
-      ["Result", "Exact 12.0-bit maximum entropy plateau."]
+    num: "03",
+    label: "Active Space Replacement",
+    badge: "COMPUTATIONAL BENCHMARK",
+    title: "Extensive Thermodynamic Equilibration for Strong Correlation",
+    summary: "Bypassing exponential O(N!) combinatorial CI active space selection through kinetic phase-space equilibration.",
+    content: "Complete Active Space (CASSCF/DMRG) methods require manual orbital partitioning and suffer from factorial combinatorial growth. In Φ-QUEST, strongly correlated bond dissociation (e.g., N₂ triple bond cleavage and O₂ singlet-triplet multiplet splitting) is achieved via extensive thermodynamic relaxation of the density distribution, arriving at an exact 12.0-bit maximum entropy plateau without active space truncation.",
+    asset: "/n2_final_publication_plot.png",
+    assetCaption: "Figure 3: N₂ dissociation potential energy curve and entropy plateau validating active space replacement.",
+    stats: [
+      { label: "N₂ Dissociation", value: "Exact Asymptote" },
+      { label: "Entropy Bound", value: "12.00 Bits" },
+      { label: "Scaling Advantage", value: "Polynomial vs Exp" }
+    ],
+    highlights: [
+      "Unbiased multi-configurational character captured without manual active space curation.",
+      "Robust treatment of open-shell biradicals, polyradicals, and bond-breaking trajectories.",
+      "Direct applicability to complex multi-center transition metal catalytic clusters."
+    ]
+  },
+  {
+    id: "wigner_tomography",
+    num: "04",
+    label: "Phase-Space Wigner Tomography",
+    badge: "QUANTUM FLUID ONTOLOGY",
+    title: "Informational Fluid Dynamics in Molecular Phase Space",
+    summary: "Mapping quantum density matrices to phase-space distributions for intuitive, physics-informed visual exploration.",
+    content: "By projecting high-dimensional density matrices into phase-space via the Wigner-Weyl transform, molecular electronic structures are interpreted as viscous quantum fluids undergoing hydrodynamic drift and diffusive collisions. This dual coordinate-momentum slice reveals nodal structures, phase coherence, and dynamic correlation effects undetectable in standard spatial orbital renderings.",
+    asset: "/o2_wigner_dual_slice.png",
+    assetCaption: "Figure 4: Dual-slice Wigner phase-space tomography for singlet vs. triplet molecular oxygen.",
+    stats: [
+      { label: "Formalism", value: "Wigner-Weyl" },
+      { label: "Phase Topology", value: "Non-Gaussian" },
+      { label: "Visual Diagnostics", value: "Real-Time Slice" }
+    ],
+    highlights: [
+      "Direct visualization of non-classical quantum correlation and negative quasiprobability packets.",
+      "Seamless integration with phase-space machine learning surrogate models.",
+      "Rigorous foundations documented under U.S. Patent Application No. 64/033,274."
     ]
   }
 ];
 
+const publicationList = [
+  {
+    id: "arxiv-2608-14979",
+    type: "Lead Preprint",
+    title: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities",
+    authors: "Romit Chakraborty",
+    affil: "Point Reyes Sound, Inc.",
+    journal: "arXiv:2608.14979 [quant-ph, physics.chem-ph]",
+    date: "August 2026",
+    doi: "https://arxiv.org/abs/2608.14979",
+    pdf: "https://arxiv.org/pdf/2608.14979.pdf",
+    featured: true,
+    abstract: "Standard self-consistent field algorithms in quantum chemistry often fail or exhibit catastrophic derivative discontinuities near degenerate or open-shell states. We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. By minimizing the Helmholtz free energy with dynamic algebraic connectivity damping, QBE-SCF achieves smooth entropic regularization across Coulson-Fischer singular cusps and conical intersections without requiring exponential active space expansions.",
+    bibtex: `@article{chakraborty2026qbescf,
+  title={Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities},
+  author={Chakraborty, Romit},
+  journal={arXiv preprint arXiv:2608.14979},
+  year={2026},
+  url={https://arxiv.org/abs/2608.14979}
+}`
+  },
+  {
+    id: "patent-64-033-274",
+    type: "Intellectual Property",
+    title: "U.S. Provisional Patent Application No. 64/033,274",
+    authors: "Romit Chakraborty",
+    affil: "Assignee: Point Reyes Sound, Inc.",
+    journal: "",
+    date: "2026",
+    featured: false,
+    abstract: "Underlying the preprint: Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities.",
+    bibtex: `@misc{chakraborty2026patent,
+  title={U.S. Provisional Patent Application No. 64/033,274},
+  author={Chakraborty, Romit},
+  year={2026},
+  note={Assigned to Point Reyes Sound, Inc.}
+}`
+  }
+];
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState(0);
-  const [showInteractive, setShowInteractive] = useState(true); // The toggle state
+  const [activeTheme, setActiveTheme] = useState(0);
+  const [copiedBibtexId, setCopiedBibtexId] = useState(null);
+  const [showInteractiveLab, setShowInteractiveLab] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    affiliation: "",
+    subject: "",
+    message: ""
+  });
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const currentData = phiQuestTabs[activeTab];
+  const handleContactChange = (e) => {
+    const { name, value } = e.target;
+    setContactForm((prev) => ({ ...prev, [name]: value }));
+  };
 
-  // 1. INTERACTIVE LANDING PAGE VIEW
-  if (showInteractive) {
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    if (!contactForm.name || !contactForm.email || !contactForm.message) return;
+    setFormSubmitted(true);
+  };
+
+  const handleCopyBibtex = (item) => {
+    navigator.clipboard.writeText(item.bibtex);
+    setCopiedBibtexId(item.id);
+    setTimeout(() => setCopiedBibtexId(null), 2500);
+  };
+
+  // If user opens the Interactive 3D Lab
+  if (showInteractiveLab) {
     return (
-      <>
-        <button 
-          onClick={() => setShowInteractive(false)}
-          style={{ position: "absolute", top: 10, right: 10, zIndex: 9999, padding: "8px", background: "#35ff82", color: "#000", border: "none", cursor: "pointer", fontFamily: "inherit", fontWeight: "bold" }}
-        >
-          Manuscripts
-        </button>
+      <div className="interactive-wrapper">
+        <div className="lab-topbar">
+          <div className="lab-brand">
+            <img src="/PRS_logo_v2.jpeg" alt="Point Reyes Sound" className="lab-logo" />
+            <span>POINT REYES SOUND // Φ-QUEST 3D INTERACTIVE LAB</span>
+          </div>
+          <button 
+            className="return-pod-btn"
+            onClick={() => setShowInteractiveLab(false)}
+          >
+            ← Return to Research Pod
+          </button>
+        </div>
         <LandingPage />
-      </>
+      </div>
     );
   }
 
-  // 2. ORIGINAL MANUSCRIPT VIEW
+  const currentTheme = researchThemes[activeTheme];
+
   return (
-    <>
-      <button 
-        onClick={() => setShowInteractive(true)}
-        style={{ position: "absolute", top: 10, right: 10, zIndex: 9999, padding: "8px", background: "#35ff82", color: "#000", border: "none", cursor: "pointer", fontFamily: "inherit", fontWeight: "bold" }}
-      >
-        Interactive
-      </button>
+    <div className="pod-container">
+      {/* 1. TOP GLOBAL NAVIGATION */}
+      <header className="pod-header">
+        <div className="header-inner">
+          <div className="brand-lockup">
+            <img 
+              src="/PRS_logo_v2.jpeg" 
+              alt="Point Reyes Sound Logo" 
+              className="prs-header-logo" 
+            />
+            <div className="brand-text">
+              <span className="brand-name">POINT REYES SOUND, INC.</span>
+            </div>
+          </div>
 
-      <main className="app binder terminal-mode">
-        <aside className="binder-spine">
-          <div className="binder-rings" aria-hidden="true">
-            <span></span><span></span><span></span>
-          </div>
-          <div className="brand-block">
-            <div className="kicker">POINT REYES SOUND, Inc.</div>
-            <h1>Φ-QUEST</h1>
-            <p>Autonomous Quantum Fluid Dynamics.</p>
-          </div>
-          <nav>
-            {phiQuestTabs.map((tab, idx) => (
-              <button
-                key={tab.id}
-                className={`nav-item ${idx === activeTab ? "active" : ""}`}
-                onClick={() => setActiveTab(idx)}
-              >
-                <span>{tab.label}</span>
-              </button>
-            ))}
+          <nav className="header-nav">
+            <a href="#overview">Overview</a>
+            <a href="#research" className="nav-research-link">
+              <span className="pulse-dot"></span> Research
+            </a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="#people">People</a>
+            <a href="#contact">Contact</a>
+            <button 
+              className="nav-interactive-link"
+              onClick={() => setShowInteractiveLab(true)}
+              title="Launch 3D Quantum Reaction Simulator"
+            >
+              Interactive
+            </button>
           </nav>
-          <div className="offline">
-            <strong>SECURE VAULT ACTIVE</strong>
-            <span>Proprietary Architectures Restricted.</span>
-          </div>
-        </aside>
+        </div>
+      </header>
 
-        <section className="page">
-          <div className="page-holes" aria-hidden="true">
-            <span></span><span></span><span></span>
-          </div>
+      {/* 2. HERO SECTION WITH ARXIV PREPRINT SPOTLIGHT */}
+      <section id="overview" className="hero-section">
+        <h1 className="hero-title">
+          Quantum Boltzmann Solver
+        </h1>
 
-          <div className="eyebrow">{currentData.eyebrow}</div>
-          <h2>{currentData.title}</h2>
-          <p className="subtitle">{currentData.subtitle}</p>
+        <p className="hero-lead">
+          Point Reyes Sound is a theoretical and computational research pod pioneering kinetic transport methods for quantum chemistry. We reformulate self-consistent field theory as an informational fluid equilibration in phase space, eliminating mean-field singularities and bypassing exponential combinatorial active space barriers.
+        </p>
 
-          {/* HERO TAB 1: Half-Cropped O2 Plot + Text Block */}
-          {currentData.isHeroLayout && (
-            <>
-              <div className="hero-cockpit">
-                <img 
-                  src={currentData.heroAsset} 
-                  alt="Wigner Phase-Space Tomography" 
-                  className="hero-image-crop"
-                />
-              </div>
-              <div className="hero-text">
-                {currentData.heroText}
-              </div>
-            </>
-          )}
-
-          {/* SHARED PLOT RENDERING (Tabs 2, 3, 4) */}
-          {currentData.hasPlotAsset && (
-            <div className="plot-cockpit">
-              <img 
-                src={currentData.plotAsset} 
-                alt="Scientific Plot Data" 
-                className="scientific-plot inverted-blend"
-              />
+        {/* FEATURED PREPRINT CALLOUT BANNER */}
+        <div id="preprint" className="preprint-spotlight-card">
+          <div className="spotlight-header">
+            <div className="spotlight-tag-group">
+              <span className="spotlight-badge">FEATURED ARXIV PREPRINT</span>
+              <span className="spotlight-meta">arXiv:2608.14979 [quant-ph] &bull; August 2026</span>
             </div>
-          )}
+            <span className="spotlight-status">Open Access</span>
+          </div>
 
-          {/* QUANTIFIED STATS GRID */}
-          {currentData.stats && (
-            <div className="stats">
-              {currentData.stats.map(([val, lbl, dtl]) => (
-                <div className="stat" key={lbl}>
-                  <strong>{val}</strong>
-                  <span>{lbl}</span>
-                  <small>{dtl}</small>
+          <h2 className="spotlight-title">
+            Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities
+          </h2>
+
+          <div className="spotlight-author">
+            <strong>Romit Chakraborty</strong> &bull; Point Reyes Sound, Inc.
+          </div>
+
+          <p className="spotlight-abstract">
+            "Standard self-consistent field algorithms in quantum chemistry often fail or exhibit catastrophic derivative discontinuities near degenerate or open-shell states. We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. By minimizing the Helmholtz free energy with dynamic algebraic connectivity damping, QBE-SCF achieves smooth entropic regularization across Coulson-Fischer singular cusps and conical intersections without requiring exponential active space expansions."
+          </p>
+
+          <div className="spotlight-actions">
+            <a 
+              href="https://arxiv.org/abs/2608.14979" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="action-btn primary"
+            >
+              View on arXiv (2608.14979) &rarr;
+            </a>
+            <a 
+              href="https://arxiv.org/pdf/2608.14979.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="action-btn secondary"
+            >
+              Download PDF
+            </a>
+            <button 
+              onClick={() => handleCopyBibtex(publicationList[0])}
+              className="action-btn outline"
+            >
+              {copiedBibtexId === "arxiv-2608-14979" ? "✓ Citation Copied" : "Copy BibTeX"}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. RESEARCH THEMES (GAGLIARDI GROUP TEMPLATE ARCHITECTURE) */}
+      <section id="research" className="section-block">
+        <div className="section-head">
+          <div className="section-kicker">RESEARCH PORTFOLIO</div>
+          <h2 className="section-title">Scientific Themes</h2>
+          <p className="section-sub">
+            Our theoretical methodology integrates quantum statistical mechanics, kinetic transport, and algebraic spectral graph theory into molecular modeling.
+          </p>
+        </div>
+
+        {/* THEME SELECTOR TABS */}
+        <div className="theme-nav-bar">
+          {researchThemes.map((theme, idx) => (
+            <button
+              key={theme.id}
+              className={`theme-tab-btn ${idx === activeTheme ? "active" : ""}`}
+              onClick={() => setActiveTheme(idx)}
+            >
+              <span className="tab-num">{theme.num}</span>
+              <span className="tab-label">{theme.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* ACTIVE THEME SHOWCASE */}
+        <div className="theme-display-panel">
+          <div className="theme-meta-col">
+            <span className="theme-badge">{currentTheme.badge}</span>
+            <h3 className="theme-title">{currentTheme.title}</h3>
+            <p className="theme-summary">{currentTheme.summary}</p>
+            <p className="theme-body">{currentTheme.content}</p>
+          </div>
+        </div>
+
+        {/* PUBLICATIONS & INTELLECTUAL PROPERTY SUB-BLOCK */}
+        <div className="research-pub-block">
+          <div className="section-head sub-head">
+            <div className="section-kicker">SCHOLARLY OUTPUT & INTELLECTUAL PROPERTY</div>
+            <h3 className="section-title sub-title">Publications & Patents</h3>
+            <p className="section-sub">
+              Peer-reviewed articles, preprints, patents, and foundational methodologies developed by the research pod.
+            </p>
+          </div>
+
+          <div className="pub-list">
+            {publicationList.map((pub) => (
+              <article key={pub.id} className={`pub-card ${pub.featured ? "featured-pub" : ""}`}>
+                <div className="pub-card-top">
+                  <span className="pub-type-badge">{pub.type}</span>
+                  <span className="pub-date">{pub.date}</span>
                 </div>
-              ))}
-            </div>
-          )}
+                <h3 className="pub-card-title">{pub.title}</h3>
+                <div className="pub-card-authors">{pub.authors} &bull; <span className="pub-affil">{pub.affil}</span></div>
+                {pub.journal && <div className="pub-card-journal">{pub.journal}</div>}
+                <p className="pub-card-abstract">{pub.abstract}</p>
 
-          {/* CARDS ARCHITECTURE */}
-          {currentData.cards && (
-            <div className="cards">
-              {currentData.cards.map(([title, text]) => (
-                <article className="card" key={title}>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </article>
-              ))}
-            </div>
-          )}
+                <div className="pub-card-actions">
+                  {pub.doi && (
+                    <a href={pub.doi} target="_blank" rel="noopener noreferrer" className="pub-link">
+                      arXiv Page &rarr;
+                    </a>
+                  )}
+                  {pub.pdf && (
+                    <a href={pub.pdf} target="_blank" rel="noopener noreferrer" className="pub-link">
+                      Download PDF
+                    </a>
+                  )}
+                  <button 
+                    onClick={() => handleCopyBibtex(pub)} 
+                    className="pub-copy-btn"
+                  >
+                    {copiedBibtexId === pub.id ? "✓ Copied" : "Cite BibTeX"}
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
 
-          {/* MOAT BLOCK */}
-          {currentData.talking && (
-            <div className="talking-point">
-              <strong>CORE PARADIGM SHIFT</strong>
-              <span>{currentData.talking}</span>
+        {/* HARDWARE ACCELERATION SUB-BLOCK */}
+        <div className="research-pub-block">
+          <div className="section-head sub-head">
+            <div className="section-kicker">INFRASTRUCTURE & COMPUTING</div>
+            <h3 className="section-title sub-title">Hardware Acceleration</h3>
+            <p className="section-sub">
+              Bridging theoretical quantum kinetic equations with modern GPU supercomputing architectures and distributed cloud infrastructure.
+            </p>
+          </div>
+
+          <div className="grants-grid">
+            {/* NVIDIA INCEPTION CARD */}
+            <div className="grant-card nvidia-accent">
+              <div className="grant-header">
+                <div className="grant-logo-badge">NVIDIA INCEPTION PROGRAM</div>
+                <span className="grant-status">Application Track</span>
+              </div>
+              <h3>GPU-Accelerated Quantum Kinetic Engine</h3>
+              <p>
+                Applying NVIDIA CUDA, Tensor Core matrix operations, and cuQuantum acceleration libraries to parallelize the Bhatnagar-Gross-Krook (BGK) collision operator and multi-orbital density matrix propagation.
+              </p>
+              <ul className="grant-specs">
+                <li><strong>Target Compute:</strong> NVIDIA H100 / H200 & Grace Hopper Superchips</li>
+                <li><strong>Speedup Goal:</strong> 100× throughput acceleration for density matrix kinetic relaxation</li>
+                <li><strong>Matrix Kernels:</strong> Custom trace-preserving Fermi-Dirac rotation shaders</li>
+              </ul>
             </div>
-          )}
-        </section>
-      </main>
-    </>
+
+            {/* GOOGLE CLOUD RESEARCH CARD */}
+            <div className="grant-card google-accent">
+              <div className="grant-header">
+                <div className="grant-logo-badge">GOOGLE CLOUD RESEARCH</div>
+                <span className="grant-status">Research Grant Track</span>
+              </div>
+              <h3>Distributed Phase-Space HPC Scaling</h3>
+              <p>
+                Scaling molecular Wigner tomography and multi-center transition-metal simulations across Google Cloud A3 Mega GPU clusters and TPU v5p acceleration pods for high-throughput chemical discovery.
+              </p>
+              <ul className="grant-specs">
+                <li><strong>Infrastructure:</strong> Distributed Vertex AI & Google Cloud HPC Slurm Clusters</li>
+                <li><strong>Scope:</strong> Scaling from small diatomics to 500+ atom metalloprotein complexes</li>
+                <li><strong>Data Architecture:</strong> Cloud-native phase-space trajectory storage & analysis</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. ROADMAP */}
+      <section id="roadmap" className="section-block">
+        <div className="section-head">
+          <div className="section-kicker">TECHNOLOGY TRAJECTORY</div>
+          <h2 className="section-title">Roadmap</h2>
+        </div>
+
+        <div className="roadmap-timeline">
+          <div className="timeline-node active">
+            <div className="timeline-marker">Phase I</div>
+            <div className="timeline-content">
+              <div className="timeline-tag">CURRENT</div>
+              <h4>Theoretical Foundations & Validation</h4>
+              <p>
+                Derivation of the Quantum Boltzmann Equation Self-Consistent Field.
+              </p>
+            </div>
+          </div>
+
+          <div className="timeline-node current">
+            <div className="timeline-marker">Phase II</div>
+            <div className="timeline-content">
+              <div className="timeline-tag">CURRENT &bull; GRANT INITIATIVE</div>
+              <h4>GPU Kernels</h4>
+              <p>
+                NVIDIA Inception and Google Cloud accelerated implementations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. PEOPLE & RESEARCH POD */}
+      <section id="people" className="section-block">
+        <div className="section-head">
+          <div className="section-kicker">POD</div>
+          <h2 className="section-title">Principal Researcher</h2>
+          <p className="section-sub">
+            The Point Reyes Sound research pod operates as an agile, interdisciplinary theoretical research facility.
+          </p>
+        </div>
+
+        <div className="people-single-card">
+          <div className="person-header">
+            <img 
+              src="/rc_scholar_portrait.jpeg" 
+              alt="Romit Chakraborty" 
+              className="person-avatar-img" 
+            />
+            <div className="person-info">
+              <h3>Romit Chakraborty</h3>
+              <span className="person-role">Founder & Principal Researcher</span>
+              <div className="person-links-row">
+                <a href="mailto:romit@pointreyessound.com" className="person-contact-link">
+                  romit@pointreyessound.com
+                </a>
+                <span className="link-sep">&bull;</span>
+                <a 
+                  href="https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="person-scholar-link"
+                >
+                  Google Scholar &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+          <p className="person-bio">
+            Quantum Chemist specializing in phase-space electronic structure, GPU acceleration, and FTQC.
+          </p>
+          <div className="person-tags">
+            <a 
+              href="https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="tag-scholar-btn"
+            >
+              Publications on Google Scholar &rarr;
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. CONTACT SECTION & INQUIRIES */}
+      <section id="contact" className="section-block dark-tint">
+        <div className="section-head">
+          <div className="section-kicker">COMMUNICATIONS & INQUIRIES</div>
+          <h2 className="section-title">Contact</h2>
+          <p className="section-sub">
+            Direct inquiries regarding theoretical research collaborations, visiting fellowships, grant partnerships, and computing resources.
+          </p>
+        </div>
+
+        <div className="contact-grid">
+          {/* CONTACT INFO CARD */}
+          <div className="contact-info-card">
+            <div className="contact-block">
+              <span className="contact-label">MAILING & REGISTERED OFFICE</span>
+              <div className="contact-value-box">
+                <p className="contact-address-text">
+                  <strong>Point Reyes Sound, Inc.</strong><br />
+                  2261 Market Street, STE 72927<br />
+                  San Francisco, CA 94114<br />
+                  United States
+                </p>
+              </div>
+            </div>
+
+            <div className="contact-block">
+              <span className="contact-label">DIRECT ELECTRONIC INQUIRIES</span>
+              <div className="contact-emails">
+                <div className="email-row">
+                  <span className="email-type">Founder & Research:</span>
+                  <a href="mailto:romit@pointreyessound.com" className="email-link">romit@pointreyessound.com</a>
+                </div>
+                <div className="email-row">
+                  <span className="email-type">Board & Directors:</span>
+                  <a href="mailto:directors@pointreyessound.com" className="email-link">directors@pointreyessound.com</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* FILL-OUT MESSAGE FORM */}
+          <div className="contact-form-card">
+            <h3 className="form-card-title">Send a Message</h3>
+            
+            {formSubmitted ? (
+              <div className="form-success-box">
+                <div className="success-icon">✓</div>
+                <h4>Message Transmitted</h4>
+                <p>Thank you for reaching out. We will review your inquiry and follow up promptly.</p>
+                <div className="mailto-fallback">
+                  <span>Need an immediate copy? </span>
+                  <a 
+                    href={`mailto:romit@pointreyessound.com,directors@pointreyessound.com?subject=${encodeURIComponent(contactForm.subject || "Point Reyes Sound Inquiry")}&body=${encodeURIComponent(`From: ${contactForm.name} (${contactForm.affiliation || "N/A"})\nEmail: ${contactForm.email}\n\n${contactForm.message}`)}`}
+                    className="mailto-btn"
+                  >
+                    Open in Mail Client &rarr;
+                  </a>
+                </div>
+                <button 
+                  className="reset-form-btn"
+                  onClick={() => {
+                    setFormSubmitted(false);
+                    setContactForm({ name: "", email: "", affiliation: "", subject: "", message: "" });
+                  }}
+                >
+                  Send Another Inquiry
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleContactSubmit} className="inquiry-form">
+                <div className="form-row-2">
+                  <div className="form-group">
+                    <label htmlFor="name">Full Name *</label>
+                    <input 
+                      type="text" 
+                      id="name" 
+                      name="name" 
+                      required 
+                      value={contactForm.name} 
+                      onChange={handleContactChange} 
+                      placeholder="Dr. Jane Doe"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="email">Email Address *</label>
+                    <input 
+                      type="email" 
+                      id="email" 
+                      name="email" 
+                      required 
+                      value={contactForm.email} 
+                      onChange={handleContactChange} 
+                      placeholder="jane.doe@university.edu"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-row-2">
+                  <div className="form-group">
+                    <label htmlFor="affiliation">Affiliation / Institution</label>
+                    <input 
+                      type="text" 
+                      id="affiliation" 
+                      name="affiliation" 
+                      value={contactForm.affiliation} 
+                      onChange={handleContactChange} 
+                      placeholder="Department of Chemistry / Lab"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="subject">Subject</label>
+                    <input 
+                      type="text" 
+                      id="subject" 
+                      name="subject" 
+                      value={contactForm.subject} 
+                      onChange={handleContactChange} 
+                      placeholder="Research Collaboration / Compute Grant"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="message">Inquiry / Message *</label>
+                  <textarea 
+                    id="message" 
+                    name="message" 
+                    rows={4} 
+                    required 
+                    value={contactForm.message} 
+                    onChange={handleContactChange} 
+                    placeholder="Describe your research inquiry, proposed collaboration, or question..."
+                  />
+                </div>
+
+                <button type="submit" className="action-btn primary submit-btn">
+                  Transmit Inquiry &rarr;
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* 9. FOOTER */}
+      <footer className="pod-footer">
+        <div className="footer-inner">
+          <div className="footer-col-brand">
+            <div className="brand-lockup">
+              <img src="/PRS_logo_v2.jpeg" alt="Point Reyes Sound" className="prs-footer-logo" />
+              <div>
+                <span className="brand-name">POINT REYES SOUND, INC.</span>
+              </div>
+            </div>
+            <p className="footer-desc">
+              Resolving foundational bottlenecks in quantum electronic structure.
+            </p>
+            <div className="footer-address">
+              2261 Market Street, STE 72927 &bull; San Francisco, CA 94114 &bull; United States
+            </div>
+          </div>
+
+          <div className="footer-col-links">
+            <h4>Quick Links</h4>
+            <a href="#research">Research</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="#people">People</a>
+            <a href="#contact">Contact</a>
+          </div>
+
+          <div className="footer-col-legal">
+            <h4>Notice</h4>
+            <p>
+              U.S. Provisional Patent Application No. 64/033,274. &copy; 2026 Point Reyes Sound, Inc. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }

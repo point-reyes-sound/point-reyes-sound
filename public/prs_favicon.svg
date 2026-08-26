@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1400" width="100%" height="100%">
+  <defs>
+    <clipPath id="prs-circle-clip">
+      <circle cx="700" cy="700" r="692" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#prs-circle-clip)">
+    <image href="/PRS_logo_v2.jpeg" x="-679" y="-52" width="2758" height="1504" />
+  </g>
+</svg>
