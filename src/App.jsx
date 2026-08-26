@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./App.css";
 import LandingPage from "./LandingPage";
 
@@ -133,6 +133,21 @@ export default function App() {
   const [activeTheme, setActiveTheme] = useState(0);
   const [copiedBibtexId, setCopiedBibtexId] = useState(null);
   const [showInteractiveLab, setShowInteractiveLab] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
+  const videoRef = useRef(null);
+
+  const toggleSound = () => {
+    if (videoRef.current) {
+      const nextMuted = !videoRef.current.muted;
+      videoRef.current.muted = nextMuted;
+      setIsVideoMuted(nextMuted);
+      if (!nextMuted) {
+        videoRef.current.volume = 1.0;
+        videoRef.current.play().catch(() => {});
+      }
+    }
+  };
+
   const [contactForm, setContactForm] = useState({
     name: "",
     email: "",
@@ -217,8 +232,33 @@ export default function App() {
         </div>
       </header>
 
-      {/* 2. HERO SECTION WITH ARXIV PREPRINT SPOTLIGHT */}
+      {/* 2. HERO SECTION WITH CINEMATIC VIDEO & PREPRINT SPOTLIGHT */}
       <section id="overview" className="hero-section">
+        <div className="hero-cinematic-banner">
+          <div className="hero-video-frame">
+            <video 
+              ref={videoRef}
+              src="/This_previous_version_is_good.mp4" 
+              autoPlay 
+              loop 
+              muted={isVideoMuted}
+              playsInline 
+              controls
+              className="hero-video-element"
+              onVolumeChange={(e) => setIsVideoMuted(e.target.muted)}
+            />
+            {isVideoMuted && (
+              <button 
+                onClick={toggleSound} 
+                className="video-audio-toggle-btn"
+                title="Enable Sound"
+              >
+                <span className="audio-toggle-icon">🔊</span> Click to Enable Audio
+              </button>
+            )}
+          </div>
+        </div>
+
         <h1 className="hero-title">
           Quantum Boltzmann Solver
         </h1>
