@@ -430,9 +430,17 @@ export default function App() {
                 <div className="grant-logo-badge">NVIDIA INCEPTION PROGRAM</div>
                 <span className="grant-status">Application Track</span>
               </div>
-              <h3>GPU-Accelerated Quantum Kinetic Engine</h3>
+              <h3>GPU Acceleration</h3>
               <p>
-                Applying NVIDIA CUDA, Tensor Core matrix operations, and cuQuantum acceleration libraries to parallelize the Bhatnagar-Gross-Krook (BGK) collision operator and multi-orbital density matrix propagation.
+                Demonstrates mapping phase-space electronic structure and density-fitted QBE-SCF onto GPU tile-based deferred rendering (TBDR) architectures to bypass monolithic memory bandwidth bottlenecks.{" "}
+                <a 
+                  href="/Quantum%20Fluid%20Dynamics%20with%20TBDF.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="whitepaper-inline-link"
+                >
+                  Read Whitepaper (PDF) &rarr;
+                </a>
               </p>
               <ul className="grant-specs">
                 <li><strong>Target Compute:</strong> NVIDIA H100 / H200 & Grace Hopper Superchips</li>

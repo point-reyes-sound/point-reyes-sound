@@ -683,6 +683,22 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
   margin-bottom: 22px;
 }
 
+.whitepaper-inline-link {
+  color: var(--accent-emerald);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  transition: all 0.2s ease;
+}
+
+.whitepaper-inline-link:hover {
+  color: #4ef48d;
+  text-decoration: underline;
+}
+
 .grant-specs {
   list-style: none;
   display: flex;
