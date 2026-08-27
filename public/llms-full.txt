@@ -40,4 +40,5 @@ Key characteristics:
   - Scholar Profile: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
 - **Headquarters**: 2261 Market Street, STE 72927, San Francisco, CA 94114, USA.
 - **Official Website**: https://pointreyessound.com
+- **LinkedIn**: https://www.linkedin.com/company/point-reyes-sound/
 - **GitHub Organization**: https://github.com/point-reyes-sound

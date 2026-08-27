@@ -18,5 +18,6 @@
 
 ## Canonical URLs
 - Portal: https://pointreyessound.com
+- LinkedIn: https://www.linkedin.com/company/point-reyes-sound/
 - Full LLM Context: https://pointreyessound.com/llms-full.txt
 - GitHub Organization: https://github.com/point-reyes-sound

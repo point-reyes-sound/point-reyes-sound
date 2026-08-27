@@ -761,6 +761,7 @@ export default function App() {
             <a href="#roadmap">Roadmap</a>
             <a href="#people">People</a>
             <a href="#contact">Contact</a>
+            <a href="https://www.linkedin.com/company/point-reyes-sound/" target="_blank" rel="noopener noreferrer">LinkedIn &rarr;</a>
           </div>
 
           <div className="footer-col-legal">
