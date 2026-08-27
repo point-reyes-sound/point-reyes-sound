@@ -282,7 +282,7 @@ export default function App() {
         </h1>
 
         <p className="hero-lead">
-          Point Reyes Sound is a theoretical and computational research pod pioneering kinetic transport methods for quantum chemistry.
+          Point Reyes Sound is a research pod advancing kinetic transport methods for quantum chemistry.
         </p>
 
         {/* FEATURED PREPRINT CALLOUT BANNER */}
