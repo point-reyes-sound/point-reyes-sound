@@ -35,4 +35,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://pointreyessound.com/sitemap.xml
+Sitemap: https://www.pointreyessound.com/sitemap.xml
