@@ -247,7 +247,7 @@ export default function App() {
           <div className="hero-video-frame">
             <video 
               ref={videoRef}
-              src="/This_previous_version_is_good.mp4" 
+              src="/prs_video_promo_v2.mp4" 
               autoPlay 
               muted={isVideoMuted}
               playsInline 
