@@ -133,9 +133,40 @@ export default function App() {
   const [activeTheme, setActiveTheme] = useState(0);
   const [copiedBibtexId, setCopiedBibtexId] = useState(null);
   const [showInteractiveLab, setShowInteractiveLab] = useState(false);
-  const [isVideoMuted, setIsVideoMuted] = useState(true);
+  const [isVideoMuted, setIsVideoMuted] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const videoRef = useRef(null);
+
+  // Attempt unmuted autoplay by default, with seamless interaction fallback
+  React.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.volume = 1.0;
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.log("Unmuted autoplay restricted by browser policy; enabling on first interaction:", err);
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            setIsVideoMuted(true);
+            videoRef.current.play().catch(() => {});
+          }
+
+          const handleFirstGesture = () => {
+            if (videoRef.current) {
+              videoRef.current.muted = false;
+              videoRef.current.volume = 1.0;
+              setIsVideoMuted(false);
+            }
+          };
+
+          window.addEventListener('click', handleFirstGesture, { once: true });
+          window.addEventListener('touchstart', handleFirstGesture, { once: true });
+          window.addEventListener('keydown', handleFirstGesture, { once: true });
+        });
+      }
+    }
+  }, []);
 
   const toggleSound = () => {
     if (videoRef.current) {
@@ -152,6 +183,7 @@ export default function App() {
   const handleReplay = () => {
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
+      videoRef.current.muted = isVideoMuted;
       videoRef.current.play().catch(() => {});
       setIsVideoEnded(false);
     }
@@ -411,15 +443,15 @@ export default function App() {
               >
                 <span className="replay-icon">↺</span> Replay Video
               </button>
-            ) : isVideoMuted ? (
+            ) : (
               <button 
                 onClick={toggleSound} 
-                className="video-audio-toggle-btn"
-                title="Enable Sound"
+                className={`video-audio-toggle-btn ${!isVideoMuted ? 'audio-live' : ''}`}
+                title={isVideoMuted ? "Enable Sound" : "Mute Sound"}
               >
-                <span className="audio-toggle-icon">🔊</span> Click to Enable Audio
+                <span className="audio-toggle-icon">{isVideoMuted ? "🔇" : "🔊"}</span> {isVideoMuted ? "Click to Unmute" : "Mute Sound"}
               </button>
-            ) : null}
+            )}
           </div>
         </div>
 
