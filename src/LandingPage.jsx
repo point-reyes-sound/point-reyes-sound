@@ -250,7 +250,7 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
 export default function LandingPage() {
   const [activeElement, setActiveElement] = useState(ELEMENTS[0]);
   const [moleculeName, setMoleculeName] = useState("H₂");
-  const [isAudioActive, setIsAudioActive] = useState(false);
+  const [isAudioActive, setIsAudioActive] = useState(true);
   const [volume, setVolume] = useState(0.8);
   const [bondDistance, setBondDistance] = useState(0.74);
   const [temperature, setTemperature] = useState(0.05);
@@ -283,36 +283,31 @@ export default function LandingPage() {
 
     // Auto-activate audio on mount (with browser interaction unlock)
     const startLiveAudio = () => {
-      if (audioRef.current && !audioRef.current.isPlaying) {
+      if (audioRef.current) {
         audioRef.current.start();
+        if (audioRef.current.audioCtx && audioRef.current.audioCtx.state === 'suspended') {
+          audioRef.current.audioCtx.resume().catch(() => {});
+        }
         setIsAudioActive(true);
       }
     };
 
-    // Attempt direct start
+    // Attempt direct start immediately
     startLiveAudio();
 
-    // Browser autoplay unlock listeners
+    // Universal browser autoplay unlock listeners
+    const unlockEvents = ['click', 'pointerdown', 'mousemove', 'scroll', 'touchstart', 'keydown', 'wheel'];
     const unlockAudio = () => {
       startLiveAudio();
-      window.removeEventListener("click", unlockAudio);
-      window.removeEventListener("pointerdown", unlockAudio);
-      window.removeEventListener("keydown", unlockAudio);
-      window.removeEventListener("touchstart", unlockAudio);
+      unlockEvents.forEach((e) => window.removeEventListener(e, unlockAudio, true));
     };
 
-    window.addEventListener("click", unlockAudio);
-    window.addEventListener("pointerdown", unlockAudio);
-    window.addEventListener("keydown", unlockAudio);
-    window.addEventListener("touchstart", unlockAudio);
+    unlockEvents.forEach((e) => window.addEventListener(e, unlockAudio, { capture: true, once: true }));
 
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
       if (audioRef.current) audioRef.current.stop();
-      window.removeEventListener("click", unlockAudio);
-      window.removeEventListener("pointerdown", unlockAudio);
-      window.removeEventListener("keydown", unlockAudio);
-      window.removeEventListener("touchstart", unlockAudio);
+      unlockEvents.forEach((e) => window.removeEventListener(e, unlockAudio, true));
     };
   }, []);
 
