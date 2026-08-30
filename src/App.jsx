@@ -52,7 +52,7 @@ const researchThemes = [
     badge: "COMPUTATIONAL BENCHMARK",
     title: "Extensive Thermodynamic Equilibration for Strong Correlation",
     summary: "Bypassing exponential O(N!) combinatorial CI active space selection through kinetic phase-space equilibration.",
-    content: "Complete Active Space (CASSCF/DMRG) methods require manual orbital partitioning and suffer from factorial combinatorial growth. In Φ-QUEST, strongly correlated bond dissociation (e.g., N₂ triple bond cleavage and O₂ singlet-triplet multiplet splitting) is achieved via extensive thermodynamic relaxation of the density distribution, arriving at an exact 12.0-bit maximum entropy plateau without active space truncation.",
+    content: "Complete Active Space (CASSCF/DMRG) methods require manual orbital partitioning and suffer from factorial combinatorial growth. In Q-BOLTZ, strongly correlated bond dissociation (e.g., N₂ triple bond cleavage and O₂ singlet-triplet multiplet splitting) is achieved via extensive thermodynamic relaxation of the density distribution, arriving at an exact 12.0-bit maximum entropy plateau without active space truncation.",
     asset: "/n2_final_publication_plot.png",
     assetCaption: "Figure 3: N₂ dissociation potential energy curve and entropy plateau validating active space replacement.",
     stats: [
@@ -183,6 +183,21 @@ export default function App() {
     setTimeout(() => setCopiedBibtexId(null), 2500);
   };
 
+  const [showSalesModal, setShowSalesModal] = useState(false);
+  const [salesCategory, setSalesCategory] = useState("enterprise");
+  const [salesName, setSalesName] = useState("");
+  const [salesEmail, setSalesEmail] = useState("");
+  const [salesOrg, setSalesOrg] = useState("");
+  const [salesScale, setSalesScale] = useState("pilot");
+  const [salesMessage, setSalesMessage] = useState("");
+  const [salesSubmitted, setSalesSubmitted] = useState(false);
+
+  const handleSalesSubmit = (e) => {
+    e.preventDefault();
+    if (!salesName || !salesEmail || !salesOrg) return;
+    setSalesSubmitted(true);
+  };
+
   // If user opens the Interactive 3D Lab
   if (showInteractiveLab) {
     return (
@@ -190,16 +205,147 @@ export default function App() {
         <div className="lab-topbar">
           <div className="lab-brand">
             <img src="/PRS_logo_v2.jpeg" alt="Point Reyes Sound" className="lab-logo" />
-            <span>POINT REYES SOUND // Φ-QUEST 3D INTERACTIVE LAB</span>
+            <span>POINT REYES SOUND // Q-BOLTZ</span>
           </div>
-          <button 
-            className="return-pod-btn"
-            onClick={() => setShowInteractiveLab(false)}
-          >
-            ← Return to Research Pod
-          </button>
+          <div className="lab-nav-actions">
+            <button 
+              className="lab-nav-btn research-nav-btn"
+              onClick={() => setShowInteractiveLab(false)}
+            >
+              Research
+            </button>
+            <button 
+              className="lab-nav-btn sales-nav-btn"
+              onClick={() => { setShowSalesModal(true); setSalesSubmitted(false); }}
+            >
+              Contact Sales
+            </button>
+          </div>
         </div>
+
         <LandingPage />
+
+        {/* Intelligent Contact & Enterprise Solutions Modal */}
+        {showSalesModal && (
+          <div className="sales-modal-backdrop" onClick={() => setShowSalesModal(false)}>
+            <div className="sales-modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="sales-modal-header">
+                <div className="sales-modal-title-group">
+                  <span className="sales-tag">ENTERPRISE SOLUTIONS</span>
+                  <h3>Point Reyes Sound &bull; Commercial Licensing & Pilots</h3>
+                </div>
+                <button className="sales-modal-close" onClick={() => setShowSalesModal(false)}>✕</button>
+              </div>
+
+              {salesSubmitted ? (
+                <div className="sales-success-box">
+                  <div className="success-icon">✓</div>
+                  <h4>Inquiry Successfully Dispatched</h4>
+                  <p>A computational chemistry director will connect with <strong>{salesEmail}</strong> within 1 business hour.</p>
+                  <button className="action-btn primary" onClick={() => setShowSalesModal(false)}>Return to Lab</button>
+                </div>
+              ) : (
+                <form onSubmit={handleSalesSubmit} className="sales-form">
+                  <div className="sales-category-grid">
+                    <div 
+                      className={`category-card ${salesCategory === 'enterprise' ? 'selected' : ''}`} 
+                      onClick={() => setSalesCategory('enterprise')}
+                    >
+                      <span className="cat-radio">{salesCategory === 'enterprise' ? '◉' : '○'}</span>
+                      <div className="cat-text">
+                        <strong>Q-BOLTZ Enterprise API</strong>
+                        <span>Cluster deployment & custom Hamiltonian ingestion</span>
+                      </div>
+                    </div>
+
+                    <div 
+                      className={`category-card ${salesCategory === 'pilot' ? 'selected' : ''}`} 
+                      onClick={() => setSalesCategory('pilot')}
+                    >
+                      <span className="cat-radio">{salesCategory === 'pilot' ? '◉' : '○'}</span>
+                      <div className="cat-text">
+                        <strong>Catalysis & Battery Pilot</strong>
+                        <span>Materials screening, SEI & GAAFET phase-space simulations</span>
+                      </div>
+                    </div>
+
+                    <div 
+                      className={`category-card ${salesCategory === 'academic' ? 'selected' : ''}`} 
+                      onClick={() => setSalesCategory('academic')}
+                    >
+                      <span className="cat-radio">{salesCategory === 'academic' ? '◉' : '○'}</span>
+                      <div className="cat-text">
+                        <strong>Academic / Lab License</strong>
+                        <span>Research grants, benchmark datasets & citations</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="sales-form-grid">
+                    <div className="form-group">
+                      <label>Full Name *</label>
+                      <input 
+                        type="text" 
+                        required 
+                        value={salesName} 
+                        onChange={(e) => setSalesName(e.target.value)} 
+                        placeholder="Dr. Alex Vance" 
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Work Email *</label>
+                      <input 
+                        type="email" 
+                        required 
+                        value={salesEmail} 
+                        onChange={(e) => setSalesEmail(e.target.value)} 
+                        placeholder="alex@enterprise.com" 
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Organization / Company *</label>
+                      <input 
+                        type="text" 
+                        required 
+                        value={salesOrg} 
+                        onChange={(e) => setSalesOrg(e.target.value)} 
+                        placeholder="Acme Chemical / Research Lab" 
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Compute Workload Scale</label>
+                      <select value={salesScale} onChange={(e) => setSalesScale(e.target.value)}>
+                        <option value="pilot">Evaluation Pilot (&lt;100 systems)</option>
+                        <option value="cluster">Departmental Cluster (1k - 50k systems)</option>
+                        <option value="enterprise">Enterprise HPC Scale (50k+ systems)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Project Scope & Computational Objectives</label>
+                    <textarea 
+                      rows={3} 
+                      value={salesMessage} 
+                      onChange={(e) => setSalesMessage(e.target.value)} 
+                      placeholder="Describe your computational target, hardware environment (CUDA/Metal), or pilot requirements..." 
+                    />
+                  </div>
+
+                  <div className="sales-form-actions">
+                    <button type="submit" className="action-btn primary sales-submit-btn">
+                      Transmit Inquiry to Engineering & Sales &rarr;
+                    </button>
+                    <span className="sales-guarantee-note">🔒 Direct technical response within 1 business hour</span>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     );
   }

@@ -26,3 +26,10 @@ dist-ssr
 rchakraborty.dev/
 scratch/
 deck/
+*.pdf
+server/
+*.py
+*.pyc
+__pycache__/
+public/data/
+
