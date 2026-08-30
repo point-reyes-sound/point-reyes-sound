@@ -281,33 +281,30 @@ export default function LandingPage() {
     simRef.current = new QuantumBoltzmannSimulator("H", 0.74);
     audioRef.current = new QuantumSonificationEngine();
 
-    // Auto-activate audio on mount (with browser interaction unlock)
-    const startLiveAudio = () => {
+    const startAudio = () => {
       if (audioRef.current) {
+        audioRef.current.ensureRunning();
         audioRef.current.start();
-        if (audioRef.current.audioCtx && audioRef.current.audioCtx.state === 'suspended') {
-          audioRef.current.audioCtx.resume().catch(() => {});
-        }
         setIsAudioActive(true);
       }
     };
 
-    // Attempt direct start immediately
-    startLiveAudio();
+    // Attempt direct start immediately on mount
+    startAudio();
 
-    // Universal browser autoplay unlock listeners
+    // Universal gesture unlock for browsers that suspend initial audio context
     const unlockEvents = ['click', 'pointerdown', 'mousemove', 'scroll', 'touchstart', 'keydown', 'wheel'];
-    const unlockAudio = () => {
-      startLiveAudio();
-      unlockEvents.forEach((e) => window.removeEventListener(e, unlockAudio, true));
+    const unlockHandler = () => {
+      startAudio();
+      unlockEvents.forEach((e) => window.removeEventListener(e, unlockHandler, true));
     };
 
-    unlockEvents.forEach((e) => window.addEventListener(e, unlockAudio, { capture: true, once: true }));
+    unlockEvents.forEach((e) => window.addEventListener(e, unlockHandler, { capture: true, once: true }));
 
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
       if (audioRef.current) audioRef.current.stop();
-      unlockEvents.forEach((e) => window.removeEventListener(e, unlockAudio, true));
+      unlockEvents.forEach((e) => window.removeEventListener(e, unlockHandler, true));
     };
   }, []);
 

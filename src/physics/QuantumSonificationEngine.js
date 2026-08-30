@@ -239,17 +239,42 @@ export class QuantumSonificationEngine {
 
   start() {
     this.init();
+    if (!this.audioCtx) return false;
+
     if (this.audioCtx.state === 'suspended') {
-      this.audioCtx.resume();
+      this.audioCtx.resume().then(() => {
+        if (this.masterGain && this.audioCtx) {
+          this.masterGain.gain.setValueAtTime(this.volume * 0.65, this.audioCtx.currentTime);
+        }
+      }).catch(() => {});
+    }
+
+    this.isPlaying = true;
+    if (this.masterGain && this.audioCtx) {
+      this.masterGain.gain.setValueAtTime(this.volume * 0.65, this.audioCtx.currentTime);
+    }
+    return true;
+  }
+
+  ensureRunning() {
+    this.init();
+    if (!this.audioCtx) return;
+    if (this.audioCtx.state === 'suspended') {
+      this.audioCtx.resume().then(() => {
+        if (this.masterGain && this.audioCtx) {
+          this.masterGain.gain.setValueAtTime(this.volume * 0.65, this.audioCtx.currentTime);
+        }
+      }).catch(() => {});
     }
     this.isPlaying = true;
-    this.masterGain.gain.setTargetAtTime(this.volume * 0.65, this.audioCtx.currentTime, 0.05);
-    return true;
+    if (this.masterGain && this.audioCtx) {
+      this.masterGain.gain.setValueAtTime(this.volume * 0.65, this.audioCtx.currentTime);
+    }
   }
 
   stop() {
     if (this.masterGain && this.audioCtx) {
-      this.masterGain.gain.setTargetAtTime(0.0, this.audioCtx.currentTime, 0.05);
+      this.masterGain.gain.setValueAtTime(0.0, this.audioCtx.currentTime);
     }
     this.isPlaying = false;
     return false;
