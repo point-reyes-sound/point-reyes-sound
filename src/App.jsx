@@ -137,34 +137,46 @@ export default function App() {
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const videoRef = useRef(null);
 
-  // Attempt unmuted autoplay by default, with seamless interaction fallback
+  // Attempt unmuted autoplay by default, with instant universal gesture unlock
   React.useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = false;
-      videoRef.current.volume = 1.0;
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((err) => {
-          console.log("Unmuted autoplay restricted by browser policy; enabling on first interaction:", err);
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = false;
+    video.volume = 1.0;
+
+    const unlockAudio = () => {
+      if (videoRef.current) {
+        videoRef.current.muted = false;
+        videoRef.current.volume = 1.0;
+        setIsVideoMuted(false);
+        videoRef.current.play().catch(() => {});
+      }
+    };
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setIsVideoMuted(false);
+        })
+        .catch((err) => {
+          console.log("Browser autoplay policy prevented initial unmuted playback. Arming instant unlock:", err);
           if (videoRef.current) {
             videoRef.current.muted = true;
             setIsVideoMuted(true);
             videoRef.current.play().catch(() => {});
           }
 
-          const handleFirstGesture = () => {
-            if (videoRef.current) {
-              videoRef.current.muted = false;
-              videoRef.current.volume = 1.0;
-              setIsVideoMuted(false);
-            }
+          // Unlock audio on ANY user engagement across the window
+          const events = ['click', 'pointerdown', 'touchstart', 'scroll', 'wheel', 'keydown', 'mousemove'];
+          const onUserGesture = () => {
+            unlockAudio();
+            events.forEach((evt) => window.removeEventListener(evt, onUserGesture, true));
           };
 
-          window.addEventListener('click', handleFirstGesture, { once: true });
-          window.addEventListener('touchstart', handleFirstGesture, { once: true });
-          window.addEventListener('keydown', handleFirstGesture, { once: true });
+          events.forEach((evt) => window.addEventListener(evt, onUserGesture, { once: true, capture: true }));
         });
-      }
     }
   }, []);
 
