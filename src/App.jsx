@@ -130,6 +130,9 @@ const publicationList = [
 ];
 
 export default function App() {
+  const [activeTheme, setActiveTheme] = useState(0);
+  const [copiedBibtexId, setCopiedBibtexId] = useState(null);
+
   // Deep link helper to detect if URL points to the Interactive Lab
   const checkIsInteractiveUrl = () => {
     if (typeof window === "undefined") return false;
