@@ -447,9 +447,9 @@ export default function App() {
               <button 
                 onClick={toggleSound} 
                 className={`video-audio-toggle-btn ${!isVideoMuted ? 'audio-live' : ''}`}
-                title={isVideoMuted ? "Enable Sound" : "Mute Sound"}
+                title={isVideoMuted ? "Unmute" : "Mute"}
               >
-                <span className="audio-toggle-icon">{isVideoMuted ? "🔇" : "🔊"}</span> {isVideoMuted ? "Click to Unmute" : "Mute Sound"}
+                <span className="audio-toggle-icon">{isVideoMuted ? "🔇" : "🔊"}</span> {isVideoMuted ? "Unmute" : "Mute"}
               </button>
             )}
           </div>
