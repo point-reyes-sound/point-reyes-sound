@@ -31,10 +31,10 @@
 }
 
 .phi-badge {
-  font-family: 'Space Grotesk', -apple-system, sans-serif;
-  font-size: 1.95rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-family: 'EB Garamond', Garamond, Georgia, serif;
+  font-size: 2.35rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 35%, #a7f3d0 70%, #67e8f9 100%);
   -webkit-background-clip: text;
@@ -144,8 +144,9 @@
   justify-content: center;
   align-items: center;
   gap: 0.95rem;
-  padding: 4px 0;
+  padding: 6px 0 10px 0;
   box-sizing: border-box;
+  overflow: visible;
 }
 
 @media (max-width: 1140px) {
@@ -159,18 +160,19 @@
 }
 
 .element-tile {
-  flex: 0 0 108px;
-  width: 108px;
-  height: 112px;
+  flex: 0 0 110px;
+  width: 110px;
+  min-height: 124px;
   background: rgba(5, 18, 10, 0.65);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
-  padding: 0.6rem 0.4rem;
+  padding: 0.65rem 0.45rem 0.75rem 0.45rem;
   text-align: center;
   cursor: grab;
   transition: all 0.25s ease;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -191,7 +193,7 @@
 
 .tile-3d-preview {
   width: 100%;
-  height: 58px;
+  height: 54px;
   pointer-events: none;
 }
 
@@ -200,41 +202,15 @@
   font-size: 1.25rem;
   font-weight: 800;
   margin-top: 0.1rem;
+  line-height: 1.1;
 }
 
 .tile-name {
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   color: #94a3b8;
-}
-
-.element-tile:hover {
-  border-color: var(--tile-color);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-}
-
-.element-tile.active {
-  border-color: var(--tile-color);
-  background: rgba(53, 255, 130, 0.08);
-  box-shadow: 0 0 16px rgba(53, 255, 130, 0.2);
-}
-
-.tile-3d-preview {
-  width: 100%;
-  height: 55px;
-  pointer-events: none;
-}
-
-.tile-symbol {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.15rem;
-  font-weight: 800;
-  margin-top: 0.2rem;
-}
-
-.tile-name {
-  font-size: 0.72rem;
-  color: #94a3b8;
+  margin-top: 2px;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 /* Main Chamber Grid */
