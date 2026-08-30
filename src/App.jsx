@@ -130,12 +130,68 @@ const publicationList = [
 ];
 
 export default function App() {
-  const [activeTheme, setActiveTheme] = useState(0);
-  const [copiedBibtexId, setCopiedBibtexId] = useState(null);
-  const [showInteractiveLab, setShowInteractiveLab] = useState(false);
+  // Deep link helper to detect if URL points to the Interactive Lab
+  const checkIsInteractiveUrl = () => {
+    if (typeof window === "undefined") return false;
+    const path = window.location.pathname.toLowerCase().replace(/\/$/, "");
+    const hash = window.location.hash.toLowerCase().replace(/^#\/?/, "");
+    return (
+      path === "/interactive" ||
+      path === "/lab" ||
+      path === "/simulator" ||
+      path === "/qboltz" ||
+      hash === "interactive" ||
+      hash === "lab" ||
+      hash === "simulator" ||
+      hash === "qboltz"
+    );
+  };
+
+  const [showInteractiveLab, setShowInteractiveLab] = useState(checkIsInteractiveUrl);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const videoRef = useRef(null);
+
+  // Sync state with browser navigation (back/forward buttons and direct URLs)
+  React.useEffect(() => {
+    const handlePopState = () => {
+      const isLab = checkIsInteractiveUrl();
+      setShowInteractiveLab(isLab);
+      if (isLab) {
+        document.title = "Q-BOLTZ Multimodal Quantum World | Point Reyes Sound";
+      } else {
+        document.title = "Point Reyes Sound | Quantum Electronic Structure";
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    window.addEventListener("hashchange", handlePopState);
+
+    if (checkIsInteractiveUrl()) {
+      document.title = "Q-BOLTZ Multimodal Quantum World | Point Reyes Sound";
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("hashchange", handlePopState);
+    };
+  }, []);
+
+  const openInteractiveLab = () => {
+    setShowInteractiveLab(true);
+    if (window.location.pathname !== "/interactive") {
+      window.history.pushState({ page: "interactive" }, "", "/interactive");
+    }
+    document.title = "Q-BOLTZ Multimodal Quantum World | Point Reyes Sound";
+  };
+
+  const closeInteractiveLab = () => {
+    setShowInteractiveLab(false);
+    if (window.location.pathname !== "/") {
+      window.history.pushState({ page: "home" }, "", "/");
+    }
+    document.title = "Point Reyes Sound | Quantum Electronic Structure";
+  };
 
   // Attempt unmuted autoplay by default, with instant universal gesture unlock
   React.useEffect(() => {
@@ -254,7 +310,7 @@ export default function App() {
           <div className="lab-nav-actions">
             <button 
               className="lab-nav-btn research-nav-btn"
-              onClick={() => setShowInteractiveLab(false)}
+              onClick={closeInteractiveLab}
             >
               Research
             </button>
@@ -422,7 +478,7 @@ export default function App() {
             <a href="#contact">Contact</a>
             <button 
               className="nav-interactive-link"
-              onClick={() => setShowInteractiveLab(true)}
+              onClick={openInteractiveLab}
               title="Launch 3D Quantum Reaction Simulator"
             >
               Interactive
