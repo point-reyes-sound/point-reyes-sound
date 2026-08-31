@@ -241,13 +241,15 @@ export class QuantumSonificationEngine {
     this.init();
     if (!this.audioCtx) return false;
 
-    if (this.audioCtx.state === 'suspended') {
-      this.audioCtx.resume().then(() => {
-        if (this.masterGain && this.audioCtx) {
-          this.masterGain.gain.setValueAtTime(this.volume * 0.65, this.audioCtx.currentTime);
-        }
-      }).catch(() => {});
-    }
+    try {
+      if (this.audioCtx.state === 'suspended') {
+        this.audioCtx.resume().then(() => {
+          if (this.masterGain && this.audioCtx) {
+            this.masterGain.gain.setValueAtTime(this.volume * 0.65, this.audioCtx.currentTime);
+          }
+        }).catch(() => {});
+      }
+    } catch (e) {}
 
     this.isPlaying = true;
     if (this.masterGain && this.audioCtx) {
@@ -257,8 +259,22 @@ export class QuantumSonificationEngine {
   }
 
   ensureRunning() {
+    this.unlockMobileAudio();
+  }
+
+  unlockMobileAudio() {
     this.init();
     if (!this.audioCtx) return;
+
+    try {
+      // Play a 1-sample silent buffer to unlock iOS Safari AudioContext permanently
+      const buffer = this.audioCtx.createBuffer(1, 1, 22050);
+      const source = this.audioCtx.createBufferSource();
+      source.buffer = buffer;
+      source.connect(this.audioCtx.destination);
+      source.start(0);
+    } catch (e) {}
+
     if (this.audioCtx.state === 'suspended') {
       this.audioCtx.resume().then(() => {
         if (this.masterGain && this.audioCtx) {

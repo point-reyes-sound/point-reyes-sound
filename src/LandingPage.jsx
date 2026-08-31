@@ -283,8 +283,7 @@ export default function LandingPage() {
 
     const startAudio = () => {
       if (audioRef.current) {
-        audioRef.current.ensureRunning();
-        audioRef.current.start();
+        audioRef.current.unlockMobileAudio();
         setIsAudioActive(true);
       }
     };
@@ -292,14 +291,14 @@ export default function LandingPage() {
     // Attempt direct start immediately on mount
     startAudio();
 
-    // Universal gesture unlock for browsers that suspend initial audio context
-    const unlockEvents = ['click', 'pointerdown', 'mousemove', 'scroll', 'touchstart', 'keydown', 'wheel'];
+    // Universal gesture unlock for iOS Safari and mobile Chrome
+    const unlockEvents = ['touchstart', 'touchend', 'pointerdown', 'click', 'keydown', 'scroll', 'touchmove'];
     const unlockHandler = () => {
       startAudio();
       unlockEvents.forEach((e) => window.removeEventListener(e, unlockHandler, true));
     };
 
-    unlockEvents.forEach((e) => window.addEventListener(e, unlockHandler, { capture: true, once: true }));
+    unlockEvents.forEach((e) => window.addEventListener(e, unlockHandler, { capture: true, passive: true }));
 
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
