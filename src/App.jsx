@@ -477,7 +477,6 @@ export default function App() {
               <span className="pulse-dot"></span> Research
             </a>
             <a href="#roadmap">Roadmap</a>
-            <a href="#people">People</a>
             <a href="#contact">Contact</a>
             <button 
               className="nav-interactive-link"
@@ -752,17 +751,17 @@ export default function App() {
         </div>
       </section>
 
-      {/* 7. PEOPLE & RESEARCH POD */}
-      <section id="people" className="section-block">
+      {/* 7. PEOPLE & CONTACT */}
+      <section id="contact" className="section-block dark-tint">
         <div className="section-head">
-          <div className="section-kicker">POD</div>
-          <h2 className="section-title">People</h2>
+          <div className="section-kicker">RESEARCH POD & INQUIRIES</div>
+          <h2 className="section-title">Contact</h2>
           <p className="section-sub">
-            Point Reyes Sound, Inc. is an agile privately funded research pod.
+            Point Reyes Sound, Inc. is an agile privately funded theoretical and computational research pod.
           </p>
         </div>
 
-        <div className="people-grid">
+        <div className="people-grid" style={{ marginBottom: "2.5rem" }}>
           {/* ROMIT CHAKRABORTY */}
           <div className="people-card">
             <div className="person-header">
@@ -842,14 +841,6 @@ export default function App() {
               </a>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* 8. CONTACT SECTION & INQUIRIES */}
-      <section id="contact" className="section-block dark-tint">
-        <div className="section-head">
-          <div className="section-kicker">COMMUNICATIONS & INQUIRIES</div>
-          <h2 className="section-title">Contact</h2>
         </div>
 
         <div className="contact-grid">
