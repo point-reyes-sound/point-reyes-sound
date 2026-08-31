@@ -12,8 +12,6 @@ const researchThemes = [
     title: "Quantum Boltzmann Equation Self-Consistent Field",
     summary: "Replacing static eigenvalue diagonalization with non-equilibrium kinetic transport via a Bhatnagar-Gross-Krook (BGK) collision operator.",
     content: "Standard self-consistent field algorithms formulate electronic structure as an iterative eigenvalue problem prone to catastrophic divergence near degenerate states. The QBE-SCF framework reformulates self-consistency as a continuous kinetic relaxation of the one-electron reduced density matrix (1-RDM) towards a Fermi-Dirac state. By embedding algebraic connectivity metrics (Fiedler friction) directly into the collision operator, the solver autonomously adjusts relaxation rates across multi-orbital manifolds.",
-    asset: "/c2h4_wigner_phase_space.png",
-    assetCaption: "Figure 1: Wigner phase-space kinetic transport map across the frontier orbitals of ethylene (C₂H₄).",
     stats: [
       { label: "Relaxation Mode", value: "Autonomous BGK" },
       { label: "Trace Conservation", value: "Exact Tr[P] = N" },
@@ -33,8 +31,6 @@ const researchThemes = [
     title: "Entropic Regularization of Conical Intersections & Cusps",
     summary: "Smoothing Coulson-Fischer energy cusps and derivative discontinuities through Helmholtz free energy minimization.",
     content: "Mean-field electronic structure suffers from artificial derivative discontinuities at symmetry-breaking transitions. By treating the electronic state as a finite-temperature informational ensemble governed by Helmholtz free energy A = E - TS, fractional occupations emerge naturally as entropy-bearing fixed points. This replaces sharp, non-differentiable energy cusps with smooth, thermodynamically consistent energy surfaces.",
-    asset: "/figure7.png",
-    assetCaption: "Figure 2: Entropic regularization of Coulson-Fischer singular cusps across symmetric molecular stretching regimes.",
     stats: [
       { label: "Zero-T Limit", value: "RHF Singularity" },
       { label: "Finite-T (QBE)", value: "C¹ Smooth Path" },
@@ -54,8 +50,6 @@ const researchThemes = [
     title: "Extensive Thermodynamic Equilibration for Strong Correlation",
     summary: "Bypassing exponential O(N!) combinatorial CI active space selection through kinetic phase-space equilibration.",
     content: "Complete Active Space (CASSCF/DMRG) methods require manual orbital partitioning and suffer from factorial combinatorial growth. In Q-BOLTZ, strongly correlated bond dissociation (e.g., N₂ triple bond cleavage and O₂ singlet-triplet multiplet splitting) is achieved via extensive thermodynamic relaxation of the density distribution, arriving at an exact 12.0-bit maximum entropy plateau without active space truncation.",
-    asset: "/n2_final_publication_plot.png",
-    assetCaption: "Figure 3: N₂ dissociation potential energy curve and entropy plateau validating active space replacement.",
     stats: [
       { label: "N₂ Dissociation", value: "Exact Asymptote" },
       { label: "Entropy Bound", value: "12.00 Bits" },
@@ -75,8 +69,6 @@ const researchThemes = [
     title: "Informational Fluid Dynamics in Molecular Phase Space",
     summary: "Mapping quantum density matrices to phase-space distributions for intuitive, physics-informed visual exploration.",
     content: "By projecting high-dimensional density matrices into phase-space via the Wigner-Weyl transform, molecular electronic structures are interpreted as viscous quantum fluids undergoing hydrodynamic drift and diffusive collisions. This dual coordinate-momentum slice reveals nodal structures, phase coherence, and dynamic correlation effects undetectable in standard spatial orbital renderings.",
-    asset: "/o2_wigner_dual_slice.png",
-    assetCaption: "Figure 4: Dual-slice Wigner phase-space tomography for singlet vs. triplet molecular oxygen.",
     stats: [
       { label: "Formalism", value: "Wigner-Weyl" },
       { label: "Phase Topology", value: "Non-Gaussian" },
