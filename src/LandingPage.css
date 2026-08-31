@@ -767,3 +767,148 @@
   font-family: 'JetBrains Mono', monospace;
   font-style: italic;
 }
+
+/* ==========================================================================
+   SERIOUS MOBILE OPTIMIZATIONS (Isolated for screens <= 900px and <= 600px)
+   Workstation displays (>1140px) maintain exact desktop layout & geometry
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .phi-quest-container {
+    padding: 0.75rem 0.5rem 2rem 0.5rem;
+  }
+
+  .main-chamber-grid {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .dual-spectrum-deck {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .phi-badge {
+    font-size: 1.85rem;
+    line-height: 1.2;
+  }
+
+  .phi-subtitle {
+    font-size: 0.82rem;
+    padding: 0 8px;
+  }
+
+  .element-strip-container {
+    width: 100%;
+    margin-bottom: 1.1rem;
+  }
+
+  .element-strip-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .audio-control-hub.inline-hub {
+    position: static;
+    left: auto;
+    width: auto;
+    padding: 0.35rem 0.8rem;
+    margin-bottom: 4px;
+  }
+
+  .element-strip {
+    width: 100%;
+    max-width: 100vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.65rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 6px 12px 14px 12px;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(53, 255, 130, 0.4) transparent;
+  }
+
+  .element-tile {
+    flex: 0 0 94px;
+    width: 94px;
+    min-height: 116px;
+    padding: 0.55rem 0.35rem 0.65rem 0.35rem;
+    scroll-snap-align: center;
+    touch-action: manipulation;
+  }
+
+  .tile-3d-preview {
+    height: 48px;
+  }
+
+  .tile-symbol {
+    font-size: 1.12rem;
+  }
+
+  .tile-name {
+    font-size: 0.70rem;
+  }
+
+  .spatial-canvas-container {
+    height: 220px;
+    touch-action: pan-y;
+  }
+
+  .wigner-canvas-wrapper {
+    height: 180px;
+  }
+
+  .wigner-canvas {
+    height: 180px;
+  }
+
+  .control-slider {
+    height: 10px;
+    touch-action: manipulation;
+  }
+
+  .control-slider::-webkit-slider-thumb {
+    width: 26px;
+    height: 26px;
+  }
+
+  .excite-btn, .sweep-action-btn {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    touch-action: manipulation;
+  }
+
+  .scope-canvas {
+    height: 85px;
+  }
+}
+
+@media (max-width: 480px) {
+  .phi-badge {
+    font-size: 1.55rem;
+  }
+
+  .element-tile {
+    flex: 0 0 88px;
+    width: 88px;
+    min-height: 112px;
+  }
+
+  .chamber-card {
+    padding: 0.85rem;
+  }
+
+  .telemetry-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+}

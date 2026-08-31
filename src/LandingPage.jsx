@@ -658,7 +658,7 @@ export default function LandingPage() {
                 style={{ '--tile-color': el.color }}
               >
                 <div className="tile-3d-preview">
-                  <Canvas camera={{ position: [0, 0, 3] }}>
+                  <Canvas camera={{ position: [0, 0, 3] }} dpr={[1, 2]}>
                     <ElementPreviewCloud color={el.color} radius={el.radius * 0.9} />
                   </Canvas>
                 </div>
@@ -703,7 +703,7 @@ export default function LandingPage() {
           </div>
 
           <div className="spatial-canvas-container">
-            <Canvas camera={{ position: [0, 0, 4.6], fov: 45 }}>
+            <Canvas camera={{ position: [0, 0, 4.6], fov: 45 }} dpr={[1, 2]}>
               <DiatomicMolecularSystem 
                 simulator={simRef.current} 
                 activeElement={activeElement} 
