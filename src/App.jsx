@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./App.css";
 import LandingPage from "./LandingPage";
+import { QuantumSonificationEngine } from "./physics/QuantumSonificationEngine";
 
 const researchThemes = [
   {
@@ -181,6 +182,16 @@ export default function App() {
   }, []);
 
   const openInteractiveLab = () => {
+    try {
+      if (typeof window !== "undefined") {
+        if (!window.__prsAudioEngine) {
+          window.__prsAudioEngine = new QuantumSonificationEngine();
+        }
+        window.__prsAudioEngine.unlockMobileAudio();
+        window.__prsAudioEngine.start();
+      }
+    } catch (e) {}
+
     setShowInteractiveLab(true);
     if (window.location.pathname !== "/interactive") {
       window.history.pushState({ page: "interactive" }, "", "/interactive");

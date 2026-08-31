@@ -294,11 +294,20 @@ export default function LandingPage() {
 
   useEffect(() => {
     simRef.current = new QuantumBoltzmannSimulator("H", 0.74);
-    audioRef.current = new QuantumSonificationEngine();
+    
+    if (typeof window !== "undefined" && window.__prsAudioEngine) {
+      audioRef.current = window.__prsAudioEngine;
+    } else {
+      audioRef.current = new QuantumSonificationEngine();
+      if (typeof window !== "undefined") {
+        window.__prsAudioEngine = audioRef.current;
+      }
+    }
 
     const startAudio = () => {
       if (audioRef.current) {
         audioRef.current.unlockMobileAudio();
+        audioRef.current.start();
         setIsAudioActive(true);
       }
     };
@@ -310,14 +319,12 @@ export default function LandingPage() {
     const unlockEvents = ['touchstart', 'touchend', 'pointerdown', 'click', 'keydown', 'scroll', 'touchmove'];
     const unlockHandler = () => {
       startAudio();
-      unlockEvents.forEach((e) => window.removeEventListener(e, unlockHandler, true));
     };
 
     unlockEvents.forEach((e) => window.addEventListener(e, unlockHandler, { capture: true, passive: true }));
 
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
-      if (audioRef.current) audioRef.current.stop();
       unlockEvents.forEach((e) => window.removeEventListener(e, unlockHandler, true));
     };
   }, []);

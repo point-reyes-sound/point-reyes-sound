@@ -312,93 +312,102 @@ export class QuantumSonificationEngine {
    */
   playPianoKey(freq, duration = 2.4, velocity = 0.8, isBass = false, isSolo = false) {
     if (!this.audioCtx || !this.isPlaying) return;
-    const now = this.audioCtx.currentTime;
 
-    const noteGain = this.audioCtx.createGain();
-    const noteFilter = this.audioCtx.createBiquadFilter();
-    noteFilter.type = 'lowpass';
-
-    const startCutoff = isBass 
-      ? Math.min(3800, 1200 + velocity * 2200) 
-      : isSolo 
-        ? Math.min(10500, 4200 + velocity * 5500)
-        : Math.min(7500, 2400 + velocity * 4500);
-    const endCutoff = isBass ? 450 : isSolo ? 1600 : 950;
-    
-    noteFilter.frequency.setValueAtTime(startCutoff, now);
-    noteFilter.frequency.exponentialRampToValueAtTime(endCutoff, now + 0.35);
-
-    // 1. Hammer Strike Transient
-    const hammer = this.audioCtx.createOscillator();
-    const hammerGain = this.audioCtx.createGain();
-    hammer.type = 'sine';
-    hammer.frequency.setValueAtTime(isBass ? freq * 2.5 : freq * 4.0, now);
-    hammerGain.gain.setValueAtTime(velocity * (isBass ? 0.35 : 0.25), now);
-    hammerGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.022);
-    hammer.connect(hammerGain);
-    hammerGain.connect(noteGain);
-    hammer.start(now);
-    hammer.stop(now + 0.025);
-
-    // 2. Grand Piano Paired String Unison
-    const osc1 = this.audioCtx.createOscillator();
-    const osc2 = this.audioCtx.createOscillator();
-    if (this.pianoWave) {
-      osc1.setPeriodicWave(this.pianoWave);
-      osc2.setPeriodicWave(this.pianoWave);
-    } else {
-      osc1.type = 'triangle';
-      osc2.type = 'sine';
-    }
-    osc1.frequency.setValueAtTime(freq, now);
-    osc2.frequency.setValueAtTime(freq, now);
-    osc1.detune.setValueAtTime(-1.4, now);
-    osc2.detune.setValueAtTime(1.4, now);
-
-    const stringGain1 = this.audioCtx.createGain();
-    const stringGain2 = this.audioCtx.createGain();
-    const strVol = velocity * (isBass ? 0.55 : isSolo ? 0.50 : 0.42);
-    stringGain1.gain.setValueAtTime(strVol, now);
-    stringGain2.gain.setValueAtTime(strVol, now);
-
-    osc1.connect(stringGain1);
-    osc2.connect(stringGain2);
-    stringGain1.connect(noteFilter);
-    stringGain2.connect(noteFilter);
-
-    // 3. Sub-Harmonic Weight for Deep Bass Notes
-    if (isBass && freq < 120) {
-      const subOsc = this.audioCtx.createOscillator();
-      subOsc.type = 'sine';
-      subOsc.frequency.setValueAtTime(freq * 0.5, now);
-      const subGain = this.audioCtx.createGain();
-      subGain.gain.setValueAtTime(velocity * 0.35, now);
-      subGain.gain.exponentialRampToValueAtTime(0.0001, now + duration * 0.8);
-      subOsc.connect(subGain);
-      subGain.connect(noteFilter);
-      subOsc.start(now);
-      subOsc.stop(now + duration);
+    if (this.audioCtx.state === 'suspended') {
+      this.audioCtx.resume().catch(() => {});
     }
 
-    // 4. Acoustic Concert Piano Decay Envelope
-    noteGain.gain.setValueAtTime(0.0001, now);
-    noteGain.gain.linearRampToValueAtTime(1.0, now + 0.004);
-    noteGain.gain.exponentialRampToValueAtTime(0.65, now + 0.18);
-    noteGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+    try {
+      const now = this.audioCtx.currentTime;
 
-    noteFilter.connect(noteGain);
+      const noteGain = this.audioCtx.createGain();
+      const noteFilter = this.audioCtx.createBiquadFilter();
+      noteFilter.type = 'lowpass';
 
-    // Route Excited Solo voice to dedicated Excited Spectrum Analyzer
-    if (isSolo && this.excitedBusGain) {
-      noteGain.connect(this.excitedBusGain);
-    } else {
-      noteGain.connect(this.soundboardFilter);
+      const startCutoff = isBass 
+        ? Math.min(3800, 1200 + velocity * 2200) 
+        : isSolo 
+          ? Math.min(10500, 4200 + velocity * 5500)
+          : Math.min(7500, 2400 + velocity * 4500);
+      const endCutoff = isBass ? 450 : isSolo ? 1600 : 950;
+      
+      noteFilter.frequency.setValueAtTime(startCutoff, now);
+      noteFilter.frequency.exponentialRampToValueAtTime(endCutoff, now + 0.35);
+
+      // 1. Hammer Strike Transient
+      const hammer = this.audioCtx.createOscillator();
+      const hammerGain = this.audioCtx.createGain();
+      hammer.type = 'sine';
+      hammer.frequency.setValueAtTime(isBass ? freq * 2.5 : freq * 4.0, now);
+      hammerGain.gain.setValueAtTime(velocity * (isBass ? 0.35 : 0.25), now);
+      hammerGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.022);
+      hammer.connect(hammerGain);
+      hammerGain.connect(noteGain);
+      hammer.start(now);
+      hammer.stop(now + 0.025);
+
+      // 2. Grand Piano Paired String Unison
+      const osc1 = this.audioCtx.createOscillator();
+      const osc2 = this.audioCtx.createOscillator();
+      if (this.pianoWave) {
+        osc1.setPeriodicWave(this.pianoWave);
+        osc2.setPeriodicWave(this.pianoWave);
+      } else {
+        osc1.type = 'triangle';
+        osc2.type = 'sine';
+      }
+      osc1.frequency.setValueAtTime(freq, now);
+      osc2.frequency.setValueAtTime(freq, now);
+      osc1.detune.setValueAtTime(-1.4, now);
+      osc2.detune.setValueAtTime(1.4, now);
+
+      const stringGain1 = this.audioCtx.createGain();
+      const stringGain2 = this.audioCtx.createGain();
+      const strVol = velocity * (isBass ? 0.55 : isSolo ? 0.50 : 0.42);
+      stringGain1.gain.setValueAtTime(strVol, now);
+      stringGain2.gain.setValueAtTime(strVol, now);
+
+      osc1.connect(stringGain1);
+      osc2.connect(stringGain2);
+      stringGain1.connect(noteFilter);
+      stringGain2.connect(noteFilter);
+
+      // 3. Sub-Harmonic Weight for Deep Bass Notes
+      if (isBass && freq < 120) {
+        const subOsc = this.audioCtx.createOscillator();
+        subOsc.type = 'sine';
+        subOsc.frequency.setValueAtTime(freq * 0.5, now);
+        const subGain = this.audioCtx.createGain();
+        subGain.gain.setValueAtTime(velocity * 0.35, now);
+        subGain.gain.exponentialRampToValueAtTime(0.0001, now + duration * 0.8);
+        subOsc.connect(subGain);
+        subGain.connect(noteFilter);
+        subOsc.start(now);
+        subOsc.stop(now + duration);
+      }
+
+      // 4. Acoustic Concert Piano Decay Envelope
+      noteGain.gain.setValueAtTime(0.0001, now);
+      noteGain.gain.linearRampToValueAtTime(1.0, now + 0.004);
+      noteGain.gain.exponentialRampToValueAtTime(0.65, now + 0.18);
+      noteGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+      noteFilter.connect(noteGain);
+
+      // Route Excited Solo voice to dedicated Excited Spectrum Analyzer
+      if (isSolo && this.excitedBusGain) {
+        noteGain.connect(this.excitedBusGain);
+      } else {
+        noteGain.connect(this.soundboardFilter);
+      }
+
+      osc1.start(now);
+      osc2.start(now);
+      osc1.stop(now + duration + 0.05);
+      osc2.stop(now + duration + 0.05);
+    } catch (e) {
+      console.warn("playPianoKey warning:", e);
     }
-
-    osc1.start(now);
-    osc2.start(now);
-    osc1.stop(now + duration + 0.05);
-    osc2.stop(now + duration + 0.05);
   }
 
   triggerBackbeatKick(now, velocity = 0.8) {
