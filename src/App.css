@@ -1856,4 +1856,34 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
   .pod-footer {
     padding: 42px 16px 24px 16px;
   }
+
+  /* LAB TOPBAR MOBILE */
+  .lab-topbar {
+    padding: 8px 12px;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .lab-brand {
+    font-size: 0.70rem;
+    gap: 6px;
+    letter-spacing: 0.04em;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .lab-logo {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+  .lab-nav-actions {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .lab-nav-btn {
+    padding: 5px 10px;
+    font-size: 0.72rem;
+  }
 }

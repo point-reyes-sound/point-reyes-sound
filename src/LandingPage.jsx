@@ -1,9 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { QuantumBoltzmannSimulator } from "./physics/QuantumBoltzmannSimulator";
 import { QuantumSonificationEngine } from "./physics/QuantumSonificationEngine";
 import "./LandingPage.css";
+
+// Auto-scaling camera for mobile and narrow screens
+function ResponsiveCamera() {
+  const { camera, size } = useThree();
+  useEffect(() => {
+    const aspect = size.width / Math.max(1, size.height);
+    if (aspect < 1.95) {
+      camera.position.z = 4.6 * (1.95 / Math.max(0.75, aspect));
+    } else {
+      camera.position.z = 4.6;
+    }
+    camera.updateProjectionMatrix();
+  }, [size.width, size.height, camera]);
+  return null;
+}
 
 const ELEMENTS = [
   { num: 1, symbol: "H", name: "Hydrogen", color: "#35ff82", row: 1, radius: 0.53, desc: "H₂ Singlet Covalent Bond (Req = 0.74 Å)" },
@@ -703,6 +718,7 @@ export default function LandingPage() {
 
           <div className="spatial-canvas-container">
             <Canvas camera={{ position: [0, 0, 4.6], fov: 45 }} dpr={[1, 2]}>
+              <ResponsiveCamera />
               <DiatomicMolecularSystem 
                 simulator={simRef.current} 
                 activeElement={activeElement} 
