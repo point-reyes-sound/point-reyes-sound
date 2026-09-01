@@ -812,12 +812,13 @@ export default function App() {
             <div className="person-header">
               <img 
                 src="/sayan_chakraborty.jpeg" 
-                alt="Sayan Chakraborty" 
+                alt="Sayan Chakraborty, Ph.D." 
                 className="person-avatar-img" 
               />
               <div className="person-info">
-                <h3>Sayan Chakraborty</h3>
-                <span className="person-role">Research Advisor</span>
+                <h3>Sayan Chakraborty, Ph.D.</h3>
+                <span className="person-role">Research Collaborator</span>
+                <span className="person-affiliation">TCG CREST</span>
                 <div className="person-links-row">
                   <a 
                     href="https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate" 

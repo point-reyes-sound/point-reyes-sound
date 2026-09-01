@@ -7,16 +7,25 @@
  * - Layer 2 (d-polarization excitation): Double-speed rapid arpeggiated string-crossing flourish.
  */
 
-// Note frequencies in Hz (A4 = 440 Hz)
+// Note frequencies in Hz (A4 = 440 Hz) across 6 octaves
 const N = {
-  D1: 36.71, E1: 41.20, Fs1: 46.25, G1: 49.00, A1: 55.00, B1: 61.74, Cs2: 69.30,
-  D2: 73.42, E2: 82.41, Fs2: 92.50, G2: 98.00, A2: 110.00, B2: 123.47, Cs3: 138.59,
-  D3: 146.83, E3: 164.81, Fs3: 185.00, G3: 196.00, A3: 220.00, B3: 246.94, Cs4: 277.18,
-  D4: 293.66, E4: 329.63, Fs4: 369.99, G4: 392.00, A4: 440.00, B4: 493.88, Cs5: 554.37,
-  D5: 587.33, E5: 659.25, Fs5: 739.99, G5: 783.99, A5: 880.00, B5: 987.77, Cs6: 1108.73, D6: 1174.66
+  // Octave 1
+  C1: 32.70, Cs1: 34.65, D1: 36.71, Ds1: 38.89, E1: 41.20, F1: 43.65, Fs1: 46.25, G1: 49.00, Gs1: 51.91, A1: 55.00, As1: 58.27, B1: 61.74,
+  // Octave 2
+  C2: 65.41, Cs2: 69.30, D2: 73.42, Ds2: 77.78, E2: 82.41, F2: 87.31, Fs2: 92.50, G2: 98.00, Gs2: 103.83, A2: 110.00, As2: 116.54, B2: 123.47,
+  // Octave 3
+  C3: 130.81, Cs3: 138.59, D3: 146.83, Ds3: 155.56, E3: 164.81, F3: 174.61, Fs3: 185.00, G3: 196.00, Gs3: 207.65, A3: 220.00, As3: 233.08, B3: 246.94,
+  // Octave 4
+  C4: 261.63, Cs4: 277.18, D4: 293.66, Ds4: 311.13, E4: 329.63, F4: 349.23, Fs4: 369.99, G4: 392.00, Gs4: 415.30, A4: 440.00, As4: 466.16, B4: 493.88,
+  // Octave 5
+  C5: 523.25, Cs5: 554.37, D5: 587.33, Ds5: 622.25, E5: 659.25, F5: 698.46, Fs5: 739.99, G5: 783.99, Gs5: 830.61, A5: 880.00, As5: 932.33, B5: 987.77,
+  // Octave 6
+  C6: 1046.50, Cs6: 1108.73, D6: 1174.66, Ds6: 1244.51, E6: 1318.51, Fs6: 1479.98, Gs6: 1661.22, A6: 1760.00
 };
 
-// Pachelbel's Canon in D - Full 8-Bar Classical Piano Ground Progression (64 sixteenth steps)
+// ============================================================================
+// 1. PACHELBEL'S CANON IN D (For H₂ / Covalent Ground State)
+// ============================================================================
 const CANON_PROGRESSION = [
   // 1. D Major: Heavy Low Bass (D1 + A1 + D2), Chords (F#3, A3, D4, F#4)
   {
@@ -68,12 +77,10 @@ const CANON_PROGRESSION = [
   }
 ];
 
-// Pachelbel's Classical Piano Regular Melody (8 notes)
 const CANON_MELODY = [
   N.Fs4, N.E4, N.D4, N.Cs4, N.B3, N.A3, N.B3, N.Cs4
 ];
 
-// Solo Layer 1 (p-polarization excitation: 16th-note scalar runs)
 const CANON_SOLO_LAYER_1 = [
   // Bar 1 (D Major)
   N.Fs5, N.E5, N.Fs5, N.G5, N.A5, N.B5, N.A5, N.G5,
@@ -93,9 +100,8 @@ const CANON_SOLO_LAYER_1 = [
   N.Cs5, N.B4, N.A4, N.G4, N.A4, N.B4, N.Cs5, N.D5
 ];
 
-// Solo Layer 2 (d-polarization excitation: Rapid Virtuoso Arpeggiated String-Crossing Flourish)
 const CANON_SOLO_LAYER_2 = [
-  // Bar 1 (D Major - high octave flourish)
+  // Bar 1 (D Major)
   N.Fs5, N.D5, N.A5, N.Fs5, N.D5, N.Fs5, N.A5, N.D6,
   // Bar 2 (A Major)
   N.E5, N.Cs5, N.A5, N.E5, N.Cs5, N.E5, N.A5, N.Cs6,
@@ -113,11 +119,110 @@ const CANON_SOLO_LAYER_2 = [
   N.Cs5, N.A4, N.E5, N.Cs5, N.A4, N.Cs5, N.E5, N.A5
 ];
 
+// ============================================================================
+// 2. CLAUDE DEBUSSY — PREMIÈRE ARABESQUE IN E MAJOR (For He₂ / Dispersion Dimer)
+// ============================================================================
+const ARABESQUE_PROGRESSION = [
+  // 1. E Major (Ground): Soft Open Bass (E1 + B1 + E2), Floating Chords (G#3, B3, E4, G#4)
+  {
+    bassRoot: N.E1, bassOctave: N.E2, bassFifth: N.B1,
+    arpeggio: [N.Gs3, N.B3, N.E4, N.Gs4],
+    name: "E Major"
+  },
+  // 2. A Major / E (Suspended Dispersion): Bass (E1 + A2), Chords (A3, C#4, E4, A4)
+  {
+    bassRoot: N.E1, bassOctave: N.A2, bassFifth: N.E2,
+    arpeggio: [N.A3, N.Cs4, N.E4, N.A4],
+    name: "A Major / E"
+  },
+  // 3. F# Minor 7: Bass (F#1 + C#2 + F#2), Chords (A3, C#4, E4, F#4)
+  {
+    bassRoot: N.Fs1, bassOctave: N.Fs2, bassFifth: N.Cs2,
+    arpeggio: [N.A3, N.Cs4, N.E4, N.Fs4],
+    name: "F# Minor 7"
+  },
+  // 4. B Dominant 7 / Susp: Bass (B1 + F#2 + B2), Chords (A3, D#4, F#4, B4)
+  {
+    bassRoot: N.B1, bassOctave: N.B2, bassFifth: N.Fs2,
+    arpeggio: [N.A3, N.Ds4, N.Fs4, N.B4],
+    name: "B7"
+  },
+  // 5. G# Minor 7: Bass (G#1 + D#2 + G#2), Chords (B3, D#4, F#4, G#4)
+  {
+    bassRoot: N.Gs1, bassOctave: N.Gs2, bassFifth: N.Ds2,
+    arpeggio: [N.B3, N.Ds4, N.Fs4, N.Gs4],
+    name: "G# Minor 7"
+  },
+  // 6. C# Minor 7: Bass (C#1 + G#2 + C#2), Chords (E3, G#3, B3, E4)
+  {
+    bassRoot: N.Cs1, bassOctave: N.Cs2, bassFifth: N.Gs2,
+    arpeggio: [N.E3, N.Gs3, N.B3, N.E4],
+    name: "C# Minor 7"
+  },
+  // 7. Aadd9 / F#: Bass (F#1 + C#2 + A2), Chords (A3, B3, E4, G#4)
+  {
+    bassRoot: N.Fs1, bassOctave: N.Fs2, bassFifth: N.Cs2,
+    arpeggio: [N.A3, N.B3, N.E4, N.Gs4],
+    name: "Aadd9"
+  },
+  // 8. E Major Full Release: Bass (E1 + B1 + E2), Chords (G#3, B3, E4, B4)
+  {
+    bassRoot: N.E1, bassOctave: N.E2, bassFifth: N.B1,
+    arpeggio: [N.Gs3, N.B3, N.E4, N.B4],
+    name: "E Major"
+  }
+];
+
+const ARABESQUE_MELODY = [
+  N.B4, N.Cs5, N.A4, N.Gs4, N.B4, N.Gs4, N.Fs4, N.E4
+];
+
+// Layer 1: p-polarization excitation (16th-note flowing Debussy Arabesque cascades)
+const ARABESQUE_SOLO_LAYER_1 = [
+  // Bar 1 (E Major) - Descending curved arabesque
+  N.B5, N.Gs5, N.Fs5, N.E5, N.Ds5, N.Cs5, N.B4, N.Gs4,
+  // Bar 2 (A Major)
+  N.Cs5, N.B4, N.A4, N.Gs4, N.Fs4, N.E4, N.Ds4, N.Cs4,
+  // Bar 3 (F# Minor 7) - Lyrical rise & fall
+  N.Fs4, N.A4, N.Cs5, N.E5, N.Fs5, N.E5, N.Ds5, N.Cs5,
+  // Bar 4 (B7)
+  N.Ds5, N.Cs5, N.B4, N.A4, N.Gs4, N.Fs4, N.E4, N.Ds4,
+  // Bar 5 (G# Minor 7)
+  N.Gs4, N.B4, N.Ds5, N.Fs5, N.Gs5, N.Fs5, N.E5, N.Ds5,
+  // Bar 6 (C# Minor 7)
+  N.E5, N.Ds5, N.Cs5, N.B4, N.A4, N.Gs4, N.Fs4, N.E4,
+  // Bar 7 (Aadd9) - Flowing scalar return
+  N.Fs4, N.Gs4, N.A4, N.B4, N.Cs5, N.Ds5, N.E5, N.Fs5,
+  // Bar 8 (E Major)
+  N.Gs5, N.Fs5, N.E5, N.Ds5, N.Cs5, N.B4, N.A4, N.Gs4
+];
+
+// Layer 2: d-polarization excitation (Rapid Virtuoso 3-Octave Shimmering Arabesque Flourish)
+const ARABESQUE_SOLO_LAYER_2 = [
+  // Bar 1 (E Major - high octave dispersion ripple)
+  N.E5, N.Gs5, N.B5, N.E6, N.B5, N.Gs5, N.E5, N.B4,
+  // Bar 2 (A Major)
+  N.A4, N.Cs5, N.E5, N.A5, N.E5, N.Cs5, N.A4, N.E4,
+  // Bar 3 (F# Minor 7)
+  N.Fs4, N.A4, N.Cs5, N.Fs5, N.Cs5, N.A4, N.Fs4, N.Cs4,
+  // Bar 4 (B7)
+  N.B4, N.Ds5, N.Fs5, N.B5, N.Fs5, N.Ds5, N.B4, N.Fs4,
+  // Bar 5 (G# Minor 7)
+  N.Gs4, N.B4, N.Ds5, N.Gs5, N.Ds5, N.B4, N.Gs4, N.Ds4,
+  // Bar 6 (C# Minor 7)
+  N.Cs4, N.E4, N.Gs4, N.Cs5, N.E5, N.Gs5, N.Cs6, N.Gs5,
+  // Bar 7 (Aadd9) - Ascending shimmer
+  N.A4, N.Cs5, N.E5, N.A5, N.B5, N.Cs6, N.Ds6, N.E6,
+  // Bar 8 (E Major) - Grand cascading resolution
+  N.E6, N.B5, N.Gs5, N.E5, N.B4, N.Gs4, N.E4, N.B3
+];
+
 export class QuantumSonificationEngine {
   constructor() {
     this.audioCtx = null;
     this.isPlaying = false;
     this.volume = 0.85;
+    this.currentPiece = "canon"; // "canon" (H2 default) or "arabesque" (He2)
 
     // Master Nodes
     this.masterGain = null;
@@ -472,6 +577,18 @@ export class QuantumSonificationEngine {
     whiteNoise.start(now);
   }
 
+  setElement(symbol) {
+    if (symbol === "He") {
+      this.currentPiece = "arabesque";
+    } else {
+      this.currentPiece = "canon";
+    }
+  }
+
+  setPiece(pieceName) {
+    this.currentPiece = pieceName;
+  }
+
   update(dt, quantumState) {
     if (!this.audioCtx || !this.isPlaying) return;
 
@@ -483,10 +600,16 @@ export class QuantumSonificationEngine {
       this.masterStep = (this.masterStep + 1) % 64; // 64 16th-notes per 8-measure progression
       const now = this.audioCtx.currentTime;
 
+      // Select active score arrays based on molecule (Canon in D vs Debussy Arabesque)
+      const activeProgression = this.currentPiece === "arabesque" ? ARABESQUE_PROGRESSION : CANON_PROGRESSION;
+      const activeMelody = this.currentPiece === "arabesque" ? ARABESQUE_MELODY : CANON_MELODY;
+      const activeSolo1 = this.currentPiece === "arabesque" ? ARABESQUE_SOLO_LAYER_1 : CANON_SOLO_LAYER_1;
+      const activeSolo2 = this.currentPiece === "arabesque" ? ARABESQUE_SOLO_LAYER_2 : CANON_SOLO_LAYER_2;
+
       // Each bar = 8 sixteenth-note steps (2 beats = 8 sixteenths)
-      const barIndex = Math.floor(this.masterStep / 8) % CANON_PROGRESSION.length;
+      const barIndex = Math.floor(this.masterStep / 8) % activeProgression.length;
       const stepInBar = this.masterStep % 8;
-      const prog = CANON_PROGRESSION[barIndex];
+      const prog = activeProgression[barIndex];
       const pExc = quantumState.pExcitation || 0.0;
       const dExc = quantumState.dExcitation || 0.0;
       const perturb = quantumState.perturbation || 0.0;
@@ -528,16 +651,16 @@ export class QuantumSonificationEngine {
       // ============================================================
       if (dExc > 0.04) {
         // Tier 3: d-polarization excitation (Solo Layer 2: Rapid Virtuoso Arpeggios)
-        const soloNote = CANON_SOLO_LAYER_2[this.masterStep % CANON_SOLO_LAYER_2.length];
+        const soloNote = activeSolo2[this.masterStep % activeSolo2.length];
         const soloVel = 0.92 * Math.min(1.0, dExc * 1.35);
         this.playPianoKey(soloNote, this.sixteenthDuration * 1.6, soloVel, false, true);
 
         // Also add rapid 32nd-note sparkle echo on off-beats
-        const echoNote = CANON_SOLO_LAYER_1[(this.masterStep + 1) % CANON_SOLO_LAYER_1.length];
+        const echoNote = activeSolo1[(this.masterStep + 1) % activeSolo1.length];
         this.playPianoKey(echoNote, this.sixteenthDuration * 0.9, soloVel * 0.45, false, true);
       } else if (pExc > 0.04) {
         // Tier 2: p-polarization excitation (Solo Layer 1: 16th-Note Scalar Runs)
-        const soloNote = CANON_SOLO_LAYER_1[this.masterStep % CANON_SOLO_LAYER_1.length];
+        const soloNote = activeSolo1[this.masterStep % activeSolo1.length];
         const soloVel = 0.86 * Math.min(1.0, pExc * 1.25);
         this.playPianoKey(soloNote, this.sixteenthDuration * 1.8, soloVel, false, true);
       }
@@ -552,7 +675,7 @@ export class QuantumSonificationEngine {
         this.playPianoKey(arpNote, this.beatDuration * 1.4, arpVel, false);
 
         if (pExc <= 0.25 && dExc <= 0.25 && stepInBar === 0) {
-          const melNote = CANON_MELODY[barIndex % CANON_MELODY.length];
+          const melNote = activeMelody[barIndex % activeMelody.length];
           const melodyVel = 0.78 * (0.85 + 0.2 * quantumState.coherence);
           this.playPianoKey(melNote, this.beatDuration * 1.8, melodyVel, false);
         }

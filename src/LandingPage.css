@@ -213,16 +213,18 @@
   white-space: nowrap;
 }
 
-/* Main Chamber Grid */
+/* Main Chamber Grid - Perfect 2-Column Vertical Bisecting Symmetry */
 .main-chamber-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
   align-items: stretch;
 }
 
 .controls-observables-grid {
-  margin-top: 1.1rem;
+  margin-top: 1.25rem;
 }
 
 @media (max-width: 1024px) {
@@ -235,14 +237,27 @@
   background: rgba(4, 15, 8, 0.7);
   border: 1px solid rgba(53, 255, 130, 0.2);
   border-radius: 10px;
-  padding: 1.1rem;
+  padding: 1.15rem;
   backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
 }
 
-.controls-card {
+.controls-card,
+.telemetry-card,
+.viewport-card,
+.wigner-card,
+.excited-deck-card,
+.ground-deck-card {
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .card-top-bar {
@@ -598,19 +613,24 @@
 }
 
 .metrics-grid {
+  flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
   gap: 0.6rem;
+  box-sizing: border-box;
 }
 
 .metric-box {
   background: rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 6px;
-  padding: 0.5rem 0.7rem;
+  padding: 0.55rem 0.75rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.2rem;
+  box-sizing: border-box;
 }
 
 .m-label {
@@ -667,6 +687,7 @@
   border: 1px solid rgba(56, 189, 248, 0.3);
   padding: 4px;
   margin-bottom: 0.6rem;
+  box-sizing: border-box;
   box-shadow: inset 0 0 24px rgba(3, 14, 30, 0.85);
 }
 
@@ -682,15 +703,20 @@
   color: #94a3b8;
   font-family: 'JetBrains Mono', monospace;
   line-height: 1.35;
+  min-height: 2.2em;
+  display: flex;
+  align-items: center;
 }
 
 /* Acoustic Card & Dual Spectrum Deck */
 .dual-spectrum-deck {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
   width: 100%;
-  margin-top: 1.1rem;
+  margin-top: 1.25rem;
+  box-sizing: border-box;
+  align-items: stretch;
 }
 
 @media (max-width: 900px) {
@@ -751,11 +777,12 @@
   border: 1px solid rgba(100, 200, 255, 0.25);
   padding: 4px;
   margin-bottom: 0.5rem;
+  box-sizing: border-box;
 }
 
 .scope-canvas {
   width: 100%;
-  height: 100px;
+  height: 96px;
   border-radius: 4px;
   display: block;
 }
@@ -766,6 +793,9 @@
   line-height: 1.35;
   font-family: 'JetBrains Mono', monospace;
   font-style: italic;
+  min-height: 2.8em;
+  display: flex;
+  align-items: center;
 }
 
 /* ==========================================================================

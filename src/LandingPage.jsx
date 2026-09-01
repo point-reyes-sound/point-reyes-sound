@@ -5,18 +5,16 @@ import { QuantumBoltzmannSimulator } from "./physics/QuantumBoltzmannSimulator";
 import { QuantumSonificationEngine } from "./physics/QuantumSonificationEngine";
 import "./LandingPage.css";
 
-// Auto-scaling camera for mobile and narrow screens
-function ResponsiveCamera() {
+// Auto-scaling camera for mobile and narrow screens, with dynamic zoom framing for bond length R
+function ResponsiveCamera({ bondLength = 0.74 }) {
   const { camera, size } = useThree();
   useEffect(() => {
     const aspect = size.width / Math.max(1, size.height);
-    if (aspect < 1.95) {
-      camera.position.z = 4.6 * (1.95 / Math.max(0.75, aspect));
-    } else {
-      camera.position.z = 4.6;
-    }
+    const span = Math.max(2.2, bondLength * 0.85 + 1.2);
+    const requiredZ = Math.max(4.6, (span / Math.tan((45 * Math.PI) / 360)) / Math.max(0.75, aspect));
+    camera.position.z = requiredZ;
     camera.updateProjectionMatrix();
-  }, [size.width, size.height, camera]);
+  }, [size.width, size.height, camera, bondLength]);
   return null;
 }
 
@@ -108,7 +106,7 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
     if (!simulator) return;
 
     const currentR = simulator.getCurrentBondLength();
-    const halfR = currentR * 1.35; // Visual coordinate scaling
+    const halfR = currentR * 0.75; // Symmetrical coordinate scaling across full R range
 
     if (atom1Ref.current) atom1Ref.current.position.x = -halfR;
     if (atom2Ref.current) atom2Ref.current.position.x = halfR;
@@ -333,9 +331,13 @@ export default function LandingPage() {
     setActiveElement(el);
     const molName = `${el.symbol}₂`;
     setMoleculeName(molName);
-    const req = el.symbol === "H" ? 0.74 : el.symbol === "N" ? 1.09 : el.symbol === "O" ? 1.21 : 1.5;
+    const req = el.symbol === "H" ? 0.74 : el.symbol === "He" ? 2.97 : el.symbol === "N" ? 1.09 : el.symbol === "O" ? 1.21 : 1.5;
     setBondDistance(req);
     
+    if (audioRef.current) {
+      audioRef.current.setElement(el.symbol);
+    }
+
     if (simRef.current) {
       simRef.current.element = el.symbol;
       simRef.current.R_eq = req;
@@ -725,7 +727,7 @@ export default function LandingPage() {
 
           <div className="spatial-canvas-container">
             <Canvas camera={{ position: [0, 0, 4.6], fov: 45 }} dpr={[1, 2]}>
-              <ResponsiveCamera />
+              <ResponsiveCamera bondLength={telemetry.R} />
               <DiatomicMolecularSystem 
                 simulator={simRef.current} 
                 activeElement={activeElement} 
@@ -774,7 +776,9 @@ export default function LandingPage() {
               <button 
                 className={`excite-btn ${telemetry.dExcitation > 0.05 ? 'd-active' : telemetry.pExcitation > 0.05 ? 'p-active' : ''}`} 
                 onClick={handleExciteWavefunction} 
-                title="Excite s -> p -> d multi-tier quantum transitions and play phase-locked virtuoso Canon in D solo lines"
+                title={activeElement.symbol === "He"
+                  ? "Excite s -> p -> d multi-tier quantum transitions and play phase-locked Debussy's Première Arabesque solo lines"
+                  : "Excite s -> p -> d multi-tier quantum transitions and play phase-locked virtuoso Canon in D solo lines"}
               >
                 <span className="btn-icon">◈</span> {telemetry.dExcitation > 0.05 ? "Excite (d-Wave Solo 2)" : telemetry.pExcitation > 0.05 ? "Excite (p-Wave Solo 1)" : "Excite"}
               </button>
@@ -786,7 +790,7 @@ export default function LandingPage() {
                 <label>R: <strong>{telemetry.R.toFixed(2)} Å</strong></label>
                 <PWaveSlider 
                   min={0.4} 
-                  max={3.0} 
+                  max={3.5} 
                   step={0.02} 
                   value={bondDistance} 
                   onChange={handleBondChange} 
@@ -896,10 +900,16 @@ export default function LandingPage() {
           </div>
           <div className="acoustic-footer-note">
             {telemetry.dExcitation > 0.05 
-              ? "Tier 3 d-wave quadrupole resonance & double-speed 32nd/16th virtuoso arpeggiated string-crossing flourish." 
+              ? (activeElement.symbol === "He"
+                  ? "Tier 3 d-wave quadrupole resonance & rapid virtuoso 3-octave shimmering Arabesque flourish."
+                  : "Tier 3 d-wave quadrupole resonance & double-speed 32nd/16th virtuoso arpeggiated string-crossing flourish.")
               : telemetry.pExcitation > 0.05 
-                ? "Tier 2 p-wave dipole excitation & 16th-note lyrical descending scalar runs."
-                : "Standby: Click ◈ Excite to sonify phase-locked virtuoso Canon in D solo lines."}
+                ? (activeElement.symbol === "He"
+                    ? "Tier 2 p-wave dipole excitation & 16th-note flowing Debussy Arabesque scalar cascades."
+                    : "Tier 2 p-wave dipole excitation & 16th-note lyrical descending scalar runs.")
+                : (activeElement.symbol === "He"
+                    ? "Standby: Click ◈ Excite to sonify phase-locked Debussy's Première Arabesque solo lines."
+                    : "Standby: Click ◈ Excite to sonify phase-locked virtuoso Canon in D solo lines.")}
           </div>
         </div>
 
@@ -907,13 +917,19 @@ export default function LandingPage() {
         <div className="chamber-card acoustic-card ground-deck-card">
           <div className="card-top-bar">
             <div className="card-tag">GROUND ACOUSTIC FIELD SPECTRUM S_ground[f(t)]</div>
-            <span className="status-tag">{isAudioActive ? "PACHELBEL'S CANON IN D ACTIVE" : "MUTED"}</span>
+            <span className="status-tag">
+              {isAudioActive 
+                ? (activeElement.symbol === "He" ? "DEBUSSY'S PREMIÈRE ARABESQUE ACTIVE" : "PACHELBEL'S CANON IN D ACTIVE") 
+                : "MUTED"}
+            </span>
           </div>
           <div className="scope-canvas-wrapper">
             <canvas ref={scopeCanvasRef} width={520} height={80} className="scope-canvas" />
           </div>
           <div className="acoustic-footer-note">
-            Canon in D ground bass & classical melody dynamically coupled to orbital populations, bond stretching, and electronic entropy.
+            {activeElement.symbol === "He"
+              ? "Debussy's Première Arabesque ground bass & impressionist melody dynamically coupled to closed-shell dispersion, bond stretching, and electronic entropy."
+              : "Canon in D ground bass & classical melody dynamically coupled to orbital populations, bond stretching, and electronic entropy."}
           </div>
         </div>
       </div>
