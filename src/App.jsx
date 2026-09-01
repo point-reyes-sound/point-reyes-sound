@@ -683,18 +683,8 @@ export default function App() {
               </div>
               <h3>GPU Acceleration</h3>
               <p>
-                Density-Fitted QBE-SCF when mapped to Tile-Based Deferred rendering (TBDR) enables faster CPU&rarr;GPU interconnect.
+                Density-Fitted QBE-SCF mapped to modern streaming multiprocessor architectures for accelerated CPU&rarr;GPU interconnect and fast phase-space transport.
               </p>
-              <div className="grant-action-row">
-                <a 
-                  href="/Quantum%20Fluid%20Dynamics%20with%20TBDF.pdf" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="grant-pdf-btn"
-                >
-                  Read Whitepaper (PDF) &rarr;
-                </a>
-              </div>
               <ul className="grant-specs">
                 <li><strong>Target Compute:</strong> NVIDIA H100 / H200 & Grace Hopper Superchips</li>
                 <li><strong>Speedup Goal:</strong> 100× throughput acceleration for density matrix kinetic relaxation</li>
