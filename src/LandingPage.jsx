@@ -269,7 +269,7 @@ export default function LandingPage() {
   const [temperature, setTemperature] = useState(0.05);
   const [relaxationRate, setRelaxationRate] = useState(0.20);
   const [basisSet, setBasisSet] = useState("aug-cc-pvdz");
-  const [bondStateStatus, setBondStateStatus] = useState("COVALENT BOND (Equilibrium)");
+  const [bondStateStatus, setBondStateStatus] = useState("COVALENT BOND");
 
   const [telemetry, setTelemetry] = useState({
     E: -30.388,
@@ -441,13 +441,13 @@ export default function LandingPage() {
 
         const currentR = simRef.current.getCurrentBondLength();
 
-        // Update bond formation state description
+        // Update bond formation state description without parenthetical text
         if (currentR > 1.9) {
-          setBondStateStatus("DISSOCIATED ATOMS (Two Separate Localized Orbitals)");
+          setBondStateStatus("DISSOCIATED ATOMS");
         } else if (currentR > 1.1) {
-          setBondStateStatus("TRANSITION REGIME (Overlapping 1s Wavefunctions)");
+          setBondStateStatus("TRANSITION REGIME");
         } else {
-          setBondStateStatus("COVALENT BOND FORMED (Constructive Shared Density Peak)");
+          setBondStateStatus(activeElement.symbol === "He" ? "VAN DER WAALS DIMER" : "COVALENT BOND FORMED");
         }
 
         setTelemetry({
@@ -766,7 +766,7 @@ export default function LandingPage() {
           <div className="card-top-bar">
             <div className="card-tag">QUANTUM CHAMBER CONTROLS & BASIS</div>
             <span className="mol-badge" style={{ color: activeElement.color }}>
-              {moleculeName} ({activeElement.desc})
+              {moleculeName} · {activeElement.name}
             </span>
           </div>
 
