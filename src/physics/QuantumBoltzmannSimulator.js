@@ -51,15 +51,44 @@ export class QuantumBoltzmannSimulator {
     this.fetchLivePySCF(this.R);
   }
 
+  getElementParams() {
+    switch (this.element) {
+      case "He":
+        return { De: 0.0011, a: 1.15, req: 2.97, E_inf: -157.848, splitBase: 2.5, midBase: -24.58, vibFreq: 1.8 };
+      case "Li":
+        return { De: 1.05, a: 0.86, req: 2.67, E_inf: -406.20, splitBase: 4.8, midBase: -5.39, vibFreq: 2.2 };
+      case "C":
+        return { De: 6.32, a: 2.20, req: 1.24, E_inf: -2065.4, splitBase: 24.0, midBase: -11.2, vibFreq: 5.5 };
+      case "N":
+        return { De: 9.91, a: 2.68, req: 1.09, E_inf: -2975.6, splitBase: 35.0, midBase: -15.5, vibFreq: 6.8 };
+      case "O":
+        return { De: 5.21, a: 2.45, req: 1.21, E_inf: -4088.2, splitBase: 28.0, midBase: -13.6, vibFreq: 4.8 };
+      case "H":
+      default:
+        return { De: 4.75, a: 1.94, req: 0.74, E_inf: -27.21, splitBase: 21.0, midBase: -13.6, vibFreq: 4.2 };
+    }
+  }
+
+  setElement(symbol, req) {
+    this.element = symbol;
+    const params = this.getElementParams();
+    this.R_eq = req || params.req;
+    this.R = this.R_eq;
+    this.vibrationFreq = params.vibFreq;
+    this.updatePotentialAndOrbitals(this.R);
+    this.updateWignerDistribution(this.R);
+  }
+
   setBondDistance(R) {
     this.R = Math.max(0.4, Math.min(3.5, R));
-    this.updatePotentialAndOrbitals(this.R);
+    this.updatePotentialAndOrbitals(this.getCurrentBondLength());
     this.updateWignerDistribution(this.getCurrentBondLength());
     this.fetchLivePySCF(this.R);
   }
 
   setElectronicTemp(T) {
     this.t_elec = Math.max(0.001, Math.min(2.0, T));
+    this.updatePotentialAndOrbitals(this.getCurrentBondLength());
     this.fetchLivePySCF(this.R);
   }
 
@@ -78,6 +107,7 @@ export class QuantumBoltzmannSimulator {
     this.coherence = Math.min(1.0, this.coherence + strength * 0.5);
     this.vibrationAmp = Math.min(0.28, this.vibrationAmp + strength * 0.2);
     this.perturbationLevel = 1.0; // Trigger powerful backbeat!
+    this.updatePotentialAndOrbitals(this.getCurrentBondLength());
   }
 
   exciteWavefunction(strength = 1.0) {
@@ -97,6 +127,7 @@ export class QuantumBoltzmannSimulator {
     this.coherence = 1.0;
     this.vibrationAmp = 0.28;
     this.perturbationLevel = 1.0;
+    this.updatePotentialAndOrbitals(this.getCurrentBondLength());
   }
 
   startBondFormationSweep() {
@@ -136,17 +167,19 @@ export class QuantumBoltzmannSimulator {
   }
 
   updatePotentialAndOrbitals(R) {
-    const De = 4.75;
-    const a = 1.94;
-    const req = this.R_eq;
+    const params = this.getElementParams();
+    const req = this.R_eq || params.req;
+    const De = params.De;
+    const a = params.a;
     
-    // Morse potential
-    const morseExp = Math.exp(-a * (R - req));
-    this.energy = De * Math.pow(1.0 - morseExp, 2.0) - De - 27.21;
-    
+    // Morse potential energy curve
     const deltaR = R - req;
-    const split = 21.0 * Math.exp(-1.15 * deltaR);
-    const midPoint = -6.0 - 5.0 * Math.exp(-0.8 * R);
+    const morseExp = Math.exp(-a * deltaR);
+    const V_morse = De * Math.pow(1.0 - morseExp, 2.0) - De;
+    
+    // Dynamic orbital splitting based on instantaneous R
+    const split = params.splitBase * Math.exp(-1.15 * deltaR);
+    const midPoint = params.midBase - 4.0 * Math.exp(-0.8 * Math.max(0.4, R));
     
     this.orbitalEnergies[0] = midPoint - split * 0.5;
     this.orbitalEnergies[1] = midPoint + split * 0.5;
@@ -158,6 +191,18 @@ export class QuantumBoltzmannSimulator {
     
     this.P_eq[0] = 2.0 / (1.0 + Math.exp(beta * (e0 - mu)));
     this.P_eq[1] = 2.0 / (1.0 + Math.exp(beta * (e1 - mu)));
+
+    // Total dynamic energy: PES + Electronic correlation + Dynamic non-equilibrium excitations + Thermal energy
+    const eElectronic = (this.P_occ[0] * (e0 - midPoint) + this.P_occ[1] * (e1 - midPoint)) * 0.25;
+    const eExcitation = (this.pExcitationLevel * 2.85 + this.dExcitationLevel * 4.60);
+    const eThermal = this.t_elec * 1.5;
+    
+    this.energy = params.E_inf + V_morse + eElectronic + eExcitation + eThermal;
+    
+    // Dynamic Virial ratio -V/(2T)
+    const T_kin = Math.max(0.1, Math.abs(this.energy * 0.5) + this.vibrationAmp * 2.0);
+    const V_pot = Math.max(0.1, Math.abs(this.energy * 1.0) - V_morse);
+    this.virial = Math.max(0.75, Math.min(1.25, V_pot / (2.0 * T_kin)));
   }
 
   step(dt, musicBeatPulse = 0) {
@@ -209,7 +254,9 @@ export class QuantumBoltzmannSimulator {
     }
     this.entropy_vN = Math.max(0.0, s_vn);
     
+    // Recalculate dynamic electronic Hamiltonian, potential, and energy at instantaneous R(t)
     const currR = this.getCurrentBondLength();
+    this.updatePotentialAndOrbitals(currR);
     this.updateWignerDistribution(currR);
   }
 

@@ -339,9 +339,7 @@ export default function LandingPage() {
     }
 
     if (simRef.current) {
-      simRef.current.element = el.symbol;
-      simRef.current.R_eq = req;
-      simRef.current.setBondDistance(req);
+      simRef.current.setElement(el.symbol, req);
       simRef.current.perturbState(0.4);
     }
   };
