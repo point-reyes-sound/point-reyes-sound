@@ -10,17 +10,17 @@
 // Note frequencies in Hz (A4 = 440 Hz) across 6 octaves
 const N = {
   // Octave 1
-  C1: 32.70, Cs1: 34.65, D1: 36.71, Ds1: 38.89, E1: 41.20, F1: 43.65, Fs1: 46.25, G1: 49.00, Gs1: 51.91, A1: 55.00, As1: 58.27, B1: 61.74,
+  C1: 32.70, Cs1: 34.65, Db1: 34.65, D1: 36.71, Ds1: 38.89, Eb1: 38.89, E1: 41.20, F1: 43.65, Fs1: 46.25, Gb1: 46.25, G1: 49.00, Gs1: 51.91, Ab1: 51.91, A1: 55.00, As1: 58.27, Bb1: 58.27, B1: 61.74,
   // Octave 2
-  C2: 65.41, Cs2: 69.30, D2: 73.42, Ds2: 77.78, E2: 82.41, F2: 87.31, Fs2: 92.50, G2: 98.00, Gs2: 103.83, A2: 110.00, As2: 116.54, B2: 123.47,
+  C2: 65.41, Cs2: 69.30, Db2: 69.30, D2: 73.42, Ds2: 77.78, Eb2: 77.78, E2: 82.41, F2: 87.31, Fs2: 92.50, Gb2: 92.50, G2: 98.00, Gs2: 103.83, Ab2: 103.83, A2: 110.00, As2: 116.54, Bb2: 116.54, B2: 123.47,
   // Octave 3
-  C3: 130.81, Cs3: 138.59, D3: 146.83, Ds3: 155.56, E3: 164.81, F3: 174.61, Fs3: 185.00, G3: 196.00, Gs3: 207.65, A3: 220.00, As3: 233.08, B3: 246.94,
+  C3: 130.81, Cs3: 138.59, Db3: 138.59, D3: 146.83, Ds3: 155.56, Eb3: 155.56, E3: 164.81, F3: 174.61, Fs3: 185.00, Gb3: 185.00, G3: 196.00, Gs3: 207.65, Ab3: 207.65, A3: 220.00, As3: 233.08, Bb3: 233.08, B3: 246.94,
   // Octave 4
-  C4: 261.63, Cs4: 277.18, D4: 293.66, Ds4: 311.13, E4: 329.63, F4: 349.23, Fs4: 369.99, G4: 392.00, Gs4: 415.30, A4: 440.00, As4: 466.16, B4: 493.88,
+  C4: 261.63, Cs4: 277.18, Db4: 277.18, D4: 293.66, Ds4: 311.13, Eb4: 311.13, E4: 329.63, F4: 349.23, Fs4: 369.99, Gb4: 369.99, G4: 392.00, Gs4: 415.30, Ab4: 415.30, A4: 440.00, As4: 466.16, Bb4: 466.16, B4: 493.88,
   // Octave 5
-  C5: 523.25, Cs5: 554.37, D5: 587.33, Ds5: 622.25, E5: 659.25, F5: 698.46, Fs5: 739.99, G5: 783.99, Gs5: 830.61, A5: 880.00, As5: 932.33, B5: 987.77,
+  C5: 523.25, Cs5: 554.37, Db5: 554.37, D5: 587.33, Ds5: 622.25, Eb5: 622.25, E5: 659.25, F5: 698.46, Fs5: 739.99, Gb5: 739.99, G5: 783.99, Gs5: 830.61, Ab5: 830.61, A5: 880.00, As5: 932.33, Bb5: 932.33, B5: 987.77,
   // Octave 6
-  C6: 1046.50, Cs6: 1108.73, D6: 1174.66, Ds6: 1244.51, E6: 1318.51, Fs6: 1479.98, Gs6: 1661.22, A6: 1760.00
+  C6: 1046.50, Cs6: 1108.73, Db6: 1108.73, D6: 1174.66, Ds6: 1244.51, Eb6: 1244.51, E6: 1318.51, F6: 1396.91, Fs6: 1479.98, Gb6: 1479.98, G6: 1567.98, Gs6: 1661.22, Ab6: 1661.22, A6: 1760.00, Bb6: 1864.66, B6: 1975.53
 };
 
 // ============================================================================
@@ -215,6 +215,104 @@ const ARABESQUE_SOLO_LAYER_2 = [
   N.A4, N.Cs5, N.E5, N.A5, N.B5, N.Cs6, N.Ds6, N.E6,
   // Bar 8 (E Major) - Grand cascading resolution
   N.E6, N.B5, N.Gs5, N.E5, N.B4, N.Gs4, N.E4, N.B3
+];
+
+// ============================================================================
+// 3. FRÉDÉRIC CHOPIN — NOCTURNE IN E-FLAT MAJOR, OP. 9, NO. 2 (For Li₂ / Metallic Covalent Dimer)
+// ============================================================================
+const CHOPIN_NOCTURNE_PROGRESSION = [
+  // 1. Eb Major (Ground Warmth): Deep 10th Bass (Eb1 + Bb1 + Eb2), Cantabile Chords (G3, Bb3, Eb4, G4)
+  {
+    bassRoot: N.Eb1, bassOctave: N.Eb2, bassFifth: N.Bb1,
+    arpeggio: [N.G3, N.Bb3, N.Eb4, N.G4],
+    name: "Eb Major"
+  },
+  // 2. C Minor 7 (Metallic Core Shift): Bass (C2 + G2 + C3), Chords (Eb3, G3, Bb3, Eb4)
+  {
+    bassRoot: N.C2, bassOctave: N.C3, bassFifth: N.G2,
+    arpeggio: [N.Eb3, N.G3, N.Bb3, N.Eb4],
+    name: "Cm7"
+  },
+  // 3. F Minor 7 (Subdominant Warmth): Bass (F1 + C2 + F2), Chords (Ab3, C4, Eb4, Ab4)
+  {
+    bassRoot: N.F1, bassOctave: N.F2, bassFifth: N.C2,
+    arpeggio: [N.Ab3, N.C4, N.Eb4, N.Ab4],
+    name: "Fm7"
+  },
+  // 4. Bb Dominant 7 (Polarizing Tension): Bass (Bb1 + F2 + Bb2), Chords (Ab3, D4, F4, Bb4)
+  {
+    bassRoot: N.Bb1, bassOctave: N.Bb2, bassFifth: N.F2,
+    arpeggio: [N.Ab3, N.D4, N.F4, N.Bb4],
+    name: "Bb7"
+  },
+  // 5. Eb Major (Lyrical Swell): Bass (Eb1 + Bb1 + Eb2), Chords (G3, Bb3, Eb4, Bb4)
+  {
+    bassRoot: N.Eb1, bassOctave: N.Eb2, bassFifth: N.Bb1,
+    arpeggio: [N.G3, N.Bb3, N.Eb4, N.Bb4],
+    name: "Eb Major"
+  },
+  // 6. G Minor (Inner Core Modulation): Bass (G1 + D2 + G2), Chords (Bb3, D4, G4, Bb4)
+  {
+    bassRoot: N.G1, bassOctave: N.G2, bassFifth: N.D2,
+    arpeggio: [N.Bb3, N.D4, N.G4, N.Bb4],
+    name: "Gm"
+  },
+  // 7. Ab Major / Fm7 (Expanded Orbital Cloud): Bass (Ab1 + Eb2 + Ab2), Chords (C4, Eb4, Ab4, C5)
+  {
+    bassRoot: N.Ab1, bassOctave: N.Ab2, bassFifth: N.Eb2,
+    arpeggio: [N.C4, N.Eb4, N.Ab4, N.C5],
+    name: "Ab Major"
+  },
+  // 8. Bb7 -> Eb Cadence (Delocalized Ground Settlement): Bass (Bb1 + F2 + Eb2), Chords (Ab3, D4, F4, Eb4)
+  {
+    bassRoot: N.Bb1, bassOctave: N.Eb2, bassFifth: N.F2,
+    arpeggio: [N.Ab3, N.D4, N.F4, N.Eb4],
+    name: "Bb7 / Eb"
+  }
+];
+
+const CHOPIN_NOCTURNE_MELODY = [
+  N.Bb4, N.G4, N.F4, N.Eb4, N.C5, N.Bb4, N.Ab4, N.Eb4
+];
+
+// Layer 1: p-polarization excitation (16th-note Chopin Lyrical Turns & Chromatic Runs)
+const CHOPIN_NOCTURNE_SOLO_LAYER_1 = [
+  // Bar 1 (Eb Major) - Opening cantabile turn ornament
+  N.Bb4, N.C5, N.Bb4, N.A4, N.Bb4, N.G4, N.F4, N.Eb4,
+  // Bar 2 (Cm7) - Expressive ascending arch
+  N.F4, N.G4, N.Ab4, N.Bb4, N.C5, N.D5, N.Eb5, N.F5,
+  // Bar 3 (Fm7) - Graceful descending sweep
+  N.Ab5, N.G5, N.F5, N.Eb5, N.D5, N.C5, N.Bb4, N.Ab4,
+  // Bar 4 (Bb7) - Dominant chromatic preparation
+  N.D5, N.Eb5, N.F5, N.D5, N.Bb4, N.Ab4, N.G4, N.F4,
+  // Bar 5 (Eb Major) - Luminous arpeggiated bloom
+  N.G4, N.Bb4, N.Eb5, N.G5, N.F5, N.Eb5, N.D5, N.C5,
+  // Bar 6 (Gm) - Expressive chromatic sigh
+  N.D5, N.F5, N.Bb5, N.A5, N.Bb5, N.G5, N.F5, N.Eb5,
+  // Bar 7 (Ab Major) - High soaring scalar ascent
+  N.C5, N.D5, N.Eb5, N.F5, N.G5, N.Ab5, N.Bb5, N.C6,
+  // Bar 8 (Bb7 / Eb) - Gentle descending cadential cascade
+  N.D6, N.C6, N.Bb5, N.Ab5, N.G5, N.F5, N.Eb5, N.D5
+];
+
+// Layer 2: d-polarization excitation (Virtuoso 22-Tuplet Chromatic Fiorituras)
+const CHOPIN_NOCTURNE_SOLO_LAYER_2 = [
+  // Bar 1 (Eb Major - 3-octave high fioritura cascade)
+  N.Eb5, N.G5, N.Bb5, N.Eb6, N.D6, N.C6, N.Bb5, N.G5,
+  // Bar 2 (Cm7 - Chromatic turn in upper register)
+  N.F5, N.Ab5, N.C6, N.Eb6, N.D6, N.C6, N.B5, N.C6,
+  // Bar 3 (Fm7 - Virtuoso soaring arc)
+  N.Ab5, N.C6, N.Eb6, N.F6, N.Eb6, N.D6, N.C6, N.Bb5,
+  // Bar 4 (Bb7 - Chromatic scalar descent)
+  N.Bb5, N.D6, N.F6, N.Ab6, N.G6, N.F6, N.Eb6, N.D6,
+  // Bar 5 (Eb Major - Double-speed sparkling flourish)
+  N.Eb6, N.Bb5, N.G5, N.Eb5, N.G5, N.Bb5, N.Eb6, N.G6,
+  // Bar 6 (Gm - Rapid octave shift)
+  N.D6, N.Bb5, N.G5, N.D5, N.F5, N.Bb5, N.D6, N.F6,
+  // Bar 7 (Ab Major - Brilliant peak fioritura)
+  N.C6, N.Eb6, N.Ab6, N.G6, N.F6, N.Eb6, N.D6, N.C6,
+  // Bar 8 (Bb7 / Eb - Grand luminous resolving cascade)
+  N.Bb5, N.Ab5, N.G5, N.F5, N.Eb5, N.D5, N.C5, N.Bb4
 ];
 
 export class QuantumSonificationEngine {
@@ -580,6 +678,8 @@ export class QuantumSonificationEngine {
   setElement(symbol) {
     if (symbol === "He") {
       this.currentPiece = "arabesque";
+    } else if (symbol === "Li") {
+      this.currentPiece = "chopin";
     } else {
       this.currentPiece = "canon";
     }
@@ -600,11 +700,30 @@ export class QuantumSonificationEngine {
       this.masterStep = (this.masterStep + 1) % 64; // 64 16th-notes per 8-measure progression
       const now = this.audioCtx.currentTime;
 
-      // Select active score arrays based on molecule (Canon in D vs Debussy Arabesque)
-      const activeProgression = this.currentPiece === "arabesque" ? ARABESQUE_PROGRESSION : CANON_PROGRESSION;
-      const activeMelody = this.currentPiece === "arabesque" ? ARABESQUE_MELODY : CANON_MELODY;
-      const activeSolo1 = this.currentPiece === "arabesque" ? ARABESQUE_SOLO_LAYER_1 : CANON_SOLO_LAYER_1;
-      const activeSolo2 = this.currentPiece === "arabesque" ? ARABESQUE_SOLO_LAYER_2 : CANON_SOLO_LAYER_2;
+      // Select active score arrays based on molecule (Canon in D vs Debussy Arabesque vs Chopin Nocturne)
+      const activeProgression = this.currentPiece === "chopin"
+        ? CHOPIN_NOCTURNE_PROGRESSION
+        : this.currentPiece === "arabesque" 
+          ? ARABESQUE_PROGRESSION 
+          : CANON_PROGRESSION;
+
+      const activeMelody = this.currentPiece === "chopin"
+        ? CHOPIN_NOCTURNE_MELODY
+        : this.currentPiece === "arabesque" 
+          ? ARABESQUE_MELODY 
+          : CANON_MELODY;
+
+      const activeSolo1 = this.currentPiece === "chopin"
+        ? CHOPIN_NOCTURNE_SOLO_LAYER_1
+        : this.currentPiece === "arabesque" 
+          ? ARABESQUE_SOLO_LAYER_1 
+          : CANON_SOLO_LAYER_1;
+
+      const activeSolo2 = this.currentPiece === "chopin"
+        ? CHOPIN_NOCTURNE_SOLO_LAYER_2
+        : this.currentPiece === "arabesque" 
+          ? ARABESQUE_SOLO_LAYER_2 
+          : CANON_SOLO_LAYER_2;
 
       // Each bar = 8 sixteenth-note steps (2 beats = 8 sixteenths)
       const barIndex = Math.floor(this.masterStep / 8) % activeProgression.length;

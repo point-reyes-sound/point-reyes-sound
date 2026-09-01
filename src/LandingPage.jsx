@@ -331,7 +331,7 @@ export default function LandingPage() {
     setActiveElement(el);
     const molName = `${el.symbol}₂`;
     setMoleculeName(molName);
-    const req = el.symbol === "H" ? 0.74 : el.symbol === "He" ? 2.97 : el.symbol === "N" ? 1.09 : el.symbol === "O" ? 1.21 : 1.5;
+    const req = el.symbol === "H" ? 0.74 : el.symbol === "He" ? 2.97 : el.symbol === "Li" ? 2.67 : el.symbol === "N" ? 1.09 : el.symbol === "O" ? 1.21 : 1.5;
     setBondDistance(req);
     
     if (audioRef.current) {
@@ -776,9 +776,11 @@ export default function LandingPage() {
               <button 
                 className={`excite-btn ${telemetry.dExcitation > 0.05 ? 'd-active' : telemetry.pExcitation > 0.05 ? 'p-active' : ''}`} 
                 onClick={handleExciteWavefunction} 
-                title={activeElement.symbol === "He"
-                  ? "Excite s -> p -> d multi-tier quantum transitions and play phase-locked Debussy's Première Arabesque solo lines"
-                  : "Excite s -> p -> d multi-tier quantum transitions and play phase-locked virtuoso Canon in D solo lines"}
+                title={activeElement.symbol === "Li"
+                  ? "Excite s -> p -> d multi-tier quantum transitions and play phase-locked Chopin's Nocturne in E-flat Major chromatic fiorituras"
+                  : activeElement.symbol === "He"
+                    ? "Excite s -> p -> d multi-tier quantum transitions and play phase-locked Debussy's Première Arabesque solo lines"
+                    : "Excite s -> p -> d multi-tier quantum transitions and play phase-locked virtuoso Canon in D solo lines"}
               >
                 <span className="btn-icon">◈</span> {telemetry.dExcitation > 0.05 ? "Excite (d-Wave Solo 2)" : telemetry.pExcitation > 0.05 ? "Excite (p-Wave Solo 1)" : "Excite"}
               </button>
@@ -900,16 +902,22 @@ export default function LandingPage() {
           </div>
           <div className="acoustic-footer-note">
             {telemetry.dExcitation > 0.05 
-              ? (activeElement.symbol === "He"
-                  ? "Tier 3 d-wave quadrupole resonance & rapid virtuoso 3-octave shimmering Arabesque flourish."
-                  : "Tier 3 d-wave quadrupole resonance & double-speed 32nd/16th virtuoso arpeggiated string-crossing flourish.")
+              ? (activeElement.symbol === "Li"
+                  ? "Tier 3 d-wave quadrupole resonance & brilliant Chopin 22-tuplet cascading chromatic fiorituras."
+                  : activeElement.symbol === "He"
+                    ? "Tier 3 d-wave quadrupole resonance & rapid virtuoso 3-octave shimmering Arabesque flourish."
+                    : "Tier 3 d-wave quadrupole resonance & double-speed 32nd/16th virtuoso arpeggiated string-crossing flourish.")
               : telemetry.pExcitation > 0.05 
-                ? (activeElement.symbol === "He"
-                    ? "Tier 2 p-wave dipole excitation & 16th-note flowing Debussy Arabesque scalar cascades."
-                    : "Tier 2 p-wave dipole excitation & 16th-note lyrical descending scalar runs.")
-                : (activeElement.symbol === "He"
-                    ? "Standby: Click ◈ Excite to sonify phase-locked Debussy's Première Arabesque solo lines."
-                    : "Standby: Click ◈ Excite to sonify phase-locked virtuoso Canon in D solo lines.")}
+                ? (activeElement.symbol === "Li"
+                    ? "Tier 2 p-wave dipole excitation & 16th-note lyrical Chopin cantabile turns and scalar ornaments."
+                    : activeElement.symbol === "He"
+                      ? "Tier 2 p-wave dipole excitation & 16th-note flowing Debussy Arabesque scalar cascades."
+                      : "Tier 2 p-wave dipole excitation & 16th-note lyrical descending scalar runs.")
+                : (activeElement.symbol === "Li"
+                    ? "Standby: Click ◈ Excite to sonify phase-locked Chopin's Nocturne in E-flat Major solo lines."
+                    : activeElement.symbol === "He"
+                      ? "Standby: Click ◈ Excite to sonify phase-locked Debussy's Première Arabesque solo lines."
+                      : "Standby: Click ◈ Excite to sonify phase-locked virtuoso Canon in D solo lines.")}
           </div>
         </div>
 
@@ -919,7 +927,11 @@ export default function LandingPage() {
             <div className="card-tag">GROUND ACOUSTIC FIELD SPECTRUM S_ground[f(t)]</div>
             <span className="status-tag">
               {isAudioActive 
-                ? (activeElement.symbol === "He" ? "DEBUSSY'S PREMIÈRE ARABESQUE ACTIVE" : "PACHELBEL'S CANON IN D ACTIVE") 
+                ? (activeElement.symbol === "Li"
+                    ? "CHOPIN'S NOCTURNE IN E♭ ACTIVE"
+                    : activeElement.symbol === "He" 
+                      ? "DEBUSSY'S PREMIÈRE ARABESQUE ACTIVE" 
+                      : "PACHELBEL'S CANON IN D ACTIVE") 
                 : "MUTED"}
             </span>
           </div>
@@ -927,9 +939,11 @@ export default function LandingPage() {
             <canvas ref={scopeCanvasRef} width={520} height={80} className="scope-canvas" />
           </div>
           <div className="acoustic-footer-note">
-            {activeElement.symbol === "He"
-              ? "Debussy's Première Arabesque ground bass & impressionist melody dynamically coupled to closed-shell dispersion, bond stretching, and electronic entropy."
-              : "Canon in D ground bass & classical melody dynamically coupled to orbital populations, bond stretching, and electronic entropy."}
+            {activeElement.symbol === "Li"
+              ? "Chopin's Nocturne in E-flat Major ground bass & warm romantic cantabile dynamically coupled to soft 2s metallic bonding, bond stretching, and entropy."
+              : activeElement.symbol === "He"
+                ? "Debussy's Première Arabesque ground bass & impressionist melody dynamically coupled to closed-shell dispersion, bond stretching, and electronic entropy."
+                : "Canon in D ground bass & classical melody dynamically coupled to orbital populations, bond stretching, and electronic entropy."}
           </div>
         </div>
       </div>
