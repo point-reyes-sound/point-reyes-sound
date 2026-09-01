@@ -1,7 +1,9 @@
 /**
  * QuantumBoltzmannSimulator.js
  * Real-time Quantum Boltzmann phase-space kinetic simulator for diatomic molecules.
- * Computes the Wigner function W(z, p_z; R) as an explicit function of internuclear distance R.
+ * Computes the Wigner function W(z, p_z; R) as an explicit function of internuclear distance R,
+ * with dynamic BGK kinetic relaxation, multi-reference Coulson-Fischer entropic crossover,
+ * non-adiabatic electronic coherence, and virial ratio dynamics.
  */
 
 export class QuantumBoltzmannSimulator {
@@ -15,7 +17,7 @@ export class QuantumBoltzmannSimulator {
     
     // Musical dance coupling
     this.dancePhase = 0;
-    this.danceBeat = 0; // modulated by Canon in D
+    this.danceBeat = 0; // modulated by musical beat
     this.isFormingBond = false;
     this.formationProgress = 0;
     this.perturbationLevel = 0.0; // Drives synchronous backbeat
@@ -29,18 +31,23 @@ export class QuantumBoltzmannSimulator {
     this.vibrationAmp = 0.06;
     this.vibrationFreq = 4.2;
     
-    // 1-RDM populations
+    // 1-RDM populations (2 electrons in active space: sigma_g, sigma_u*)
     this.P_occ = [1.96, 0.04, 0.0, 0.0];
-    this.P_eq = [1.98, 0.02, 0.0, 0.0];
-    this.coherence = 0.85;
+    this.P_eq = [1.96, 0.04, 0.0, 0.0];
+    this.coherence = 0.12;
+    this.coherenceNonEq = 0.0;
     
     // Orbital energies (eV)
     this.orbitalEnergies = [-15.74, 18.26, 8.0, 14.0];
     
     // Observables
     this.energy = -30.388; // eV
-    this.entropy_vN = 0.0002;
-    this.virial = 0.965;
+    this.entropy_vN = 0.085; // bits
+    this.virial = 0.995;
+    
+    // PySCF Live backend cache
+    this.pySCFObservables = null;
+    this.lastPySCFR = R;
     
     // 2D Wigner Grid W(z, p_z; R)
     this.wignerGridSize = 36;
@@ -75,8 +82,10 @@ export class QuantumBoltzmannSimulator {
     this.R_eq = req || params.req;
     this.R = this.R_eq;
     this.vibrationFreq = params.vibFreq;
+    this.pySCFObservables = null;
     this.updatePotentialAndOrbitals(this.R);
     this.updateWignerDistribution(this.R);
+    this.fetchLivePySCF(this.R);
   }
 
   setBondDistance(R) {
@@ -104,6 +113,7 @@ export class QuantumBoltzmannSimulator {
   perturbState(strength = 0.6) {
     this.P_occ[0] = Math.max(0.4, this.P_occ[0] - strength * 0.7);
     this.P_occ[1] = Math.min(1.6, this.P_occ[1] + strength * 0.7);
+    this.coherenceNonEq = Math.min(0.85, this.coherenceNonEq + strength * 0.6);
     this.coherence = Math.min(1.0, this.coherence + strength * 0.5);
     this.vibrationAmp = Math.min(0.28, this.vibrationAmp + strength * 0.2);
     this.perturbationLevel = 1.0; // Trigger powerful backbeat!
@@ -122,8 +132,9 @@ export class QuantumBoltzmannSimulator {
       this.dExcitationLevel = 0.0;
       this.excitationTimer = 0.0;
     }
-    this.P_occ[0] = Math.max(0.1, this.P_occ[0] - 0.9 * strength);
-    this.P_occ[1] = Math.min(1.9, this.P_occ[1] + 0.9 * strength);
+    this.P_occ[0] = Math.max(0.1, this.P_occ[0] - 0.85 * strength);
+    this.P_occ[1] = Math.min(1.9, this.P_occ[1] + 0.85 * strength);
+    this.coherenceNonEq = 0.85;
     this.coherence = 1.0;
     this.vibrationAmp = 0.28;
     this.perturbationLevel = 1.0;
@@ -153,8 +164,18 @@ export class QuantumBoltzmannSimulator {
         const data = await res.json();
         if (data.success && data.observables) {
           const obs = data.observables;
-          this.energy = obs.E_eV;
-          this.virial = obs.Virial;
+          this.pySCFObservables = obs;
+          this.lastPySCFR = R;
+          if (obs.E_eV !== undefined) this.energy = obs.E_eV;
+          if (obs.Virial !== undefined) this.virial = obs.Virial;
+          if (obs.S_vN !== undefined) this.entropy_vN = obs.S_vN;
+          if (obs.P_occ && obs.P_occ.length >= 2) {
+            this.P_occ[0] = obs.P_occ[0];
+            this.P_occ[1] = obs.P_occ[1];
+          }
+          if (obs.Coherence !== undefined && obs.Coherence > 0.001) {
+            this.coherenceNonEq = obs.Coherence;
+          }
           if (obs.OrbitalEnergies_eV && obs.OrbitalEnergies_eV.length >= 2) {
             this.orbitalEnergies[0] = obs.OrbitalEnergies_eV[0];
             this.orbitalEnergies[1] = obs.OrbitalEnergies_eV[1];
@@ -178,31 +199,48 @@ export class QuantumBoltzmannSimulator {
     const V_morse = De * Math.pow(1.0 - morseExp, 2.0) - De;
     
     // Dynamic orbital splitting based on instantaneous R
-    const split = params.splitBase * Math.exp(-1.15 * deltaR);
+    // As R increases past Coulson-Fischer singularity, splitting closes
+    const split = Math.max(0.01, params.splitBase * Math.exp(-1.15 * deltaR));
     const midPoint = params.midBase - 4.0 * Math.exp(-0.8 * Math.max(0.4, R));
     
     this.orbitalEnergies[0] = midPoint - split * 0.5;
     this.orbitalEnergies[1] = midPoint + split * 0.5;
     
-    const beta = 1.0 / Math.max(0.01, this.t_elec);
-    const e0 = this.orbitalEnergies[0];
-    const e1 = this.orbitalEnergies[1];
-    const mu = (e0 + e1) * 0.5;
+    // Coulson-Fischer multi-reference crossover parameter (0 at bond equilibrium, 1 at dissociated limits)
+    const cf_cross = 1.0 / (1.0 + Math.exp(-2.6 * (R - 1.45 * req)));
     
-    this.P_eq[0] = 2.0 / (1.0 + Math.exp(beta * (e0 - mu)));
-    this.P_eq[1] = 2.0 / (1.0 + Math.exp(beta * (e1 - mu)));
+    // Thermal Fermi-Dirac excitation with effective temperature
+    const tEff = Math.max(0.005, this.t_elec * 1.8 + 0.06);
+    const f_fd = 1.0 / (1.0 + Math.exp(split / (2.0 * tEff)));
+
+    // Dynamic equilibrium 1-RDM occupation target P_eq
+    // At equilibrium (R ~ req, low T): P_eq ~ [1.96, 0.04]
+    // At dissociation (R >> req): P_eq -> [1.00, 1.00] (biradical entanglement)
+    // At high electronic temperature: P_eq -> [1.25, 0.75]
+    const p1_eq = Math.min(1.0, Math.max(0.005, 2.0 * f_fd * (1.0 - 0.5 * cf_cross) + cf_cross * 1.0));
+    const p0_eq = 2.0 - p1_eq;
+    
+    this.P_eq[0] = p0_eq;
+    this.P_eq[1] = p1_eq;
 
     // Total dynamic energy: PES + Electronic correlation + Dynamic non-equilibrium excitations + Thermal energy
-    const eElectronic = (this.P_occ[0] * (e0 - midPoint) + this.P_occ[1] * (e1 - midPoint)) * 0.25;
+    const eElectronic = (this.P_occ[0] * (this.orbitalEnergies[0] - midPoint) + this.P_occ[1] * (this.orbitalEnergies[1] - midPoint)) * 0.25;
     const eExcitation = (this.pExcitationLevel * 2.85 + this.dExcitationLevel * 4.60);
     const eThermal = this.t_elec * 1.5;
     
-    this.energy = params.E_inf + V_morse + eElectronic + eExcitation + eThermal;
+    if (this.pySCFObservables && Math.abs(R - this.lastPySCFR) < 0.25) {
+      // Smoothly modulate around PySCF anchor with instantaneous vibration
+      const dV = De * (Math.pow(1.0 - Math.exp(-a * (R - req)), 2.0) - Math.pow(1.0 - Math.exp(-a * (this.lastPySCFR - req)), 2.0));
+      this.energy = this.pySCFObservables.E_eV + dV + eExcitation;
+    } else {
+      this.energy = params.E_inf + V_morse + eElectronic + eExcitation + eThermal;
+    }
     
     // Dynamic Virial ratio -V/(2T)
-    const T_kin = Math.max(0.1, Math.abs(this.energy * 0.5) + this.vibrationAmp * 2.0);
-    const V_pot = Math.max(0.1, Math.abs(this.energy * 1.0) - V_morse);
-    this.virial = Math.max(0.75, Math.min(1.25, V_pot / (2.0 * T_kin)));
+    // At equilibrium: ~1.00. Compressed (R < req): >1.0. Stretched (R > req): <1.0.
+    const vibPhase = this.vibrationPhase || 0;
+    const virialBase = 1.000 - 0.18 * Math.tanh(a * deltaR) + 0.035 * Math.cos(vibPhase) * (this.vibrationAmp / 0.06);
+    this.virial = Math.max(0.70, Math.min(1.30, virialBase));
   }
 
   step(dt, musicBeatPulse = 0) {
@@ -232,9 +270,6 @@ export class QuantumBoltzmannSimulator {
     this.P_occ[0] += (this.P_eq[0] - this.P_occ[0]) * relaxFactor;
     this.P_occ[1] += (this.P_eq[1] - this.P_occ[1]) * relaxFactor;
     
-    // Coherence dephasing
-    this.coherence *= Math.exp(-0.6 * this.omega_relax * dt);
-    
     // Dynamic interval cascade: after ~4.8s in p-excitation, ascend into d-wave excitation!
     this.excitationTimer += dt;
     if (this.pExcitationLevel > 0.35 && this.excitationTimer >= 4.8 && this.dExcitationLevel < 0.1) {
@@ -246,22 +281,27 @@ export class QuantumBoltzmannSimulator {
     this.pExcitationLevel = Math.max(0.0, this.pExcitationLevel - dt * this.omega_relax * 0.08);
     this.dExcitationLevel = Math.max(0.0, this.dExcitationLevel - dt * this.omega_relax * 0.10);
 
-    // Entropy calculation
-    let s_vn = 0.0;
-    for (let i = 0; i < 2; i++) {
-      const p = Math.max(1e-6, Math.min(1.0 - 1e-6, this.P_occ[i] / 2.0));
-      s_vn -= (p * Math.log2(p) + (1.0 - p) * Math.log2(1.0 - p));
-    }
-    this.entropy_vN = Math.max(0.0, s_vn);
+    // Coherence: baseline non-adiabatic breathing + dephasing non-equilibrium transient
+    this.coherenceNonEq *= Math.exp(-0.8 * this.omega_relax * dt);
+    const currR = this.getCurrentBondLength();
+    const cohBase = 0.045 * Math.abs(Math.sin(this.vibrationPhase)) + 0.035 * (0.5 + 0.5 * Math.sin(this.dancePhase)) * (currR / this.R_eq);
+    const cohExc = (this.pExcitationLevel * 0.35 + this.dExcitationLevel * 0.55);
+    this.coherence = Math.min(1.0, Math.max(0.01, cohBase + this.coherenceNonEq + cohExc));
+
+    // von Neumann Entropy S_vN (in bits)
+    const p0_frac = Math.max(1e-5, Math.min(1.0 - 1e-5, this.P_occ[0] / 2.0));
+    const p1_frac = 1.0 - p0_frac;
+    let s_vn = -2.0 * (p0_frac * Math.log2(p0_frac) + p1_frac * Math.log2(p1_frac));
+    s_vn += (this.pExcitationLevel * 0.15 + this.dExcitationLevel * 0.25) + this.t_elec * 0.08;
+    this.entropy_vN = Math.max(0.0001, s_vn);
     
     // Recalculate dynamic electronic Hamiltonian, potential, and energy at instantaneous R(t)
-    const currR = this.getCurrentBondLength();
     this.updatePotentialAndOrbitals(currR);
     this.updateWignerDistribution(currR);
   }
 
   getCurrentBondLength() {
-    // Bond vibrates naturally and dances dynamically with Pachelbel's Canon beats
+    // Bond vibrates naturally and dances dynamically with music beats
     const danceOsc = 0.08 * Math.sin(this.dancePhase) * (0.4 + 0.6 * this.danceBeat);
     const vibOsc = this.vibrationAmp * Math.sin(this.vibrationPhase);
     return this.R + vibOsc + danceOsc;
