@@ -281,6 +281,21 @@ export default function App() {
     e.preventDefault();
     if (!contactForm.name || !contactForm.email || !contactForm.message) return;
     setFormSubmitted(true);
+    const subject = contactForm.subject || "Point Reyes Sound Inquiry";
+    const body = `From: ${contactForm.name} (${contactForm.affiliation || "N/A"})\nEmail: ${contactForm.email}\n\n${contactForm.message}`;
+    window.location.href = `mailto:romit@pointreyessound.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  const handleSelectHardwareCard = (topicTitle, defaultNote) => {
+    setContactForm((prev) => ({
+      ...prev,
+      subject: `Inquiry: ${topicTitle}`,
+      message: prev.message || `Hello Romit,\n\nI would like to inquire about Point Reyes Sound's ${topicTitle} initiatives and potential compute access / technical collaboration.\n\nBest regards,`
+    }));
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const handleCopyBibtex = (item) => {
@@ -676,7 +691,11 @@ export default function App() {
 
           <div className="grants-grid">
             {/* NVIDIA INCEPTION CARD */}
-            <div className="grant-card nvidia-accent">
+            <div 
+              className="grant-card nvidia-accent clickable-grant-card"
+              onClick={() => handleSelectHardwareCard("NVIDIA Inception GPU Acceleration", "Inquiry regarding custom CUDA/shader matrix kernels and H100/H200 compute evaluation.")}
+              title="Click to contact sales & compute team regarding NVIDIA Inception"
+            >
               <div className="grant-header">
                 <div className="grant-logo-badge">NVIDIA INCEPTION PROGRAM</div>
                 <span className="grant-status">Application Track</span>
@@ -690,10 +709,26 @@ export default function App() {
                 <li><strong>Speedup Goal:</strong> 100× throughput acceleration for density matrix kinetic relaxation</li>
                 <li><strong>Matrix Kernels:</strong> Custom trace-preserving Fermi-Dirac rotation shaders</li>
               </ul>
+              <div className="grant-action-row">
+                <button 
+                  type="button" 
+                  className="grant-contact-btn nvidia-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSelectHardwareCard("NVIDIA Inception GPU Acceleration", "Inquiry regarding custom CUDA/shader matrix kernels and H100/H200 compute evaluation.");
+                  }}
+                >
+                  Contact Sales & Compute Access &rarr;
+                </button>
+              </div>
             </div>
 
             {/* GOOGLE CLOUD RESEARCH CARD */}
-            <div className="grant-card google-accent">
+            <div 
+              className="grant-card google-accent clickable-grant-card"
+              onClick={() => handleSelectHardwareCard("Google Cloud HPC Research Integration", "Inquiry regarding Google Cloud A3 Mega GPU clusters and TPU v5p chemical discovery pipelines.")}
+              title="Click to contact sales & compute team regarding Google Cloud HPC"
+            >
               <div className="grant-header">
                 <div className="grant-logo-badge">GOOGLE CLOUD RESEARCH</div>
                 <span className="grant-status">Research Grant Track</span>
@@ -707,6 +742,18 @@ export default function App() {
                 <li><strong>Scope:</strong> Scaling from small diatomics to 500+ atom metalloprotein complexes</li>
                 <li><strong>Data Architecture:</strong> Cloud-native phase-space trajectory storage & analysis</li>
               </ul>
+              <div className="grant-action-row">
+                <button 
+                  type="button" 
+                  className="grant-contact-btn google-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSelectHardwareCard("Google Cloud HPC Research Integration", "Inquiry regarding Google Cloud A3 Mega GPU clusters and TPU v5p chemical discovery pipelines.");
+                  }}
+                >
+                  Inquire for HPC & Enterprise &rarr;
+                </button>
+              </div>
             </div>
           </div>
         </div>
