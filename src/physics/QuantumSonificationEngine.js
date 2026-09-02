@@ -82,41 +82,41 @@ const CANON_MELODY = [
 ];
 
 const CANON_SOLO_LAYER_1 = [
-  // Bar 1 (D Major)
-  N.Fs5, N.E5, N.Fs5, N.G5, N.A5, N.B5, N.A5, N.G5,
+  // Bar 1 (D Major) - Solemn cello/viola register lyrical line
+  N.Fs4, N.E4, N.Fs4, N.G4, N.A4, N.B4, N.A4, N.G4,
   // Bar 2 (A Major)
-  N.Fs5, N.D5, N.E5, N.Fs5, N.E5, N.D5, N.Cs5, N.B4,
+  N.Fs4, N.D4, N.E4, N.Fs4, N.E4, N.D4, N.Cs4, N.B3,
   // Bar 3 (B Minor)
-  N.Cs5, N.D5, N.Cs5, N.B4, N.A4, N.G4, N.A4, N.B4,
+  N.Cs4, N.D4, N.Cs4, N.B3, N.A3, N.G3, N.A3, N.B3,
   // Bar 4 (F# Minor)
-  N.A4, N.G4, N.Fs4, N.E4, N.D4, N.E4, N.Fs4, N.G4,
+  N.A3, N.G3, N.Fs3, N.E3, N.D3, N.E3, N.Fs3, N.G3,
   // Bar 5 (G Major)
-  N.Fs4, N.D4, N.G4, N.Fs4, N.E4, N.B4, N.A4, N.G4,
+  N.Fs3, N.D3, N.G3, N.Fs3, N.E3, N.B3, N.A3, N.G3,
   // Bar 6 (D Major)
-  N.Fs4, N.D4, N.E4, N.Fs4, N.G4, N.A4, N.B4, N.Cs5,
+  N.Fs3, N.D3, N.E3, N.Fs3, N.G3, N.A3, N.B3, N.Cs4,
   // Bar 7 (G Major)
-  N.D5, N.Cs5, N.B4, N.A4, N.B4, N.Cs5, N.D5, N.E5,
+  N.D4, N.Cs4, N.B3, N.A3, N.B3, N.Cs4, N.D4, N.E4,
   // Bar 8 (A Major)
-  N.Cs5, N.B4, N.A4, N.G4, N.A4, N.B4, N.Cs5, N.D5
+  N.Cs4, N.B3, N.A3, N.G3, N.A3, N.B3, N.Cs4, N.D4
 ];
 
 const CANON_SOLO_LAYER_2 = [
-  // Bar 1 (D Major)
-  N.Fs5, N.D5, N.A5, N.Fs5, N.D5, N.Fs5, N.A5, N.D6,
+  // Bar 1 (D Major) - Noble singing arpeggio
+  N.Fs4, N.D4, N.A4, N.Fs4, N.D4, N.Fs4, N.A4, N.D5,
   // Bar 2 (A Major)
-  N.E5, N.Cs5, N.A5, N.E5, N.Cs5, N.E5, N.A5, N.Cs6,
+  N.E4, N.Cs4, N.A4, N.E4, N.Cs4, N.E4, N.A4, N.Cs5,
   // Bar 3 (B Minor)
-  N.D5, N.B4, N.Fs5, N.D5, N.B4, N.D5, N.Fs5, N.B5,
+  N.D4, N.B3, N.Fs4, N.D4, N.B3, N.D4, N.Fs4, N.B4,
   // Bar 4 (F# Minor)
-  N.Cs5, N.A4, N.E5, N.Cs5, N.A4, N.Cs5, N.E5, N.A5,
+  N.Cs4, N.A3, N.E4, N.Cs4, N.A3, N.Cs4, N.E4, N.A4,
   // Bar 5 (G Major)
-  N.B4, N.G4, N.D5, N.B4, N.G4, N.B4, N.D5, N.G5,
+  N.B3, N.G3, N.D4, N.B3, N.G3, N.B3, N.D4, N.G4,
   // Bar 6 (D Major)
-  N.A4, N.Fs4, N.D5, N.A4, N.Fs4, N.A4, N.D5, N.Fs5,
+  N.A3, N.Fs3, N.D4, N.A3, N.Fs3, N.A3, N.D4, N.Fs4,
   // Bar 7 (G Major)
-  N.B4, N.G4, N.D5, N.B4, N.G4, N.B4, N.D5, N.G5,
+  N.B3, N.G3, N.D4, N.B3, N.G3, N.B3, N.D4, N.G4,
   // Bar 8 (A Major)
-  N.Cs5, N.A4, N.E5, N.Cs5, N.A4, N.Cs5, N.E5, N.A5
+  N.Cs4, N.A3, N.E4, N.Cs4, N.A3, N.Cs4, N.E4, N.A4
 ];
 
 // ============================================================================
@@ -177,44 +177,44 @@ const ARABESQUE_MELODY = [
   N.B4, N.Cs5, N.A4, N.Gs4, N.B4, N.Gs4, N.Fs4, N.E4
 ];
 
-// Layer 1: p-polarization excitation (16th-note flowing Debussy Arabesque cascades)
+// Layer 1: p-polarization excitation (Solemn flowing Debussy Arabesque lines)
 const ARABESQUE_SOLO_LAYER_1 = [
-  // Bar 1 (E Major) - Descending curved arabesque
-  N.B5, N.Gs5, N.Fs5, N.E5, N.Ds5, N.Cs5, N.B4, N.Gs4,
+  // Bar 1 (E Major) - Gentle descending arabesque in warm middle octave
+  N.B4, N.Gs4, N.Fs4, N.E4, N.Ds4, N.Cs4, N.B3, N.Gs3,
   // Bar 2 (A Major)
-  N.Cs5, N.B4, N.A4, N.Gs4, N.Fs4, N.E4, N.Ds4, N.Cs4,
-  // Bar 3 (F# Minor 7) - Lyrical rise & fall
-  N.Fs4, N.A4, N.Cs5, N.E5, N.Fs5, N.E5, N.Ds5, N.Cs5,
+  N.Cs4, N.B3, N.A3, N.Gs3, N.Fs3, N.E3, N.Ds3, N.Cs3,
+  // Bar 3 (F# Minor 7)
+  N.Fs3, N.A3, N.Cs4, N.E4, N.Fs4, N.E4, N.Ds4, N.Cs4,
   // Bar 4 (B7)
-  N.Ds5, N.Cs5, N.B4, N.A4, N.Gs4, N.Fs4, N.E4, N.Ds4,
+  N.Ds4, N.Cs4, N.B3, N.A3, N.Gs3, N.Fs3, N.E3, N.Ds3,
   // Bar 5 (G# Minor 7)
-  N.Gs4, N.B4, N.Ds5, N.Fs5, N.Gs5, N.Fs5, N.E5, N.Ds5,
+  N.Gs3, N.B3, N.Ds4, N.Fs4, N.Gs4, N.Fs4, N.E4, N.Ds4,
   // Bar 6 (C# Minor 7)
-  N.E5, N.Ds5, N.Cs5, N.B4, N.A4, N.Gs4, N.Fs4, N.E4,
-  // Bar 7 (Aadd9) - Flowing scalar return
-  N.Fs4, N.Gs4, N.A4, N.B4, N.Cs5, N.Ds5, N.E5, N.Fs5,
+  N.E4, N.Ds4, N.Cs4, N.B3, N.A3, N.Gs3, N.Fs3, N.E3,
+  // Bar 7 (Aadd9)
+  N.Fs3, N.Gs3, N.A3, N.B3, N.Cs4, N.Ds4, N.E4, N.Fs4,
   // Bar 8 (E Major)
-  N.Gs5, N.Fs5, N.E5, N.Ds5, N.Cs5, N.B4, N.A4, N.Gs4
+  N.Gs4, N.Fs4, N.E4, N.Ds4, N.Cs4, N.B3, N.A3, N.Gs3
 ];
 
-// Layer 2: d-polarization excitation (Rapid Virtuoso 3-Octave Shimmering Arabesque Flourish)
+// Layer 2: d-polarization excitation (Solemn & Expressive Arabesque Resonant Swell)
 const ARABESQUE_SOLO_LAYER_2 = [
-  // Bar 1 (E Major - high octave dispersion ripple)
-  N.E5, N.Gs5, N.B5, N.E6, N.B5, N.Gs5, N.E5, N.B4,
+  // Bar 1 (E Major)
+  N.E4, N.Gs4, N.B4, N.E5, N.B4, N.Gs4, N.E4, N.B3,
   // Bar 2 (A Major)
-  N.A4, N.Cs5, N.E5, N.A5, N.E5, N.Cs5, N.A4, N.E4,
+  N.A3, N.Cs4, N.E4, N.A4, N.E4, N.Cs4, N.A3, N.E3,
   // Bar 3 (F# Minor 7)
-  N.Fs4, N.A4, N.Cs5, N.Fs5, N.Cs5, N.A4, N.Fs4, N.Cs4,
+  N.Fs3, N.A3, N.Cs4, N.Fs4, N.Cs4, N.A3, N.Fs3, N.Cs3,
   // Bar 4 (B7)
-  N.B4, N.Ds5, N.Fs5, N.B5, N.Fs5, N.Ds5, N.B4, N.Fs4,
+  N.B3, N.Ds4, N.Fs4, N.B4, N.Fs4, N.Ds4, N.B3, N.Fs3,
   // Bar 5 (G# Minor 7)
-  N.Gs4, N.B4, N.Ds5, N.Gs5, N.Ds5, N.B4, N.Gs4, N.Ds4,
+  N.Gs3, N.B3, N.Ds4, N.Gs4, N.Ds4, N.B3, N.Gs3, N.Ds3,
   // Bar 6 (C# Minor 7)
-  N.Cs4, N.E4, N.Gs4, N.Cs5, N.E5, N.Gs5, N.Cs6, N.Gs5,
-  // Bar 7 (Aadd9) - Ascending shimmer
-  N.A4, N.Cs5, N.E5, N.A5, N.B5, N.Cs6, N.Ds6, N.E6,
-  // Bar 8 (E Major) - Grand cascading resolution
-  N.E6, N.B5, N.Gs5, N.E5, N.B4, N.Gs4, N.E4, N.B3
+  N.Cs3, N.E3, N.Gs3, N.Cs4, N.E4, N.Gs4, N.Cs5, N.Gs4,
+  // Bar 7 (Aadd9)
+  N.A3, N.Cs4, N.E4, N.A4, N.B4, N.Cs5, N.Ds5, N.E5,
+  // Bar 8 (E Major)
+  N.E5, N.B4, N.Gs4, N.E4, N.B3, N.Gs3, N.E3, N.B2
 ];
 
 // ============================================================================
@@ -275,44 +275,44 @@ const CHOPIN_NOCTURNE_MELODY = [
   N.Bb4, N.G4, N.F4, N.Eb4, N.C5, N.Bb4, N.Ab4, N.Eb4
 ];
 
-// Layer 1: p-polarization excitation (16th-note Chopin Lyrical Turns & Chromatic Runs)
+// Layer 1: p-polarization excitation (Solemn Chopin Lyrical Turns)
 const CHOPIN_NOCTURNE_SOLO_LAYER_1 = [
-  // Bar 1 (Eb Major) - Opening cantabile turn ornament
-  N.Bb4, N.C5, N.Bb4, N.A4, N.Bb4, N.G4, N.F4, N.Eb4,
-  // Bar 2 (Cm7) - Expressive ascending arch
-  N.F4, N.G4, N.Ab4, N.Bb4, N.C5, N.D5, N.Eb5, N.F5,
-  // Bar 3 (Fm7) - Graceful descending sweep
-  N.Ab5, N.G5, N.F5, N.Eb5, N.D5, N.C5, N.Bb4, N.Ab4,
-  // Bar 4 (Bb7) - Dominant chromatic preparation
-  N.D5, N.Eb5, N.F5, N.D5, N.Bb4, N.Ab4, N.G4, N.F4,
-  // Bar 5 (Eb Major) - Luminous arpeggiated bloom
-  N.G4, N.Bb4, N.Eb5, N.G5, N.F5, N.Eb5, N.D5, N.C5,
-  // Bar 6 (Gm) - Expressive chromatic sigh
-  N.D5, N.F5, N.Bb5, N.A5, N.Bb5, N.G5, N.F5, N.Eb5,
-  // Bar 7 (Ab Major) - High soaring scalar ascent
-  N.C5, N.D5, N.Eb5, N.F5, N.G5, N.Ab5, N.Bb5, N.C6,
-  // Bar 8 (Bb7 / Eb) - Gentle descending cadential cascade
-  N.D6, N.C6, N.Bb5, N.Ab5, N.G5, N.F5, N.Eb5, N.D5
+  // Bar 1 (Eb Major) - Lyrical turn in rich middle register
+  N.Bb3, N.C4, N.Bb3, N.A3, N.Bb3, N.G3, N.F3, N.Eb3,
+  // Bar 2 (Cm7)
+  N.F3, N.G3, N.Ab3, N.Bb3, N.C4, N.D4, N.Eb4, N.F4,
+  // Bar 3 (Fm7)
+  N.Ab4, N.G4, N.F4, N.Eb4, N.D4, N.C4, N.Bb3, N.Ab3,
+  // Bar 4 (Bb7)
+  N.D4, N.Eb4, N.F4, N.D4, N.Bb3, N.Ab3, N.G3, N.F3,
+  // Bar 5 (Eb Major)
+  N.G3, N.Bb3, N.Eb4, N.G4, N.F4, N.Eb4, N.D4, N.C4,
+  // Bar 6 (Gm)
+  N.D4, N.F4, N.Bb4, N.A4, N.Bb4, N.G4, N.F4, N.Eb4,
+  // Bar 7 (Ab Major)
+  N.C4, N.D4, N.Eb4, N.F4, N.G4, N.Ab4, N.Bb4, N.C5,
+  // Bar 8 (Bb7 / Eb)
+  N.D5, N.C5, N.Bb4, N.Ab4, N.G4, N.F4, N.Eb4, N.D4
 ];
 
-// Layer 2: d-polarization excitation (Virtuoso 22-Tuplet Chromatic Fiorituras)
+// Layer 2: d-polarization excitation (Solemn & Resonant Chopin Cantabile Fiorituras)
 const CHOPIN_NOCTURNE_SOLO_LAYER_2 = [
-  // Bar 1 (Eb Major - 3-octave high fioritura cascade)
-  N.Eb5, N.G5, N.Bb5, N.Eb6, N.D6, N.C6, N.Bb5, N.G5,
-  // Bar 2 (Cm7 - Chromatic turn in upper register)
-  N.F5, N.Ab5, N.C6, N.Eb6, N.D6, N.C6, N.B5, N.C6,
-  // Bar 3 (Fm7 - Virtuoso soaring arc)
-  N.Ab5, N.C6, N.Eb6, N.F6, N.Eb6, N.D6, N.C6, N.Bb5,
-  // Bar 4 (Bb7 - Chromatic scalar descent)
-  N.Bb5, N.D6, N.F6, N.Ab6, N.G6, N.F6, N.Eb6, N.D6,
-  // Bar 5 (Eb Major - Double-speed sparkling flourish)
-  N.Eb6, N.Bb5, N.G5, N.Eb5, N.G5, N.Bb5, N.Eb6, N.G6,
-  // Bar 6 (Gm - Rapid octave shift)
-  N.D6, N.Bb5, N.G5, N.D5, N.F5, N.Bb5, N.D6, N.F6,
-  // Bar 7 (Ab Major - Brilliant peak fioritura)
-  N.C6, N.Eb6, N.Ab6, N.G6, N.F6, N.Eb6, N.D6, N.C6,
-  // Bar 8 (Bb7 / Eb - Grand luminous resolving cascade)
-  N.Bb5, N.Ab5, N.G5, N.F5, N.Eb5, N.D5, N.C5, N.Bb4
+  // Bar 1 (Eb Major)
+  N.Eb4, N.G4, N.Bb4, N.Eb5, N.D5, N.C5, N.Bb4, N.G4,
+  // Bar 2 (Cm7)
+  N.F4, N.Ab4, N.C5, N.Eb5, N.D5, N.C5, N.B4, N.C5,
+  // Bar 3 (Fm7)
+  N.Ab4, N.C5, N.Eb5, N.F5, N.Eb5, N.D5, N.C5, N.Bb4,
+  // Bar 4 (Bb7)
+  N.Bb4, N.D5, N.F5, N.Ab5, N.G5, N.F5, N.Eb5, N.D5,
+  // Bar 5 (Eb Major)
+  N.Eb5, N.Bb4, N.G4, N.Eb4, N.G4, N.Bb4, N.Eb5, N.G5,
+  // Bar 6 (Gm)
+  N.D5, N.Bb4, N.G4, N.D4, N.F4, N.Bb4, N.D5, N.F5,
+  // Bar 7 (Ab Major)
+  N.C5, N.Eb5, N.Ab5, N.G5, N.F5, N.Eb5, N.D5, N.C5,
+  // Bar 8 (Bb7 / Eb)
+  N.Bb4, N.Ab4, N.G4, N.F4, N.Eb4, N.D4, N.C4, N.Bb3
 ];
 
 // ============================================================================
@@ -374,41 +374,41 @@ const BEETHOVEN_MOONLIGHT_MELODY = [
 ];
 
 const BEETHOVEN_MOONLIGHT_SOLO_LAYER_1 = [
-  // Bar 1 (C# Minor) - 16th-note lyrical rising wave
-  N.Gs4, N.Cs5, N.E5, N.Gs5, N.Cs6, N.Gs5, N.E5, N.Cs5,
+  // Bar 1 (C# Minor) - Dark, solemn cello wave
+  N.Gs3, N.Cs4, N.E4, N.Gs4, N.Cs5, N.Gs4, N.E4, N.Cs4,
   // Bar 2 (C#m / B)
-  N.B4, N.Cs5, N.E5, N.Gs5, N.B5, N.Gs5, N.E5, N.Cs5,
+  N.B3, N.Cs4, N.E4, N.Gs4, N.B4, N.Gs4, N.E4, N.Cs4,
   // Bar 3 (A Major)
-  N.A4, N.Cs5, N.E5, N.A5, N.Cs6, N.A5, N.E5, N.Cs5,
+  N.A3, N.Cs4, N.E4, N.A4, N.Cs5, N.A4, N.E4, N.Cs4,
   // Bar 4 (F# Minor)
-  N.Fs4, N.A4, N.Cs5, N.Fs5, N.A5, N.Fs5, N.Cs5, N.A4,
+  N.Fs3, N.A3, N.Cs4, N.Fs4, N.A4, N.Fs4, N.Cs4, N.A3,
   // Bar 5 (G#7)
-  N.Gs4, N.C5, N.Ds5, N.Fs5, N.Gs5, N.Fs5, N.Ds5, N.C5,
+  N.Gs3, N.C4, N.Ds4, N.Fs4, N.Gs4, N.Fs4, N.Ds4, N.C4,
   // Bar 6 (C# Minor)
-  N.Cs5, N.E5, N.Gs5, N.Cs6, N.E6, N.Cs6, N.Gs5, N.E5,
+  N.Cs4, N.E4, N.Gs4, N.Cs5, N.E5, N.Cs5, N.Gs4, N.E4,
   // Bar 7 (D Major Neapolitan)
-  N.D5, N.Fs5, N.A5, N.D6, N.Fs6, N.D6, N.A5, N.Fs5,
+  N.D4, N.Fs4, N.A4, N.D5, N.Fs5, N.D5, N.A4, N.Fs4,
   // Bar 8 (G#7 -> C#m)
-  N.Gs5, N.Fs5, N.E5, N.Ds5, N.Cs5, N.B4, N.A4, N.Gs4
+  N.Gs4, N.Fs4, N.E4, N.Ds4, N.Cs4, N.B3, N.A3, N.Gs3
 ];
 
 const BEETHOVEN_MOONLIGHT_SOLO_LAYER_2 = [
-  // Bar 1 (C# Minor - Presto agitato virtuosic arpeggio)
-  N.Cs4, N.E4, N.Gs4, N.Cs5, N.E5, N.Gs5, N.Cs6, N.Gs5,
+  // Bar 1 (C# Minor - Solemn expressive counter-arpeggio)
+  N.Cs3, N.E3, N.Gs3, N.Cs4, N.E4, N.Gs4, N.Cs5, N.Gs4,
   // Bar 2 (C#m / B)
-  N.B3, N.E4, N.Gs4, N.B4, N.E5, N.Gs5, N.B5, N.Gs5,
+  N.B2, N.E3, N.Gs3, N.B3, N.E4, N.Gs4, N.B4, N.Gs4,
   // Bar 3 (A Major)
-  N.A3, N.Cs4, N.E4, N.A4, N.Cs5, N.E5, N.A5, N.E5,
+  N.A2, N.Cs3, N.E3, N.A3, N.Cs4, N.E4, N.A4, N.E4,
   // Bar 4 (F# Minor)
-  N.Fs3, N.A3, N.Cs4, N.Fs4, N.A4, N.Cs5, N.Fs5, N.Cs5,
+  N.Fs2, N.A2, N.Cs3, N.Fs3, N.A3, N.Cs4, N.Fs4, N.Cs4,
   // Bar 5 (G#7)
-  N.Gs3, N.C4, N.Ds4, N.Gs4, N.C5, N.Ds5, N.Gs5, N.Ds5,
+  N.Gs2, N.C3, N.Ds3, N.Gs3, N.C4, N.Ds4, N.Gs4, N.Ds4,
   // Bar 6 (C# Minor)
-  N.Cs4, N.E4, N.Gs4, N.Cs5, N.E5, N.Gs5, N.Cs6, N.E6,
+  N.Cs3, N.E3, N.Gs3, N.Cs4, N.E4, N.Gs4, N.Cs5, N.E5,
   // Bar 7 (D Major Neapolitan)
-  N.D4, N.Fs4, N.A4, N.D5, N.Fs5, N.A5, N.D6, N.Fs6,
-  // Bar 8 (G#7 -> C#m cascade)
-  N.Gs6, N.Ds6, N.C6, N.Gs5, N.Ds5, N.C5, N.Gs4, N.Cs4
+  N.D3, N.Fs3, N.A3, N.D4, N.Fs4, N.A4, N.D5, N.Fs5,
+  // Bar 8 (G#7 -> C#m)
+  N.Gs5, N.Ds5, N.C5, N.Gs4, N.Ds4, N.C4, N.Gs3, N.Cs3
 ];
 
 // ============================================================================
@@ -470,41 +470,41 @@ const BACH_TOCCATA_MELODY = [
 ];
 
 const BACH_TOCCATA_SOLO_LAYER_1 = [
-  // Bar 1 (D Minor) - 16th-note 3-Voice Fugue Counterpoint
-  N.A4, N.G4, N.A4, N.D5, N.Cs5, N.D5, N.E5, N.F5,
+  // Bar 1 (D Minor) - Solemn organ counterpoint
+  N.A3, N.G3, N.A3, N.D4, N.Cs4, N.D4, N.E4, N.F4,
   // Bar 2 (C Major)
-  N.G5, N.F5, N.E5, N.D5, N.C5, N.B4, N.C5, N.D5,
+  N.G4, N.F4, N.E4, N.D4, N.C4, N.B3, N.C4, N.D4,
   // Bar 3 (Bb Major)
-  N.F5, N.E5, N.D5, N.C5, N.Bb4, N.A4, N.Bb4, N.C5,
+  N.F4, N.E4, N.D4, N.C4, N.Bb3, N.A3, N.Bb3, N.C4,
   // Bar 4 (G Minor)
-  N.D5, N.C5, N.Bb4, N.A4, N.G4, N.Fs4, N.G4, N.A4,
+  N.D4, N.C4, N.Bb3, N.A3, N.G3, N.Fs3, N.G3, N.A3,
   // Bar 5 (A7)
-  N.Cs5, N.D5, N.E5, N.F5, N.G5, N.A5, N.G5, N.F5,
+  N.Cs4, N.D4, N.E4, N.F4, N.G4, N.A4, N.G4, N.F4,
   // Bar 6 (D Minor)
-  N.F5, N.E5, N.D5, N.Cs5, N.D5, N.E5, N.F5, N.G5,
+  N.F4, N.E4, N.D4, N.Cs4, N.D4, N.E4, N.F4, N.G4,
   // Bar 7 (Gm6 / E)
-  N.E5, N.G5, N.Bb5, N.A5, N.G5, N.F5, N.E5, N.D5,
+  N.E4, N.G4, N.Bb4, N.A4, N.G4, N.F4, N.E4, N.D4,
   // Bar 8 (D Major)
-  N.Cs5, N.D5, N.E5, N.D5, N.Cs5, N.B4, N.Cs5, N.D5
+  N.Cs4, N.D4, N.E4, N.D4, N.Cs4, N.B3, N.Cs4, N.D4
 ];
 
 const BACH_TOCCATA_SOLO_LAYER_2 = [
-  // Bar 1 (D Minor - Virtuoso Toccata 32nd-note Cascades)
-  N.D5, N.A5, N.F5, N.D5, N.A4, N.F4, N.D4, N.A3,
+  // Bar 1 (D Minor - Solemn authoritative counterpoint)
+  N.D4, N.A4, N.F4, N.D4, N.A3, N.F3, N.D3, N.A2,
   // Bar 2 (C Major)
-  N.C5, N.G5, N.E5, N.C5, N.G4, N.E4, N.C4, N.G3,
+  N.C4, N.G4, N.E4, N.C4, N.G3, N.E3, N.C3, N.G2,
   // Bar 3 (Bb Major)
-  N.Bb4, N.F5, N.D5, N.Bb4, N.F4, N.D4, N.Bb3, N.F3,
+  N.Bb3, N.F4, N.D4, N.Bb3, N.F3, N.D3, N.Bb2, N.F2,
   // Bar 4 (G Minor)
-  N.G4, N.D5, N.Bb4, N.G4, N.D4, N.Bb3, N.G3, N.D3,
+  N.G3, N.D4, N.Bb3, N.G3, N.D3, N.Bb2, N.G2, N.D2,
   // Bar 5 (A7)
-  N.A4, N.Cs5, N.E5, N.G5, N.A5, N.G5, N.E5, N.Cs5,
+  N.A3, N.Cs4, N.E4, N.G4, N.A4, N.G4, N.E4, N.Cs4,
   // Bar 6 (D Minor)
-  N.D5, N.F5, N.A5, N.D6, N.A5, N.F5, N.D5, N.A4,
+  N.D4, N.F4, N.A4, N.D5, N.A4, N.F4, N.D4, N.A3,
   // Bar 7 (Gm6 / E)
-  N.E5, N.G5, N.Bb5, N.Cs6, N.E6, N.Cs6, N.Bb5, N.G5,
+  N.E4, N.G4, N.Bb4, N.Cs5, N.E5, N.Cs5, N.Bb4, N.G4,
   // Bar 8 (D Major Grand Finale)
-  N.D6, N.A5, N.Fs5, N.D5, N.A4, N.Fs4, N.D4, N.D3
+  N.D5, N.A4, N.Fs4, N.D4, N.A3, N.Fs3, N.D3, N.D2
 ];
 
 // ============================================================================
@@ -566,41 +566,41 @@ const VIVALDI_SUMMER_MELODY = [
 ];
 
 const VIVALDI_SUMMER_SOLO_LAYER_1 = [
-  // Bar 1 (G Minor) - Relentless 16th-note string tremolo
-  N.G4, N.G4, N.Bb4, N.Bb4, N.D5, N.D5, N.G5, N.G5,
+  // Bar 1 (G Minor) - Solemn minor tremolo
+  N.G3, N.G3, N.Bb3, N.Bb3, N.D4, N.D4, N.G4, N.G4,
   // Bar 2 (D7)
-  N.Fs5, N.Fs5, N.D5, N.D5, N.C5, N.C5, N.A4, N.A4,
+  N.Fs4, N.Fs4, N.D4, N.D4, N.C4, N.C4, N.A3, N.A3,
   // Bar 3 (G Minor)
-  N.G4, N.Bb4, N.D5, N.G5, N.Bb5, N.G5, N.D5, N.Bb4,
+  N.G3, N.Bb3, N.D4, N.G4, N.Bb4, N.G4, N.D4, N.Bb3,
   // Bar 4 (C Minor)
-  N.C5, N.Eb5, N.G5, N.C6, N.Eb6, N.C6, N.G5, N.Eb5,
+  N.C4, N.Eb4, N.G4, N.C5, N.Eb5, N.C5, N.G4, N.Eb4,
   // Bar 5 (F7)
-  N.F5, N.A5, N.C6, N.Eb6, N.F6, N.Eb6, N.C6, N.A5,
+  N.F4, N.A4, N.C5, N.Eb5, N.F5, N.Eb5, N.C5, N.A4,
   // Bar 6 (Bb Major)
-  N.Bb5, N.D6, N.F6, N.Bb6, N.F6, N.D6, N.Bb5, N.F5,
+  N.Bb4, N.D5, N.F5, N.Bb5, N.F5, N.D5, N.Bb4, N.F4,
   // Bar 7 (Eb Major)
-  N.Eb5, N.G5, N.Bb5, N.Eb6, N.D6, N.C6, N.Bb5, N.A5,
+  N.Eb4, N.G4, N.Bb4, N.Eb5, N.D5, N.C5, N.Bb4, N.A4,
   // Bar 8 (D7 -> Gm)
-  N.D5, N.Fs5, N.A5, N.C6, N.Bb5, N.A5, N.G5, N.Fs5
+  N.D4, N.Fs4, N.A4, N.C5, N.Bb4, N.A4, N.G4, N.Fs4
 ];
 
 const VIVALDI_SUMMER_SOLO_LAYER_2 = [
-  // Bar 1 (G Minor - Virtuoso dual-spin lightning arpeggios)
-  N.G5, N.D5, N.Bb5, N.G5, N.D6, N.Bb5, N.G6, N.D6,
+  // Bar 1 (G Minor - Solemn dual-spin deep arpeggios)
+  N.G4, N.D4, N.Bb3, N.G3, N.D4, N.Bb4, N.G4, N.D4,
   // Bar 2 (D7)
-  N.Fs6, N.D6, N.A5, N.Fs5, N.C6, N.A5, N.Fs5, N.D5,
+  N.Fs4, N.D4, N.A3, N.Fs3, N.C4, N.A3, N.Fs3, N.D3,
   // Bar 3 (G Minor)
-  N.G5, N.Bb5, N.D6, N.G6, N.D6, N.Bb5, N.G5, N.D5,
+  N.G3, N.Bb3, N.D4, N.G4, N.D4, N.Bb3, N.G3, N.D3,
   // Bar 4 (C Minor)
-  N.C5, N.Eb5, N.G5, N.C6, N.Eb6, N.G6, N.C6, N.Eb6,
+  N.C3, N.Eb3, N.G3, N.C4, N.Eb4, N.G4, N.C5, N.Eb4,
   // Bar 5 (F7)
-  N.F5, N.A5, N.C6, N.F6, N.A6, N.F6, N.C6, N.A5,
+  N.F3, N.A3, N.C4, N.F4, N.A4, N.F4, N.C4, N.A3,
   // Bar 6 (Bb Major)
-  N.Bb5, N.D6, N.F6, N.Bb6, N.F6, N.D6, N.Bb5, N.F5,
+  N.Bb3, N.D4, N.F4, N.Bb4, N.F4, N.D4, N.Bb3, N.F3,
   // Bar 7 (Eb Major)
-  N.Eb6, N.Bb5, N.G5, N.Eb5, N.D6, N.A5, N.Fs5, N.D5,
-  // Bar 8 (D7 -> Gm Grand Storm Lightning)
-  N.G6, N.D6, N.Bb5, N.G5, N.D5, N.Bb4, N.G4, N.G3
+  N.Eb4, N.Bb3, N.G3, N.Eb3, N.D4, N.A3, N.Fs3, N.D3,
+  // Bar 8 (D7 -> Gm Grand Storm Resolution)
+  N.G4, N.D4, N.Bb3, N.G3, N.D3, N.Bb2, N.G2, N.G1
 ];
 
 export class QuantumSonificationEngine {
@@ -652,8 +652,8 @@ export class QuantumSonificationEngine {
 
     this.audioCtx = new AudioContext();
 
-    // 1. Generate Acoustic Piano Periodic Harmonic Series
-    const real = new Float32Array([0, 1.0, 0.65, 0.35, 0.18, 0.09, 0.05, 0.02, 0.01]);
+    // 1. Generate Warm Acoustic Grand Piano Harmonic Series (velvet harmonics, reduced brittle upper partials)
+    const real = new Float32Array([0, 1.0, 0.58, 0.28, 0.12, 0.04, 0.015, 0.005, 0.0]);
     const imag = new Float32Array(real.length);
     this.pianoWave = this.audioCtx.createPeriodicWave(real, imag);
 
@@ -672,7 +672,7 @@ export class QuantumSonificationEngine {
     // 4. Warm Soundboard Lowpass Filter
     this.soundboardFilter = this.audioCtx.createBiquadFilter();
     this.soundboardFilter.type = 'lowpass';
-    this.soundboardFilter.frequency.setValueAtTime(4500, this.audioCtx.currentTime);
+    this.soundboardFilter.frequency.setValueAtTime(3800, this.audioCtx.currentTime);
     this.soundboardFilter.Q.setValueAtTime(0.7, this.audioCtx.currentTime);
 
     // 5. Dual Analyzers (Ground & Excited Spectral Buses)
@@ -721,11 +721,39 @@ export class QuantumSonificationEngine {
     this.convolver.buffer = impulse;
 
     this.reverbGain = this.audioCtx.createGain();
-    this.reverbGain.gain.setValueAtTime(0.28, this.audioCtx.currentTime);
+    this.reverbGain.gain.setValueAtTime(0.24, this.audioCtx.currentTime);
 
     this.soundboardFilter.connect(this.convolver);
     this.convolver.connect(this.reverbGain);
-    this.reverbGain.connect(this.masterGain);
+    this.reverbGain.connect(this.bassBooster);
+  }
+
+  setElement(symbol) {
+    const sym = symbol ? symbol.toUpperCase() : "H";
+    if (sym === "H") {
+      this.currentPiece = "canon";
+      this.bpm = 68;
+    } else if (sym === "HE") {
+      this.currentPiece = "arabesque";
+      this.bpm = 60;
+    } else if (sym === "LI") {
+      this.currentPiece = "chopin";
+      this.bpm = 56;
+    } else if (sym === "C") {
+      this.currentPiece = "moonlight";
+      this.bpm = 54;
+    } else if (sym === "N") {
+      this.currentPiece = "bach";
+      this.bpm = 72;
+    } else if (sym === "O") {
+      this.currentPiece = "vivaldi";
+      this.bpm = 80;
+    } else {
+      this.currentPiece = "canon";
+      this.bpm = 68;
+    }
+    this.beatDuration = 60.0 / this.bpm;
+    this.sixteenthDuration = this.beatDuration * 0.25;
   }
 
   start() {
@@ -799,7 +827,7 @@ export class QuantumSonificationEngine {
   }
 
   /**
-   * Play an acoustic concert grand piano voice
+   * Play an acoustic concert grand piano voice (Warm, solemn, expressive)
    */
   playPianoKey(freq, duration = 2.4, velocity = 0.8, isBass = false, isSolo = false) {
     if (!this.audioCtx || !this.isPlaying) return;
@@ -816,26 +844,26 @@ export class QuantumSonificationEngine {
       noteFilter.type = 'lowpass';
 
       const startCutoff = isBass 
-        ? Math.min(3800, 1200 + velocity * 2200) 
+        ? Math.min(3200, 1100 + velocity * 1800) 
         : isSolo 
-          ? Math.min(10500, 4200 + velocity * 5500)
-          : Math.min(7500, 2400 + velocity * 4500);
-      const endCutoff = isBass ? 450 : isSolo ? 1600 : 950;
+          ? Math.min(3200, 1400 + velocity * 1600)
+          : Math.min(4200, 1800 + velocity * 2200);
+      const endCutoff = isBass ? 380 : isSolo ? 850 : 750;
       
       noteFilter.frequency.setValueAtTime(startCutoff, now);
-      noteFilter.frequency.exponentialRampToValueAtTime(endCutoff, now + 0.35);
+      noteFilter.frequency.exponentialRampToValueAtTime(endCutoff, now + 0.38);
 
-      // 1. Hammer Strike Transient
+      // 1. Hammer Strike Transient (Soft felt-tip attack for solemn tone)
       const hammer = this.audioCtx.createOscillator();
       const hammerGain = this.audioCtx.createGain();
       hammer.type = 'sine';
-      hammer.frequency.setValueAtTime(isBass ? freq * 2.5 : freq * 4.0, now);
-      hammerGain.gain.setValueAtTime(velocity * (isBass ? 0.35 : 0.25), now);
-      hammerGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.022);
+      hammer.frequency.setValueAtTime(isBass ? freq * 1.8 : freq * 1.5, now);
+      hammerGain.gain.setValueAtTime(velocity * (isBass ? 0.22 : 0.10), now);
+      hammerGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.024);
       hammer.connect(hammerGain);
       hammerGain.connect(noteGain);
       hammer.start(now);
-      hammer.stop(now + 0.025);
+      hammer.stop(now + 0.028);
 
       // 2. Grand Piano Paired String Unison
       const osc1 = this.audioCtx.createOscillator();
@@ -849,12 +877,12 @@ export class QuantumSonificationEngine {
       }
       osc1.frequency.setValueAtTime(freq, now);
       osc2.frequency.setValueAtTime(freq, now);
-      osc1.detune.setValueAtTime(-1.4, now);
-      osc2.detune.setValueAtTime(1.4, now);
+      osc1.detune.setValueAtTime(-0.9, now);
+      osc2.detune.setValueAtTime(0.9, now);
 
       const stringGain1 = this.audioCtx.createGain();
       const stringGain2 = this.audioCtx.createGain();
-      const strVol = velocity * (isBass ? 0.55 : isSolo ? 0.50 : 0.42);
+      const strVol = velocity * (isBass ? 0.52 : isSolo ? 0.44 : 0.38);
       stringGain1.gain.setValueAtTime(strVol, now);
       stringGain2.gain.setValueAtTime(strVol, now);
 
@@ -869,7 +897,7 @@ export class QuantumSonificationEngine {
         subOsc.type = 'sine';
         subOsc.frequency.setValueAtTime(freq * 0.5, now);
         const subGain = this.audioCtx.createGain();
-        subGain.gain.setValueAtTime(velocity * 0.35, now);
+        subGain.gain.setValueAtTime(velocity * 0.32, now);
         subGain.gain.exponentialRampToValueAtTime(0.0001, now + duration * 0.8);
         subOsc.connect(subGain);
         subGain.connect(noteFilter);
@@ -877,10 +905,10 @@ export class QuantumSonificationEngine {
         subOsc.stop(now + duration);
       }
 
-      // 4. Acoustic Concert Piano Decay Envelope
+      // 4. Acoustic Concert Piano Decay Envelope (Smooth, non-clicking solemn attack & sustained singing body)
       noteGain.gain.setValueAtTime(0.0001, now);
-      noteGain.gain.linearRampToValueAtTime(1.0, now + 0.004);
-      noteGain.gain.exponentialRampToValueAtTime(0.65, now + 0.18);
+      noteGain.gain.linearRampToValueAtTime(1.0, now + (isSolo ? 0.012 : 0.006));
+      noteGain.gain.exponentialRampToValueAtTime(0.68, now + 0.22);
       noteGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
       noteFilter.connect(noteGain);
@@ -920,23 +948,23 @@ export class QuantumSonificationEngine {
     osc.stop(now + 0.3);
   }
 
-  triggerBackbeatSnare(now, velocity = 0.7) {
+  triggerBackbeatSnare(now, velocity = 0.8) {
     if (!this.audioCtx || !this.isPlaying) return;
 
+    // Body Tone
     const osc = this.audioCtx.createOscillator();
-    const oscGain = this.audioCtx.createGain();
+    const gain = this.audioCtx.createGain();
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(190, now);
-    osc.frequency.exponentialRampToValueAtTime(80, now + 0.07);
+    osc.frequency.setValueAtTime(180, now);
+    osc.frequency.exponentialRampToValueAtTime(65, now + 0.06);
 
-    oscGain.gain.setValueAtTime(velocity * 0.35, now);
-    oscGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+    gain.gain.setValueAtTime(velocity * 0.40, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.15);
 
-    osc.connect(oscGain);
-    oscGain.connect(this.soundboardFilter);
-    osc.start(now);
-    osc.stop(now + 0.14);
+    osc.connect(gain);
+    gain.connect(this.soundboardFilter);
 
+    // Noise Wire Crisp
     const bufferSize = Math.floor(this.audioCtx.sampleRate * 0.12);
     const noiseBuffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
     const output = noiseBuffer.getChannelData(0);
@@ -947,116 +975,79 @@ export class QuantumSonificationEngine {
     const whiteNoise = this.audioCtx.createBufferSource();
     whiteNoise.buffer = noiseBuffer;
 
-    const noiseFilter = this.audioCtx.createBiquadFilter();
-    noiseFilter.type = 'bandpass';
-    noiseFilter.frequency.setValueAtTime(1800, now);
-    noiseFilter.Q.setValueAtTime(1.5, now);
+    const filter = this.audioCtx.createBiquadFilter();
+    filter.type = 'highpass';
+    filter.frequency.setValueAtTime(1000, now);
 
     const noiseGain = this.audioCtx.createGain();
     noiseGain.gain.setValueAtTime(velocity * 0.32, now);
-    noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
+    noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
 
-    whiteNoise.connect(noiseFilter);
-    noiseFilter.connect(noiseGain);
+    whiteNoise.connect(filter);
+    filter.connect(noiseGain);
     noiseGain.connect(this.soundboardFilter);
 
+    osc.start(now);
+    osc.stop(now + 0.16);
     whiteNoise.start(now);
+    whiteNoise.stop(now + 0.13);
   }
 
-  setElement(symbol) {
-    if (symbol === "He") {
-      this.currentPiece = "arabesque";
-    } else if (symbol === "Li") {
-      this.currentPiece = "chopin";
-    } else if (symbol === "C") {
-      this.currentPiece = "moonlight";
-    } else if (symbol === "N") {
-      this.currentPiece = "bach";
-    } else if (symbol === "O") {
-      this.currentPiece = "vivaldi";
-    } else {
-      this.currentPiece = "canon";
-    }
+  getCurrentPieceData() {
+    if (this.currentPiece === "chopin") return { progression: CHOPIN_NOCTURNE_PROGRESSION, melody: CHOPIN_NOCTURNE_MELODY, solo1: CHOPIN_NOCTURNE_SOLO_LAYER_1, solo2: CHOPIN_NOCTURNE_SOLO_LAYER_2 };
+    if (this.currentPiece === "arabesque") return { progression: ARABESQUE_PROGRESSION, melody: ARABESQUE_MELODY, solo1: ARABESQUE_SOLO_LAYER_1, solo2: ARABESQUE_SOLO_LAYER_2 };
+    if (this.currentPiece === "moonlight") return { progression: BEETHOVEN_MOONLIGHT_PROGRESSION, melody: BEETHOVEN_MOONLIGHT_MELODY, solo1: BEETHOVEN_MOONLIGHT_SOLO_LAYER_1, solo2: BEETHOVEN_MOONLIGHT_SOLO_LAYER_2 };
+    if (this.currentPiece === "bach") return { progression: BACH_TOCCATA_PROGRESSION, melody: BACH_TOCCATA_MELODY, solo1: BACH_TOCCATA_SOLO_LAYER_1, solo2: BACH_TOCCATA_SOLO_LAYER_2 };
+    if (this.currentPiece === "vivaldi") return { progression: VIVALDI_SUMMER_PROGRESSION, melody: VIVALDI_SUMMER_MELODY, solo1: VIVALDI_SUMMER_SOLO_LAYER_1, solo2: VIVALDI_SUMMER_SOLO_LAYER_2 };
+    return { progression: CANON_PROGRESSION, melody: CANON_MELODY, solo1: CANON_SOLO_LAYER_1, solo2: CANON_SOLO_LAYER_2 };
   }
 
-  setPiece(pieceName) {
-    this.currentPiece = pieceName;
-  }
+  /**
+   * Main real-time update loop called from requestAnimationFrame
+   */
+  update(dt, quantumState = {}) {
+    if (!this.isPlaying || !this.audioCtx) return;
 
-  update(dt, quantumState) {
-    if (!this.audioCtx || !this.isPlaying) return;
-
-    this.quantumBeatPulse = Math.max(0, this.quantumBeatPulse - dt * 2.5);
+    const { progression, melody, solo1, solo2 } = this.getCurrentPieceData();
+    const activeProg = progression || CANON_PROGRESSION;
+    const activeMelody = melody || CANON_MELODY;
+    const activeSolo1 = solo1 || CANON_SOLO_LAYER_1;
+    const activeSolo2 = solo2 || CANON_SOLO_LAYER_2;
 
     this.masterTimer += dt;
+
     if (this.masterTimer >= this.sixteenthDuration) {
-      this.masterTimer = 0;
-      this.masterStep = (this.masterStep + 1) % 64; // 64 16th-notes per 8-measure progression
+      this.masterTimer -= this.sixteenthDuration;
+      this.masterStep = (this.masterStep + 1) % 64;
+
+      const barIndex = Math.floor(this.masterStep / 8) % activeProg.length;
+      const stepInBar = this.masterStep % 8;
+      const prog = activeProg[barIndex];
       const now = this.audioCtx.currentTime;
 
-      // Select active score arrays based on molecule
-      let activeProgression = CANON_PROGRESSION;
-      let activeMelody = CANON_MELODY;
-      let activeSolo1 = CANON_SOLO_LAYER_1;
-      let activeSolo2 = CANON_SOLO_LAYER_2;
-
-      if (this.currentPiece === "chopin") {
-        activeProgression = CHOPIN_NOCTURNE_PROGRESSION;
-        activeMelody = CHOPIN_NOCTURNE_MELODY;
-        activeSolo1 = CHOPIN_NOCTURNE_SOLO_LAYER_1;
-        activeSolo2 = CHOPIN_NOCTURNE_SOLO_LAYER_2;
-      } else if (this.currentPiece === "arabesque") {
-        activeProgression = ARABESQUE_PROGRESSION;
-        activeMelody = ARABESQUE_MELODY;
-        activeSolo1 = ARABESQUE_SOLO_LAYER_1;
-        activeSolo2 = ARABESQUE_SOLO_LAYER_2;
-      } else if (this.currentPiece === "moonlight") {
-        activeProgression = BEETHOVEN_MOONLIGHT_PROGRESSION;
-        activeMelody = BEETHOVEN_MOONLIGHT_MELODY;
-        activeSolo1 = BEETHOVEN_MOONLIGHT_SOLO_LAYER_1;
-        activeSolo2 = BEETHOVEN_MOONLIGHT_SOLO_LAYER_2;
-      } else if (this.currentPiece === "bach") {
-        activeProgression = BACH_TOCCATA_PROGRESSION;
-        activeMelody = BACH_TOCCATA_MELODY;
-        activeSolo1 = BACH_TOCCATA_SOLO_LAYER_1;
-        activeSolo2 = BACH_TOCCATA_SOLO_LAYER_2;
-      } else if (this.currentPiece === "vivaldi") {
-        activeProgression = VIVALDI_SUMMER_PROGRESSION;
-        activeMelody = VIVALDI_SUMMER_MELODY;
-        activeSolo1 = VIVALDI_SUMMER_SOLO_LAYER_1;
-        activeSolo2 = VIVALDI_SUMMER_SOLO_LAYER_2;
-      }
-
-      // Each bar = 8 sixteenth-note steps (2 beats = 8 sixteenths)
-      const barIndex = Math.floor(this.masterStep / 8) % activeProgression.length;
-      const stepInBar = this.masterStep % 8;
-      const prog = activeProgression[barIndex];
+      // Extract excitation levels
       const pExc = quantumState.pExcitation || 0.0;
       const dExc = quantumState.dExcitation || 0.0;
       const perturb = quantumState.perturbation || 0.0;
 
       // ============================================================
-      // 1. SOLID BASS BACKBONE (On Step 0 of each bar)
+      // 1. DEEP RESONANT BASS ARCHITECTURE (Bars 1 to 8)
       // ============================================================
       if (stepInBar === 0) {
-        this.quantumBeatPulse = 1.0;
-        const bassVel = 0.92 * (0.8 + 0.2 * (quantumState.occ0 / 2.0));
-        const bassTail = this.beatDuration * 3.8;
-
-        this.playPianoKey(prog.bassRoot, bassTail, bassVel, true);
-        this.playPianoKey(prog.bassOctave, bassTail * 0.9, bassVel * 0.85, true);
-        if (prog.bassFifth) {
-          this.playPianoKey(prog.bassFifth, bassTail * 0.75, bassVel * 0.65, true);
-        }
-      } else if (stepInBar === 4) {
-        // Mid-bar walking bass pulse
-        this.playPianoKey(prog.bassOctave, this.beatDuration * 1.8, 0.65, true);
+        // Bar Downbeat: Sub-Bass Fundamental Root + Octave Reinforcement
+        const rootVel = 0.95 * (0.85 + 0.15 * Math.min(1.0, quantumState.dissociationEnergy / 4.5));
+        this.playPianoKey(prog.bassRoot, this.beatDuration * 3.8, rootVel, true);
+        this.playPianoKey(prog.bassOctave, this.beatDuration * 3.2, rootVel * 0.85, true);
+      } else if (stepInBar === 4 && prog.bassFifth) {
+        // Half-Bar: Resonant Harmonic 5th Anchor
+        const fifthVel = 0.82 * (0.85 + 0.15 * Math.min(1.0, quantumState.dissociationEnergy / 4.5));
+        this.playPianoKey(prog.bassFifth, this.beatDuration * 2.8, fifthVel, true);
       }
 
       // ============================================================
-      // 2. SYNCHRONOUS STRONG BACKBEAT (Perturbation)
+      // 2. PERTURBATION-DRIVEN ACOUSTIC BACKBEAT
       // ============================================================
-      if (perturb > 0.04) {
+      if (perturb > 0.05) {
         const beatGain = Math.min(1.0, perturb * 1.15);
         if (stepInBar === 0) {
           this.triggerBackbeatKick(now, 0.88 * beatGain);
@@ -1068,22 +1059,18 @@ export class QuantumSonificationEngine {
       }
 
       // ============================================================
-      // 3. MULTI-TIER PHASE-LOCKED VIRTUOSO SOLO (s -> p -> d)
+      // 3. MULTI-TIER PHASE-LOCKED SOLEMN VIRTUOSO SOLO (s -> p -> d)
       // ============================================================
       if (dExc > 0.04) {
-        // Tier 3: d-polarization excitation (Solo Layer 2: Rapid Virtuoso Arpeggios)
+        // Tier 3: d-polarization excitation (Solo Layer 2: Solemn & Expressive Resonant Swells)
         const soloNote = activeSolo2[this.masterStep % activeSolo2.length];
-        const soloVel = 0.92 * Math.min(1.0, dExc * 1.35);
-        this.playPianoKey(soloNote, this.sixteenthDuration * 1.6, soloVel, false, true);
-
-        // Also add rapid 32nd-note sparkle echo on off-beats
-        const echoNote = activeSolo1[(this.masterStep + 1) % activeSolo1.length];
-        this.playPianoKey(echoNote, this.sixteenthDuration * 0.9, soloVel * 0.45, false, true);
+        const soloVel = 0.78 * Math.min(1.0, dExc * 1.20);
+        this.playPianoKey(soloNote, this.sixteenthDuration * 2.2, soloVel, false, true);
       } else if (pExc > 0.04) {
-        // Tier 2: p-polarization excitation (Solo Layer 1: 16th-Note Scalar Runs)
+        // Tier 2: p-polarization excitation (Solo Layer 1: Solemn Lyrical Contrapuntal Lines)
         const soloNote = activeSolo1[this.masterStep % activeSolo1.length];
-        const soloVel = 0.86 * Math.min(1.0, pExc * 1.25);
-        this.playPianoKey(soloNote, this.sixteenthDuration * 1.8, soloVel, false, true);
+        const soloVel = 0.74 * Math.min(1.0, pExc * 1.15);
+        this.playPianoKey(soloNote, this.sixteenthDuration * 2.4, soloVel, false, true);
       }
 
       // ============================================================
@@ -1092,22 +1079,22 @@ export class QuantumSonificationEngine {
       if (stepInBar % 2 === 0) {
         const arpIdx = Math.floor(stepInBar / 2) % prog.arpeggio.length;
         const arpNote = prog.arpeggio[arpIdx];
-        const arpVel = 0.52 * (0.85 + 0.15 * Math.sin(quantumState.R));
+        const arpVel = 0.52 * (0.85 + 0.15 * Math.sin(quantumState.R || 0));
         this.playPianoKey(arpNote, this.beatDuration * 1.4, arpVel, false);
 
         if (pExc <= 0.25 && dExc <= 0.25 && stepInBar === 0) {
           const melNote = activeMelody[barIndex % activeMelody.length];
-          const melodyVel = 0.78 * (0.85 + 0.2 * quantumState.coherence);
+          const melodyVel = 0.78 * (0.85 + 0.2 * (quantumState.coherence || 0));
           this.playPianoKey(melNote, this.beatDuration * 1.8, melodyVel, false);
         }
       }
     }
 
-    // Dynamic Soundboard Lowpass Modulation by Entropy S_vN
+    // Dynamic Soundboard Warmth Modulation by Entropy S_vN
     const pExcLevel = quantumState.pExcitation || 0.0;
     const dExcLevel = quantumState.dExcitation || 0.0;
-    const brightness = Math.max(2800, Math.min(7800, 3800 + quantumState.entropy * 2400 + pExcLevel * 1800 + dExcLevel * 2400));
-    this.soundboardFilter.frequency.setTargetAtTime(brightness, this.audioCtx.currentTime, 0.05);
+    const brightness = Math.max(2200, Math.min(4400, 3000 + (quantumState.entropy || 0) * 1000 + pExcLevel * 500 + dExcLevel * 700));
+    this.soundboardFilter.frequency.setTargetAtTime(brightness, this.audioCtx.currentTime, 0.06);
   }
 
   getVisualizerData() {
