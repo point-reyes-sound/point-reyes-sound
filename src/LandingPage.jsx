@@ -889,7 +889,7 @@ export default function LandingPage() {
                 onClick={handleExciteWavefunction} 
                 title={pieceInfo.exciteTooltip}
               >
-                <span className="btn-icon">◈</span> {telemetry.dExcitation > 0.05 ? "Excite (d-Wave Solo 2)" : telemetry.pExcitation > 0.05 ? "Excite (p-Wave Solo 1)" : "Excite"}
+                {telemetry.dExcitation > 0.05 ? "Excite (d-Wave)" : telemetry.pExcitation > 0.05 ? "Excite (p-Wave)" : "Excite"}
               </button>
             </div>
 
@@ -948,7 +948,7 @@ export default function LandingPage() {
             {/* Bottom Row: Centered Perturb Button */}
             <div className="controls-action-bottom">
               <button className="perturb-btn" onClick={handlePerturb} title="Perturb 1-RDM non-equilibrium occupation">
-                <span className="btn-icon">☍</span> Perturb
+                Perturb
               </button>
             </div>
           </div>
