@@ -768,7 +768,7 @@ export default function LandingPage() {
       {/* Top Header */}
       <header className="phi-header">
         <div className="phi-title-group">
-          <div className="phi-badge">MULTIMODAL CHEMICAL WORLD</div>
+          <div className="phi-badge">QUANTUM GAS</div>
           <p className="phi-subtitle">
             Quantum kinetic transport, molecular bond dynamics, and phase-locked harmonic sonification.
           </p>
