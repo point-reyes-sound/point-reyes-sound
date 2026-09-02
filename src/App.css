@@ -320,7 +320,108 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
   line-height: 1.7;
   color: var(--text-secondary);
   max-width: 1120px;
-  margin-bottom: 48px;
+  margin-bottom: 28px;
+}
+
+/* EXECUTIVE VC & COMMERCIAL VALUE THESIS CARD */
+.vc-thesis-card {
+  background: linear-gradient(135deg, rgba(6, 20, 14, 0.95), rgba(3, 10, 8, 0.98));
+  border: 1px solid rgba(100, 200, 255, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+  margin-bottom: 36px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 28px rgba(100, 200, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.vc-thesis-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent-cyan);
+}
+
+.vc-thesis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.vc-thesis-badge {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  background: rgba(100, 200, 255, 0.15);
+  border: 1px solid #64c8ff;
+  color: #64c8ff;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.08em;
+}
+
+.vc-thesis-tag {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #35ff82;
+}
+
+.vc-thesis-statement {
+  font-family: var(--font-serif);
+  font-size: 1.32rem;
+  line-height: 1.55;
+  color: #f0fdf4;
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+.vc-impact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.vc-impact-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vc-impact-item strong {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: #35ff82;
+  font-weight: 600;
+}
+
+.vc-impact-item span {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.vc-thesis-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .vc-impact-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* PREPRINT SPOTLIGHT CARD */

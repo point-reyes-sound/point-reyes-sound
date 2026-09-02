@@ -551,6 +551,47 @@ export default function App() {
           Point Reyes Sound is a research pod advancing kinetic transport methods for quantum chemistry.
         </p>
 
+        {/* EXECUTIVE VC & COMMERCIAL VALUE THESIS BANNER */}
+        <div className="vc-thesis-card">
+          <div className="vc-thesis-header">
+            <span className="vc-thesis-badge">COMMERCIAL MOAT & COMPUTE THESIS</span>
+            <span className="vc-thesis-tag">O(N) vs. O(N!) Active Space Scaling</span>
+          </div>
+          <p className="vc-thesis-statement">
+            Replacing months of factorial CASSCF/DMRG supercomputer cluster runtime with minutes of exact Quantum Boltzmann kinetic transport without active space truncation.
+          </p>
+          <div className="vc-impact-grid">
+            <div className="vc-impact-item">
+              <strong>Catalysis & Green Synthesis</strong>
+              <span>Transition-metal biradical bond cleavage & enzymatic active sites</span>
+            </div>
+            <div className="vc-impact-item">
+              <strong>Battery & Materials R&D</strong>
+              <span>Non-equilibrium SEI transport & strongly correlated solid electrolytes</span>
+            </div>
+            <div className="vc-impact-item">
+              <strong>Dedicated Hardware Foundry</strong>
+              <span>FPGA/ASIC transport kernels backed by USISTEF & NSF initiatives</span>
+            </div>
+          </div>
+          <div className="vc-thesis-actions">
+            <button 
+              onClick={openInteractiveLab} 
+              className="action-btn primary"
+              title="Launch 3D Quantum Reaction Simulator"
+            >
+              Launch Interactive 3D Lab &rarr;
+            </button>
+            <button 
+              onClick={() => { setShowSalesModal(true); setSalesSubmitted(false); }} 
+              className="action-btn secondary"
+              title="Request Enterprise Pilot and Seed Deck"
+            >
+              Request Enterprise Pilot & Deck
+            </button>
+          </div>
+        </div>
+
         {/* FEATURED PREPRINT CALLOUT BANNER */}
         <div id="preprint" className="preprint-spotlight-card">
           <div className="spotlight-header">
