@@ -90,6 +90,73 @@ function ElementPreviewCloud({ color, radius }) {
   );
 }
 
+// Helper to get classical piece details and descriptions for all 6 diatomic molecules
+function getPieceDetails(symbol) {
+  switch (symbol) {
+    case "He":
+      return {
+        title: "DEBUSSY'S PREMIÈRE ARABESQUE (E MAJOR)",
+        pieceName: "Debussy's Première Arabesque in E Major",
+        groundDesc: "Debussy's Première Arabesque ground bass & impressionist melody dynamically coupled to closed-shell dispersion, bond stretching, and electronic entropy.",
+        pSoloDesc: "Tier 2 p-wave dipole excitation & 16th-note flowing Debussy Arabesque scalar cascades.",
+        dSoloDesc: "Tier 3 d-wave quadrupole resonance & rapid virtuoso 3-octave shimmering Arabesque flourish.",
+        standbyDesc: "Standby: Click ◈ Excite to sonify phase-locked Debussy's Première Arabesque solo lines.",
+        exciteTooltip: "Excite s -> p -> d multi-tier quantum transitions and play phase-locked Debussy's Première Arabesque solo lines"
+      };
+    case "Li":
+      return {
+        title: "CHOPIN'S NOCTURNE IN E♭ MAJOR, OP. 9 NO. 2",
+        pieceName: "Chopin's Nocturne in E♭ Major",
+        groundDesc: "Chopin's Nocturne in E-flat Major ground bass & warm romantic cantabile dynamically coupled to soft 2s metallic bonding, bond stretching, and entropy.",
+        pSoloDesc: "Tier 2 p-wave dipole excitation & 16th-note lyrical Chopin cantabile turns and scalar ornaments.",
+        dSoloDesc: "Tier 3 d-wave quadrupole resonance & brilliant Chopin 22-tuplet cascading chromatic fiorituras.",
+        standbyDesc: "Standby: Click ◈ Excite to sonify phase-locked Chopin's Nocturne in E-flat Major solo lines.",
+        exciteTooltip: "Excite s -> p -> d multi-tier quantum transitions and play phase-locked Chopin's Nocturne in E-flat Major chromatic fiorituras"
+      };
+    case "C":
+      return {
+        title: "BEETHOVEN'S MOONLIGHT SONATA (C# MINOR, OP. 27 NO. 2)",
+        pieceName: "Beethoven's Moonlight Sonata in C# Minor",
+        groundDesc: "Beethoven's Moonlight Sonata undulating triplet ground bass & haunting theme dynamically coupled to C₂ multireference quadruple correlation, Swan band combustion, and orbital mixing.",
+        pSoloDesc: "Tier 2 p-wave dipole excitation & 16th-note lyrical rising minor waves mirroring Swan band cometary emission.",
+        dSoloDesc: "Tier 3 d-wave quadrupole resonance & fiery Presto agitato sweeping 3-octave virtuosic arpeggio lines.",
+        standbyDesc: "Standby: Click ◈ Excite to sonify phase-locked Beethoven's Moonlight Sonata solo lines.",
+        exciteTooltip: "Excite s -> p -> d multi-tier quantum transitions and play phase-locked Beethoven's Moonlight Sonata Presto agitato solo lines"
+      };
+    case "N":
+      return {
+        title: "J.S. BACH — TOCCATA & FUGUE IN D MINOR (BWV 565)",
+        pieceName: "J.S. Bach's Toccata & Fugue in D Minor",
+        groundDesc: "J.S. Bach's Toccata and Fugue monumental pedal bass & 3-voice contrapuntal architecture dynamically coupled to the indestructible N₂ covalent triple bond.",
+        pSoloDesc: "Tier 2 p-wave dipole excitation & 16th-note 3-voice fugue counterpoint reflecting mutually orthogonal σ + 2π bonding pairs.",
+        dSoloDesc: "Tier 3 d-wave quadrupole resonance & lightning-fast 32nd-note virtuoso toccata cascades.",
+        standbyDesc: "Standby: Click ◈ Excite to sonify phase-locked Bach's Toccata & Fugue solo lines.",
+        exciteTooltip: "Excite s -> p -> d multi-tier quantum transitions and play phase-locked Bach's Toccata and Fugue contrapuntal solo lines"
+      };
+    case "O":
+      return {
+        title: "VIVALDI — SUMMER (PRESTO STORM) IN G MINOR (RV 315)",
+        pieceName: "Vivaldi's Summer (Presto Storm) in G Minor",
+        groundDesc: "Vivaldi's Summer Presto storm bass & driving syncopation dynamically coupled to O₂ open-shell triplet diradical paramagnetism and magnetic spin torque.",
+        pSoloDesc: "Tier 2 p-wave dipole excitation & relentless 16th-note string tremolo capturing dual unpaired parallel electron spins.",
+        dSoloDesc: "Tier 3 d-wave quadrupole resonance & virtuoso dual-spin lightning arpeggio sweeps.",
+        standbyDesc: "Standby: Click ◈ Excite to sonify phase-locked Vivaldi's Summer Storm solo lines.",
+        exciteTooltip: "Excite s -> p -> d multi-tier quantum transitions and play phase-locked Vivaldi's Summer Storm virtuoso solo lines"
+      };
+    case "H":
+    default:
+      return {
+        title: "PACHELBEL'S CANON IN D MAJOR",
+        pieceName: "Pachelbel's Canon in D Major",
+        groundDesc: "Pachelbel's Canon in D ground bass & classical melody dynamically coupled to single covalent orbital populations, bond stretching, and electronic entropy.",
+        pSoloDesc: "Tier 2 p-wave dipole excitation & 16th-note lyrical descending scalar runs.",
+        dSoloDesc: "Tier 3 d-wave quadrupole resonance & double-speed 32nd/16th virtuoso arpeggiated string-crossing flourish.",
+        standbyDesc: "Standby: Click ◈ Excite to sonify phase-locked virtuoso Canon in D solo lines.",
+        exciteTooltip: "Excite s -> p -> d multi-tier quantum transitions and play phase-locked virtuoso Canon in D solo lines"
+      };
+  }
+}
+
 // 3D Diatomic Molecule with Shared Orbital Cloud & Vibrating Nuclei
 function DiatomicMolecularSystem({ simulator, activeElement }) {
   const groupRef = useRef();
@@ -100,6 +167,7 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
   const atomCloud2Ref = useRef();
   const antibondRef = useRef();
   const dWaveRef = useRef();
+  const piCloudRef = useRef();
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
@@ -119,17 +187,18 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
       groupRef.current.rotation.x = Math.sin(t * 0.25) * 0.12;
     }
 
-    // Shared Covalent Bonding Cloud (Concentrates at center when R is small)
+    const isBonded = Math.max(0, 1.0 - (currentR - (activeElement?.radius ? activeElement.radius * 1.5 : 0.74)) / 1.6);
+
+    // Shared Covalent Bonding Cloud
     if (bondCloudRef.current) {
-      const isBonded = Math.max(0, 1.0 - (currentR - 0.74) / 1.5);
       const scaleX = currentR * 1.1 + 0.4;
       const scaleY = (0.9 + 0.25 * Math.sin(simulator.dancePhase)) * (0.5 + 0.5 * isBonded);
       bondCloudRef.current.scale.set(scaleX, scaleY, scaleY);
-      bondCloudRef.current.material.opacity = 0.75 * isBonded;
+      bondCloudRef.current.material.opacity = (activeElement?.symbol === "He" ? 0.25 : 0.75) * isBonded;
     }
 
     // Atomic Localized Clouds (Dominant when dissociated at large R)
-    const isDissociated = Math.min(1.0, Math.max(0, (currentR - 1.1) / 1.2));
+    const isDissociated = Math.min(1.0, Math.max(0, (currentR - 1.2) / 1.3));
     if (atomCloud1Ref.current) {
       atomCloud1Ref.current.material.opacity = 0.15 + 0.65 * isDissociated;
     }
@@ -153,9 +222,18 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
       dWaveRef.current.rotation.x += 0.025;
       dWaveRef.current.scale.set(1 + dExc * 0.5, 1 + dExc * 0.5, 1 + dExc * 0.5);
     }
+
+    // Specialized Pi/Spin cloud for C, N, O
+    if (piCloudRef.current) {
+      const sym = activeElement?.symbol;
+      const hasPiOrSpin = (sym === "C" || sym === "N" || sym === "O");
+      piCloudRef.current.material.opacity = hasPiOrSpin ? (0.35 + 0.35 * isBonded) : 0.0;
+      piCloudRef.current.rotation.z = t * 0.5;
+    }
   });
 
   const elColor = activeElement?.color || "#35ff82";
+  const sym = activeElement?.symbol || "H";
 
   return (
     <group ref={groupRef}>
@@ -163,7 +241,7 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
       <pointLight position={[5, 5, 5]} intensity={1.6} color="#ffffff" />
       <pointLight position={[-5, -5, -5]} intensity={0.9} color={elColor} />
 
-      {/* Nucleus 1 (Proton) */}
+      {/* Nucleus 1 */}
       <mesh ref={atom1Ref} position={[-1, 0, 0]}>
         <sphereGeometry args={[0.34, 32, 32]} />
         <meshStandardMaterial
@@ -175,7 +253,7 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
         />
       </mesh>
 
-      {/* Nucleus 2 (Proton) */}
+      {/* Nucleus 2 */}
       <mesh ref={atom2Ref} position={[1, 0, 0]}>
         <sphereGeometry args={[0.34, 32, 32]} />
         <meshStandardMaterial
@@ -187,7 +265,7 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
         />
       </mesh>
 
-      {/* Localized 1s Atomic Clouds (Visible at larger R) */}
+      {/* Localized Atomic Clouds (Visible at larger R) */}
       <mesh ref={atomCloud1Ref} position={[-1, 0, 0]}>
         <sphereGeometry args={[0.75, 32, 32]} />
         <meshStandardMaterial
@@ -214,7 +292,7 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
         />
       </mesh>
 
-      {/* Bonding Sigma_g Orbital Probability Cloud (Emerald Delocalized Lobe) */}
+      {/* Bonding Sigma_g Orbital Probability Cloud */}
       <mesh ref={bondCloudRef} position={[0, 0, 0]}>
         <sphereGeometry args={[1.05, 48, 48]} />
         <meshStandardMaterial
@@ -226,6 +304,20 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           roughness={0.25}
+        />
+      </mesh>
+
+      {/* Specialized Multi-Bond / Pi-orbital / Triplet-spin structure for C2, N2, O2 */}
+      <mesh ref={piCloudRef} position={[0, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <torusGeometry args={[1.15, sym === "N" ? 0.28 : 0.20, 16, 48]} />
+        <meshStandardMaterial
+          color={sym === "C" ? "#10b981" : sym === "N" ? "#818cf8" : sym === "O" ? "#f43f5e" : elColor}
+          emissive={sym === "C" ? "#059669" : sym === "N" ? "#6366f1" : sym === "O" ? "#e11d48" : elColor}
+          emissiveIntensity={1.0}
+          transparent={true}
+          opacity={0.0}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
         />
       </mesh>
 
@@ -331,7 +423,13 @@ export default function LandingPage() {
     setActiveElement(el);
     const molName = `${el.symbol}₂`;
     setMoleculeName(molName);
-    const req = el.symbol === "H" ? 0.74 : el.symbol === "He" ? 2.97 : el.symbol === "Li" ? 2.67 : el.symbol === "N" ? 1.09 : el.symbol === "O" ? 1.21 : 1.5;
+    const req = el.symbol === "H" ? 0.74 
+      : el.symbol === "He" ? 2.97 
+      : el.symbol === "Li" ? 2.67 
+      : el.symbol === "C" ? 1.24 
+      : el.symbol === "N" ? 1.09 
+      : el.symbol === "O" ? 1.21 
+      : 1.5;
     setBondDistance(req);
     
     if (audioRef.current) {
@@ -438,14 +536,27 @@ export default function LandingPage() {
         simRef.current.step(dt, beatPulse);
 
         const currentR = simRef.current.getCurrentBondLength();
+        const req = simRef.current.R_eq || 0.74;
 
-        // Update bond formation state description without parenthetical text
-        if (currentR > 1.9) {
+        // Dynamic element-specific bond regime status
+        if (currentR > req * 1.55) {
           setBondStateStatus("DISSOCIATED ATOMS");
-        } else if (currentR > 1.1) {
+        } else if (currentR > req * 1.15) {
           setBondStateStatus("TRANSITION REGIME");
         } else {
-          setBondStateStatus(activeElement.symbol === "He" ? "VAN DER WAALS DIMER" : "COVALENT BOND FORMED");
+          setBondStateStatus(
+            activeElement.symbol === "He"
+              ? "VAN DER WAALS DIMER"
+              : activeElement.symbol === "C"
+                ? "MULTIREFERENCE COVALENT"
+                : activeElement.symbol === "N"
+                  ? "TRIPLE BOND FORMED"
+                  : activeElement.symbol === "O"
+                    ? "PARAMAGNETIC TRIPLET"
+                    : activeElement.symbol === "Li"
+                      ? "METALLIC COVALENT"
+                      : "COVALENT BOND FORMED"
+          );
         }
 
         setTelemetry({
@@ -475,6 +586,8 @@ export default function LandingPage() {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
     };
   }, []);
+
+  const pieceInfo = getPieceDetails(activeElement.symbol);
 
   // Ocean Blue Color Lookup Helper with smooth transitions
   const getOceanBlueColor = (val) => {
@@ -774,11 +887,7 @@ export default function LandingPage() {
               <button 
                 className={`excite-btn ${telemetry.dExcitation > 0.05 ? 'd-active' : telemetry.pExcitation > 0.05 ? 'p-active' : ''}`} 
                 onClick={handleExciteWavefunction} 
-                title={activeElement.symbol === "Li"
-                  ? "Excite s -> p -> d multi-tier quantum transitions and play phase-locked Chopin's Nocturne in E-flat Major chromatic fiorituras"
-                  : activeElement.symbol === "He"
-                    ? "Excite s -> p -> d multi-tier quantum transitions and play phase-locked Debussy's Première Arabesque solo lines"
-                    : "Excite s -> p -> d multi-tier quantum transitions and play phase-locked virtuoso Canon in D solo lines"}
+                title={pieceInfo.exciteTooltip}
               >
                 <span className="btn-icon">◈</span> {telemetry.dExcitation > 0.05 ? "Excite (d-Wave Solo 2)" : telemetry.pExcitation > 0.05 ? "Excite (p-Wave Solo 1)" : "Excite"}
               </button>
@@ -900,22 +1009,10 @@ export default function LandingPage() {
           </div>
           <div className="acoustic-footer-note">
             {telemetry.dExcitation > 0.05 
-              ? (activeElement.symbol === "Li"
-                  ? "Tier 3 d-wave quadrupole resonance & brilliant Chopin 22-tuplet cascading chromatic fiorituras."
-                  : activeElement.symbol === "He"
-                    ? "Tier 3 d-wave quadrupole resonance & rapid virtuoso 3-octave shimmering Arabesque flourish."
-                    : "Tier 3 d-wave quadrupole resonance & double-speed 32nd/16th virtuoso arpeggiated string-crossing flourish.")
+              ? pieceInfo.dSoloDesc
               : telemetry.pExcitation > 0.05 
-                ? (activeElement.symbol === "Li"
-                    ? "Tier 2 p-wave dipole excitation & 16th-note lyrical Chopin cantabile turns and scalar ornaments."
-                    : activeElement.symbol === "He"
-                      ? "Tier 2 p-wave dipole excitation & 16th-note flowing Debussy Arabesque scalar cascades."
-                      : "Tier 2 p-wave dipole excitation & 16th-note lyrical descending scalar runs.")
-                : (activeElement.symbol === "Li"
-                    ? "Standby: Click ◈ Excite to sonify phase-locked Chopin's Nocturne in E-flat Major solo lines."
-                    : activeElement.symbol === "He"
-                      ? "Standby: Click ◈ Excite to sonify phase-locked Debussy's Première Arabesque solo lines."
-                      : "Standby: Click ◈ Excite to sonify phase-locked virtuoso Canon in D solo lines.")}
+                ? pieceInfo.pSoloDesc
+                : pieceInfo.standbyDesc}
           </div>
         </div>
 
@@ -923,25 +1020,15 @@ export default function LandingPage() {
         <div className="chamber-card acoustic-card ground-deck-card">
           <div className="card-top-bar">
             <div className="card-tag">GROUND ACOUSTIC FIELD SPECTRUM S_ground[f(t)]</div>
-            <span className="status-tag">
-              {isAudioActive 
-                ? (activeElement.symbol === "Li"
-                    ? "CHOPIN'S NOCTURNE IN E♭ ACTIVE"
-                    : activeElement.symbol === "He" 
-                      ? "DEBUSSY'S PREMIÈRE ARABESQUE ACTIVE" 
-                      : "PACHELBEL'S CANON IN D ACTIVE") 
-                : "MUTED"}
+            <span className={`status-tag ${isAudioActive ? 'highlight-emerald' : 'status-muted'}`}>
+              {isAudioActive ? "ACTIVE" : "MUTED"}
             </span>
           </div>
           <div className="scope-canvas-wrapper">
             <canvas ref={scopeCanvasRef} width={520} height={80} className="scope-canvas" />
           </div>
           <div className="acoustic-footer-note">
-            {activeElement.symbol === "Li"
-              ? "Chopin's Nocturne in E-flat Major ground bass & warm romantic cantabile dynamically coupled to soft 2s metallic bonding, bond stretching, and entropy."
-              : activeElement.symbol === "He"
-                ? "Debussy's Première Arabesque ground bass & impressionist melody dynamically coupled to closed-shell dispersion, bond stretching, and electronic entropy."
-                : "Canon in D ground bass & classical melody dynamically coupled to orbital populations, bond stretching, and electronic entropy."}
+            {pieceInfo.groundDesc}
           </div>
         </div>
       </div>

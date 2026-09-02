@@ -315,12 +315,300 @@ const CHOPIN_NOCTURNE_SOLO_LAYER_2 = [
   N.Bb5, N.Ab5, N.G5, N.F5, N.Eb5, N.D5, N.C5, N.Bb4
 ];
 
+// ============================================================================
+// 4. LUDWIG VAN BEETHOVEN — MOONLIGHT SONATA IN C# MINOR, OP. 27 NO. 2 (For C₂ / Multireference Quadruple Character)
+// ============================================================================
+const BEETHOVEN_MOONLIGHT_PROGRESSION = [
+  // 1. C# Minor (Ground Triplet Wave): Deep Bass (C#1 + G#1 + C#2), Chords (G#3, C#4, E4, G#4)
+  {
+    bassRoot: N.Cs1, bassOctave: N.Cs2, bassFifth: N.Gs1,
+    arpeggio: [N.Gs3, N.Cs4, N.E4, N.Gs4],
+    name: "C# Minor"
+  },
+  // 2. C# Minor / B (Static Correlation Shift): Bass (B1 + F#2 + B2), Chords (G#3, C#4, E4, B4)
+  {
+    bassRoot: N.B1, bassOctave: N.B2, bassFifth: N.Fs2,
+    arpeggio: [N.Gs3, N.Cs4, N.E4, N.B4],
+    name: "C#m / B"
+  },
+  // 3. A Major (Submediant Orbital Mixing): Bass (A1 + E2 + A2), Chords (A3, C#4, E4, A4)
+  {
+    bassRoot: N.A1, bassOctave: N.A2, bassFifth: N.E2,
+    arpeggio: [N.A3, N.Cs4, N.E4, N.A4],
+    name: "A Major"
+  },
+  // 4. F# Minor (Swan Band Combustion): Bass (F#1 + C#2 + F#2), Chords (A3, C#4, F#4, A4)
+  {
+    bassRoot: N.Fs1, bassOctave: N.Fs2, bassFifth: N.Cs2,
+    arpeggio: [N.A3, N.Cs4, N.Fs4, N.A4],
+    name: "F# Minor"
+  },
+  // 5. G# Dominant 7 (Strong Hybridization): Bass (G#1 + D#2 + G#2), Chords (Gs3, C4, Ds4, Fs4)
+  {
+    bassRoot: N.Gs1, bassOctave: N.Gs2, bassFifth: N.Ds2,
+    arpeggio: [N.Gs3, N.C4, N.Ds4, N.Fs4],
+    name: "G#7"
+  },
+  // 6. C# Minor (Core Return): Bass (C#1 + G#1 + C#2), Chords (G#3, C#4, E4, C#5)
+  {
+    bassRoot: N.Cs1, bassOctave: N.Cs2, bassFifth: N.Gs1,
+    arpeggio: [N.Gs3, N.Cs4, N.E4, N.Cs5],
+    name: "C# Minor"
+  },
+  // 7. D Major (Neapolitan bII / Multireference CI Mixing): Bass (D1 + A1 + D2), Chords (F#3, A3, D4, F#4)
+  {
+    bassRoot: N.D1, bassOctave: N.D2, bassFifth: N.A1,
+    arpeggio: [N.Fs3, N.A3, N.D4, N.Fs4],
+    name: "D Major (Neapolitan)"
+  },
+  // 8. G#7 -> C#m Cadence: Bass (G#1 + D#2 + C#2), Chords (G#3, C#4, D#4, G#4)
+  {
+    bassRoot: N.Gs1, bassOctave: N.Cs2, bassFifth: N.Ds2,
+    arpeggio: [N.Gs3, N.Cs4, N.Ds4, N.Gs4],
+    name: "G#7 -> C#m"
+  }
+];
+
+const BEETHOVEN_MOONLIGHT_MELODY = [
+  N.Gs4, N.Gs4, N.A4, N.Fs4, N.Gs4, N.E4, N.Ds4, N.Cs4
+];
+
+const BEETHOVEN_MOONLIGHT_SOLO_LAYER_1 = [
+  // Bar 1 (C# Minor) - 16th-note lyrical rising wave
+  N.Gs4, N.Cs5, N.E5, N.Gs5, N.Cs6, N.Gs5, N.E5, N.Cs5,
+  // Bar 2 (C#m / B)
+  N.B4, N.Cs5, N.E5, N.Gs5, N.B5, N.Gs5, N.E5, N.Cs5,
+  // Bar 3 (A Major)
+  N.A4, N.Cs5, N.E5, N.A5, N.Cs6, N.A5, N.E5, N.Cs5,
+  // Bar 4 (F# Minor)
+  N.Fs4, N.A4, N.Cs5, N.Fs5, N.A5, N.Fs5, N.Cs5, N.A4,
+  // Bar 5 (G#7)
+  N.Gs4, N.C5, N.Ds5, N.Fs5, N.Gs5, N.Fs5, N.Ds5, N.C5,
+  // Bar 6 (C# Minor)
+  N.Cs5, N.E5, N.Gs5, N.Cs6, N.E6, N.Cs6, N.Gs5, N.E5,
+  // Bar 7 (D Major Neapolitan)
+  N.D5, N.Fs5, N.A5, N.D6, N.Fs6, N.D6, N.A5, N.Fs5,
+  // Bar 8 (G#7 -> C#m)
+  N.Gs5, N.Fs5, N.E5, N.Ds5, N.Cs5, N.B4, N.A4, N.Gs4
+];
+
+const BEETHOVEN_MOONLIGHT_SOLO_LAYER_2 = [
+  // Bar 1 (C# Minor - Presto agitato virtuosic arpeggio)
+  N.Cs4, N.E4, N.Gs4, N.Cs5, N.E5, N.Gs5, N.Cs6, N.Gs5,
+  // Bar 2 (C#m / B)
+  N.B3, N.E4, N.Gs4, N.B4, N.E5, N.Gs5, N.B5, N.Gs5,
+  // Bar 3 (A Major)
+  N.A3, N.Cs4, N.E4, N.A4, N.Cs5, N.E5, N.A5, N.E5,
+  // Bar 4 (F# Minor)
+  N.Fs3, N.A3, N.Cs4, N.Fs4, N.A4, N.Cs5, N.Fs5, N.Cs5,
+  // Bar 5 (G#7)
+  N.Gs3, N.C4, N.Ds4, N.Gs4, N.C5, N.Ds5, N.Gs5, N.Ds5,
+  // Bar 6 (C# Minor)
+  N.Cs4, N.E4, N.Gs4, N.Cs5, N.E5, N.Gs5, N.Cs6, N.E6,
+  // Bar 7 (D Major Neapolitan)
+  N.D4, N.Fs4, N.A4, N.D5, N.Fs5, N.A5, N.D6, N.Fs6,
+  // Bar 8 (G#7 -> C#m cascade)
+  N.Gs6, N.Ds6, N.C6, N.Gs5, N.Ds5, N.C5, N.Gs4, N.Cs4
+];
+
+// ============================================================================
+// 5. JOHANN SEBASTIAN BACH — TOCCATA AND FUGUE IN D MINOR, BWV 565 (For N₂ / Indestructible Triple Bond)
+// ============================================================================
+const BACH_TOCCATA_PROGRESSION = [
+  // 1. D Minor (Monumental Covalent Triple Fortress): Heavy Bass (D1 + A1 + D2), Chords (F3, A3, D4, F4)
+  {
+    bassRoot: N.D1, bassOctave: N.D2, bassFifth: N.A1,
+    arpeggio: [N.F3, N.A3, N.D4, N.F4],
+    name: "D Minor (Toccata)"
+  },
+  // 2. C Major (Contrapuntal Motion): Bass (C2 + G2 + C3), Chords (E3, G3, C4, E4)
+  {
+    bassRoot: N.C2, bassOctave: N.C3, bassFifth: N.G2,
+    arpeggio: [N.E3, N.G3, N.C4, N.E4],
+    name: "C Major"
+  },
+  // 3. Bb Major (High Structural Integrity): Bass (Bb1 + F2 + Bb2), Chords (D3, F3, Bb3, D4)
+  {
+    bassRoot: N.Bb1, bassOctave: N.Bb2, bassFifth: N.F2,
+    arpeggio: [N.D3, N.F3, N.Bb3, N.D4],
+    name: "Bb Major"
+  },
+  // 4. G Minor (Triple Voice Polyphony): Bass (G1 + D2 + G2), Chords (D3, G3, Bb3, D4)
+  {
+    bassRoot: N.G1, bassOctave: N.G2, bassFifth: N.D2,
+    arpeggio: [N.D3, N.G3, N.Bb3, N.D4],
+    name: "G Minor"
+  },
+  // 5. A Dominant 7 (Rigid Potential Well): Bass (A1 + E2 + A2), Chords (Cs3, E3, G3, A3)
+  {
+    bassRoot: N.A1, bassOctave: N.A2, bassFifth: N.E2,
+    arpeggio: [N.Cs3, N.E3, N.G3, N.A3],
+    name: "A7"
+  },
+  // 6. D Minor (Fugue Subject Theme): Bass (D1 + A1 + D2), Chords (A2, D3, F3, A3)
+  {
+    bassRoot: N.D1, bassOctave: N.D2, bassFifth: N.A1,
+    arpeggio: [N.A2, N.D3, N.F3, N.A3],
+    name: "D Minor"
+  },
+  // 7. Gm6 / E (Diminished Covalent Stiffening): Bass (E1 + Bb1 + E2), Chords (E3, G3, Bb3, Cs4)
+  {
+    bassRoot: N.E1, bassOctave: N.E2, bassFifth: N.Bb1,
+    arpeggio: [N.E3, N.G3, N.Bb3, N.Cs4],
+    name: "Gm6 / E"
+  },
+  // 8. D Major (Grand Picardy Third Cadence): Bass (D1 + A1 + D2), Chords (F#3, A3, D4, F#4)
+  {
+    bassRoot: N.D1, bassOctave: N.D2, bassFifth: N.A1,
+    arpeggio: [N.Fs3, N.A3, N.D4, N.Fs4],
+    name: "D Major / Picardy"
+  }
+];
+
+const BACH_TOCCATA_MELODY = [
+  N.A4, N.G4, N.F4, N.E4, N.D4, N.A4, N.Cs4, N.D4
+];
+
+const BACH_TOCCATA_SOLO_LAYER_1 = [
+  // Bar 1 (D Minor) - 16th-note 3-Voice Fugue Counterpoint
+  N.A4, N.G4, N.A4, N.D5, N.Cs5, N.D5, N.E5, N.F5,
+  // Bar 2 (C Major)
+  N.G5, N.F5, N.E5, N.D5, N.C5, N.B4, N.C5, N.D5,
+  // Bar 3 (Bb Major)
+  N.F5, N.E5, N.D5, N.C5, N.Bb4, N.A4, N.Bb4, N.C5,
+  // Bar 4 (G Minor)
+  N.D5, N.C5, N.Bb4, N.A4, N.G4, N.Fs4, N.G4, N.A4,
+  // Bar 5 (A7)
+  N.Cs5, N.D5, N.E5, N.F5, N.G5, N.A5, N.G5, N.F5,
+  // Bar 6 (D Minor)
+  N.F5, N.E5, N.D5, N.Cs5, N.D5, N.E5, N.F5, N.G5,
+  // Bar 7 (Gm6 / E)
+  N.E5, N.G5, N.Bb5, N.A5, N.G5, N.F5, N.E5, N.D5,
+  // Bar 8 (D Major)
+  N.Cs5, N.D5, N.E5, N.D5, N.Cs5, N.B4, N.Cs5, N.D5
+];
+
+const BACH_TOCCATA_SOLO_LAYER_2 = [
+  // Bar 1 (D Minor - Virtuoso Toccata 32nd-note Cascades)
+  N.D5, N.A5, N.F5, N.D5, N.A4, N.F4, N.D4, N.A3,
+  // Bar 2 (C Major)
+  N.C5, N.G5, N.E5, N.C5, N.G4, N.E4, N.C4, N.G3,
+  // Bar 3 (Bb Major)
+  N.Bb4, N.F5, N.D5, N.Bb4, N.F4, N.D4, N.Bb3, N.F3,
+  // Bar 4 (G Minor)
+  N.G4, N.D5, N.Bb4, N.G4, N.D4, N.Bb3, N.G3, N.D3,
+  // Bar 5 (A7)
+  N.A4, N.Cs5, N.E5, N.G5, N.A5, N.G5, N.E5, N.Cs5,
+  // Bar 6 (D Minor)
+  N.D5, N.F5, N.A5, N.D6, N.A5, N.F5, N.D5, N.A4,
+  // Bar 7 (Gm6 / E)
+  N.E5, N.G5, N.Bb5, N.Cs6, N.E6, N.Cs6, N.Bb5, N.G5,
+  // Bar 8 (D Major Grand Finale)
+  N.D6, N.A5, N.Fs5, N.D5, N.A4, N.Fs4, N.D4, N.D3
+];
+
+// ============================================================================
+// 6. ANTONIO VIVALDI — SUMMER (PRESTO STORM) IN G MINOR, RV 315 (For O₂ / Paramagnetic Triplet Radical)
+// ============================================================================
+const VIVALDI_SUMMER_PROGRESSION = [
+  // 1. G Minor (Driving Triplet Spin Bass): Relentless Bass (G1 + D2 + G2), Chords (G3, Bb3, D4, G4)
+  {
+    bassRoot: N.G1, bassOctave: N.G2, bassFifth: N.D2,
+    arpeggio: [N.G3, N.Bb3, N.D4, N.G4],
+    name: "G Minor"
+  },
+  // 2. D Dominant 7 (Paramagnetic Magnetic Torque): Bass (D1 + A1 + D2), Chords (F#3, A3, C4, D4)
+  {
+    bassRoot: N.D1, bassOctave: N.D2, bassFifth: N.A1,
+    arpeggio: [N.Fs3, N.A3, N.C4, N.D4],
+    name: "D7"
+  },
+  // 3. G Minor (Radical Resonance): Bass (G1 + D2 + G2), Chords (G3, Bb3, D4, Bb4)
+  {
+    bassRoot: N.G1, bassOctave: N.G2, bassFifth: N.D2,
+    arpeggio: [N.G3, N.Bb3, N.D4, N.Bb4],
+    name: "G Minor"
+  },
+  // 4. C Minor (Subdominant Spin-Flip): Bass (C1 + G1 + C2), Chords (Eb3, G3, C4, Eb4)
+  {
+    bassRoot: N.C1, bassOctave: N.C2, bassFifth: N.G1,
+    arpeggio: [N.Eb3, N.G3, N.C4, N.Eb4],
+    name: "C Minor"
+  },
+  // 5. F Dominant 7 (Singlet Oxygen Photochemical Shift): Bass (F1 + C2 + F2), Chords (Eb3, F3, A3, C4)
+  {
+    bassRoot: N.F1, bassOctave: N.F2, bassFifth: N.C2,
+    arpeggio: [N.Eb3, N.F3, N.A3, N.C4],
+    name: "F7"
+  },
+  // 6. Bb Major (Relative Major Luminous Excursion): Bass (Bb1 + F2 + Bb2), Chords (D3, F3, Bb3, D4)
+  {
+    bassRoot: N.Bb1, bassOctave: N.Bb2, bassFifth: N.F2,
+    arpeggio: [N.D3, N.F3, N.Bb3, N.D4],
+    name: "Bb Major"
+  },
+  // 7. Eb Major -> D7 (Relentless Storm Surge): Bass (Eb1 + Bb1 + Eb2), Chords (Eb3, G3, Bb3, Eb4)
+  {
+    bassRoot: N.Eb1, bassOctave: N.Eb2, bassFifth: N.Bb1,
+    arpeggio: [N.Eb3, N.G3, N.Bb3, N.Eb4],
+    name: "Eb Major"
+  },
+  // 8. D7 -> Gm (Dramatic Lightning Cadence): Bass (D1 + A1 + G1), Chords (F#3, A3, C4, G4)
+  {
+    bassRoot: N.D1, bassOctave: N.G1, bassFifth: N.A1,
+    arpeggio: [N.Fs3, N.A3, N.C4, N.G4],
+    name: "D7 -> Gm"
+  }
+];
+
+const VIVALDI_SUMMER_MELODY = [
+  N.G4, N.D4, N.Bb4, N.A4, N.G4, N.F4, N.Eb4, N.D4
+];
+
+const VIVALDI_SUMMER_SOLO_LAYER_1 = [
+  // Bar 1 (G Minor) - Relentless 16th-note string tremolo
+  N.G4, N.G4, N.Bb4, N.Bb4, N.D5, N.D5, N.G5, N.G5,
+  // Bar 2 (D7)
+  N.Fs5, N.Fs5, N.D5, N.D5, N.C5, N.C5, N.A4, N.A4,
+  // Bar 3 (G Minor)
+  N.G4, N.Bb4, N.D5, N.G5, N.Bb5, N.G5, N.D5, N.Bb4,
+  // Bar 4 (C Minor)
+  N.C5, N.Eb5, N.G5, N.C6, N.Eb6, N.C6, N.G5, N.Eb5,
+  // Bar 5 (F7)
+  N.F5, N.A5, N.C6, N.Eb6, N.F6, N.Eb6, N.C6, N.A5,
+  // Bar 6 (Bb Major)
+  N.Bb5, N.D6, N.F6, N.Bb6, N.F6, N.D6, N.Bb5, N.F5,
+  // Bar 7 (Eb Major)
+  N.Eb5, N.G5, N.Bb5, N.Eb6, N.D6, N.C6, N.Bb5, N.A5,
+  // Bar 8 (D7 -> Gm)
+  N.D5, N.Fs5, N.A5, N.C6, N.Bb5, N.A5, N.G5, N.Fs5
+];
+
+const VIVALDI_SUMMER_SOLO_LAYER_2 = [
+  // Bar 1 (G Minor - Virtuoso dual-spin lightning arpeggios)
+  N.G5, N.D5, N.Bb5, N.G5, N.D6, N.Bb5, N.G6, N.D6,
+  // Bar 2 (D7)
+  N.Fs6, N.D6, N.A5, N.Fs5, N.C6, N.A5, N.Fs5, N.D5,
+  // Bar 3 (G Minor)
+  N.G5, N.Bb5, N.D6, N.G6, N.D6, N.Bb5, N.G5, N.D5,
+  // Bar 4 (C Minor)
+  N.C5, N.Eb5, N.G5, N.C6, N.Eb6, N.G6, N.C6, N.Eb6,
+  // Bar 5 (F7)
+  N.F5, N.A5, N.C6, N.F6, N.A6, N.F6, N.C6, N.A5,
+  // Bar 6 (Bb Major)
+  N.Bb5, N.D6, N.F6, N.Bb6, N.F6, N.D6, N.Bb5, N.F5,
+  // Bar 7 (Eb Major)
+  N.Eb6, N.Bb5, N.G5, N.Eb5, N.D6, N.A5, N.Fs5, N.D5,
+  // Bar 8 (D7 -> Gm Grand Storm Lightning)
+  N.G6, N.D6, N.Bb5, N.G5, N.D5, N.Bb4, N.G4, N.G3
+];
+
 export class QuantumSonificationEngine {
   constructor() {
     this.audioCtx = null;
     this.isPlaying = false;
     this.volume = 0.85;
-    this.currentPiece = "canon"; // "canon" (H2 default) or "arabesque" (He2)
+    this.currentPiece = "canon"; // "canon", "arabesque", "chopin", "moonlight", "bach", "vivaldi"
 
     // Master Nodes
     this.masterGain = null;
@@ -680,6 +968,12 @@ export class QuantumSonificationEngine {
       this.currentPiece = "arabesque";
     } else if (symbol === "Li") {
       this.currentPiece = "chopin";
+    } else if (symbol === "C") {
+      this.currentPiece = "moonlight";
+    } else if (symbol === "N") {
+      this.currentPiece = "bach";
+    } else if (symbol === "O") {
+      this.currentPiece = "vivaldi";
     } else {
       this.currentPiece = "canon";
     }
@@ -700,30 +994,38 @@ export class QuantumSonificationEngine {
       this.masterStep = (this.masterStep + 1) % 64; // 64 16th-notes per 8-measure progression
       const now = this.audioCtx.currentTime;
 
-      // Select active score arrays based on molecule (Canon in D vs Debussy Arabesque vs Chopin Nocturne)
-      const activeProgression = this.currentPiece === "chopin"
-        ? CHOPIN_NOCTURNE_PROGRESSION
-        : this.currentPiece === "arabesque" 
-          ? ARABESQUE_PROGRESSION 
-          : CANON_PROGRESSION;
+      // Select active score arrays based on molecule
+      let activeProgression = CANON_PROGRESSION;
+      let activeMelody = CANON_MELODY;
+      let activeSolo1 = CANON_SOLO_LAYER_1;
+      let activeSolo2 = CANON_SOLO_LAYER_2;
 
-      const activeMelody = this.currentPiece === "chopin"
-        ? CHOPIN_NOCTURNE_MELODY
-        : this.currentPiece === "arabesque" 
-          ? ARABESQUE_MELODY 
-          : CANON_MELODY;
-
-      const activeSolo1 = this.currentPiece === "chopin"
-        ? CHOPIN_NOCTURNE_SOLO_LAYER_1
-        : this.currentPiece === "arabesque" 
-          ? ARABESQUE_SOLO_LAYER_1 
-          : CANON_SOLO_LAYER_1;
-
-      const activeSolo2 = this.currentPiece === "chopin"
-        ? CHOPIN_NOCTURNE_SOLO_LAYER_2
-        : this.currentPiece === "arabesque" 
-          ? ARABESQUE_SOLO_LAYER_2 
-          : CANON_SOLO_LAYER_2;
+      if (this.currentPiece === "chopin") {
+        activeProgression = CHOPIN_NOCTURNE_PROGRESSION;
+        activeMelody = CHOPIN_NOCTURNE_MELODY;
+        activeSolo1 = CHOPIN_NOCTURNE_SOLO_LAYER_1;
+        activeSolo2 = CHOPIN_NOCTURNE_SOLO_LAYER_2;
+      } else if (this.currentPiece === "arabesque") {
+        activeProgression = ARABESQUE_PROGRESSION;
+        activeMelody = ARABESQUE_MELODY;
+        activeSolo1 = ARABESQUE_SOLO_LAYER_1;
+        activeSolo2 = ARABESQUE_SOLO_LAYER_2;
+      } else if (this.currentPiece === "moonlight") {
+        activeProgression = BEETHOVEN_MOONLIGHT_PROGRESSION;
+        activeMelody = BEETHOVEN_MOONLIGHT_MELODY;
+        activeSolo1 = BEETHOVEN_MOONLIGHT_SOLO_LAYER_1;
+        activeSolo2 = BEETHOVEN_MOONLIGHT_SOLO_LAYER_2;
+      } else if (this.currentPiece === "bach") {
+        activeProgression = BACH_TOCCATA_PROGRESSION;
+        activeMelody = BACH_TOCCATA_MELODY;
+        activeSolo1 = BACH_TOCCATA_SOLO_LAYER_1;
+        activeSolo2 = BACH_TOCCATA_SOLO_LAYER_2;
+      } else if (this.currentPiece === "vivaldi") {
+        activeProgression = VIVALDI_SUMMER_PROGRESSION;
+        activeMelody = VIVALDI_SUMMER_MELODY;
+        activeSolo1 = VIVALDI_SUMMER_SOLO_LAYER_1;
+        activeSolo2 = VIVALDI_SUMMER_SOLO_LAYER_2;
+      }
 
       // Each bar = 8 sixteenth-note steps (2 beats = 8 sixteenths)
       const barIndex = Math.floor(this.masterStep / 8) % activeProgression.length;
