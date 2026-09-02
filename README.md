@@ -1,16 +1,30 @@
-# React + Vite
+# Point Reyes Sound
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Web application for quantum kinetic simulation, molecular bond dynamics, and phase-space sonification.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The platform couples quantum kinetic transport calculations with audio synthesis to model diatomic systems ($\text{H}_2, \text{He}_2, \text{Li}_2, \text{C}_2, \text{N}_2, \text{O}_2$):
 
-## React Compiler
+- **Quantum Boltzmann Solver**: Computes Morse potential curves, BGK relaxation, 2D Wigner distributions $W(z, p_z; R)$, non-adiabatic coherence, and von Neumann entropy $S_{\text{vN}}$.
+- **Acoustic Engine**: Synthesizes polyphonic compositions mapped to electronic state transitions ($s \to p \to d$), driving spectral analyzers for ground and excited states.
+- **Molecular Visualization**: Renders electron density $\rho(\mathbf{r})$, orbital geometry, and internuclear distance $R$ in 3D.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack
 
-## Expanding the ESLint configuration
+- **Frontend**: React, Vite, Three.js, React Three Fiber
+- **Audio**: Web Audio API
+- **Simulation**: Quantum Boltzmann kinetic engine with PySCF integration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start local server
+npm run dev
+
+# Build production bundle
+npm run build
+```
