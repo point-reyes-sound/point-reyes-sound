@@ -357,7 +357,6 @@ export default function LandingPage() {
   const [moleculeName, setMoleculeName] = useState("H₂");
   const [isAudioActive, setIsAudioActive] = useState(true);
   const [volume, setVolume] = useState(0.8);
-  const [excitedVolume, setExcitedVolume] = useState(1.0);
   const [bondDistance, setBondDistance] = useState(0.74);
   const [temperature, setTemperature] = useState(0.05);
   const [relaxationRate, setRelaxationRate] = useState(0.20);
@@ -470,12 +469,6 @@ export default function LandingPage() {
     const val = parseFloat(e.target.value);
     setVolume(val);
     if (audioRef.current) audioRef.current.setVolume(val);
-  };
-
-  const handleExcitedVolumeChange = (e) => {
-    const val = parseFloat(e.target.value);
-    setExcitedVolume(val);
-    if (audioRef.current) audioRef.current.setExcitedVolume(val);
   };
 
   const handleBondChange = (e) => {
@@ -820,7 +813,7 @@ export default function LandingPage() {
             </button>
             
             <div className="volume-slider-group">
-              <span className="vol-label" title="Ground & Master Volume">VOL</span>
+              <span className="vol-label">VOL</span>
               <PWaveSlider 
                 min={0} 
                 max={1} 
@@ -828,18 +821,6 @@ export default function LandingPage() {
                 value={volume} 
                 onChange={handleVolumeChange} 
                 className="vol-pwave-slider"
-              />
-            </div>
-
-            <div className="volume-slider-group excited-vol-group">
-              <span className="vol-label exc-vol-label" title="Excited State Volume Multiplier (p & d wave levels)">EXC</span>
-              <PWaveSlider 
-                min={0.2} 
-                max={2.2} 
-                step={0.02} 
-                value={excitedVolume} 
-                onChange={handleExcitedVolumeChange} 
-                className="vol-pwave-slider exc-slider"
               />
             </div>
           </div>
