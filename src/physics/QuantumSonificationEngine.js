@@ -608,6 +608,7 @@ export class QuantumSonificationEngine {
     this.audioCtx = null;
     this.isPlaying = false;
     this.volume = 0.85;
+    this.excitedVolume = 1.0;
     this.currentPiece = "canon"; // "canon", "arabesque", "chopin", "moonlight", "bach", "vivaldi"
 
     // Master Nodes
@@ -826,6 +827,13 @@ export class QuantumSonificationEngine {
     }
   }
 
+  setExcitedVolume(vol) {
+    this.excitedVolume = Math.max(0.1, Math.min(2.5, vol));
+    if (this.excitedBusGain && this.audioCtx) {
+      this.excitedBusGain.gain.setTargetAtTime(this.excitedVolume, this.audioCtx.currentTime, 0.03);
+    }
+  }
+
   /**
    * Play an acoustic concert grand piano voice (Warm, solemn, expressive)
    */
@@ -882,7 +890,7 @@ export class QuantumSonificationEngine {
 
       const stringGain1 = this.audioCtx.createGain();
       const stringGain2 = this.audioCtx.createGain();
-      const strVol = velocity * (isBass ? 0.52 : isSolo ? 0.44 : 0.38);
+      const strVol = velocity * (isBass ? 0.52 : isSolo ? 0.44 * this.excitedVolume : 0.38);
       stringGain1.gain.setValueAtTime(strVol, now);
       stringGain2.gain.setValueAtTime(strVol, now);
 
@@ -1060,17 +1068,33 @@ export class QuantumSonificationEngine {
 
       // ============================================================
       // 3. MULTI-TIER PHASE-LOCKED SOLEMN VIRTUOSO SOLO (s -> p -> d)
+      // Dynamic volume escalation: Ground (s: 0) -> p-wave -> d-wave (+45% volume surge)
       // ============================================================
       if (dExc > 0.04) {
-        // Tier 3: d-polarization excitation (Solo Layer 2: Solemn & Expressive Resonant Swells)
+        // Tier 3: d-polarization excitation (Solo Layer 2: Elevated volume step & resonant surge)
         const soloNote = activeSolo2[this.masterStep % activeSolo2.length];
-        const soloVel = 0.78 * Math.min(1.0, dExc * 1.20);
+        const dGain = Math.min(1.0, dExc * 1.20);
+        const soloVel = 0.94 * (0.85 + 0.15 * dGain) * this.excitedVolume;
         this.playPianoKey(soloNote, this.sixteenthDuration * 2.2, soloVel, false, true);
+
+        if (this.excitedBusGain) {
+          this.excitedBusGain.gain.setTargetAtTime(1.45 * this.excitedVolume * dGain, now, 0.03);
+        }
       } else if (pExc > 0.04) {
-        // Tier 2: p-polarization excitation (Solo Layer 1: Solemn Lyrical Contrapuntal Lines)
+        // Tier 2: p-polarization excitation (Solo Layer 1: Balanced solemn lyrical line)
         const soloNote = activeSolo1[this.masterStep % activeSolo1.length];
-        const soloVel = 0.74 * Math.min(1.0, pExc * 1.15);
+        const pGain = Math.min(1.0, pExc * 1.15);
+        const soloVel = 0.72 * (0.85 + 0.15 * pGain) * this.excitedVolume;
         this.playPianoKey(soloNote, this.sixteenthDuration * 2.4, soloVel, false, true);
+
+        if (this.excitedBusGain) {
+          this.excitedBusGain.gain.setTargetAtTime(0.95 * this.excitedVolume * pGain, now, 0.03);
+        }
+      } else {
+        // Ground State (s-orbital): excited bus muted
+        if (this.excitedBusGain) {
+          this.excitedBusGain.gain.setTargetAtTime(0.0, now, 0.05);
+        }
       }
 
       // ============================================================
