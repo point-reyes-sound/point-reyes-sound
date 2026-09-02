@@ -97,7 +97,6 @@ function getPieceDetails(symbol) {
       return {
         title: "DEBUSSY'S PREMIÈRE ARABESQUE (E MAJOR)",
         pieceName: "Debussy's Première Arabesque in E Major",
-        shortTag: "DEBUSSY'S PREMIÈRE ARABESQUE ACTIVE",
         groundDesc: "Debussy's Première Arabesque ground bass & impressionist melody dynamically coupled to closed-shell dispersion, bond stretching, and electronic entropy.",
         pSoloDesc: "Tier 2 p-wave dipole excitation & 16th-note flowing Debussy Arabesque scalar cascades.",
         dSoloDesc: "Tier 3 d-wave quadrupole resonance & rapid virtuoso 3-octave shimmering Arabesque flourish.",
@@ -108,7 +107,6 @@ function getPieceDetails(symbol) {
       return {
         title: "CHOPIN'S NOCTURNE IN E♭ MAJOR, OP. 9 NO. 2",
         pieceName: "Chopin's Nocturne in E♭ Major",
-        shortTag: "CHOPIN'S NOCTURNE IN E♭ ACTIVE",
         groundDesc: "Chopin's Nocturne in E-flat Major ground bass & warm romantic cantabile dynamically coupled to soft 2s metallic bonding, bond stretching, and entropy.",
         pSoloDesc: "Tier 2 p-wave dipole excitation & 16th-note lyrical Chopin cantabile turns and scalar ornaments.",
         dSoloDesc: "Tier 3 d-wave quadrupole resonance & brilliant Chopin 22-tuplet cascading chromatic fiorituras.",
@@ -119,7 +117,6 @@ function getPieceDetails(symbol) {
       return {
         title: "BEETHOVEN'S MOONLIGHT SONATA (C# MINOR, OP. 27 NO. 2)",
         pieceName: "Beethoven's Moonlight Sonata in C# Minor",
-        shortTag: "BEETHOVEN'S MOONLIGHT SONATA ACTIVE",
         groundDesc: "Beethoven's Moonlight Sonata undulating triplet ground bass & haunting theme dynamically coupled to C₂ multireference quadruple correlation, Swan band combustion, and orbital mixing.",
         pSoloDesc: "Tier 2 p-wave dipole excitation & 16th-note lyrical rising minor waves mirroring Swan band cometary emission.",
         dSoloDesc: "Tier 3 d-wave quadrupole resonance & fiery Presto agitato sweeping 3-octave virtuosic arpeggio lines.",
@@ -130,7 +127,6 @@ function getPieceDetails(symbol) {
       return {
         title: "J.S. BACH — TOCCATA & FUGUE IN D MINOR (BWV 565)",
         pieceName: "J.S. Bach's Toccata & Fugue in D Minor",
-        shortTag: "BACH'S TOCCATA & FUGUE IN Dm ACTIVE",
         groundDesc: "J.S. Bach's Toccata and Fugue monumental pedal bass & 3-voice contrapuntal architecture dynamically coupled to the indestructible N₂ covalent triple bond.",
         pSoloDesc: "Tier 2 p-wave dipole excitation & 16th-note 3-voice fugue counterpoint reflecting mutually orthogonal σ + 2π bonding pairs.",
         dSoloDesc: "Tier 3 d-wave quadrupole resonance & lightning-fast 32nd-note virtuoso toccata cascades.",
@@ -141,7 +137,6 @@ function getPieceDetails(symbol) {
       return {
         title: "VIVALDI — SUMMER (PRESTO STORM) IN G MINOR (RV 315)",
         pieceName: "Vivaldi's Summer (Presto Storm) in G Minor",
-        shortTag: "VIVALDI'S SUMMER (STORM) ACTIVE",
         groundDesc: "Vivaldi's Summer Presto storm bass & driving syncopation dynamically coupled to O₂ open-shell triplet diradical paramagnetism and magnetic spin torque.",
         pSoloDesc: "Tier 2 p-wave dipole excitation & relentless 16th-note string tremolo capturing dual unpaired parallel electron spins.",
         dSoloDesc: "Tier 3 d-wave quadrupole resonance & virtuoso dual-spin lightning arpeggio sweeps.",
@@ -153,7 +148,6 @@ function getPieceDetails(symbol) {
       return {
         title: "PACHELBEL'S CANON IN D MAJOR",
         pieceName: "Pachelbel's Canon in D Major",
-        shortTag: "PACHELBEL'S CANON IN D ACTIVE",
         groundDesc: "Pachelbel's Canon in D ground bass & classical melody dynamically coupled to single covalent orbital populations, bond stretching, and electronic entropy.",
         pSoloDesc: "Tier 2 p-wave dipole excitation & 16th-note lyrical descending scalar runs.",
         dSoloDesc: "Tier 3 d-wave quadrupole resonance & double-speed 32nd/16th virtuoso arpeggiated string-crossing flourish.",
@@ -1026,10 +1020,8 @@ export default function LandingPage() {
         <div className="chamber-card acoustic-card ground-deck-card">
           <div className="card-top-bar">
             <div className="card-tag">GROUND ACOUSTIC FIELD SPECTRUM S_ground[f(t)]</div>
-            <span className="status-tag">
-              {isAudioActive 
-                ? pieceInfo.shortTag
-                : "MUTED"}
+            <span className={`status-tag ${isAudioActive ? 'highlight-emerald' : 'status-muted'}`}>
+              {isAudioActive ? "ACTIVE" : "MUTED"}
             </span>
           </div>
           <div className="scope-canvas-wrapper">
