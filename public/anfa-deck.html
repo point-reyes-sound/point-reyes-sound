@@ -23,7 +23,7 @@
 
       --bg-core: #030704;
       --bg-panel: #07120a;
-      --bg-card: rgba(8, 20, 12, 0.85);
+      --bg-card: rgba(8, 20, 12, 0.88);
       
       --accent-emerald: #35ff82;
       --accent-emerald-dim: rgba(53, 255, 130, 0.12);
@@ -87,7 +87,7 @@
       transition: opacity 0.35s ease-in-out;
       flex-direction: column;
       justify-content: space-between;
-      padding: 2.8% 4.5%;
+      padding: 2.5% 4.2%;
       z-index: 1;
     }
 
@@ -103,8 +103,8 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 0.8%;
-      margin-bottom: 1.2%;
+      padding-bottom: 0.7%;
+      margin-bottom: 1%;
     }
 
     .brand-lockup {
@@ -114,13 +114,13 @@
     }
 
     .brand-logo-animated {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
     }
 
     .company-tag {
       font-family: var(--font-mono);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       letter-spacing: 2px;
       color: var(--accent-emerald);
       font-weight: 600;
@@ -128,7 +128,7 @@
 
     .header-qboltz-tag {
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--accent-gold);
       background: rgba(245, 197, 66, 0.1);
       border: 1px solid rgba(245, 197, 66, 0.3);
@@ -142,18 +142,18 @@
 
     .slide-num {
       font-family: var(--font-mono);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
     }
 
     /* Typography */
     h2 {
       font-family: var(--font-mono);
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       font-weight: 700;
-      letter-spacing: -1px;
+      letter-spacing: -0.5px;
       color: #fff;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.25rem;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -161,10 +161,10 @@
 
     p.subtitle {
       font-family: var(--font-serif);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       color: var(--text-secondary);
-      line-height: 1.4;
-      margin-bottom: 1.2rem;
+      line-height: 1.35;
+      margin-bottom: 1rem;
       max-width: 95%;
     }
 
@@ -175,7 +175,7 @@
       gap: 1.4rem;
       flex: 1;
       align-items: stretch;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.6rem;
     }
 
     .grid-3 {
@@ -184,26 +184,49 @@
       gap: 1.2rem;
       flex: 1;
       align-items: stretch;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.6rem;
     }
 
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 8px;
-      padding: 1.2rem 1.4rem;
+      padding: 1.1rem 1.3rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       position: relative;
+      overflow: hidden;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid rgba(53, 255, 130, 0.2);
+      margin-bottom: 0.8rem;
+      background: #040b06;
+      display: block;
+    }
+
+    .card-img-large {
+      width: 100%;
+      height: 100%;
+      min-height: 250px;
+      object-fit: contain;
+      border-radius: 6px;
+      border: 1px solid rgba(53, 255, 130, 0.2);
+      background: #040b07;
+      display: block;
     }
 
     .card-header {
       font-family: var(--font-mono);
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 600;
       color: var(--accent-emerald);
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
       letter-spacing: 0.5px;
       display: flex;
       align-items: center;
@@ -212,9 +235,9 @@
 
     .card-body {
       font-family: var(--font-serif);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--text-secondary);
-      line-height: 1.45;
+      line-height: 1.4;
       flex: 1;
     }
 
@@ -333,7 +356,7 @@
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid var(--border-subtle);
-      padding-top: 0.8%;
+      padding-top: 0.7%;
       font-family: var(--font-mono);
       font-size: 0.8rem;
       color: var(--text-muted);
@@ -555,7 +578,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 03: The Convergence of Computational Paradigms -->
+    <!-- SLIDE 03: The Convergence of Computational Paradigms (Image-Rich) -->
     <section class="slide" id="slide-3" data-slide="3">
       <div class="header">
         <div class="brand-lockup">
@@ -567,37 +590,37 @@
       
       <h2>Convergence of Computational Paradigms</h2>
       <p class="subtitle">
-        <em>"At Point Reyes Sound, we are long electrons."</em> Computing is converging on the atomic scale across classical semiconductors, streaming GPU clusters, and quantum processors.
+        <em>"At Point Reyes Sound, we are long electrons."</em> Computing is converging on the atomic scale across classical devices, streaming GPU clusters, and quantum processors.
       </p>
 
       <div class="grid-3">
         <div class="card" style="border-top: 3px solid var(--accent-cyan);">
+          <img src="/vertical_semiconductors.jpg" alt="Sub-2nm Devices" class="card-img" onerror="this.src='/qpu_hero.jpg'" />
           <div class="card-header" style="color: var(--accent-cyan);">
             1. Sub-2nm Classical Devices
           </div>
           <div class="card-body">
-            <p style="margin-bottom: 0.8rem;">Gate-All-Around (GAA-FET) transistors and solid-state battery interfaces have shrunk below continuous scales.</p>
-            <p>At these dimensions, quantum confinement and non-equilibrium electron-phonon scattering dictate thermal dissipation and failure.</p>
+            GAA-FET transistors have shrunk below continuous scales. Non-equilibrium electron-phonon scattering dictates thermal limits and leakage.
           </div>
         </div>
 
         <div class="card" style="border-top: 3px solid var(--accent-emerald);">
+          <img src="/qpu_hero.jpg" alt="Massively Parallel Hardware" class="card-img" />
           <div class="card-header">
-            2. Massively Parallel GPUs
+            2. Massively Parallel Hardware
           </div>
           <div class="card-body">
-            <p style="margin-bottom: 0.8rem;">Modern GPU accelerators (NVIDIA Blackwell, Grace Hopper) thrive on local spatial stencils and continuous streaming execution.</p>
-            <p>They choke on global memory synchronizations and dense matrix operations that scale poorly across distributed clusters.</p>
+            Modern GPUs thrive on streaming spatial stencils. They stall on memory-bound, global matrix diagonalizations scaling at O(N³) to O(N⁴).
           </div>
         </div>
 
         <div class="card" style="border-top: 3px solid var(--accent-gold);">
+          <img src="/bottleneck_workflow.jpg" alt="Phase Space Framework" class="card-img" />
           <div class="card-header" style="color: var(--accent-gold);">
-            3. Quantum & Phase-Space Cores
+            3. Phase-Space Framework
           </div>
           <div class="card-body">
-            <p style="margin-bottom: 0.8rem;">Phase space provides the natural, unified mathematical representation connecting electronic structure to classical and quantum simulation.</p>
-            <p>It eliminates discrete basis-set artifacts and unifies kinetic transport across computing regimes.</p>
+            Phase space provides the unified mathematical representation connecting electronic structure to classical GPU and quantum co-simulation.
           </div>
         </div>
       </div>
@@ -608,7 +631,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 04: The Diagonalization Bottleneck -->
+    <!-- SLIDE 04: The Matrix Diagonalization Bottleneck (Image-Rich) -->
     <section class="slide" id="slide-4" data-slide="4">
       <div class="header">
         <div class="brand-lockup">
@@ -620,35 +643,27 @@
       
       <h2>The Matrix Diagonalization Bottleneck</h2>
       <p class="subtitle">
-        Legacy algorithms in the $35B CAE/EDA ecosystem still depend on global matrix operations that become brittle exactly where quantum effects prevail.
+        Legacy algorithms in the $35B CAE/EDA ecosystem depend on global matrix operations that become brittle exactly where quantum effects prevail.
       </p>
 
       <div class="grid-2">
-        <div class="card" style="border-left: 3px solid #ff4d4d;">
+        <div class="card" style="border-left: 3px solid #ff4d4d; display: flex; flex-direction: column;">
+          <img src="/bottleneck_matrix.jpg" alt="Matrix Diagonalization Bottleneck" class="card-img" style="height: 180px;" />
           <div class="card-header" style="color: #ff6b6b;">
             ✕ The O(N³) to O(N⁴) Scaling Wall
           </div>
           <div class="card-body">
-            <p style="margin-bottom: 0.8rem;">
-              Standard Self-Consistent-Field (SCF) algorithms rely on repeated, iterative dense matrix diagonalizations to find wavefunctions.
-            </p>
-            <p>
-              As atomic counts grow, memory-bound global operations cause complete compute stalls on modern streaming clusters, restricting first-principles simulation to tiny toy systems.
-            </p>
+            Iterative dense matrix diagonalizations stall modern streaming GPU clusters, restricting first-principles simulation to tiny toy systems.
           </div>
         </div>
 
-        <div class="card" style="border-left: 3px solid #f59e0b;">
+        <div class="card" style="border-left: 3px solid #f59e0b; display: flex; flex-direction: column;">
+          <img src="/bottleneck_singularity.jpg" alt="Potential Energy Surface Instability" class="card-img" style="height: 180px;" />
           <div class="card-header" style="color: #fbbf24;">
-            ✕ Brittleness & Potential Energy Singularities
+            ✕ Brittleness & Singularities
           </div>
           <div class="card-body">
-            <p style="margin-bottom: 0.8rem;">
-              Whenever chemical bonds dissociate, interfaces reconstruct, or electrons scatter strongly, iterative solvers fail to converge.
-            </p>
-            <p>
-              Numerical divergence crashes automated high-throughput discovery pipelines, leaving chip designers and battery engineers dependent on costly physical trial-and-error.
-            </p>
+            Traditional density functional and continuum approximations diverge and crash automated discovery pipelines during chemical bond dissociation.
           </div>
         </div>
       </div>
@@ -659,7 +674,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 05: The Q-Boltz Solution -->
+    <!-- SLIDE 05: The Q-Boltz Solution (Image-Rich) -->
     <section class="slide" id="slide-5" data-slide="5">
       <div class="header">
         <div class="brand-lockup">
@@ -674,34 +689,26 @@
         Q-Boltz changes the computational language: instead of repeatedly diagonalizing a static matrix, we kinetically relax it in continuous phase space.
       </p>
 
-      <div class="grid-3">
-        <div class="card">
-          <div class="card-header">
-            Wigner-Weyl Transform
+      <div class="grid-2" style="align-items: stretch;">
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <div class="card" style="flex: 1;">
+            <div class="card-header">Wigner-Weyl Transform</div>
+            <div class="card-body">
+              Maps electronic density matrices into smooth, continuous phase-space coordinates <span class="code-text">(x, p)</span>, transforming discrete eigenvalue problems into fluid-like kinetic transport equations.
+            </div>
           </div>
-          <div class="card-body">
-            <p style="margin-bottom: 0.8rem;">Maps electronic density matrices (1-RDM) into smooth, continuous phase-space coordinates <span class="code-text">(x, p)</span>.</p>
-            <p>Transforms discrete eigenvalue problems into fluid-like kinetic transport equations amenable to localized stencil algorithms.</p>
-          </div>
-        </div>
-
-        <div class="card" style="border: 1px solid var(--accent-emerald);">
-          <div class="card-header" style="color: var(--accent-emerald);">
-            BGK Collision Operator
-          </div>
-          <div class="card-body">
-            <p style="margin-bottom: 0.8rem;">Relaxes the system continuously toward Fermi-Dirac equilibrium via Bhatnagar-Gross-Krook (BGK) kinetic scattering.</p>
-            <p>Inherently local, streaming-native, and eliminates non-local matrix diagonalization loops entirely.</p>
+          <div class="card" style="flex: 1; border-color: var(--accent-emerald);">
+            <div class="card-header" style="color: var(--accent-emerald);">BGK Collision Operator & H-Theorem</div>
+            <div class="card-body">
+              Relaxes density toward Fermi-Dirac equilibrium via localized Bhatnagar-Gross-Krook scattering. Monotonically dissipates energy with provable mathematical convergence guarantees.
+            </div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-header">
-            Guaranteed H-Theorem
-          </div>
-          <div class="card-body">
-            <p style="margin-bottom: 0.8rem;">Monotonically dissipates energy toward the physical ground state with rigorous mathematical entropy convergence.</p>
-            <p>Singularity-free: zero crashes during chemical dissociation or strong electron correlation.</p>
+        <div class="card" style="padding: 0.8rem; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <img src="/n2_wigner_4panel_clean.png" alt="N2 Phase-Space Wigner & Cumulant Distributions" class="card-img-large" style="max-height: 310px;" />
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">
+            Wigner Phase-Space Electronic Distribution Kernel
           </div>
         </div>
       </div>
@@ -712,7 +719,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 06: Scientific Validation Benchmarks -->
+    <!-- SLIDE 06: Scientific Validation Benchmarks (Image-Rich) -->
     <section class="slide" id="slide-6" data-slide="6">
       <div class="header">
         <div class="brand-lockup">
@@ -727,38 +734,28 @@
         A regularized solver that reproduces fundamental dissociation benchmarks without singularities, demonstrating linear scaling on streaming hardware.
       </p>
 
-      <div class="grid-2">
+      <div class="grid-2" style="align-items: stretch;">
         <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
           <div>
-            <div class="card-header" style="font-size: 1.3rem;">Dinitrogen (N₂) Dissociation Benchmark</div>
-            <div class="card-body" style="font-size: 1.15rem; line-height: 1.5; margin-top: 0.8rem;">
-              <p style="margin-bottom: 1rem;">
-                Breaking the triple bond in <span class="code-text">N₂</span> represents the classic "hard test" in quantum mechanics where traditional Hartree-Fock and DFT methods fail catastrophically due to static correlation.
+            <div class="card-header" style="font-size: 1.25rem;">Dinitrogen (N₂) Triple-Bond Dissociation</div>
+            <div class="card-body" style="font-size: 1.1rem; line-height: 1.5; margin-top: 0.6rem;">
+              <p style="margin-bottom: 0.8rem;">
+                Breaking the triple bond in <span class="code-text">N₂</span> represents the classic failure point where traditional DFT and SCF methods collapse due to strong correlation singularities.
               </p>
-              <p style="margin-bottom: 1rem;">
-                Q-Boltz achieves continuous, monotonic energy dissipation across the full potential energy surface without artificial symmetry breaking or divergence.
+              <p style="margin-bottom: 0.8rem;">
+                Q-Boltz achieves continuous, monotonic convergence across the full potential energy surface with zero numerical divergence.
               </p>
             </div>
           </div>
-          <div style="background: rgba(53, 255, 130, 0.08); border: 1px solid var(--border-subtle); padding: 10px 14px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.95rem; color: var(--accent-emerald);">
+          <div style="background: rgba(53, 255, 130, 0.08); border: 1px solid var(--border-subtle); padding: 10px 14px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-emerald);">
             ✓ Verified with UChicago Mazziotti Group Benchmarks
           </div>
         </div>
 
-        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; border-color: var(--accent-cyan);">
-          <div>
-            <div class="card-header" style="color: var(--accent-cyan); font-size: 1.3rem;">Streaming Hardware Scaling Advantage</div>
-            <div class="card-body" style="font-size: 1.15rem; line-height: 1.5; margin-top: 0.8rem;">
-              <p style="margin-bottom: 1rem;">
-                <strong>Local Stencils vs. Global Synchronizations:</strong> By substituting matrix diagonalization with kinetic phase-space relaxation, memory transfers drop from <span class="code-text">O(N³)</span> to <span class="code-text">O(N)</span>.
-              </p>
-              <p style="margin-bottom: 1rem;">
-                Enables linear compute scaling across multi-GPU nodes (NVIDIA H100/B200), unlocking multi-million atom kinetic transport simulations previously impossible.
-              </p>
-            </div>
-          </div>
-          <div style="background: rgba(100, 200, 255, 0.08); border: 1px solid rgba(100, 200, 255, 0.25); padding: 10px 14px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.95rem; color: var(--accent-cyan);">
-            ✓ 10x–100x Projected Acceleration on GPU Streaming Stencils
+        <div class="card" style="padding: 0.8rem; display: flex; flex-direction: column; justify-content: center; align-items: center; border-color: var(--accent-cyan);">
+          <img src="/n2_wigner_4panel_dark.png" alt="Dinitrogen Polynomial Scaling Dissociation" class="card-img-large" style="max-height: 290px;" />
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan); margin-top: 6px;">
+            Singularity-Free Dissociation Dynamics
           </div>
         </div>
       </div>
@@ -769,7 +766,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 07: High-Impact Market Verticals -->
+    <!-- SLIDE 07: High-Impact Market Verticals (Image-Rich) -->
     <section class="slide" id="slide-7" data-slide="7">
       <div class="header">
         <div class="brand-lockup">
@@ -781,37 +778,37 @@
       
       <h2>High-Impact Market Verticals ($35B CAE/EDA)</h2>
       <p class="subtitle">
-        Deploying the Q-Boltz solver core into critical industrial sectors where sub-2nm and atomistic transport are bottlenecking global commercial roadmaps.
+        Deploying the Q-Boltz solver core into critical industrial sectors where sub-2nm and atomistic transport bottleneck global engineering roadmaps.
       </p>
 
       <div class="grid-3">
         <div class="card">
+          <img src="/vertical_semiconductors.jpg" alt="Semiconductor GAA-FETs" class="card-img" />
           <div class="card-header">
             Semiconductors & GAA-FETs
           </div>
           <div class="card-body">
-            <p style="margin-bottom: 0.8rem;"><strong>The Problem:</strong> Thermal bottlenecks and phonon scattering at sub-2nm nodes throttle leading-edge chip performance.</p>
-            <p><strong>The Solution:</strong> Exact non-equilibrium electron-phonon transport prediction to optimize gate geometries and heat dissipation.</p>
+            Thermal bottlenecks and phonon scattering at sub-2nm nodes throttle leading-edge chip performance. Q-Boltz resolves hot-carrier kinetic transport.
           </div>
         </div>
 
         <div class="card">
+          <img src="/vertical_batteries.jpg" alt="Solid-State Batteries" class="card-img" />
           <div class="card-header">
             Solid-State Batteries
           </div>
           <div class="card-body">
-            <p style="margin-bottom: 0.8rem;"><strong>The Problem:</strong> Solid-Electrolyte Interphase (SEI) degradation and dendrite formation are invisible to continuum models.</p>
-            <p><strong>The Solution:</strong> Atomistic kinetic simulation of ion transport across solid electrolyte boundaries to extend cycle lifetime.</p>
+            Solid-Electrolyte Interphase (SEI) degradation and dendrite formation are invisible to continuum models. Q-Boltz models exact interfacial ion transport.
           </div>
         </div>
 
         <div class="card">
+          <img src="/vertical_catalysis.jpg" alt="High-Efficiency Catalysis" class="card-img" />
           <div class="card-header">
             High-Efficiency Catalysis
           </div>
           <div class="card-body">
-            <p style="margin-bottom: 0.8rem;"><strong>The Problem:</strong> Transition-state modeling in green hydrogen and carbon capture crashes due to multireference singularities.</p>
-            <p><strong>The Solution:</strong> Singularity-free kinetic relaxation for rapid, automated catalyst screening.</p>
+            Transition-state modeling in green hydrogen and carbon capture crashes in DFT. Q-Boltz enables automated, singularity-free screening.
           </div>
         </div>
       </div>
@@ -822,7 +819,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 08: Q-Boltz as a Product (C-ABI Architecture) -->
+    <!-- SLIDE 08: Q-Boltz as a Product (Image-Rich) -->
     <section class="slide" id="slide-8" data-slide="8">
       <div class="header">
         <div class="brand-lockup">
@@ -837,32 +834,28 @@
         Delivered as a high-performance pre-compiled binary (<span class="code-text">libqbescf.so</span>) that solves simulation bottlenecks without exposing our underlying source code.
       </p>
 
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-header">
-            Seamless In-Tree Integration
+      <div class="grid-2" style="align-items: stretch;">
+        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="card-header" style="font-size: 1.25rem;">Seamless In-Tree CAE/EDA Integration</div>
+            <div class="card-body" style="font-size: 1.1rem; line-height: 1.5; margin-top: 0.6rem;">
+              <p style="margin-bottom: 0.8rem;">
+                Engineered with clean C-ABI entrypoints and PyAnsys / OpenFOAM bindings that embed directly inside tier-1 engineering platforms.
+              </p>
+              <p style="margin-bottom: 0.8rem;">
+                <strong>Zero Source Exposure:</strong> Enterprise customers run compiled CUDA machine code inside their on-premise or cloud HPC without accessing our proprietary solver algorithms.
+              </p>
+            </div>
           </div>
-          <div class="card-body">
-            <p style="margin-bottom: 0.8rem;">
-              Engineered with clean C-ABI entrypoints and PyAnsys / OpenFOAM bindings that embed directly inside tier-1 engineering platforms.
-            </p>
-            <p>
-              Host engineering applications pass mesh geometries and potential fields; Q-Boltz executes streaming kinetic relaxation and returns density matrices without modifying host CAD pipelines.
-            </p>
+          <div style="background: rgba(100, 200, 255, 0.08); border: 1px solid rgba(100, 200, 255, 0.25); padding: 10px 14px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-cyan);">
+            ✓ Direct In-Tree Embedding (Synopsys, Cadence, Ansys, Siemens)
           </div>
         </div>
 
-        <div class="card" style="border-color: var(--accent-emerald);">
-          <div class="card-header" style="color: var(--accent-emerald);">
-            Zero Source Code Exposure
-          </div>
-          <div class="card-body">
-            <p style="margin-bottom: 0.8rem;">
-              <strong>Full IP Protection:</strong> Enterprise customers run compiled CUDA and CPU machine code binaries inside their sovereign on-premise HPC or private cloud clusters.
-            </p>
-            <p>
-              Our proprietary phase-space collision operator, regularized relaxation kernels, and basis formulations remain fully protected compiled trade secrets.
-            </p>
+        <div class="card" style="padding: 0.8rem; display: flex; flex-direction: column; justify-content: center; align-items: center; border-color: var(--accent-emerald);">
+          <img src="/qomputing_ide_ui.jpg" alt="Enterprise Platform Integration" class="card-img-large" style="max-height: 290px;" />
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-emerald); margin-top: 6px;">
+            Enterprise In-Tree Solver Interface
           </div>
         </div>
       </div>
@@ -873,7 +866,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 09: Land & Scale Commercial Strategy -->
+    <!-- SLIDE 09: Land & Scale Commercial Strategy (Image-Rich) -->
     <section class="slide" id="slide-9" data-slide="9">
       <div class="header">
         <div class="brand-lockup">
@@ -888,28 +881,38 @@
         Integrating directly with existing EDA/CAE distribution channels to land enterprise pilots, scaling into high-margin compute token drawdowns.
       </p>
 
-      <div class="grid-2">
-        <div class="card" style="border-top: 3px solid var(--accent-emerald);">
-          <div class="card-header" style="font-size: 1.25rem;">Phase 1: Land (In-Tree OEM Embed)</div>
-          <div class="card-body" style="font-size: 1.15rem; line-height: 1.5; margin-top: 0.8rem;">
-            <p style="margin-bottom: 1rem;">
-              <strong>Direct Distribution via Incumbents:</strong> Partner with established CAE/EDA vendors (Synopsys, Cadence, Ansys, Siemens) rather than building a standalone CAD GUI from scratch.
-            </p>
-            <p style="margin-bottom: 1rem;">
-              <strong>Pilot NRE & SDK Licenses:</strong> $250k–$500k pilot engagements with semiconductor foundry design teams and battery OEMs.
-            </p>
+      <div class="grid-2" style="align-items: stretch;">
+        <div class="card" style="border-top: 3px solid var(--accent-emerald); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="card-header" style="font-size: 1.25rem;">Phase 1: Land (In-Tree OEM Embed)</div>
+            <div class="card-body" style="font-size: 1.1rem; line-height: 1.5; margin-top: 0.6rem;">
+              <p style="margin-bottom: 0.8rem;">
+                <strong>Distribution via Incumbents:</strong> Partner with established CAE/EDA vendors rather than building a standalone CAD GUI.
+              </p>
+              <p style="margin-bottom: 0.8rem;">
+                <strong>Pilot NRE & SDK Licenses:</strong> $250k–$500k pilot engagements with semiconductor foundry teams and battery OEMs.
+              </p>
+            </div>
+          </div>
+          <div style="background: rgba(53, 255, 130, 0.08); border: 1px solid var(--border-subtle); padding: 8px 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-emerald);">
+            Target: 3 Enterprise Foundry Pilots
           </div>
         </div>
 
-        <div class="card" style="border-top: 3px solid var(--accent-gold);">
-          <div class="card-header" style="color: var(--accent-gold); font-size: 1.25rem;">Phase 2: Scale (Cloud Token Consumption)</div>
-          <div class="card-body" style="font-size: 1.15rem; line-height: 1.5; margin-top: 0.8rem;">
-            <p style="margin-bottom: 1rem;">
-              <strong>Recurring Compute Metering:</strong> Token-based runtime licensing on enterprise GPU clusters (AWS, Azure, OCI, and on-premise DGX systems).
-            </p>
-            <p style="margin-bottom: 1rem;">
-              <strong>High-Margin OEM Engine:</strong> As automated discovery pipelines scale, recurring solver token consumption builds a durable $15M+/year cash engine.
-            </p>
+        <div class="card" style="border-top: 3px solid var(--accent-gold); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="card-header" style="color: var(--accent-gold); font-size: 1.25rem;">Phase 2: Scale (Cloud Token Metering)</div>
+            <div class="card-body" style="font-size: 1.1rem; line-height: 1.5; margin-top: 0.6rem;">
+              <p style="margin-bottom: 0.8rem;">
+                <strong>Recurring Compute Drawdowns:</strong> Token-based runtime licensing on enterprise GPU clusters (AWS, Azure, OCI, and DGX on-premise).
+              </p>
+              <p style="margin-bottom: 0.8rem;">
+                <strong>Compounding Engine:</strong> As automated discovery workflows scale, solver token consumption builds a durable $15M+/year cash engine.
+              </p>
+            </div>
+          </div>
+          <div style="background: rgba(245, 197, 66, 0.08); border: 1px solid rgba(245, 197, 66, 0.25); padding: 8px 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-gold);">
+            Target: $15M+/yr Recurring Cash Engine
           </div>
         </div>
       </div>
@@ -920,7 +923,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 10: Defensible IP & Strategic Moat -->
+    <!-- SLIDE 10: Defensible IP & Strategic Moat (Image-Rich) -->
     <section class="slide" id="slide-10" data-slide="10">
       <div class="header">
         <div class="brand-lockup">
@@ -935,34 +938,26 @@
         A triple-layer defensive barrier combining patent filings, defensive scientific preprints, and compiled binary distribution.
       </p>
 
-      <div class="grid-3">
-        <div class="card">
-          <div class="card-header">
-            1. Patent Portfolio
+      <div class="grid-2" style="align-items: stretch;">
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <div class="card" style="flex: 1;">
+            <div class="card-header">1. Patent Portfolio</div>
+            <div class="card-body">
+              <strong>U.S. Prov. Pat. App. 64/033,274:</strong> Broad proprietary claims covering phase-space kinetic relaxation for quantum and atomistic multiphysics simulations.
+            </div>
           </div>
-          <div class="card-body">
-            <p style="margin-bottom: 0.8rem;"><strong>U.S. Prov. Pat. App. 64/033,274</strong></p>
-            <p>Broad proprietary claims covering phase-space kinetic relaxation for quantum and atomistic multiphysics simulations.</p>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            2. Defensive Preprints
-          </div>
-          <div class="card-body">
-            <p style="margin-bottom: 0.8rem;"><strong>arXiv:2608.14979 & Academic Roots</strong></p>
-            <p>Peer-reviewed validation establishing clear prior art on phase-space cumulant dynamics, preventing competitor patent grabs.</p>
+          <div class="card" style="flex: 1; border-color: var(--accent-emerald);">
+            <div class="card-header" style="color: var(--accent-emerald);">2. Binary Compilation Moat</div>
+            <div class="card-body">
+              Optimized CUDA streaming routines and mathematical stencils remain encrypted inside compiled binaries, ensuring permanent trade secret protection.
+            </div>
           </div>
         </div>
 
-        <div class="card" style="border: 1px solid var(--accent-emerald);">
-          <div class="card-header" style="color: var(--accent-emerald);">
-            3. Binary Compilation
-          </div>
-          <div class="card-body">
-            <p style="margin-bottom: 0.8rem;"><strong>Pre-Compiled Binary Moat</strong></p>
-            <p>Optimized CUDA streaming routines and mathematical stencils remain encrypted inside compiled binaries, ensuring trade secret protection.</p>
+        <div class="card" style="padding: 0.8rem; display: flex; flex-direction: column; justify-content: center; align-items: center; border-color: var(--accent-cyan);">
+          <img src="/thumbnail_paper1.png" alt="Defensive Science Preprints" class="card-img-large" style="max-height: 290px;" onerror="this.src='/thumbnail_qgas.png'" />
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan); margin-top: 6px;">
+            Defensive Preprints (arXiv:2608.14979) Establishing Prior Art
           </div>
         </div>
       </div>
@@ -973,7 +968,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 11: Proven Leadership & Scientific Advisory Board -->
+    <!-- SLIDE 11: Proven Leadership & Scientific Advisory Board (Image-Rich) -->
     <section class="slide" id="slide-11" data-slide="11">
       <div class="header">
         <div class="brand-lockup">
@@ -989,47 +984,47 @@
       </p>
 
       <div class="grid-3">
-        <div class="card">
-          <div style="width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--accent-emerald); overflow: hidden; margin-bottom: 0.8rem; background: #06140b;">
-            <img src="/PRS_logo_v2.jpeg" alt="Romit Chakraborty" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/prs_favicon.svg'" />
+        <div class="card" style="align-items: center; text-align: center;">
+          <div style="width: 105px; height: 105px; border-radius: 50%; border: 2.5px solid var(--accent-emerald); overflow: hidden; margin-bottom: 0.8rem; background: #06140b; box-shadow: 0 0 20px rgba(53, 255, 130, 0.25);">
+            <img src="/rc_scholar_portrait.jpeg" alt="Romit Chakraborty" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%;" onerror="this.src='/PRS_logo_v2.jpeg'" />
           </div>
-          <div class="card-header" style="font-size: 1.15rem; margin-bottom: 0.2rem;">
+          <div class="card-header" style="font-size: 1.18rem; margin-bottom: 0.2rem; justify-content: center;">
             Dr. Romit Chakraborty
           </div>
           <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-gold); margin-bottom: 0.6rem;">
             Founder & CSO
           </div>
-          <div class="card-body" style="font-size: 1rem;">
+          <div class="card-body" style="font-size: 0.98rem; line-height: 1.4;">
             PhD in Chemical Physics from UC Berkeley; Postdoctoral Fellow at University of Chicago. Author of foundation papers on non-equilibrium phase-space dynamics.
           </div>
         </div>
 
-        <div class="card">
-          <div style="width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--accent-cyan); overflow: hidden; margin-bottom: 0.8rem; background: #06140b;">
+        <div class="card" style="align-items: center; text-align: center;">
+          <div style="width: 105px; height: 105px; border-radius: 50%; border: 2.5px solid var(--accent-cyan); overflow: hidden; margin-bottom: 0.8rem; background: #06140b; box-shadow: 0 0 20px rgba(100, 200, 255, 0.25);">
             <img src="/david_mazziotti.jpg" alt="David Mazziotti" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/PRS_logo_v2.jpeg'" />
           </div>
-          <div class="card-header" style="font-size: 1.15rem; margin-bottom: 0.2rem; color: var(--accent-cyan);">
+          <div class="card-header" style="font-size: 1.18rem; margin-bottom: 0.2rem; color: var(--accent-cyan); justify-content: center;">
             Prof. David Mazziotti
           </div>
           <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-gold); margin-bottom: 0.6rem;">
             Scientific Advisor (UChicago)
           </div>
-          <div class="card-body" style="font-size: 1rem;">
+          <div class="card-body" style="font-size: 0.98rem; line-height: 1.4;">
             Chair of Chemistry, University of Chicago. World-renowned authority in Reduced Density Matrix (RDM) mechanics and electronic correlation theory.
           </div>
         </div>
 
-        <div class="card">
-          <div style="width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--accent-gold); overflow: hidden; margin-bottom: 0.8rem; background: #06140b;">
+        <div class="card" style="align-items: center; text-align: center;">
+          <div style="width: 105px; height: 105px; border-radius: 50%; border: 2.5px solid var(--accent-gold); overflow: hidden; margin-bottom: 0.8rem; background: #06140b; box-shadow: 0 0 20px rgba(245, 197, 66, 0.25);">
             <img src="/david_schuster.jpg" alt="David Schuster" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/PRS_logo_v2.jpeg'" />
           </div>
-          <div class="card-header" style="font-size: 1.15rem; margin-bottom: 0.2rem; color: var(--accent-gold);">
+          <div class="card-header" style="font-size: 1.18rem; margin-bottom: 0.2rem; color: var(--accent-gold); justify-content: center;">
             Prof. David Schuster
           </div>
           <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-gold); margin-bottom: 0.6rem;">
             Quantum & Systems Advisor (Stanford)
           </div>
-          <div class="card-body" style="font-size: 1rem;">
+          <div class="card-body" style="font-size: 0.98rem; line-height: 1.4;">
             Professor of Applied Physics, Stanford University. Pioneer in superconducting quantum circuits, quantum hardware architectures, and hybrid simulation.
           </div>
         </div>
@@ -1037,11 +1032,11 @@
 
       <div class="footer">
         <span>Point Reyes Sound, Inc. © 2026</span>
-        <span>World-Class Academic & Industrial Network</span>
+        <span>World-Class Academic & Industrial Pedigree</span>
       </div>
     </section>
 
-    <!-- SLIDE 12: Pre-Seed Financing & Raise (Anfa Anchor Highlighted) -->
+    <!-- SLIDE 12: Pre-Seed Financing & Terms (Capital Allocation Only, No Syndicate) -->
     <section class="slide" id="slide-12" data-slide="12">
       <div class="header">
         <div class="brand-lockup">
@@ -1051,99 +1046,95 @@
         <span class="slide-num">12 / 12</span>
       </div>
       
-      <h2>Pre-Seed Financing & Syndicate Terms</h2>
+      <h2>Pre-Seed Financing & Strategic Milestones</h2>
       <p class="subtitle">
         Point Reyes Sound is raising a <strong>$750,000 pre-seed round</strong>, anchored by <strong>Anfa with $500,000</strong> on a post-money SAFE at a <strong>$6M valuation cap</strong>.
       </p>
 
-      <div class="grid-2" style="margin-bottom: 0.6rem;">
+      <div class="grid-2" style="margin-bottom: 0.6rem; align-items: stretch;">
         <!-- Card 1: Capital Allocation Donut -->
-        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 1.2rem;">
-          <div class="card-header" style="font-size: 1.15rem; margin-bottom: 0.4rem;">
-            Capital Allocation ($750k)
+        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 1.4rem;">
+          <div class="card-header" style="font-size: 1.25rem; margin-bottom: 0.4rem;">
+            Capital Allocation ($750,000)
           </div>
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex: 1;">
-            <div style="width: 140px; height: 140px; flex-shrink: 0;">
+          
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; flex: 1;">
+            <div style="width: 155px; height: 155px; flex-shrink: 0;">
               <svg viewBox="0 0 42 42" style="width: 100%; height: 100%; transform: rotate(-90deg);">
-                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#071a0f" stroke-width="6.5"></circle>
+                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#071a0f" stroke-width="7"></circle>
                 <!-- NVIDIA Dev: 53.33% (400k) -->
-                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#35ff82" stroke-width="6.5" stroke-dasharray="53.33 46.67" stroke-dashoffset="0"></circle>
+                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#35ff82" stroke-width="7" stroke-dasharray="53.33 46.67" stroke-dashoffset="0" style="filter: drop-shadow(0 0 4px rgba(53, 255, 130, 0.6));"></circle>
                 <!-- Solver Production: 26.67% (200k) -->
-                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#64c8ff" stroke-width="6.5" stroke-dasharray="26.67 73.33" stroke-dashoffset="-53.33"></circle>
+                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#64c8ff" stroke-width="7" stroke-dasharray="26.67 73.33" stroke-dashoffset="-53.33"></circle>
                 <!-- Pilot Infrastructure: 20.00% (150k) -->
-                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#f5c542" stroke-width="6.5" stroke-dasharray="20.00 80.00" stroke-dashoffset="-80.00"></circle>
+                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#f5c542" stroke-width="7" stroke-dasharray="20.00 80.00" stroke-dashoffset="-80.00"></circle>
               </svg>
             </div>
-            <div style="flex: 1; font-family: var(--font-mono); font-size: 0.95rem; line-height: 1.6;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                <span style="color: var(--accent-emerald);">● NVIDIA Dev Hire:</span>
+            <div style="flex: 1; font-family: var(--font-mono); font-size: 1rem; line-height: 1.8;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 6px; background: rgba(53, 255, 130, 0.08); padding: 4px 8px; border-radius: 4px;">
+                <span style="color: var(--accent-emerald); font-weight: 700;">● NVIDIA Dev Hire:</span>
                 <strong style="color: #fff;">$400,000 (53%)</strong>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                <span style="color: var(--accent-cyan);">● Productionize Solver:</span>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 6px; background: rgba(100, 200, 255, 0.08); padding: 4px 8px; border-radius: 4px;">
+                <span style="color: var(--accent-cyan); font-weight: 700;">● Productionize Solver:</span>
                 <strong style="color: #fff;">$200,000 (27%)</strong>
               </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--accent-gold);">● Pilot Infrastructure:</span>
+              <div style="display: flex; justify-content: space-between; background: rgba(245, 197, 66, 0.08); padding: 4px 8px; border-radius: 4px;">
+                <span style="color: var(--accent-gold); font-weight: 700;">● Pilot Infrastructure:</span>
                 <strong style="color: #fff;">$150,000 (20%)</strong>
               </div>
             </div>
           </div>
-          <div style="font-family: var(--font-serif); font-size: 0.95rem; color: var(--text-secondary); margin-top: 0.6rem; border-top: 1px solid var(--border-subtle); padding-top: 0.4rem;">
-            Converts working prototype into enterprise C-ABI streaming binaries.
-          </div>
-        </div>
 
-        <!-- Card 2: Funding Syndicate Split Donut (Anfa Highlighted) -->
-        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 1.2rem; border: 2px solid var(--accent-emerald); background: rgba(53, 255, 130, 0.04); box-shadow: 0 0 25px rgba(53, 255, 130, 0.1);">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-            <div class="card-header" style="font-size: 1.15rem; margin-bottom: 0;">
-              Syndicate Allocation ($750k)
-            </div>
-            <span style="background: var(--accent-emerald); color: #030704; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px;">
-              ANFA ANCHOR
-            </span>
-          </div>
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex: 1;">
-            <div style="width: 140px; height: 140px; flex-shrink: 0;">
-              <svg viewBox="0 0 42 42" style="width: 100%; height: 100%; transform: rotate(-90deg);">
-                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#071a0f" stroke-width="6.5"></circle>
-                <!-- Anfa: 66.67% (500k) -->
-                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#35ff82" stroke-width="7.5" stroke-dasharray="66.67 33.33" stroke-dashoffset="0" style="filter: drop-shadow(0 0 4px rgba(53, 255, 130, 0.8));"></circle>
-                <!-- Quantonation: 13.33% (100k) -->
-                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#64c8ff" stroke-width="6.5" stroke-dasharray="13.33 86.67" stroke-dashoffset="-66.67"></circle>
-                <!-- Alchemist: 13.33% (100k) -->
-                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#a78bfa" stroke-width="6.5" stroke-dasharray="13.33 86.67" stroke-dashoffset="-80.00"></circle>
-                <!-- Plug & Play: 6.67% (50k) -->
-                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#f5c542" stroke-width="6.5" stroke-dasharray="6.67 93.33" stroke-dashoffset="-93.33"></circle>
-              </svg>
-            </div>
-            <div style="flex: 1; font-family: var(--font-mono); font-size: 0.95rem; line-height: 1.6;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 4px; background: rgba(53, 255, 130, 0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(53, 255, 130, 0.3);">
-                <span style="color: var(--accent-emerald); font-weight: 700;">● Anfa (Anchor):</span>
-                <strong style="color: #fff;">$500,000 (67%)</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                <span style="color: var(--accent-cyan);">● Quantonation:</span>
-                <strong style="color: #fff;">$100,000 (13%)</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                <span style="color: #c4b5fd;">● Alchemist:</span>
-                <strong style="color: #fff;">$100,000 (13%)</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--accent-gold);">● Plug and Play:</span>
-                <strong style="color: #fff;">$50,000 (7%)</strong>
-              </div>
-            </div>
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 0.4rem; margin-top: 0.4rem;">
-            <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-gold);">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 0.6rem; margin-top: 0.6rem;">
+            <span style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-gold); font-weight: 600;">
               +$75,000 USISTEF Allotment
             </span>
             <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted);">
               Non-Dilutive Federal Grant
             </span>
+          </div>
+        </div>
+
+        <!-- Card 2: Strategic Milestones & Financing Summary -->
+        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 1.4rem; border: 2px solid var(--accent-emerald); background: rgba(53, 255, 130, 0.04); box-shadow: 0 0 25px rgba(53, 255, 130, 0.1);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem;">
+            <div>
+              <div style="font-family: var(--font-mono); color: var(--accent-gold); font-size: 0.85rem; font-weight: 700; letter-spacing: 1px;">
+                PRE-SEED FINANCING ROUND
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 1.45rem; font-weight: 700; color: #fff;">
+                $750,000 on $6.0M Cap
+              </div>
+            </div>
+            <span style="background: var(--accent-emerald); color: #030704; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; padding: 3px 10px; border-radius: 14px;">
+              ANFA ANCHOR · $500K
+            </span>
+          </div>
+
+          <div style="font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.5; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.8rem; flex: 1; justify-content: center;">
+            <div style="display: flex; align-items: flex-start; gap: 10px;">
+              <span style="color: var(--accent-emerald); font-weight: 700; font-family: var(--font-mono);">01</span>
+              <div>
+                <strong style="color: #fff;">Full-Time NVIDIA GPU Compiler Hire:</strong> Dedicated kernel engineer to optimize streaming stencils and build CUDA commercial binary.
+              </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 10px;">
+              <span style="color: var(--accent-cyan); font-weight: 700; font-family: var(--font-mono);">02</span>
+              <div>
+                <strong style="color: #fff;">Productionize Open-Source Solver:</strong> Package C-ABI shared library (<span class="code-text">libqbescf.so</span>) and PyAnsys SDK integration.
+              </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 10px;">
+              <span style="color: var(--accent-gold); font-weight: 700; font-family: var(--font-mono);">03</span>
+              <div>
+                <strong style="color: #fff;">3 Pilot-Ready Deployments:</strong> Onboard initial enterprise foundry partners in sub-2nm GAA-FET and battery SEI workflows.
+              </div>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.6rem; font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-emerald);">
+            ✓ 18-Month Operating Runway to $1.5M+ NRE/ARR
           </div>
         </div>
       </div>
