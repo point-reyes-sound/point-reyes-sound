@@ -1127,119 +1127,225 @@
         <span class="slide-num">07 / 07</span>
       </div>
 
-      <div>
-        <h2>Pre-Seed Financing</h2>
-        <p class="subtitle">Capital Structure & Milestones</p>
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.35rem;">
+        <div>
+          <h2>Pre-Seed Syndicate Financing</h2>
+          <p class="subtitle" style="margin-bottom: 0;">$750k Pre-Seed Round &middot; Post-Money SAFE @ $6M Cap &middot; +$75k Non-Dilutive USISTEF Grant</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <span style="font-family: var(--font-mono); font-size: 0.78rem; background: rgba(53, 255, 130, 0.08); border: 1px solid var(--accent-emerald); color: var(--accent-emerald); padding: 3px 10px; border-radius: 14px; font-weight: 600;">
+            $750K SAFE ROUND
+          </span>
+          <span style="font-family: var(--font-mono); font-size: 0.78rem; background: rgba(245, 197, 66, 0.08); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 3px 10px; border-radius: 14px; font-weight: 600;">
+            $6.0M CAP (12.5% DILUTION)
+          </span>
+          <span style="font-family: var(--font-mono); font-size: 0.78rem; background: rgba(100, 200, 255, 0.08); border: 1px solid var(--accent-cyan); color: var(--accent-cyan); padding: 3px 10px; border-radius: 14px; font-weight: 600;">
+            +$75K USISTEF GRANT
+          </span>
+        </div>
       </div>
 
-      <!-- Top Row: 4 Metric Cards for Deal Terms -->
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin: 0.6rem 0 1.1rem 0;">
+      <!-- Main Centerpiece: Dual Pie Charts + 4 Partner Ask Cards -->
+      <div style="flex: 1; display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.2rem; align-items: center; margin: 0.3rem 0;">
         
-        <!-- Target Round -->
-        <div style="background: rgba(8, 20, 12, 0.85); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.2rem 1.4rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
-          <div style="font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase;">
-            Round Size
+        <!-- Left: Dual Pie Charts Container -->
+        <div style="background: rgba(8, 20, 12, 0.85); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 0.9rem 1.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.4); height: 100%;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.35rem;">
+            <span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase;">
+              Stakeholder Allocation
+            </span>
+            <span style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent-emerald); font-weight: 600;">
+              ● Anfa Anchor Highlighted ($500k)
+            </span>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 2.2rem; font-weight: 700; color: #fff; margin: 0.35rem 0 0.15rem 0;">
-            $750,000
+
+          <!-- Dual Donut SVGs Side-by-Side -->
+          <div style="display: flex; justify-content: space-around; align-items: center; padding: 0.5rem 0;">
+            
+            <!-- Donut 1: Check Size by Partner ($750k SAFE) -->
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <svg width="158" height="158" viewBox="0 0 200 200" style="overflow: visible; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));">
+                <!-- Anfa Slice (66.7%, 500k) HIGHLIGHTED -->
+                <path d="M 32.45 139.00 A 78 78 0 1 0 100.00 22.00 L 100.00 54.00 A 46 46 0 1 1 60.16 123.00 Z" fill="#35ff82" stroke="#f0f7f2" stroke-width="2" style="filter: drop-shadow(0 0 12px rgba(53, 255, 130, 0.65));" />
+                
+                <!-- Quantonation Slice (13.3%, 100k) -->
+                <path d="M 25.82 75.90 A 78 78 0 0 0 32.45 139.00 L 60.16 123.00 A 46 46 0 0 1 56.25 85.79 Z" fill="#64c8ff" stroke="#030704" stroke-width="1.5" opacity="0.9" />
+                
+                <!-- Alchemist Slice (13.3%, 100k) -->
+                <path d="M 68.27 28.74 A 78 78 0 0 0 25.82 75.90 L 56.25 85.79 A 46 46 0 0 1 81.29 57.98 Z" fill="#f5c542" stroke="#030704" stroke-width="1.5" opacity="0.9" />
+                
+                <!-- Plug and Play Slice (6.7%, 50k) -->
+                <path d="M 100.00 22.00 A 78 78 0 0 0 68.27 28.74 L 81.29 57.98 A 46 46 0 0 1 100.00 54.00 Z" fill="#a78bfa" stroke="#030704" stroke-width="1.5" opacity="0.85" />
+
+                <!-- Center Readout -->
+                <text x="100" y="96" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="#fff">$750K</text>
+                <text x="100" y="112" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600" fill="#a3c2ad" letter-spacing="1.5">SAFE ROUND</text>
+              </svg>
+              <span style="font-family: var(--font-mono); font-size: 0.78rem; color: #fff; font-weight: 600; margin-top: 4px;">Syndicate Ask ($750k)</span>
+            </div>
+
+            <!-- Donut 2: Total Available Capital ($825k with USISTEF Grant) -->
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <svg width="158" height="158" viewBox="0 0 200 200" style="overflow: visible; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));">
+                <!-- Anfa (60.6%, $500k) HIGHLIGHTED -->
+                <path d="M 51.79 161.31 A 78 78 0 1 0 100.00 22.00 L 100.00 54.00 A 46 46 0 1 1 71.57 136.16 Z" fill="#35ff82" stroke="#f0f7f2" stroke-width="2" style="filter: drop-shadow(0 0 12px rgba(53, 255, 130, 0.65));" />
+
+                <!-- Quantonation (12.1%, $100k) -->
+                <path d="M 22.79 111.10 A 78 78 0 0 0 51.79 161.31 L 71.57 136.16 A 46 46 0 0 1 54.47 106.55 Z" fill="#64c8ff" stroke="#030704" stroke-width="1.5" opacity="0.9" />
+
+                <!-- Alchemist (12.1%, $100k) -->
+                <path d="M 36.46 54.76 A 78 78 0 0 0 22.79 111.10 L 54.47 106.55 A 46 46 0 0 1 62.53 73.32 Z" fill="#f5c542" stroke="#030704" stroke-width="1.5" opacity="0.9" />
+
+                <!-- Plug & Play (6.1%, $50k) -->
+                <path d="M 57.83 34.38 A 78 78 0 0 0 36.46 54.76 L 62.53 73.32 A 46 46 0 0 1 75.13 61.30 Z" fill="#a78bfa" stroke="#030704" stroke-width="1.5" opacity="0.85" />
+
+                <!-- USISTEF Grant (9.1%, $75k Non-Dilutive) -->
+                <path d="M 100.00 22.00 A 78 78 0 0 0 57.83 34.38 L 75.13 61.30 A 46 46 0 0 1 100.00 54.00 Z" fill="#fb923c" stroke="#030704" stroke-width="1.5" />
+
+                <!-- Center Readout -->
+                <text x="100" y="96" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="#fff">$825K</text>
+                <text x="100" y="112" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600" fill="#a3c2ad" letter-spacing="1.5">TOTAL INFLOW</text>
+              </svg>
+              <span style="font-family: var(--font-mono); font-size: 0.78rem; color: #fff; font-weight: 600; margin-top: 4px;">Total Inflow (+Grant)</span>
+            </div>
+
           </div>
-          <div style="font-family: var(--font-mono); font-size: 0.88rem; color: var(--accent-cyan);">
-            Pre-Seed Round
+
+          <!-- Bottom Legend Strip -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.4rem; font-family: var(--font-mono); font-size: 0.72rem;">
+            <span style="color: var(--accent-emerald); font-weight: 700;">■ Anfa ($500k)</span>
+            <span style="color: var(--accent-gold);">■ Alchemist ($100k)</span>
+            <span style="color: var(--accent-cyan);">■ Quantonation ($100k)</span>
+            <span style="color: #a78bfa;">■ PnP ($50k)</span>
+            <span style="color: #fb923c; font-weight: 600;">■ USISTEF ($75k)</span>
           </div>
         </div>
 
-        <!-- Anfa Anchor (Hero Accent Card) -->
-        <div style="background: radial-gradient(circle at 80% 20%, rgba(53, 255, 130, 0.12) 0%, rgba(8, 20, 12, 0.95) 75%); border: 1.5px solid var(--accent-emerald); border-radius: 10px; padding: 1.2rem 1.4rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 0 25px rgba(53, 255, 130, 0.15);">
-          <div style="font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 1.5px; text-transform: uppercase;">
-            Anchor Target
+        <!-- Right: 4 Dedicated Stakeholder Ask Cards -->
+        <div style="display: flex; flex-direction: column; gap: 0.48rem; height: 100%; justify-content: space-between;">
+          
+          <!-- ANFA CARD (HIGHLIGHTED) -->
+          <div style="background: radial-gradient(circle at 90% 20%, rgba(53, 255, 130, 0.16) 0%, rgba(8, 20, 12, 0.95) 75%); border: 2px solid var(--accent-emerald); border-radius: 9px; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 0 25px rgba(53, 255, 130, 0.25);">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
+                <span style="width: 8px; height: 8px; background: var(--accent-emerald); border-radius: 50%; box-shadow: 0 0 8px var(--accent-emerald);"></span>
+                <span style="font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; color: #fff;">Anfa</span>
+                <span style="font-family: var(--font-mono); font-size: 0.68rem; color: #030704; background: var(--accent-emerald); padding: 1px 6px; border-radius: 10px; font-weight: 700;">LEAD ANCHOR</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-secondary);">
+                Rolling Interviews &middot; Post-Money SAFE @ $6M Cap
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700; color: var(--accent-emerald); line-height: 1.1;">
+                $500,000
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.72rem; color: #fff; font-weight: 600;">
+                66.7% Round &middot; 8.33% Equity
+              </div>
+            </div>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 2.2rem; font-weight: 700; color: var(--accent-emerald); margin: 0.35rem 0 0.15rem 0; text-shadow: 0 0 20px rgba(53, 255, 130, 0.3);">
-            $500,000
-          </div>
-          <div style="font-family: var(--font-mono); font-size: 0.88rem; color: #fff; font-weight: 600;">
-            Anfa Anchor
-          </div>
-        </div>
 
-        <!-- Instrument -->
-        <div style="background: rgba(8, 20, 12, 0.85); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.2rem 1.4rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
-          <div style="font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase;">
-            Structure
+          <!-- ALCHEMIST CARD -->
+          <div style="background: rgba(8, 20, 12, 0.85); border-left: 3px solid var(--accent-gold); border-top: 1px solid var(--border-subtle); border-right: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.65rem 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
+                <span style="font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; color: #fff;">Alchemist</span>
+                <span style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent-gold); border: 1px solid rgba(245, 197, 66, 0.3); padding: 1px 6px; border-radius: 10px;">PITCH TOMORROW</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted);">
+                Enterprise B2B GTM & Customer Acceleration
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-family: var(--font-mono); font-size: 1.35rem; font-weight: 700; color: #fff; line-height: 1.1;">
+                $100,000
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary);">
+                13.3% Round &middot; 1.67% Equity
+              </div>
+            </div>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 1.85rem; font-weight: 700; color: #fff; margin: 0.35rem 0 0.15rem 0; line-height: 1.2;">
-            Post-Money SAFE
-          </div>
-          <div style="font-family: var(--font-mono); font-size: 0.88rem; color: var(--text-secondary);">
-            Standard YC Agreement
-          </div>
-        </div>
 
-        <!-- Valuation Cap -->
-        <div style="background: rgba(8, 20, 12, 0.85); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.2rem 1.4rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
-          <div style="font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase;">
-            Valuation Cap
+          <!-- QUANTONATION CARD -->
+          <div style="background: rgba(8, 20, 12, 0.85); border-left: 3px solid var(--accent-cyan); border-top: 1px solid var(--border-subtle); border-right: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.65rem 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
+                <span style="font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; color: #fff;">Quantonation</span>
+                <span style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent-cyan); border: 1px solid rgba(100, 200, 255, 0.3); padding: 1px 6px; border-radius: 10px;">PITCH DAY AFTER</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted);">
+                Deep-Tech Quantum Specialized Syndicate
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-family: var(--font-mono); font-size: 1.35rem; font-weight: 700; color: #fff; line-height: 1.1;">
+                $100,000
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary);">
+                13.3% Round &middot; 1.67% Equity
+              </div>
+            </div>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 2.2rem; font-weight: 700; color: var(--accent-gold); margin: 0.35rem 0 0.15rem 0;">
-            $6,000,000
+
+          <!-- PLUG AND PLAY CARD -->
+          <div style="background: rgba(8, 20, 12, 0.85); border-left: 3px solid #a78bfa; border-top: 1px solid var(--border-subtle); border-right: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.65rem 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
+                <span style="font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; color: #fff;">Plug and Play</span>
+                <span style="font-family: var(--font-mono); font-size: 0.68rem; color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.3); padding: 1px 6px; border-radius: 10px;">PITCHED</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted);">
+                Semiconductor & Energy Corporate Pilot Network
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-family: var(--font-mono); font-size: 1.35rem; font-weight: 700; color: #fff; line-height: 1.1;">
+                $50,000
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary);">
+                6.7% Round &middot; 0.83% Equity
+              </div>
+            </div>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 0.88rem; color: var(--text-secondary);">
-            $6M Post-Money Cap
-          </div>
+
         </div>
 
       </div>
 
-      <!-- Bottom Row: 3 Pillars of Capital Allocation (Use of Proceeds) -->
-      <div style="flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; align-items: stretch; margin-bottom: 0.8rem;">
-        
-        <!-- Allocation 1: NVIDIA Developer -->
-        <div style="background: rgba(8, 20, 12, 0.85); border-left: 3.5px solid #76b900; border-top: 1px solid var(--border-subtle); border-right: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.4rem 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <!-- Bottom Strip: Capital Allocation Milestones & Non-Dilutive Grant Leverage -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1.1fr; gap: 0.8rem; align-items: center; margin-bottom: 0.35rem; padding: 0.55rem 0.9rem; background: rgba(8, 20, 12, 0.65); border: 1px solid rgba(53, 255, 130, 0.15); border-radius: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #76b900; background: rgba(118, 185, 0, 0.12); padding: 2px 6px; border-radius: 5px; font-weight: 700;">01</span>
           <div>
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
-              <span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: #76b900; letter-spacing: 1.5px;">ALLOCATION 01</span>
-              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); border: 1px solid rgba(118, 185, 0, 0.3); padding: 2px 8px; border-radius: 12px;">ENGINEERING</span>
-            </div>
-            <div style="font-family: var(--font-serif); font-size: 1.45rem; font-weight: 600; color: #fff; line-height: 1.25; margin-bottom: 0.5rem;">
-              NVIDIA-Focused Developer
-            </div>
-          </div>
-          <div style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--text-secondary); line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.7rem;">
-            Dedicated GPU engineer for CUDA/Metal kernels & H100/H200 streaming acceleration.
+            <div style="font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: #fff;">NVIDIA Developer</div>
+            <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">CUDA/Metal matrix kernels</div>
           </div>
         </div>
 
-        <!-- Allocation 2: Productionize Open-Source -->
-        <div style="background: rgba(8, 20, 12, 0.85); border-left: 3.5px solid var(--accent-cyan); border-top: 1px solid var(--border-subtle); border-right: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.4rem 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-cyan); background: rgba(100, 200, 255, 0.12); padding: 2px 6px; border-radius: 5px; font-weight: 700;">02</span>
           <div>
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
-              <span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--accent-cyan); letter-spacing: 1.5px;">ALLOCATION 02</span>
-              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); border: 1px solid rgba(100, 200, 255, 0.3); padding: 2px 8px; border-radius: 12px;">SOFTWARE</span>
-            </div>
-            <div style="font-family: var(--font-serif); font-size: 1.45rem; font-weight: 600; color: #fff; line-height: 1.25; margin-bottom: 0.5rem;">
-              Productionize Open-Source Branch
-            </div>
-          </div>
-          <div style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--text-secondary); line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.7rem;">
-            Hardened commercial C-ABI DLL, PyAnsys connectors & high-throughput Python API.
+            <div style="font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: #fff;">Production Open-Core</div>
+            <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">C-ABI DLL & PyAnsys SDK</div>
           </div>
         </div>
 
-        <!-- Allocation 3: Pilot-Ready Infrastructure -->
-        <div style="background: rgba(8, 20, 12, 0.85); border-left: 3.5px solid var(--accent-emerald); border-top: 1px solid var(--border-subtle); border-right: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.4rem 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-emerald); background: rgba(53, 255, 130, 0.12); padding: 2px 6px; border-radius: 5px; font-weight: 700;">03</span>
           <div>
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
-              <span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--accent-emerald); letter-spacing: 1.5px;">ALLOCATION 03</span>
-              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); border: 1px solid rgba(53, 255, 130, 0.3); padding: 2px 8px; border-radius: 12px;">INFRASTRUCTURE</span>
-            </div>
-            <div style="font-family: var(--font-serif); font-size: 1.45rem; font-weight: 600; color: #fff; line-height: 1.25; margin-bottom: 0.5rem;">
-              Pilot-Ready Infrastructure
-            </div>
-          </div>
-          <div style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--text-secondary); line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.7rem;">
-            Converts working solver into sandboxed enterprise deployable solver modules.
+            <div style="font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: #fff;">Pilot-Ready Infra</div>
+            <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">Sandboxed enterprise solver</div>
           </div>
         </div>
 
+        <div style="display: flex; align-items: center; gap: 8px; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 10px;">
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fb923c; background: rgba(251, 146, 60, 0.12); padding: 2px 6px; border-radius: 5px; font-weight: 700;">GRANT</span>
+          <div>
+            <div style="font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: var(--accent-gold);">+$75k USISTEF Allotment</div>
+            <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">Non-dilutive R&D capital applied</div>
+          </div>
+        </div>
       </div>
 
       <div class="footer">
