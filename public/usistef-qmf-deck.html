@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Materials Foundry — USISTEF Grant Proposal Deck</title>
+  <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg" />
+
+  <!-- Google Fonts: EB Garamond, JetBrains Mono, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root {
+      --font-serif: "EB Garamond", Georgia, "Times New Roman", serif;
+      --font-mono: "JetBrains Mono", monospace;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --bg-core: #030704;
+      --bg-panel: #07120a;
+      --bg-card: rgba(8, 20, 12, 0.85);
+      --bg-card-hover: rgba(12, 28, 17, 0.95);
+      
+      --accent-emerald: #35ff82;
+      --accent-emerald-dim: rgba(53, 255, 130, 0.12);
+      --accent-emerald-glow: rgba(53, 255, 130, 0.35);
+      --accent-cyan: #64c8ff;
+      --accent-gold: #f5c542;
+      --accent-orange: #fb923c;
+      --accent-blue: #3b82f6;
+
+      --text-primary: #f0f7f2;
+      --text-secondary: #a3c2ad;
+      --text-muted: #62826c;
+      --border-subtle: rgba(53, 255, 130, 0.18);
+      --border-active: #35ff82;
+    }
+
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-serif);
+      background-color: var(--bg-core);
+      color: var(--text-primary);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(53, 255, 130, 0.04) 0%, transparent 80%),
+        linear-gradient(rgba(53, 255, 130, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(53, 255, 130, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    /* Deck presentation wrapper */
+    .deck-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      gap: 40px;
+    }
+
+    /* Slide styling (16:9 Aspect Ratio) */
+    .slide {
+      width: 16in;
+      height: 9in;
+      background-color: var(--bg-core);
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(53, 255, 130, 0.03);
+      position: relative;
+      padding: 0.5in 0.75in 0.4in 0.75in;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-after: always;
+      break-after: page;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    /* Header Bar */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.1in;
+      margin-bottom: 0.12in;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-animated {
+      width: 24px;
+      height: 24px;
+    }
+
+    .company-tag {
+      font-family: var(--font-mono);
+      font-size: 10pt;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--accent-emerald);
+      text-transform: uppercase;
+    }
+
+    .header-qmf-tag {
+      font-family: var(--font-mono);
+      font-size: 9pt;
+      font-weight: 600;
+      color: #93c5fd;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      padding: 2px 10px;
+      border-radius: 12px;
+      margin-left: 8px;
+      letter-spacing: 1px;
+    }
+
+    .header-call-tag {
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      font-weight: 600;
+      color: var(--accent-gold);
+      background: rgba(245, 197, 66, 0.1);
+      border: 1px solid rgba(245, 197, 66, 0.3);
+      padding: 2px 10px;
+      border-radius: 12px;
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .slide-num {
+      font-family: var(--font-mono);
+      font-size: 10.5pt;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Typography */
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 42pt;
+      font-weight: 600;
+      line-height: 1.05;
+      color: var(--text-primary);
+      margin-bottom: 0.08in;
+      letter-spacing: -0.5px;
+    }
+
+    h2 {
+      font-family: var(--font-serif);
+      font-size: 28pt;
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 0.05in;
+    }
+
+    h3 {
+      font-family: var(--font-sans);
+      font-size: 15pt;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.06in;
+    }
+
+    p.subtitle {
+      font-family: var(--font-sans);
+      font-size: 13pt;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin-bottom: 0.14in;
+      max-width: 13.5in;
+    }
+
+    /* Grids & Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.25in;
+      flex: 1;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.22in;
+      flex: 1;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0.16in;
+      flex: 1;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 0.2in;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      font-family: var(--font-sans);
+      font-size: 14pt;
+      font-weight: 600;
+      color: var(--accent-emerald);
+      margin-bottom: 0.06in;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-body {
+      font-family: var(--font-sans);
+      font-size: 11.5pt;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 9pt;
+      font-weight: 600;
+      color: var(--accent-emerald);
+      background: var(--accent-emerald-dim);
+      border: 1px solid rgba(53, 255, 130, 0.3);
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-right: 6px;
+    }
+
+    .badge-cyan {
+      color: var(--accent-cyan);
+      background: rgba(100, 200, 255, 0.1);
+      border-color: rgba(100, 200, 255, 0.3);
+    }
+
+    .badge-gold {
+      color: var(--accent-gold);
+      background: rgba(245, 197, 66, 0.1);
+      border-color: rgba(245, 197, 66, 0.3);
+    }
+
+    .badge-blue {
+      color: #93c5fd;
+      background: rgba(37, 99, 235, 0.15);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.08in;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      color: var(--text-muted);
+    }
+
+    .highlight-stat {
+      font-family: var(--font-serif);
+      font-size: 30pt;
+      font-weight: 700;
+      color: var(--accent-emerald);
+      line-height: 1;
+    }
+
+    .code-text {
+      font-family: var(--font-mono);
+      color: var(--accent-cyan);
+    }
+
+    /* Keyboard navigation badge */
+    #nav-hud {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(3, 7, 4, 0.9);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 11pt;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--accent-emerald);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: var(--accent-emerald-dim);
+      border-color: var(--accent-emerald);
+    }
+
+    @media print {
+      body {
+        background: #000 !important;
+      }
+      .slide {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+      #nav-hud {
+        display: none !important;
+      }
+      .deck-container {
+        padding: 0 !important;
+        gap: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation HUD for interactive viewing -->
+  <div id="nav-hud">
+    <span style="color: var(--text-muted);">SLIDE:</span>
+    <span id="current-slide-num" style="color: var(--accent-emerald); font-weight: 700;">1 / 12</span>
+<button class="nav-btn" onclick="prevSlide()" title="Previous Slide (Left Arrow / K)">‹</button>
+    <button class="nav-btn" onclick="nextSlide()" title="Next Slide (Right Arrow / J)">›</button>
+    <button class="nav-btn" onclick="window.print()" title="Print / Export PDF" style="width: auto; padding: 0 8px; border-radius: 12px; font-size: 9pt;">PDF</button>
+  </div>
+
+  <div class="deck-container">
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 1: Title & Bilateral Hero Lockup with Photorealistic QPU Core -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-1" data-slide="1">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.4)" stroke-width="1.2"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/><circle cx="16" cy="16" r="3.5" fill="#64c8ff"/><circle cx="16" cy="6" r="2" fill="#35ff82"/><circle cx="25" cy="11" r="2" fill="#f5c542"/><circle cx="25" cy="21" r="2" fill="#3b82f6"/><circle cx="16" cy="26" r="2" fill="#35ff82"/><circle cx="7" cy="21" r="2" fill="#f5c542"/><circle cx="7" cy="11" r="2" fill="#3b82f6"/></svg>
+          <span class="company-tag">USISTEF BILATERAL GRANT PROPOSAL</span>
+          <span class="header-qmf-tag">QMF · 2026</span>
+          <span class="header-call-tag">CRITICAL MINERALS & QUANTUM TECH</span>
+        </div>
+        <span class="slide-num">01 / 12</span>
+      </div>
+
+      <div style="display: flex; flex: 1; align-items: center; justify-content: space-between; gap: 0.4in;">
+        <!-- Left Hero Text & Consortium Lockup -->
+        <div style="flex: 1.2; display: flex; flex-direction: column; justify-content: center;">
+          <div style="font-family: var(--font-mono); font-size: 10pt; color: var(--accent-gold); letter-spacing: 2px; font-weight: 700; text-transform: uppercase; margin-bottom: 0.1in;">
+            INDIA–U.S. SCIENCE & TECHNOLOGY ENDOWMENT FUND
+          </div>
+          <h1 style="font-family: var(--font-serif); font-size: 50pt; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 0.1in; color: #fff; text-shadow: 0 0 40px rgba(53, 255, 130, 0.25); line-height: 1.05;">
+            Quantum Materials Foundry
+          </h1>
+          <p class="subtitle" style="font-family: var(--font-sans); font-size: 16pt; color: var(--accent-emerald); font-weight: 500; margin-bottom: 0.22in; line-height: 1.35;">
+            An AI-Native Full-Stack Platform for Clean-Energy Discovery
+          </p>
+
+          <!-- Tri-Partite Consortium Info Lockup -->
+          <div style="background: rgba(8, 20, 12, 0.92); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.16in 0.2in; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.16in; font-size: 10pt;">
+              <div style="border-left: 2.5px solid var(--accent-emerald); padding-left: 10px;">
+                <strong style="color: #fff; display: block; font-size: 11pt; font-family: var(--font-sans); font-weight: 600;">Point Reyes Sound</strong>
+                <span style="color: var(--accent-emerald); font-family: var(--font-mono); font-size: 8.5pt; font-weight: 600;">U.S. Lead Partner</span>
+                <p style="color: var(--text-secondary); margin-top: 4px; font-size: 9pt; font-family: var(--font-sans);">Dr. Romit Chakraborty (PI)</p>
+              </div>
+              <div style="border-left: 2.5px solid var(--accent-cyan); padding-left: 10px;">
+                <strong style="color: #fff; display: block; font-size: 11pt; font-family: var(--font-sans); font-weight: 600;">Qomputing.ai</strong>
+                <span style="color: var(--accent-cyan); font-family: var(--font-mono); font-size: 8.5pt; font-weight: 600;">India Commercial Lead</span>
+                <p style="color: var(--text-secondary); margin-top: 4px; font-size: 9pt; font-family: var(--font-sans);">Saurabh Sharma (Founder & CEO)</p>
+              </div>
+              <div style="border-left: 2.5px solid var(--accent-gold); padding-left: 10px;">
+                <strong style="color: #fff; display: block; font-size: 11pt; font-family: var(--font-sans); font-weight: 600;">TCG CREST</strong>
+                <span style="color: var(--accent-gold); font-family: var(--font-mono); font-size: 8.5pt; font-weight: 600;">India Academic Lead</span>
+                <p style="color: var(--text-secondary); margin-top: 4px; font-size: 9pt; font-family: var(--font-sans);">Dr. Sayan Chakraborty (Asst. Prof.)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right QPU Hardware Hero Visual -->
+        <div style="flex: 0.95; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+          <div style="width: 4.8in; height: 4.8in; position: relative; border-radius: 12px; overflow: hidden; border: 1.5px solid rgba(53, 255, 130, 0.35); box-shadow: 0 0 50px rgba(53, 255, 130, 0.2); background: #040b07;">
+            <img src="/qpu_hero.jpg" alt="Quantum Processing Unit (QPU) Core" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+            <div style="position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); background: rgba(3, 7, 4, 0.94); border: 1.5px solid var(--accent-emerald); padding: 6px 20px; border-radius: 20px; font-family: var(--font-mono); font-size: 9pt; font-weight: 700; color: #f0f7f2; letter-spacing: 1.5px; box-shadow: 0 0 25px rgba(53, 255, 130, 0.4); display: flex; align-items: center; gap: 8px; white-space: nowrap;">
+              <span style="width: 7px; height: 7px; background: var(--accent-emerald); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px var(--accent-emerald);"></span>
+              QUANTUM PROCESSOR (QPU)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>USISTEF / IUSSTF Grant Proposal · Consortium: Point Reyes Sound · Qomputing.ai · TCG CREST</span>
+        <span>Commercializing Technologies for Societal Impact</span>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 2: The Materials Discovery Bottleneck (Image-Driven) -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-2" data-slide="2">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/></svg>
+          <span class="company-tag">POINT REYES SOUND · QOMPUTING.AI · TCG CREST</span>
+          <span class="header-qmf-tag">QMF · USISTEF</span>
+        </div>
+        <span class="slide-num">02 / 12</span>
+      </div>
+      <h2>The Materials Discovery Bottleneck</h2>
+      <p class="subtitle">Strongly correlated electronic systems remain computationally intractable on classical architectures.</p>
+      
+      <div class="grid-3" style="gap: 0.22in; align-items: stretch;">
+        <!-- Tile 1 -->
+        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 0.14in; border-top: 3px solid var(--accent-emerald);">
+          <div style="margin-bottom: 0.08in;">
+            <div class="card-header" style="font-size: 14pt; margin-bottom: 0.04in;">Strong Correlation Limits</div>
+            <div class="card-body" style="font-size: 10.5pt; line-height: 1.35; color: var(--text-secondary); flex: none;">
+              Single-reference mean-field DFT fails catastrophically in multi-reference open-shell catalyst regimes.
+            </div>
+          </div>
+          <div style="border-radius: 6px; overflow: hidden; border: 1px solid rgba(53, 255, 130, 0.25); background: #040b07; flex: 1;">
+            <img src="/vertical_catalysis.jpg" alt="Chemical Catalysis transition states" style="width: 100%; height: 100%; min-height: 2.7in; object-fit: cover; display: block;" />
+          </div>
+        </div>
+
+        <!-- Tile 2 -->
+        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 0.14in; border-top: 3px solid var(--accent-cyan);">
+          <div style="margin-bottom: 0.08in;">
+            <div class="card-header" style="font-size: 14pt; color: var(--accent-cyan); margin-bottom: 0.04in;">Scale & Interface Breakdown</div>
+            <div class="card-body" style="font-size: 10.5pt; line-height: 1.35; color: var(--text-secondary); flex: none;">
+              Quantum confinement breaks down at sub-2nm GAA-FET and solid-state battery SEI interfaces.
+            </div>
+          </div>
+          <div style="border-radius: 6px; overflow: hidden; border: 1px solid rgba(100, 200, 255, 0.25); background: #040b07; flex: 1;">
+            <img src="/vertical_semiconductors.jpg" alt="Semiconductor GAA-FET breakdown" style="width: 100%; height: 100%; min-height: 2.7in; object-fit: cover; display: block;" />
+          </div>
+        </div>
+
+        <!-- Tile 3 -->
+        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 0.14in; border-top: 3px solid var(--accent-gold);">
+          <div style="margin-bottom: 0.08in;">
+            <div class="card-header" style="font-size: 14pt; color: var(--accent-gold); margin-bottom: 0.04in;">Workflow Fragmentation</div>
+            <div class="card-body" style="font-size: 10.5pt; line-height: 1.35; color: var(--text-secondary); flex: none;">
+              Disconnected electronic-structure solvers, AI compilation stacks, and FPGA control hardware.
+            </div>
+          </div>
+          <div style="border-radius: 6px; overflow: hidden; border: 1px solid rgba(245, 197, 66, 0.25); background: #040b07; flex: 1;">
+            <img src="/bottleneck_workflow.jpg" alt="Quantum workflow stack" style="width: 100%; height: 100%; min-height: 2.7in; object-fit: cover; display: block;" />
+          </div>
+        </div>
+      </div>
+
+      <div class="footer"><span>USISTEF Grant Proposal · Scientific & Technological Bottlenecks</span><span>02 / 12</span></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 3: Why Existing Computational Stacks Break (Image-Driven) -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-3" data-slide="3">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/></svg>
+          <span class="company-tag">POINT REYES SOUND · QOMPUTING.AI · TCG CREST</span>
+          <span class="header-qmf-tag">QMF · USISTEF</span>
+        </div>
+        <span class="slide-num">03 / 12</span>
+      </div>
+      <h2>Why Existing Computational Stacks Break</h2>
+      <p class="subtitle">Algorithmic matrix bottlenecks and numerical divergence prevent scaling on modern GPU clusters and quantum processors.</p>
+      
+      <div class="grid-2" style="gap: 0.25in; margin-bottom: 0.1in;">
+        <!-- Card 1 -->
+        <div class="card" style="padding: 0.14in; display: flex; flex-direction: column; justify-content: space-between; border-top: 3px solid var(--accent-cyan);">
+          <div style="margin-bottom: 0.08in;">
+            <div class="card-header" style="font-size: 14pt; color: var(--accent-cyan); margin-bottom: 0.04in;">
+              <span style="font-family: var(--font-mono);">✕</span> Matrix Diagonalization Bottleneck
+            </div>
+            <div class="card-body" style="font-size: 10.5pt; line-height: 1.35; color: var(--text-secondary); flex: none;">
+              Iterative <span class="code-text">O(N³)</span> to <span class="code-text">O(N⁴)</span> global matrix operations stall modern streaming GPUs and quantum coprocessors.
+            </div>
+          </div>
+          <div style="border-radius: 6px; overflow: hidden; border: 1px solid rgba(100, 200, 255, 0.25); background: #040b07; flex: 1;">
+            <img src="/bottleneck_matrix.jpg" alt="Matrix Diagonalization Bottleneck" style="width: 100%; height: 100%; min-height: 2.5in; object-fit: cover; display: block;" />
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card" style="padding: 0.14in; display: flex; flex-direction: column; justify-content: space-between; border-top: 3px solid var(--accent-emerald);">
+          <div style="margin-bottom: 0.08in;">
+            <div class="card-header" style="font-size: 14pt; color: var(--accent-emerald); margin-bottom: 0.04in;">
+              <span style="font-family: var(--font-mono);">✕</span> Convergence Brittleness & Singularities
+            </div>
+            <div class="card-body" style="font-size: 10.5pt; line-height: 1.35; color: var(--text-secondary); flex: none;">
+              Numerical divergence crashes automated high-throughput discovery pipelines during chemical bond cleavage.
+            </div>
+          </div>
+          <div style="border-radius: 6px; overflow: hidden; border: 1px solid rgba(53, 255, 130, 0.25); background: #040b07; flex: 1;">
+            <img src="/bottleneck_singularity.jpg" alt="Potential Energy Surface Instability" style="width: 100%; height: 100%; min-height: 2.5in; object-fit: cover; display: block;" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding: 0.12in 0.16in; background: rgba(59, 130, 246, 0.06); border-color: rgba(59, 130, 246, 0.35); text-align: left;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="background: #2563eb; color: #fff; font-family: var(--font-mono); font-size: 9.5pt; font-weight: 700; padding: 3px 8px; border-radius: 4px;">THE QMF SOLUTION</div>
+          <div style="font-size: 11pt; color: var(--text-primary);">
+            <strong>Unified Phase-Space Framework:</strong> Localized kinetic relaxation (Q-Boltz) + AI circuit synthesis (Qomputing) + phase-space QEC (TCG CREST).
+          </div>
+        </div>
+      </div>
+
+      <div class="footer"><span>USISTEF Grant Proposal · Algorithmic & Hardware Scaling Limits</span><span>03 / 12</span></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 4: Quantum Boltzmann Kinetic Transport -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-4" data-slide="4">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/></svg>
+          <span class="company-tag">POINT REYES SOUND, INC. (U.S. LEAD)</span>
+          <span class="header-qmf-tag">PROPRIETARY SCIENTIFIC CORE</span>
+        </div>
+        <span class="slide-num">04 / 12</span>
+      </div>
+      <h2>Quantum Boltzmann Kinetic Transport</h2>
+      <p class="subtitle">Solving Singularities in Matrix Diagonalization with GPU-Native Kinetic Relaxation.</p>
+      
+      <div class="grid-2" style="gap: 0.35in; align-items: stretch;">
+        <div style="display: flex; flex-direction: column; gap: 0.2in; justify-content: space-between;">
+          <div class="card" style="flex: 1;">
+            <div class="card-header" style="font-size: 14pt;">Phase-Space Dynamics</div>
+            <div class="card-body" style="font-size: 11pt; line-height: 1.45;">
+              <p style="margin-bottom: 0.08in;">Maps electronic density matrices into phase-space via the Wigner-Weyl transform and relaxes probability density via Bhatnagar-Gross-Krook (BGK) collision operators toward Fermi-Dirac equilibrium.</p>
+              <p>Monotonically dissipates energy with provable <em>H</em>-theorem entropy convergence guarantees.</p>
+            </div>
+          </div>
+
+          <div class="card" style="flex: 1; border-left: 3px solid #3b82f6;">
+            <div class="card-header" style="font-size: 14pt; color: #60a5fa;">Q-Boltz Kinetic Relaxation</div>
+            <div class="card-body" style="font-size: 11pt; line-height: 1.45;">
+              <p style="margin-bottom: 0.08in;"><strong style="color: #fff;">Static Diagonalization Transformed into Kinetic Relaxation:</strong> GPU-scalable, singularity-free atomistic simulations.</p>
+              <p style="font-family: var(--font-mono); font-size: 9pt; color: #93c5fd;">Protected by U.S. Prov. Pat. App. 64/033,274</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border: 1px solid var(--accent-emerald); background: rgba(8, 20, 12, 0.95); display: flex; flex-direction: column; justify-content: space-between; padding: 0.16in;">
+          <div style="flex: 1; display: flex; align-items: center; justify-content: center; margin-bottom: 0.08in;">
+            <img src="/n2_wigner_4panel_clean.png" alt="N2 Phase-Space Wigner & Cumulant Distributions" style="width: 100%; height: 3.75in; border-radius: 6px; border: 1px solid rgba(53, 255, 130, 0.2); object-fit: contain; background: #040b07;" />
+          </div>
+          <div style="text-align: center; background: rgba(53, 255, 130, 0.05); padding: 8px 14px; border-radius: 6px; border: 1px solid rgba(53, 255, 130, 0.2); font-size: 11.5pt; font-family: var(--font-mono); color: var(--text-primary); font-weight: 600; letter-spacing: 0.01em;">
+            Polynomial Scaling Dissociation Dynamics in Dinitrogen
+          </div>
+        </div>
+      </div>
+
+      <div class="footer"><span>USISTEF Grant Proposal · Scientific Centerpiece & Baseline Evidence</span><span>04 / 12</span></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 5: The U.S.–India Full Stack (Architecture) -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-5" data-slide="5">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/></svg>
+          <span class="company-tag">QUANTUM MATERIALS FOUNDRY (QMF)</span>
+          <span class="header-qmf-tag">FULL-STACK ARCHITECTURE</span>
+        </div>
+        <span class="slide-num">05 / 12</span>
+      </div>
+      <h2>The India–U.S. Full-Stack Platform</h2>
+      <p class="subtitle">Phase space provides the unified mathematical language connecting user formulation, kinetic simulation, FPGA hardware execution, and quantum error correction.</p>
+      
+      <!-- Full Stack Architecture Diagram -->
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; background: rgba(8, 20, 12, 0.7); border: 1px solid var(--border-subtle); border-radius: 6px; padding: 0.15in 0.25in; position: relative;">
+        <svg viewBox="0 0 1100 380" style="width: 100%; height: 100%; max-height: 4.5in;">
+          <defs>
+            <linearGradient id="gradEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#35ff82" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#059669" stop-opacity="0.05"/>
+            </linearGradient>
+            <linearGradient id="gradCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#64c8ff" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#1e40af" stop-opacity="0.05"/>
+            </linearGradient>
+            <linearGradient id="gradGold" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f5c542" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#b45309" stop-opacity="0.05"/>
+            </linearGradient>
+            <filter id="glowEffect" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
+          <!-- Flow Arrows -->
+          <path d="M 170 190 L 235 190" stroke="#35ff82" stroke-width="2.5" stroke-dasharray="6,4" />
+          <path d="M 445 190 L 495 190" stroke="#64c8ff" stroke-width="2.5" />
+          <path d="M 715 190 L 765 190" stroke="#35ff82" stroke-width="2.5" />
+          <path d="M 935 190 L 965 190" stroke="#35ff82" stroke-width="2.5" stroke-dasharray="6,4" />
+
+          <!-- Input Node -->
+          <rect x="20" y="115" width="150" height="150" rx="8" fill="rgba(8, 20, 12, 0.9)" stroke="#62826c" stroke-width="1.5" />
+          <text x="95" y="155" fill="#f0f7f2" font-family="Inter" font-size="14" font-weight="600" text-anchor="middle">CLEAN ENERGY</text>
+          <text x="95" y="175" fill="#f0f7f2" font-family="Inter" font-size="14" font-weight="600" text-anchor="middle">CHALLENGE</text>
+          <text x="95" y="210" fill="#a3c2ad" font-family="JetBrains Mono" font-size="10" text-anchor="middle">Battery SEI · 2nm Oxide</text>
+          <text x="95" y="230" fill="#a3c2ad" font-family="JetBrains Mono" font-size="10" text-anchor="middle">Critical Catalysis</text>
+
+          <!-- Layer 1: Qomputing (AI Agent & IDE) -->
+          <rect x="235" y="60" width="210" height="260" rx="8" fill="url(#gradCyan)" stroke="#64c8ff" stroke-width="1.8" />
+          <rect x="250" y="75" width="180" height="26" rx="4" fill="rgba(37, 99, 235, 0.4)" />
+          <text x="340" y="93" fill="#93c5fd" font-family="JetBrains Mono" font-size="11" font-weight="700" text-anchor="middle">QOMPUTING.AI (INDIA)</text>
+          <text x="340" y="130" fill="#fff" font-family="Inter" font-size="15" font-weight="600" text-anchor="middle">AI Problem Agent</text>
+          <text x="340" y="150" fill="#fff" font-family="Inter" font-size="15" font-weight="600" text-anchor="middle">& Cloud IDE</text>
+          
+          <text x="255" y="190" fill="#a3c2ad" font-family="Inter" font-size="11">• Agentic problem-to-circuit</text>
+          <text x="255" y="215" fill="#a3c2ad" font-family="Inter" font-size="11">• Automated parameterization</text>
+          <text x="255" y="240" fill="#a3c2ad" font-family="Inter" font-size="11">• Cloud developer workspace</text>
+          <text x="255" y="265" fill="#a3c2ad" font-family="Inter" font-size="11">• Academic access tier</text>
+          <rect x="255" y="285" width="170" height="22" rx="3" fill="rgba(100, 200, 255, 0.15)" stroke="rgba(100, 200, 255, 0.3)" />
+          <text x="340" y="300" fill="#64c8ff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">AI Workflow Layer</text>
+
+          <!-- Layer 2: Point Reyes Sound (Q-Boltz Kinetic Core) -->
+          <rect x="495" y="35" width="220" height="310" rx="10" fill="url(#gradEmerald)" stroke="#35ff82" stroke-width="2.5" filter="url(#glowEffect)" />
+          <rect x="510" y="50" width="190" height="26" rx="4" fill="rgba(5, 150, 105, 0.4)" />
+          <text x="605" y="68" fill="#35ff82" font-family="JetBrains Mono" font-size="11" font-weight="700" text-anchor="middle">POINT REYES SOUND (U.S.)</text>
+          <text x="605" y="105" fill="#fff" font-family="Inter" font-size="17" font-weight="700" text-anchor="middle">Q-Boltz Kinetic Core</text>
+          <text x="605" y="125" fill="#35ff82" font-family="JetBrains Mono" font-size="11" text-anchor="middle">U.S. Pat. App. 64/033,274</text>
+          
+          <text x="520" y="165" fill="#f0f7f2" font-family="Inter" font-size="12" font-weight="500">• Wigner-Weyl Phase Space</text>
+          <text x="520" y="195" fill="#f0f7f2" font-family="Inter" font-size="12" font-weight="500">• BGK Entropic Relaxation</text>
+          <text x="520" y="225" fill="#f0f7f2" font-family="Inter" font-size="12" font-weight="500">• Singularity-Free GPU Core</text>
+          <text x="520" y="255" fill="#f0f7f2" font-family="Inter" font-size="12" font-weight="500">• Protected Binary C-ABI</text>
+          <text x="520" y="285" fill="#f0f7f2" font-family="Inter" font-size="12" font-weight="500">• Strong Correlation Solver</text>
+          <rect x="520" y="305" width="170" height="24" rx="4" fill="rgba(53, 255, 130, 0.2)" stroke="#35ff82" />
+          <text x="605" y="321" fill="#35ff82" font-family="JetBrains Mono" font-size="10" font-weight="700" text-anchor="middle">CENTRAL SCIENTIFIC IP</text>
+
+          <!-- Layer 3: India Hardware & QEC -->
+          <g transform="translate(765, 55)">
+            <!-- Top Box: Qomputing FPGA -->
+            <rect x="0" y="0" width="170" height="125" rx="6" fill="url(#gradCyan)" stroke="#64c8ff" stroke-width="1.5" />
+            <text x="85" y="22" fill="#93c5fd" font-family="JetBrains Mono" font-size="10" font-weight="700" text-anchor="middle">QOMPUTING.AI</text>
+            <text x="85" y="44" fill="#fff" font-family="Inter" font-size="13" font-weight="600" text-anchor="middle">FPGA Control Stack</text>
+            <text x="85" y="68" fill="#a3c2ad" font-family="Inter" font-size="10" text-anchor="middle">Hardware-in-the-loop</text>
+            <text x="85" y="85" fill="#a3c2ad" font-family="Inter" font-size="10" text-anchor="middle">Pulse-level compilation</text>
+            <text x="85" y="110" fill="#64c8ff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Execution Layer</text>
+
+            <!-- Bottom Box: TCG CREST QEC -->
+            <rect x="0" y="145" width="170" height="125" rx="6" fill="url(#gradGold)" stroke="#f5c542" stroke-width="1.5" />
+            <text x="85" y="167" fill="#fcd34d" font-family="JetBrains Mono" font-size="10" font-weight="700" text-anchor="middle">TCG CREST (INDIA)</text>
+            <text x="85" y="189" fill="#fff" font-family="Inter" font-size="13" font-weight="600" text-anchor="middle">Phase-Space QEC</text>
+            <text x="85" y="213" fill="#a3c2ad" font-family="Inter" font-size="10" text-anchor="middle">Stabilizer & hybrid codes</text>
+            <text x="85" y="230" fill="#a3c2ad" font-family="Inter" font-size="10" text-anchor="middle">Hardware error decoding</text>
+            <text x="85" y="255" fill="#f5c542" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Mathematical Rigor</text>
+          </g>
+
+          <!-- Output Node -->
+          <rect x="965" y="115" width="120" height="150" rx="8" fill="rgba(8, 20, 12, 0.9)" stroke="#35ff82" stroke-width="1.8" />
+          <text x="1025" y="152" fill="#35ff82" font-family="Inter" font-size="13" font-weight="700" text-anchor="middle">VALIDATED</text>
+          <text x="1025" y="172" fill="#35ff82" font-family="Inter" font-size="13" font-weight="700" text-anchor="middle">DISCOVERY</text>
+          <text x="1025" y="205" fill="#a3c2ad" font-family="JetBrains Mono" font-size="8.5" text-anchor="middle">Battery SEI Life</text>
+          <text x="1025" y="225" fill="#a3c2ad" font-family="JetBrains Mono" font-size="8.5" text-anchor="middle">2nm Oxide Defect</text>
+        </svg>
+      </div>
+
+      <div class="footer"><span>USISTEF Grant Proposal · Consortium Architecture & Integration</span><span>05 / 12</span></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 6: 24-Month Technical & Commercial Gantt Chart Roadmap -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-6" data-slide="6">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/></svg>
+          <span class="company-tag">POINT REYES SOUND · QOMPUTING.AI · TCG CREST</span>
+          <span class="header-qmf-tag">PROJECT GANTT ROADMAP</span>
+        </div>
+        <span class="slide-num">06 / 12</span>
+      </div>
+      <h2>24-Month Technical & Commercialization Roadmap</h2>
+      <p class="subtitle">Structured 4-phase execution across all three consortium swimlanes · Component TRL 4 → TRL 7/8 Pilot-Ready Platform (₹1.50 Crore Total Direct R&D).</p>
+      
+      <!-- Full Vector Gantt Chart Container -->
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; background: rgba(6, 15, 9, 0.85); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.1in 0.16in; position: relative;">
+        <svg viewBox="0 0 1140 435" style="width: 100%; height: 100%; max-height: 4.8in; display: block; font-family: var(--font-mono);">
+          <defs>
+            <!-- Emerald Gradient for PRS -->
+            <linearGradient id="barEmerald" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#35ff82" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#059669" stop-opacity="0.75"/>
+            </linearGradient>
+            <!-- Cyan Gradient for Qomputing.ai -->
+            <linearGradient id="barCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#64c8ff" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.75"/>
+            </linearGradient>
+            <!-- Gold Gradient for TCG CREST -->
+            <linearGradient id="barGold" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#f5c542" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#b45309" stop-opacity="0.75"/>
+            </linearGradient>
+            <!-- Milestone Headers Gradients -->
+            <linearGradient id="mHead1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#35ff82" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#059669" stop-opacity="0.05"/>
+            </linearGradient>
+            <linearGradient id="mHead2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#64c8ff" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#1e40af" stop-opacity="0.05"/>
+            </linearGradient>
+            <linearGradient id="mHead3" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f5c542" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#b45309" stop-opacity="0.05"/>
+            </linearGradient>
+            <linearGradient id="mHead4" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.05"/>
+            </linearGradient>
+          </defs>
+
+          <!-- ================= BACKGROUND TIMELINE GRID ================= -->
+          <!-- Vertical Milestone Separation Guides -->
+          <line x1="330" y1="10" x2="330" y2="365" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/>
+          <line x1="530" y1="10" x2="530" y2="365" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/>
+          <line x1="730" y1="10" x2="730" y2="365" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/>
+          <line x1="930" y1="10" x2="930" y2="365" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/>
+          <line x1="1130" y1="10" x2="1130" y2="365" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/>
+
+          <!-- Subtle Month Gridlines (every 33.33px) -->
+          <!-- Q1 -->
+          <line x1="363" y1="48" x2="363" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="397" y1="48" x2="397" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="430" y1="48" x2="430" y2="365" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="2,2"/>
+          <line x1="463" y1="48" x2="463" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="497" y1="48" x2="497" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <!-- Q2 -->
+          <line x1="563" y1="48" x2="563" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="597" y1="48" x2="597" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="630" y1="48" x2="630" y2="365" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="2,2"/>
+          <line x1="663" y1="48" x2="663" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="697" y1="48" x2="697" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <!-- Q3 -->
+          <line x1="763" y1="48" x2="763" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="797" y1="48" x2="797" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="830" y1="48" x2="830" y2="365" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="2,2"/>
+          <line x1="863" y1="48" x2="863" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="897" y1="48" x2="897" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <!-- Q4 -->
+          <line x1="963" y1="48" x2="963" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="997" y1="48" x2="997" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="1030" y1="48" x2="1030" y2="365" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="2,2"/>
+          <line x1="1063" y1="48" x2="1063" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          <line x1="1097" y1="48" x2="1097" y2="365" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+
+          <!-- ================= TOP MILESTONE HEADERS ================= -->
+          <!-- Left Label -->
+          <rect x="10" y="10" width="310" height="35" rx="4" fill="rgba(255,255,255,0.03)" stroke="var(--border-subtle)"/>
+          <text x="22" y="25" font-size="9" fill="var(--accent-gold)" font-weight="700" letter-spacing="1">PROJECT PHASES</text>
+          <text x="22" y="38" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">Four 6-Month Execution Milestones · TRL 4 → TRL 7/8</text>
+
+          <!-- Milestone I Header -->
+          <rect x="330" y="10" width="200" height="35" rx="4" fill="url(#mHead1)" stroke="rgba(53,255,130,0.3)"/>
+          <text x="430" y="24" text-anchor="middle" font-size="9.5" fill="#35ff82" font-weight="700">MILESTONE I: INTEGRATE</text>
+          <text x="430" y="37" text-anchor="middle" font-size="8.5" fill="var(--text-primary)">Months 1 – 6 · ₹50L</text>
+
+          <!-- Milestone II Header -->
+          <rect x="530" y="10" width="200" height="35" rx="4" fill="url(#mHead2)" stroke="rgba(100,200,255,0.3)"/>
+          <text x="630" y="24" text-anchor="middle" font-size="9.5" fill="#64c8ff" font-weight="700">MILESTONE II: EXECUTE</text>
+          <text x="630" y="37" text-anchor="middle" font-size="8.5" fill="var(--text-primary)">Months 7 – 12 · ₹41L</text>
+
+          <!-- Milestone III Header -->
+          <rect x="730" y="10" width="200" height="35" rx="4" fill="url(#mHead3)" stroke="rgba(245,197,66,0.3)"/>
+          <text x="830" y="24" text-anchor="middle" font-size="9.5" fill="#f5c542" font-weight="700">MILESTONE III: PILOT</text>
+          <text x="830" y="37" text-anchor="middle" font-size="8.5" fill="var(--text-primary)">Months 13 – 18 · ₹33L</text>
+
+          <!-- Milestone IV Header -->
+          <rect x="930" y="10" width="200" height="35" rx="4" fill="url(#mHead4)" stroke="rgba(147,197,253,0.3)"/>
+          <text x="1030" y="24" text-anchor="middle" font-size="9.5" fill="#93c5fd" font-weight="700">MILESTONE IV: HARDEN</text>
+          <text x="1030" y="37" text-anchor="middle" font-size="8.5" fill="var(--text-primary)">Months 19 – 24 · ₹26L</text>
+
+          <!-- Month Numbers Row (Y: 48 - 62) -->
+          <text x="10" y="58" font-size="8" fill="var(--text-muted)">MONTH</text>
+          <!-- M1-M6 -->
+          <text x="347" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">1</text>
+          <text x="380" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">2</text>
+          <text x="413" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">3</text>
+          <text x="447" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">4</text>
+          <text x="480" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">5</text>
+          <text x="513" y="58" font-size="7.5" fill="#35ff82" font-weight="700" text-anchor="middle">6</text>
+          <!-- M7-M12 -->
+          <text x="547" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">7</text>
+          <text x="580" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">8</text>
+          <text x="613" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">9</text>
+          <text x="647" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">10</text>
+          <text x="680" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">11</text>
+          <text x="713" y="58" font-size="7.5" fill="#64c8ff" font-weight="700" text-anchor="middle">12</text>
+          <!-- M13-M18 -->
+          <text x="747" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">13</text>
+          <text x="780" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">14</text>
+          <text x="813" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">15</text>
+          <text x="847" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">16</text>
+          <text x="880" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">17</text>
+          <text x="913" y="58" font-size="7.5" fill="#f5c542" font-weight="700" text-anchor="middle">18</text>
+          <!-- M19-M24 -->
+          <text x="947" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">19</text>
+          <text x="980" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">20</text>
+          <text x="1013" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">21</text>
+          <text x="1047" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">22</text>
+          <text x="1080" y="58" font-size="7.5" fill="var(--text-secondary)" text-anchor="middle">23</text>
+          <text x="1113" y="58" font-size="7.5" fill="#93c5fd" font-weight="700" text-anchor="middle">24</text>
+
+          <!-- ================= SWIMLANE 1: POINT REYES SOUND (U.S.) ================= -->
+          <!-- Background Row Box -->
+          <rect x="10" y="66" width="1120" height="92" rx="4" fill="rgba(53, 255, 130, 0.02)" stroke="rgba(53, 255, 130, 0.15)"/>
+          
+          <!-- Partner Tag Left (Simplified) -->
+          <rect x="16" y="72" width="100" height="80" rx="4" fill="rgba(53, 255, 130, 0.06)" stroke="rgba(53, 255, 130, 0.25)"/>
+          <text x="24" y="98" font-size="9" fill="#fff" font-weight="700">Point Reyes</text>
+          <text x="24" y="112" font-size="9" fill="#fff" font-weight="700">Sound</text>
+          <text x="24" y="132" font-size="7.5" fill="var(--accent-emerald)" font-weight="600">U.S. · ₹75.0L</text>
+
+          <!-- Task 1.1: Q-Boltz Productionization + GPU (M1-6) -->
+          <text x="124" y="83" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">Q-Boltz GPU solver core</text>
+          <rect x="330" y="72" width="200" height="15" rx="7.5" fill="url(#barEmerald)" stroke="#35ff82" stroke-width="1"/>
+          <circle cx="330" cy="79.5" r="4" fill="#fff" stroke="#059669" stroke-width="1.5"/>
+          <circle cx="530" cy="79.5" r="4" fill="#fff" stroke="#059669" stroke-width="1.5"/>
+
+          <!-- Task 1.2: Protected API / Binary Integration (M4-12) -->
+          <text x="124" y="105" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">Protected C-ABI binaries</text>
+          <rect x="430" y="94" width="300" height="15" rx="7.5" fill="url(#barEmerald)" stroke="#35ff82" stroke-width="1"/>
+          <circle cx="430" cy="101.5" r="4" fill="#fff" stroke="#059669" stroke-width="1.5"/>
+          <circle cx="730" cy="101.5" r="4" fill="#fff" stroke="#059669" stroke-width="1.5"/>
+
+          <!-- Task 1.3: Benchmarking + Application Pilots (M7-18) -->
+          <text x="124" y="127" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">Application pilot benchmarks</text>
+          <rect x="530" y="116" width="400" height="15" rx="7.5" fill="url(#barEmerald)" stroke="#35ff82" stroke-width="1"/>
+          <circle cx="530" cy="123.5" r="4" fill="#fff" stroke="#059669" stroke-width="1.5"/>
+          <circle cx="930" cy="123.5" r="4" fill="#fff" stroke="#059669" stroke-width="1.5"/>
+
+          <!-- Task 1.4: Commercial Release Architecture (M19-24) -->
+          <text x="124" y="149" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">OEM commercial package</text>
+          <rect x="930" y="138" width="200" height="15" rx="7.5" fill="url(#barEmerald)" stroke="#35ff82" stroke-width="1"/>
+          <circle cx="930" cy="145.5" r="4" fill="#fff" stroke="#059669" stroke-width="1.5"/>
+          <circle cx="1130" cy="145.5" r="4" fill="#fff" stroke="#059669" stroke-width="1.5"/>
+
+          <!-- ================= SWIMLANE 2: QOMPUTING.AI (INDIA COMM.) ================= -->
+          <!-- Background Row Box -->
+          <rect x="10" y="164" width="1120" height="92" rx="4" fill="rgba(100, 200, 255, 0.02)" stroke="rgba(100, 200, 255, 0.15)"/>
+          
+          <!-- Partner Tag Left (Simplified) -->
+          <rect x="16" y="170" width="100" height="80" rx="4" fill="rgba(100, 200, 255, 0.06)" stroke="rgba(100, 200, 255, 0.25)"/>
+          <text x="24" y="196" font-size="9" fill="#fff" font-weight="700">Qomputing.ai</text>
+          <text x="24" y="222" font-size="7.5" fill="var(--accent-cyan)" font-weight="600">India · ₹49.5L</text>
+
+          <!-- Task 2.1: IDE/cloud integration (M1-6) -->
+          <text x="124" y="181" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">IDE & cloud workflow integration</text>
+          <rect x="330" y="170" width="200" height="15" rx="7.5" fill="url(#barCyan)" stroke="#64c8ff" stroke-width="1"/>
+          <circle cx="330" cy="177.5" r="4" fill="#fff" stroke="#1d4ed8" stroke-width="1.5"/>
+          <circle cx="530" cy="177.5" r="4" fill="#fff" stroke="#1d4ed8" stroke-width="1.5"/>
+
+          <!-- Task 2.2: FPGA control infrastructure + HIL (M1-12) -->
+          <text x="124" y="203" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">FPGA control & HIL stack</text>
+          <rect x="330" y="192" width="400" height="15" rx="7.5" fill="url(#barCyan)" stroke="#64c8ff" stroke-width="1"/>
+          <circle cx="330" cy="199.5" r="4" fill="#fff" stroke="#1d4ed8" stroke-width="1.5"/>
+          <circle cx="730" cy="199.5" r="4" fill="#fff" stroke="#1d4ed8" stroke-width="1.5"/>
+
+          <!-- Task 2.3: Institutional + industrial pilots (M13-18) -->
+          <text x="124" y="225" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">Industrial pilot deployments</text>
+          <rect x="730" y="214" width="200" height="15" rx="7.5" fill="url(#barCyan)" stroke="#64c8ff" stroke-width="1"/>
+          <circle cx="730" cy="221.5" r="4" fill="#fff" stroke="#1d4ed8" stroke-width="1.5"/>
+          <circle cx="930" cy="221.5" r="4" fill="#fff" stroke="#1d4ed8" stroke-width="1.5"/>
+
+          <!-- Task 2.4: Deployment hardening + India commercial (M19-24) -->
+          <text x="124" y="247" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">Deployment hardening & scale</text>
+          <rect x="930" y="236" width="200" height="15" rx="7.5" fill="url(#barCyan)" stroke="#64c8ff" stroke-width="1"/>
+          <circle cx="930" cy="243.5" r="4" fill="#fff" stroke="#1d4ed8" stroke-width="1.5"/>
+          <circle cx="1130" cy="243.5" r="4" fill="#fff" stroke="#1d4ed8" stroke-width="1.5"/>
+
+          <!-- ================= SWIMLANE 3: TCG CREST (INDIA ACADEMIC) ================= -->
+          <!-- Background Row Box -->
+          <rect x="10" y="262" width="1120" height="92" rx="4" fill="rgba(245, 197, 66, 0.02)" stroke="rgba(245, 197, 66, 0.15)"/>
+          
+          <!-- Partner Tag Left (Simplified) -->
+          <rect x="16" y="268" width="100" height="80" rx="4" fill="rgba(245, 197, 66, 0.06)" stroke="rgba(245, 197, 66, 0.25)"/>
+          <text x="24" y="296" font-size="9" fill="#fff" font-weight="700">TCG CREST</text>
+          <text x="24" y="322" font-size="7.5" fill="var(--accent-gold)" font-weight="600">India · ₹25.5L</text>
+
+          <!-- Task 3.1: JRF launch + phase-space QEC (M1-6) -->
+          <text x="124" y="279" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">JRF launch & QEC models</text>
+          <rect x="330" y="268" width="200" height="15" rx="7.5" fill="url(#barGold)" stroke="#f5c542" stroke-width="1"/>
+          <circle cx="330" cy="275.5" r="4" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
+          <circle cx="530" cy="275.5" r="4" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
+
+          <!-- Task 3.2: QEC protocols, decoding + error models (M7-12) -->
+          <text x="124" y="301" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">QEC protocols & decoding</text>
+          <rect x="530" y="290" width="200" height="15" rx="7.5" fill="url(#barGold)" stroke="#f5c542" stroke-width="1"/>
+          <circle cx="530" cy="297.5" r="4" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
+          <circle cx="730" cy="297.5" r="4" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
+
+          <!-- Task 3.3: Logical-error suppression + QEC validation (M13-18) -->
+          <text x="124" y="323" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">Logical-error suppression proof</text>
+          <rect x="730" y="312" width="200" height="15" rx="7.5" fill="url(#barGold)" stroke="#f5c542" stroke-width="1"/>
+          <circle cx="730" cy="319.5" r="4" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
+          <circle cx="930" cy="319.5" r="4" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
+
+          <!-- Task 3.4: Final QEC transfer, scalability + training (M19-24) -->
+          <text x="124" y="345" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">QEC transfer & JRF training</text>
+          <rect x="930" y="334" width="200" height="15" rx="7.5" fill="url(#barGold)" stroke="#f5c542" stroke-width="1"/>
+          <circle cx="930" cy="341.5" r="4" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
+          <circle cx="1130" cy="341.5" r="4" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
+
+          <!-- ================= BOTTOM MILESTONE DELIVERABLES ================= -->
+          <!-- Output Box Left Label -->
+          <rect x="10" y="360" width="310" height="65" rx="4" fill="rgba(255,255,255,0.03)" stroke="var(--border-subtle)"/>
+          <text x="22" y="380" font-size="9" fill="var(--accent-gold)" font-weight="700">MILESTONE OUTPUTS</text>
+          <text x="22" y="395" font-size="8" fill="var(--text-secondary)" font-family="var(--font-sans)">Consortium Exit Criteria</text>
+          <text x="22" y="408" font-size="7.5" fill="var(--text-muted)" font-family="var(--font-sans)">Quantitative validation gates</text>
+
+          <!-- M6 Deliverable -->
+          <rect x="330" y="360" width="195" height="65" rx="4" fill="rgba(53,255,130,0.06)" stroke="rgba(53,255,130,0.35)"/>
+          <text x="340" y="378" font-size="9" fill="#35ff82" font-weight="700">M6: Integrated Architecture</text>
+          <text x="340" y="394" font-size="7.5" fill="var(--text-primary)" font-family="var(--font-sans)">Validated Q-Boltz solver core</text>
+          <text x="340" y="408" font-size="7.5" fill="var(--text-secondary)" font-family="var(--font-sans)">+ IDE / FPGA C-ABI APIs</text>
+
+          <!-- M12 Deliverable -->
+          <rect x="530" y="360" width="195" height="65" rx="4" fill="rgba(100,200,255,0.06)" stroke="rgba(100,200,255,0.35)"/>
+          <text x="540" y="378" font-size="9" fill="#64c8ff" font-weight="700">M12: Hardware-Aware Prototype</text>
+          <text x="540" y="394" font-size="7.5" fill="var(--text-primary)" font-family="var(--font-sans)">AI-assisted execution + HIL</text>
+          <text x="540" y="408" font-size="7.5" fill="var(--text-secondary)" font-family="var(--font-sans)">+ phase-space QEC validation</text>
+
+          <!-- M18 Deliverable -->
+          <rect x="730" y="360" width="195" height="65" rx="4" fill="rgba(245,197,66,0.06)" stroke="rgba(245,197,66,0.35)"/>
+          <text x="740" y="378" font-size="9" fill="#f5c542" font-weight="700">M18: Pilot Validation</text>
+          <text x="740" y="394" font-size="7.5" fill="var(--text-primary)" font-family="var(--font-sans)">Industrial & lab pilot benchmarks</text>
+          <text x="740" y="408" font-size="7.5" fill="var(--text-secondary)" font-family="var(--font-sans)">+ cross-stack telemetry data</text>
+
+          <!-- M24 Deliverable -->
+          <rect x="930" y="360" width="200" height="65" rx="4" fill="rgba(147,197,253,0.06)" stroke="rgba(147,197,253,0.35)"/>
+          <text x="940" y="378" font-size="9" fill="#93c5fd" font-weight="700">M24: Pilot-Ready Platform</text>
+          <text x="940" y="394" font-size="7.5" fill="var(--text-primary)" font-family="var(--font-sans)">Hardened deployment (TRL 7/8)</text>
+          <text x="940" y="408" font-size="7.5" fill="var(--text-secondary)" font-family="var(--font-sans)">+ validated QEC + OEM package</text>
+        </svg>
+      </div>
+
+      <div class="footer"><span>USISTEF Grant Proposal · 24-Month Technical & Commercial Roadmap</span><span>06 / 12</span></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 7: ₹1.5 Crore Deployment & Resource Allocation (Simplified) -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-7" data-slide="7">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/></svg>
+          <span class="company-tag">POINT REYES SOUND · QOMPUTING.AI · TCG CREST</span>
+          <span class="header-qmf-tag">BUDGET & RESOURCES</span>
+        </div>
+        <span class="slide-num">07 / 12</span>
+      </div>
+      <h2>₹1.5 Crore Deployment & Resource Allocation</h2>
+      <p class="subtitle">100% direct R&D capital efficiency across U.S. and Indian partners (Zero institutional overhead / indirect costs per USISTEF guidelines).</p>
+      
+      <!-- Top 4 Clean Metric Badges -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.16in; margin-bottom: 0.16in;">
+        <div class="card" style="padding: 0.12in; text-align: center; border-top: 2px solid var(--accent-emerald);">
+          <div class="highlight-stat" style="font-size: 20pt; margin-bottom: 2px;">₹1.50 Cr</div>
+          <div style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-emerald); font-weight: 600;">TOTAL DIRECT BUDGET</div>
+          <div style="font-size: 8pt; color: var(--text-muted); margin-top: 1px;">~US$165k direct capital</div>
+        </div>
+
+        <div class="card" style="padding: 0.12in; text-align: center; border-top: 2px solid var(--accent-cyan);">
+          <div class="highlight-stat" style="font-size: 20pt; color: var(--accent-cyan); margin-bottom: 2px;">50% / 50%</div>
+          <div style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-cyan); font-weight: 600;">U.S. / INDIA PARITY</div>
+          <div style="font-size: 8pt; color: var(--text-muted); margin-top: 1px;">₹75L U.S. · ₹75L India</div>
+        </div>
+
+        <div class="card" style="padding: 0.12in; text-align: center; border-top: 2px solid var(--accent-gold);">
+          <div class="highlight-stat" style="font-size: 20pt; color: var(--accent-gold); margin-bottom: 2px;">48.0%</div>
+          <div style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-gold); font-weight: 600;">R&D MANPOWER</div>
+          <div style="font-size: 8pt; color: var(--text-muted); margin-top: 1px;">₹72L for scientists & JRFs</div>
+        </div>
+
+        <div class="card" style="padding: 0.12in; text-align: center; border-top: 2px solid #93c5fd;">
+          <div class="highlight-stat" style="font-size: 20pt; color: #93c5fd; margin-bottom: 2px;">0%</div>
+          <div style="font-family: var(--font-mono); font-size: 8.5pt; color: #93c5fd; font-weight: 600;">INDIRECT OVERHEAD</div>
+          <div style="font-size: 8pt; color: var(--text-muted); margin-top: 1px;">100% direct project funding</div>
+        </div>
+      </div>
+
+      <!-- Main 2-Column Split: Partner Allocation & Category Breakdown -->
+      <div class="grid-2" style="gap: 0.25in; align-items: stretch; margin-bottom: 0.14in;">
+        <!-- Left: Partner Split -->
+        <div class="card" style="padding: 0.18in; border-left: 3px solid var(--accent-emerald); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="card-header" style="font-size: 14pt; margin-bottom: 0.1in;">Consortium Partner Allocation</div>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <!-- PRS -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px;">
+                  <span style="color: #fff; font-weight: 600; font-size: 10.5pt;">Point Reyes Sound (U.S. Lead)</span>
+                  <span style="color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 700; font-size: 10.5pt;">₹75.0 Lakh (50.0%)</span>
+                </div>
+                <div style="background: rgba(53, 255, 130, 0.15); height: 6px; border-radius: 3px; overflow: hidden; margin-bottom: 4px;">
+                  <div style="background: var(--accent-emerald); width: 50%; height: 100%;"></div>
+                </div>
+                <div style="font-size: 9pt; color: var(--text-secondary);">Q-Boltz solver core, GPU porting & U.S. OEM commercialization</div>
+              </div>
+
+              <!-- Qomputing.ai -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px;">
+                  <span style="color: #fff; font-weight: 600; font-size: 10.5pt;">Qomputing.ai (India Commercial)</span>
+                  <span style="color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 700; font-size: 10.5pt;">₹49.5 Lakh (33.0%)</span>
+                </div>
+                <div style="background: rgba(100, 200, 255, 0.15); height: 6px; border-radius: 3px; overflow: hidden; margin-bottom: 4px;">
+                  <div style="background: var(--accent-cyan); width: 33%; height: 100%;"></div>
+                </div>
+                <div style="font-size: 9pt; color: var(--text-secondary);">AI IDE, FPGA quantum control stack & Indian enterprise deployment</div>
+              </div>
+
+              <!-- TCG CREST -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px;">
+                  <span style="color: #fff; font-weight: 600; font-size: 10.5pt;">TCG CREST (India Academic)</span>
+                  <span style="color: var(--accent-gold); font-family: var(--font-mono); font-weight: 700; font-size: 10.5pt;">₹25.5 Lakh (17.0%)</span>
+                </div>
+                <div style="background: rgba(245, 197, 66, 0.15); height: 6px; border-radius: 3px; overflow: hidden; margin-bottom: 4px;">
+                  <div style="background: var(--accent-gold); width: 17%; height: 100%;"></div>
+                </div>
+                <div style="font-size: 9pt; color: var(--text-secondary);">Phase-space QEC protocols, JRF workforce & mathematical verification</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Category Allocation (4 Simplified Buckets) -->
+        <div class="card" style="padding: 0.18in; border-left: 3px solid var(--accent-cyan); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="card-header" style="font-size: 14pt; color: var(--accent-cyan); margin-bottom: 0.1in;">Budget Allocation by Use</div>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <!-- Bucket 1 -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px;">
+                  <span style="color: #fff; font-weight: 600; font-size: 10.5pt;">Technical Manpower & JRF Team</span>
+                  <span style="color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 700; font-size: 10.5pt;">₹72.0 Lakh (48.0%)</span>
+                </div>
+                <div style="background: rgba(53, 255, 130, 0.15); height: 6px; border-radius: 3px; overflow: hidden; margin-bottom: 4px;">
+                  <div style="background: var(--accent-emerald); width: 48%; height: 100%;"></div>
+                </div>
+                <div style="font-size: 9pt; color: var(--text-secondary);">Direct funding for PIs, quantum software engineers, and TCG CREST JRFs</div>
+              </div>
+
+              <!-- Bucket 2 -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px;">
+                  <span style="color: #fff; font-weight: 600; font-size: 10.5pt;">Cloud Compute & FPGA Hardware</span>
+                  <span style="color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 700; font-size: 10.5pt;">₹43.0 Lakh (28.7%)</span>
+                </div>
+                <div style="background: rgba(100, 200, 255, 0.15); height: 6px; border-radius: 3px; overflow: hidden; margin-bottom: 4px;">
+                  <div style="background: var(--accent-cyan); width: 28.7%; height: 100%;"></div>
+                </div>
+                <div style="font-size: 9pt; color: var(--text-secondary);">GPU cluster compute, FPGA controllers, testbench & cloud deployment</div>
+              </div>
+
+              <!-- Bucket 3 -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px;">
+                  <span style="color: #fff; font-weight: 600; font-size: 10.5pt;">Field Pilots, Operations & Travel</span>
+                  <span style="color: var(--accent-gold); font-family: var(--font-mono); font-weight: 700; font-size: 10.5pt;">₹35.0 Lakh (23.3%)</span>
+                </div>
+                <div style="background: rgba(245, 197, 66, 0.15); height: 6px; border-radius: 3px; overflow: hidden; margin-bottom: 4px;">
+                  <div style="background: var(--accent-gold); width: 23.3%; height: 100%;"></div>
+                </div>
+                <div style="font-size: 9pt; color: var(--text-secondary);">Industrial benchmark pilots (₹11L), bilateral travel (₹12L) & ops (₹12L)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Capital Efficiency Footer Callout -->
+      <div class="card" style="padding: 0.1in 0.16in; background: rgba(53, 255, 130, 0.04); border-color: var(--accent-emerald); text-align: center;">
+        <span style="font-family: var(--font-mono); font-size: 9pt; color: var(--accent-gold); font-weight: 700;">CAPITAL EFFICIENCY:</span>
+        <span style="color: var(--text-primary); font-size: 10.5pt; margin-left: 8px;">100% of requested grant funds flow directly to scientists, engineers, and hardware infrastructure with zero indirect overhead.</span>
+      </div>
+
+      <div class="footer"><span>USISTEF Grant Proposal · Budget Justification & Financial Plan</span><span>07 / 12</span></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 8: Commercialization & Societal Impact (Uncluttered) -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-8" data-slide="8">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/></svg>
+          <span class="company-tag">POINT REYES SOUND · QOMPUTING.AI · TCG CREST</span>
+          <span class="header-qmf-tag">IMPACT FRAMEWORK</span>
+        </div>
+        <span class="slide-num">08 / 12</span>
+      </div>
+      <h2>Commercialization & Societal Impact</h2>
+      <p class="subtitle">Dual-track value creation: Driving private-sector industrial adoption through Qomputing.ai while expanding national quantum workforce capacity.</p>
+      
+      <div class="grid-2" style="gap: 0.22in; margin-bottom: 0.1in;">
+        <!-- Track 1: Commercial Pathway -->
+        <div class="card" style="padding: 0.14in; display: flex; flex-direction: column; justify-content: space-between; border-top: 3px solid var(--accent-emerald);">
+          <div style="margin-bottom: 0.08in;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+              <div style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-emerald); font-weight: 700;">TRACK 1: COMMERCIAL PATHWAY</div>
+              <span class="badge" style="margin: 0; font-size: 7.5pt; padding: 2px 6px;">ENTERPRISE ADOPTION</span>
+            </div>
+            <div class="card-header" style="font-size: 13.5pt; color: #fff; margin-bottom: 3px;">Qomputing.ai Enterprise Platform</div>
+            <div style="font-size: 9.5pt; color: var(--text-secondary); line-height: 1.3;">
+              GPU-accelerated cloud simulation & OEM binary integration for sub-2nm materials and batteries.
+            </div>
+          </div>
+          <div style="border-radius: 6px; overflow: hidden; border: 1px solid rgba(53, 255, 130, 0.25); background: #040b07; flex: 1; margin-bottom: 0.08in;">
+            <img src="/qomputing_ide_ui.jpg" alt="Qomputing.ai Enterprise Simulation Platform" style="width: 100%; height: 100%; min-height: 2.3in; object-fit: cover; display: block;" />
+          </div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <span style="background: rgba(53, 255, 130, 0.08); border: 1px solid rgba(53, 255, 130, 0.25); font-family: var(--font-mono); font-size: 7.5pt; color: var(--accent-emerald); padding: 2px 6px; border-radius: 3px;">Sub-2nm GAA-FET</span>
+            <span style="background: rgba(53, 255, 130, 0.08); border: 1px solid rgba(53, 255, 130, 0.25); font-family: var(--font-mono); font-size: 7.5pt; color: var(--accent-emerald); padding: 2px 6px; border-radius: 3px;">Battery SEI Simulation</span>
+            <span style="background: rgba(53, 255, 130, 0.08); border: 1px solid rgba(53, 255, 130, 0.25); font-family: var(--font-mono); font-size: 7.5pt; color: var(--accent-emerald); padding: 2px 6px; border-radius: 3px;">Texas Instruments Scope</span>
+          </div>
+        </div>
+
+        <!-- Track 2: Societal & Workforce Impact -->
+        <div class="card" style="padding: 0.14in; display: flex; flex-direction: column; justify-content: space-between; border-top: 3px solid var(--accent-cyan);">
+          <div style="margin-bottom: 0.08in;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+              <div style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-cyan); font-weight: 700;">TRACK 2: SOCIETAL & WORKFORCE IMPACT</div>
+              <span class="badge badge-cyan" style="margin: 0; font-size: 7.5pt; padding: 2px 6px;">BROADER IMPACTS</span>
+            </div>
+            <div class="card-header" style="font-size: 13.5pt; color: #fff; margin-bottom: 3px;">National Quantum Talent Pipeline</div>
+            <div style="font-size: 9.5pt; color: var(--text-secondary); line-height: 1.3;">
+              Free academic tier across IITs & IISc with direct TCG CREST JRF fellowship mentorship.
+            </div>
+          </div>
+          <div style="border-radius: 6px; overflow: hidden; border: 1px solid rgba(100, 200, 255, 0.25); background: #040b07; flex: 1; margin-bottom: 0.08in;">
+            <img src="/qomputing_university_portal.jpg" alt="National Quantum Talent Pipeline" style="width: 100%; height: 100%; min-height: 2.3in; object-fit: cover; display: block;" />
+          </div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <span style="background: rgba(100, 200, 255, 0.08); border: 1px solid rgba(100, 200, 255, 0.25); font-family: var(--font-mono); font-size: 7.5pt; color: var(--accent-cyan); padding: 2px 6px; border-radius: 3px;">1,200+ Researchers</span>
+            <span style="background: rgba(100, 200, 255, 0.08); border: 1px solid rgba(100, 200, 255, 0.25); font-family: var(--font-mono); font-size: 7.5pt; color: var(--accent-cyan); padding: 2px 6px; border-radius: 3px;">Faculty Workshops</span>
+            <span style="background: rgba(100, 200, 255, 0.08); border: 1px solid rgba(100, 200, 255, 0.25); font-family: var(--font-mono); font-size: 7.5pt; color: var(--accent-cyan); padding: 2px 6px; border-radius: 3px;">TCG CREST JRF Hub</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding: 0.08in 0.14in; background: rgba(53, 255, 130, 0.04); border-color: var(--accent-emerald); text-align: center;">
+        <span style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-gold); font-weight: 700;">USISTEF MANDATE:</span>
+        <span style="color: var(--text-primary); font-size: 10pt; margin-left: 6px;">Directly fulfills the mandate for "Commercializing Technologies for Societal Impact" with active deployments within 24–36 months.</span>
+      </div>
+
+      <div class="footer"><span>USISTEF Grant Proposal · Commercialization & Broader Impacts</span><span>08 / 12</span></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 9: Consortium Leadership & Complementarity -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-9" data-slide="9">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/></svg>
+          <span class="company-tag">POINT REYES SOUND · QOMPUTING.AI · TCG CREST</span>
+          <span class="header-qmf-tag">TECHNICAL LEADERSHIP</span>
+        </div>
+        <span class="slide-num">09 / 12</span>
+      </div>
+      <h2>Consortium Leadership & Complementarity</h2>
+      <p class="subtitle">A tri-partite leadership structure uniting foundational quantum chemistry theory, commercial AI/FPGA systems, and world-class QEC mathematics.</p>
+      
+      <div class="grid-3" style="gap: 0.22in; align-items: stretch;">
+        <!-- Dr. Romit Chakraborty -->
+        <div class="card" style="padding: 0.18in 0.14in; display: flex; flex-direction: column; justify-content: space-between; border-top: 3px solid var(--accent-emerald);">
+          <div>
+            <!-- Centered Circular Portrait & Header (Hair fully visible) -->
+            <div style="text-align: center; margin-bottom: 0.14in;">
+              <img src="/rc_scholar_portrait.jpeg" alt="Dr. Romit Chakraborty" style="width: 1.45in; height: 1.45in; border-radius: 50%; object-fit: cover; object-position: 50% 12%; margin: 0 auto 0.08in auto; display: block; border: 2.5px solid var(--accent-emerald); box-shadow: 0 0 25px rgba(53, 255, 130, 0.35);" />
+              <h3 style="font-size: 14pt; margin-bottom: 2px; color: #fff;">Dr. Romit Chakraborty</h3>
+              <div style="font-family: var(--font-mono); font-size: 9.5pt; color: var(--accent-emerald); font-weight: 600;">Principal Investigator / CSO</div>
+              <div style="font-family: var(--font-mono); font-size: 9pt; color: var(--text-muted);">Point Reyes Sound, Inc. (U.S.)</div>
+            </div>
+
+            <!-- Single-Line Crisp Bullet Points -->
+            <div style="font-size: 8.8pt; color: var(--text-secondary); line-height: 1.4; display: flex; flex-direction: column; gap: 8px;">
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Scientific Lead:</strong> Primary inventor of Q-Boltz kinetic solver core.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Core IP:</strong> 100% assigned inventor on U.S. Pat. App. 64/033,274.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• HPC Core:</strong> GPU-native kinetic relaxation & C-ABI kernel engine.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Pedigree:</strong> UChicago Ph.D., UC Berkeley / LBNL, PsiQuantum.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Commercial:</strong> Leading U.S. CAE/EDA software & OEM channels.</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; justify-content: center;">
+            <span class="badge" style="font-size: 8pt; padding: 3px 8px;">UChicago Ph.D.</span>
+            <span class="badge" style="font-size: 8pt; padding: 3px 8px;">PsiQuantum</span>
+            <span class="badge badge-blue" style="font-size: 8pt; padding: 3px 8px;">Q-Boltz IP</span>
+          </div>
+        </div>
+
+        <!-- Saurabh Sharma -->
+        <div class="card" style="padding: 0.18in 0.14in; display: flex; flex-direction: column; justify-content: space-between; border-top: 3px solid var(--accent-cyan);">
+          <div>
+            <!-- Centered Circular Portrait & Header -->
+            <div style="text-align: center; margin-bottom: 0.14in;">
+              <img src="/saurabh_sharma.jpeg" alt="Saurabh Sharma" style="width: 1.45in; height: 1.45in; border-radius: 50%; object-fit: cover; object-position: 50% 15%; margin: 0 auto 0.08in auto; display: block; border: 2.5px solid var(--accent-cyan); box-shadow: 0 0 25px rgba(100, 200, 255, 0.35);" />
+              <h3 style="font-size: 14pt; margin-bottom: 2px; color: #fff;">Saurabh Sharma</h3>
+              <div style="font-family: var(--font-mono); font-size: 9.5pt; color: var(--accent-cyan); font-weight: 600;">Co-Investigator / CEO</div>
+              <div style="font-family: var(--font-mono); font-size: 9pt; color: var(--text-muted);">Qomputing.ai (India)</div>
+            </div>
+
+            <!-- Single-Line Crisp Bullet Points -->
+            <div style="font-size: 8.8pt; color: var(--text-secondary); line-height: 1.4; display: flex; flex-direction: column; gap: 8px;">
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Platform Lead:</strong> Creator of Qomputing.ai AI quantum cloud IDE.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Agentic Stack:</strong> Automated problem-to-circuit AI synthesis.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• FPGA Execution:</strong> Hardware-in-the-loop pulse sequencing stack.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Enterprise:</strong> Driving commercial rollout across Indian pilots.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Outreach:</strong> Scaling nationwide university network & hackathons.</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; justify-content: center;">
+            <span class="badge badge-cyan" style="font-size: 8pt; padding: 3px 8px;">AI IDE</span>
+            <span class="badge badge-cyan" style="font-size: 8pt; padding: 3px 8px;">FPGA Control</span>
+            <span class="badge badge-cyan" style="font-size: 8pt; padding: 3px 8px;">Industry Pilots</span>
+          </div>
+        </div>
+
+        <!-- Dr. Sayan Chakraborty -->
+        <div class="card" style="padding: 0.18in 0.14in; display: flex; flex-direction: column; justify-content: space-between; border-top: 3px solid var(--accent-gold);">
+          <div>
+            <!-- Centered Circular Portrait & Header -->
+            <div style="text-align: center; margin-bottom: 0.14in;">
+              <img src="/sayan_chakraborty.jpeg" alt="Dr. Sayan Chakraborty" style="width: 1.45in; height: 1.45in; border-radius: 50%; object-fit: cover; object-position: 50% 15%; margin: 0 auto 0.08in auto; display: block; border: 2.5px solid var(--accent-gold); box-shadow: 0 0 25px rgba(245, 197, 66, 0.35);" />
+              <h3 style="font-size: 14pt; margin-bottom: 2px; color: #fff;">Dr. Sayan Chakraborty</h3>
+              <div style="font-family: var(--font-mono); font-size: 9.5pt; color: var(--accent-gold); font-weight: 600;">Co-Investigator / Asst. Prof.</div>
+              <div style="font-family: var(--font-mono); font-size: 9pt; color: var(--text-muted);">TCG CREST (India)</div>
+            </div>
+
+            <!-- Single-Line Crisp Bullet Points -->
+            <div style="font-size: 8.8pt; color: var(--text-secondary); line-height: 1.4; display: flex; flex-direction: column; gap: 8px;">
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• QEC Architecture:</strong> Specialist in continuous-variable QEC.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Math Foundations:</strong> Phase-space stabilizer code formulation.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Academic Faculty:</strong> Assistant Professor of Physics at TCG CREST.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• JRF Mentorship:</strong> Direct supervisor for USISTEF research fellows.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Bilateral Synergy:</strong> Guiding cross-consortium benchmark papers.</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; justify-content: center;">
+            <span class="badge badge-gold" style="font-size: 8pt; padding: 3px 8px;">QEC Architecture</span>
+            <span class="badge badge-gold" style="font-size: 8pt; padding: 3px 8px;">TCG CREST</span>
+            <span class="badge badge-gold" style="font-size: 8pt; padding: 3px 8px;">JRF Leadership</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer"><span>USISTEF Grant Proposal · Consortium Leadership & Complementarity</span><span>09 / 12</span></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 10: Defensibility & Technology Readiness -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-10" data-slide="10">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/></svg>
+          <span class="company-tag">POINT REYES SOUND · QOMPUTING.AI · TCG CREST</span>
+          <span class="header-qmf-tag">IP & TECHNOLOGY READINESS</span>
+        </div>
+        <span class="slide-num">10 / 12</span>
+      </div>
+      <h2>Defensibility & Technology Readiness</h2>
+      <p class="subtitle">Multi-layered intellectual property protection backed by an accelerated progression from component validation to commercial deployment.</p>
+      
+      <div class="grid-2" style="gap: 0.28in; align-items: stretch;">
+        <!-- Left: IP Moat -->
+        <div class="card" style="border-top: 3px solid var(--accent-emerald);">
+          <div class="card-header" style="font-size: 15pt;">Multi-Layered IP Protection</div>
+          <div class="card-body" style="font-size: 10.5pt; line-height: 1.45;">
+            <p style="margin-bottom: 10px;"><strong style="color: #fff;">• Assigned Utility Patent:</strong> U.S. Provisional Patent Application 64/033,274 ("Phase-Space Free Energy Minimization via the Quantum Boltzmann Equation") assigned 100% to Point Reyes Sound, Inc.</p>
+            <p style="margin-bottom: 10px;"><strong style="color: #fff;">• Protected GPU Binary Core:</strong> Pre-compiled, high-performance streaming kernels (<span class="code-text">libqbescf.so / qbescf.dll</span>) ensuring complete source-code confidentiality during commercial embedding.</p>
+            <p style="margin-bottom: 10px;"><strong style="color: #fff;">• Proprietary Control & Compilation Stack:</strong> Qomputing.ai AI problem-to-circuit compilers and FPGA firmware.</p>
+            <p><strong style="color: #fff;">• Hardware-Aware QEC Schemes:</strong> TCG CREST customized phase-space decoders and verification protocols.</p>
+          </div>
+        </div>
+
+        <!-- Right: TRL Progression -->
+        <div class="card" style="border-top: 3px solid var(--accent-gold);">
+          <div class="card-header" style="font-size: 15pt; color: var(--accent-gold);">Technology Readiness Level (TRL) Roadmap</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px; font-size: 10pt;">
+            <div style="background: rgba(8, 20, 12, 0.9); border-left: 2px solid var(--accent-emerald); padding: 6px 10px; border-radius: 4px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                <span style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-emerald); font-weight: 700;">START OF GRANT (MONTH 0)</span>
+                <span style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-emerald); font-weight: 700;">TRL 4 (Component Validated)</span>
+              </div>
+              <p style="color: var(--text-secondary); font-size: 9.5pt;">Validated working components exist: Q-Boltz solver core, Qomputing IDE, TCG CREST QEC models.</p>
+            </div>
+
+            <div style="background: rgba(8, 20, 12, 0.9); border-left: 2px solid var(--accent-cyan); padding: 6px 10px; border-radius: 4px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                <span style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-cyan); font-weight: 700;">MID-TERM EVALUATION (MONTH 12)</span>
+                <span style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-cyan); font-weight: 700;">TRL 6 (Prototype Demonstrated)</span>
+              </div>
+              <p style="color: var(--text-secondary); font-size: 9.5pt;">Full-stack integration demonstrated in FPGA hardware-in-the-loop and simulated environments.</p>
+            </div>
+
+            <div style="background: rgba(8, 20, 12, 0.9); border-left: 2px solid var(--accent-gold); padding: 6px 10px; border-radius: 4px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                <span style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-gold); font-weight: 700;">END OF USISTEF GRANT (MONTH 24)</span>
+                <span style="font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent-gold); font-weight: 700;">TRL 7/8 (Operational Pilot)</span>
+              </div>
+              <p style="color: var(--text-secondary); font-size: 9.5pt;">Integrated pilot-ready commercial platform validated across semiconductor, battery & catalyst partners.</p>
+            </div>
+
+            <div style="background: rgba(8, 20, 12, 0.9); border-left: 2px solid #93c5fd; padding: 6px 10px; border-radius: 4px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                <span style="font-family: var(--font-mono); font-size: 8.5pt; color: #93c5fd; font-weight: 700;">COMMERCIAL HORIZON (MONTH 36)</span>
+                <span style="font-family: var(--font-mono); font-size: 8.5pt; color: #93c5fd; font-weight: 700;">TRL 8/9 (Full Market Entry)</span>
+              </div>
+              <p style="color: var(--text-secondary); font-size: 9.5pt;">Broader commercial rollout via OEM licenses, cloud subscriptions, and global industrial adoption.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer"><span>USISTEF Grant Proposal · IP Moat & TRL Progression</span><span>10 / 12</span></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 11: Why This Partnership Must Be India–U.S. -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-11" data-slide="11">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/></svg>
+          <span class="company-tag">BILATERAL VALUE CREATION</span>
+          <span class="header-qmf-tag">USISTEF SYNERGY</span>
+        </div>
+        <span class="slide-num">11 / 12</span>
+      </div>
+      <h2>Why This Partnership Must Be India–U.S.</h2>
+      <p class="subtitle">Combining India's high-velocity quantum engineering, FPGA integration, and academic rigor with world-leading U.S. foundational scientific IP.</p>
+      
+      <div class="grid-3" style="gap: 0.22in; align-items: stretch; margin-bottom: 0.12in;">
+        <!-- India Pillar -->
+        <div class="card" style="border-top: 3px solid var(--accent-cyan); padding: 0.18in; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="font-family: var(--font-mono); font-size: 9pt; color: var(--accent-cyan); font-weight: 700; margin-bottom: 2px;">INDIA</div>
+            <div class="card-header" style="font-size: 14pt; color: var(--accent-cyan); margin-bottom: 10px;">Engineering, Control & QEC</div>
+            <div style="font-size: 9.2pt; color: var(--text-secondary); line-height: 1.4; display: flex; flex-direction: column; gap: 10px;">
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• AI-Native Tooling:</strong> Qomputing.ai cloud IDE & automated circuit synthesis.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• FPGA Quantum Control:</strong> Real-time hardware-in-the-loop execution & compilation.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Academic QEC Depth:</strong> TCG CREST world-class phase-space error correction research.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Workforce Scaling:</strong> Rapid training and integration of 1,200+ Indian researchers & JRFs.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Direct Deployment:</strong> High-velocity enterprise rollout across domestic commercial hubs.</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px;">
+            <span class="badge badge-cyan" style="font-size: 7.5pt; padding: 2px 6px;">Qomputing.ai</span>
+            <span class="badge badge-cyan" style="font-size: 7.5pt; padding: 2px 6px;">TCG CREST</span>
+            <span class="badge badge-cyan" style="font-size: 7.5pt; padding: 2px 6px;">FPGA / QEC Stack</span>
+          </div>
+        </div>
+
+        <!-- U.S. Pillar -->
+        <div class="card" style="border-top: 3px solid var(--accent-emerald); padding: 0.18in; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="font-family: var(--font-mono); font-size: 9pt; color: var(--accent-emerald); font-weight: 700; margin-bottom: 2px;">UNITED STATES</div>
+            <div class="card-header" style="font-size: 14pt; color: #fff; margin-bottom: 10px;">Scientific Invention & IP</div>
+            <div style="font-size: 9.2pt; color: var(--text-secondary); line-height: 1.4; display: flex; flex-direction: column; gap: 10px;">
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Foundational Theory:</strong> Proprietary Quantum Boltzmann kinetic formulation (Q-Boltz).</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Patent Ownership:</strong> 100% assigned U.S. Patent Application 64/033,274.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• HPC Architecture:</strong> High-performance GPU streaming kernel optimization (libqbescf).</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Global Ecosystem:</strong> Deep ties into U.S. semiconductor, CAE, and venture networks.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• OEM Packaging:</strong> Direct commercial integration into CAE/EDA simulation suites.</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px;">
+            <span class="badge" style="font-size: 7.5pt; padding: 2px 6px;">Point Reyes Sound</span>
+            <span class="badge" style="font-size: 7.5pt; padding: 2px 6px;">Q-Boltz IP</span>
+            <span class="badge" style="font-size: 7.5pt; padding: 2px 6px;">GPU Binaries</span>
+          </div>
+        </div>
+
+        <!-- Joint Bilateral Result -->
+        <div class="card" style="border-top: 3px solid var(--accent-gold); padding: 0.18in; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="font-family: var(--font-mono); font-size: 9pt; color: var(--accent-gold); font-weight: 700; margin-bottom: 2px;">JOINT BILATERAL RESULT</div>
+            <div class="card-header" style="font-size: 14pt; color: var(--accent-gold); margin-bottom: 10px;">Quantum Materials Foundry</div>
+            <div style="font-size: 9.2pt; color: var(--text-secondary); line-height: 1.4; display: flex; flex-direction: column; gap: 10px;">
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Commercially Deployable:</strong> Enterprise discovery platform ready within 24–36 months.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Critical Minerals Impact:</strong> Accelerated discovery of alternative battery chemistries.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Economic Engine:</strong> Joint licensing, cloud token revenues & bilateral tech leadership.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• TRL Acceleration:</strong> Compressing 5+ years of R&D into a 24-month validated pilot.</div>
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong style="color: #fff;">• Bilateral Synergy:</strong> Zero-redundancy division of labor spanning theory to hardware.</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px;">
+            <span class="badge badge-gold" style="font-size: 7.5pt; padding: 2px 6px;">USISTEF Consortium</span>
+            <span class="badge badge-gold" style="font-size: 7.5pt; padding: 2px 6px;">₹1.50 Cr Direct R&D</span>
+            <span class="badge badge-gold" style="font-size: 7.5pt; padding: 2px 6px;">TRL 7/8 Platform</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer"><span>USISTEF Grant Proposal · Bilateral Synergy & Value Creation</span><span>11 / 12</span></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 12: USISTEF Outcome: Commercialization Within 36 Months -->
+    <!-- ===================================================================== -->
+    <section class="slide" id="slide-12" data-slide="12">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" stroke="#35ff82" stroke-width="1.2" fill="none"/></svg>
+          <span class="company-tag">POINT REYES SOUND · QOMPUTING.AI · TCG CREST</span>
+          <span class="header-qmf-tag">PROPOSAL SUMMARY</span>
+        </div>
+        <span class="slide-num">12 / 12</span>
+      </div>
+      <h2>USISTEF Outcome: Commercialization Within 36 Months</h2>
+      <p class="subtitle">₹1.5 Crore converts validated bilateral scientific IP and quantum engineering into a commercially deployable clean-energy discovery platform.</p>
+      
+      <div class="grid-3" style="gap: 0.22in; margin-bottom: 0.12in;">
+        <div class="card">
+          <div style="font-family: var(--font-mono); font-size: 9pt; color: var(--text-muted); margin-bottom: 2px;">TODAY (MONTH 0)</div>
+          <div class="card-header" style="font-size: 13.5pt; color: #fff; margin-bottom: 6px;">Component Validation</div>
+          <div class="card-body" style="font-size: 10pt; line-height: 1.4;">
+            <p style="margin-bottom: 6px;">• Proven Q-Boltz phase-space scientific core with published benchmarks.</p>
+            <p style="margin-bottom: 6px;">• Established Qomputing AI-native IDE and FPGA control prototype.</p>
+            <p>• Advanced theoretical QEC error models at TCG CREST.</p>
+          </div>
+        </div>
+
+        <div class="card" style="border-color: var(--accent-emerald);">
+          <div style="font-family: var(--font-mono); font-size: 9pt; color: var(--accent-emerald); margin-bottom: 2px;">MONTH 24 (GRANT END)</div>
+          <div class="card-header" style="font-size: 13.5pt; margin-bottom: 6px;">Pilot-Ready Platform</div>
+          <div class="card-body" style="font-size: 10pt; line-height: 1.4;">
+            <p style="margin-bottom: 6px;">• Full-stack Quantum Materials Foundry operational at TRL 7/8.</p>
+            <p style="margin-bottom: 6px;">• Validated battery SEI, semiconductor & catalysis industrial pilots.</p>
+            <p>• Packaged commercial APIs, OEM integration binaries & trained JRF workforce.</p>
+          </div>
+        </div>
+
+        <div class="card" style="border-color: var(--accent-gold);">
+          <div style="font-family: var(--font-mono); font-size: 9pt; color: var(--accent-gold); margin-bottom: 2px;">MONTH 36 (MARKET ENTRY)</div>
+          <div class="card-header" style="font-size: 13.5pt; color: var(--accent-gold); margin-bottom: 6px;">Commercial Rollout</div>
+          <div class="card-body" style="font-size: 10pt; line-height: 1.4;">
+            <p style="margin-bottom: 6px;">• OEM simulation software in-tree distribution (Ansys, COMSOL, Siemens).</p>
+            <p style="margin-bottom: 6px;">• Metered GPU cloud token drawdowns for materials synthesis teams.</p>
+            <p>• Self-sustaining commercial business generating high-margin bilateral revenue.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding: 0.16in 0.22in; background: rgba(53, 255, 130, 0.05); border: 1.5px solid var(--accent-emerald); display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <div style="flex: 1;">
+          <div style="font-family: var(--font-mono); font-size: 9.5pt; color: var(--accent-gold); font-weight: 700; letter-spacing: 1px; margin-bottom: 2px;">THE USISTEF BOTTOM LINE</div>
+          <div style="font-size: 13.5pt; color: #fff; font-weight: 500; line-height: 1.35; max-width: 10.5in;">
+            A targeted ₹1.5 crore catalyst uniting world-class U.S. scientific IP with Indian quantum engineering to commercialize critical clean-energy discovery technologies.
+          </div>
+        </div>
+        <div style="text-align: right; font-family: var(--font-mono); font-size: 8.5pt;">
+          <span style="color: var(--text-muted); display: block;">PROPOSAL CONSORTIUM</span>
+          <strong style="color: var(--accent-emerald);">Point Reyes Sound, Inc.</strong><br>
+          <span style="color: var(--accent-cyan);">Qomputing.ai</span><br>
+          <span style="color: var(--accent-gold);">TCG CREST</span>
+        </div>
+      </div>
+
+      <div class="footer"><span>USISTEF Grant Proposal · Project Conclusion & Expected Impact</span><span>12 / 12</span></div>
+    </section>
+
+  </div>
+
+  <!-- Interactive Slide Navigation & 3D WebGL Script -->
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 12;
+
+    function showSlide(n) {
+      if (n < 1) n = 1;
+      if (n > totalSlides) n = totalSlides;
+      currentSlide = n;
+      const target = document.getElementById(`slide-${currentSlide}`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+      const indicator = document.getElementById('current-slide-num');
+      if (indicator) {
+        indicator.textContent = `${currentSlide} / ${totalSlides}`;
+      }
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ' || e.key === 'j' || e.key === 'J') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'k' || e.key === 'K') {
+        prevSlide();
+      }
+    });
+
+    // Track slide in viewport on scroll
+    window.addEventListener('load', () => {
+      const slides = document.querySelectorAll('.slide');
+      const slideIndicator = document.getElementById('current-slide-num');
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const slideNum = parseInt(entry.target.getAttribute('data-slide'));
+              if (slideNum) {
+                currentSlide = slideNum;
+                slideIndicator.textContent = `${currentSlide} / ${totalSlides}`;
+              }
+            }
+          });
+        }, { threshold: 0.5 });
+
+        slides.forEach(slide => observer.observe(slide));
+      }
+
+      // Slides are observed and interactive
+    });
+  </script>
+</body>
+</html>
