@@ -678,10 +678,10 @@
           <div class="card-cover" style="background-image: url('/vertical_semiconductors.jpg'); border-top: 3px solid var(--accent-cyan);">
             <div class="card-cover-content">
               <div class="card-header" style="color: var(--accent-cyan);">
-                1. Sub-2nm Classical Devices
+                1. Sub-2nm Devices
               </div>
               <div class="card-body">
-                GAA-FET transistors have shrunk below continuous scales. Non-equilibrium electron-phonon scattering dictates thermal limits, leakage, and transistor breakdown.
+                GAA-FET transistors operate at atomic scales. Non-equilibrium electron transport now dictates thermal limits and leakage.
               </div>
             </div>
           </div>
@@ -690,10 +690,10 @@
           <div class="card-cover" style="background-image: url('/qpu_hero.jpg'); border-top: 3px solid var(--accent-emerald);">
             <div class="card-cover-content">
               <div class="card-header">
-                2. Massively Parallel Hardware
+                2. Streaming GPUs
               </div>
               <div class="card-body">
-                Modern GPUs thrive on streaming spatial stencils. They stall on memory-bound, global matrix diagonalizations scaling at O(N³) to O(N⁴).
+                Modern GPUs excel at local streaming stencils, but choke on global matrix diagonalizations scaling at O(N³).
               </div>
             </div>
           </div>
@@ -702,10 +702,10 @@
           <div class="card-cover" style="background-image: url('/bottleneck_workflow.jpg'); border-top: 3px solid var(--accent-gold);">
             <div class="card-cover-content">
               <div class="card-header" style="color: var(--accent-gold);">
-                3. Phase-Space Framework
+                3. Phase-Space Core
               </div>
               <div class="card-body">
-                Phase space provides the unified mathematical representation connecting electronic structure to classical GPU and quantum co-simulation.
+                Phase space provides the unified mathematical language connecting quantum chemistry to streaming hardware.
               </div>
             </div>
           </div>
@@ -739,10 +739,10 @@
           <div class="card-cover" style="background-image: url('/bottleneck_matrix.jpg'); border-left: 3px solid #ff4d4d;">
             <div class="card-cover-content">
               <div class="card-header" style="color: #ff6b6b; font-size: 1.45rem;">
-                ✕ The O(N³) to O(N⁴) Scaling Wall
+                ✕ The O(N³) Scaling Wall
               </div>
-              <div class="card-body" style="font-size: 1.18rem; line-height: 1.5;">
-                Iterative dense matrix diagonalizations choke streaming GPU clusters, restricting first-principles electronic simulation to tiny toy systems.
+              <div class="card-body" style="font-size: 1.25rem; line-height: 1.5;">
+                Dense matrix diagonalizations choke GPUs with global memory transfers. First-principles simulation stalls at just ~100 atoms.
               </div>
             </div>
           </div>
@@ -753,8 +753,8 @@
               <div class="card-header" style="color: #fbbf24; font-size: 1.45rem;">
                 ✕ Brittleness & Singularities
               </div>
-              <div class="card-body" style="font-size: 1.18rem; line-height: 1.5;">
-                Traditional density functional and continuum approximations diverge and crash automated discovery pipelines during chemical bond dissociation.
+              <div class="card-body" style="font-size: 1.25rem; line-height: 1.5;">
+                Standard DFT approximations divide by zero and diverge during chemical bond dissociation, crashing automated discovery pipelines.
               </div>
             </div>
           </div>
@@ -786,15 +786,15 @@
         <div class="grid-2">
           <div style="display: flex; flex-direction: column; gap: 0.8rem;">
             <div class="card" style="flex: 1;">
-              <div class="card-header">Wigner-Weyl Transform</div>
-              <div class="card-body">
-                Maps electronic density matrices into smooth phase-space coordinates <span class="code-text">(x, p)</span>, converting discrete eigenvalue problems into fluid-like kinetic transport equations.
+              <div class="card-header">Phase-Space Formulation</div>
+              <div class="card-body" style="font-size: 1.25rem; line-height: 1.5;">
+                Converts discrete matrix eigenvalue problems into smooth kinetic fluid transport in <span class="code-text">(x, p)</span> coordinates.
               </div>
             </div>
             <div class="card" style="flex: 1; border-color: var(--accent-emerald);">
-              <div class="card-header" style="color: var(--accent-emerald);">BGK Collision Operator & H-Theorem</div>
-              <div class="card-body">
-                Relaxes density toward Fermi-Dirac equilibrium via localized Bhatnagar-Gross-Krook scattering. Monotonically dissipates energy with provable mathematical convergence guarantees.
+              <div class="card-header" style="color: var(--accent-emerald);">BGK Kinetic Relaxation</div>
+              <div class="card-body" style="font-size: 1.25rem; line-height: 1.5;">
+                Relaxes density toward equilibrium via localized scattering. Provable mathematical convergence with zero global matrix inversions.
               </div>
             </div>
           </div>
@@ -836,10 +836,10 @@
           <div class="card-cover" style="background-image: url('/vertical_semiconductors.jpg'); border-top: 3px solid var(--accent-cyan);">
             <div class="card-cover-content">
               <div class="card-header" style="color: var(--accent-cyan);">
-                Semiconductors & GAA-FETs
+                Sub-2nm GAA-FETs
               </div>
               <div class="card-body">
-                Thermal bottlenecks and phonon scattering at sub-2nm nodes throttle leading-edge chip performance. Q-Boltz resolves hot-carrier kinetic transport.
+                Models exact hot-carrier kinetic transport and phonon scattering where continuum device models break down.
               </div>
             </div>
           </div>
@@ -851,7 +851,7 @@
                 Solid-State Batteries
               </div>
               <div class="card-body">
-                Solid-Electrolyte Interphase (SEI) degradation and dendrite formation are invisible to continuum models. Q-Boltz models exact interfacial ion transport.
+                Simulates interfacial SEI ion transport, capturing dendrite short-circuits invisible to legacy continuum solvers.
               </div>
             </div>
           </div>
@@ -860,10 +860,10 @@
           <div class="card-cover" style="background-image: url('/vertical_catalysis.jpg'); border-top: 3px solid var(--accent-gold);">
             <div class="card-cover-content">
               <div class="card-header" style="color: var(--accent-gold);">
-                High-Efficiency Catalysis
+                Green Catalysis
               </div>
               <div class="card-body">
-                Transition-state modeling in green hydrogen and carbon capture crashes in DFT. Q-Boltz enables automated, singularity-free screening.
+                Automates transition-state screening for hydrogen and carbon capture without DFT divergence crashes.
               </div>
             </div>
           </div>
@@ -895,25 +895,30 @@
         <div class="grid-2">
           <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
             <div>
-              <div class="card-header" style="font-size: 1.4rem;">Seamless In-Tree CAE/EDA Integration</div>
-              <div class="card-body" style="font-size: 1.15rem; line-height: 1.5; margin-top: 0.6rem;">
+              <div class="card-header" style="font-size: 1.45rem;">In-Tree Solver Engine</div>
+              <div class="card-body" style="font-size: 1.2rem; line-height: 1.6; margin-top: 0.8rem;">
                 <p style="margin-bottom: 0.8rem;">
-                  Engineered with clean C-ABI entrypoints and PyAnsys / OpenFOAM bindings that embed directly inside tier-1 engineering platforms.
+                  <strong>What it is:</strong> A pre-compiled C-ABI binary (<span class="code-text">libqbescf.so</span>) with native PyAnsys and OpenFOAM bindings.
                 </p>
                 <p style="margin-bottom: 0.8rem;">
-                  <strong>Zero Source Exposure:</strong> Enterprise customers run compiled CUDA machine code inside their on-premise or cloud HPC without accessing our proprietary solver algorithms.
+                  <strong>How it deploys:</strong> Drops directly into Synopsys, Cadence, Ansys, and Siemens enterprise workflows.
+                </p>
+                <p style="margin-bottom: 0.2rem;">
+                  <strong>Zero Source Exposure:</strong> Enterprise runs compiled CUDA machine code on customer HPC without exposing our proprietary algorithms.
                 </p>
               </div>
             </div>
-            <div style="background: rgba(100, 200, 255, 0.08); border: 1px solid rgba(100, 200, 255, 0.25); padding: 8px 12px; border-radius: 6px; font-family: var(--font-primary); font-size: 1.05rem; color: var(--accent-cyan);">
-              ✓ Direct In-Tree Embedding (Synopsys, Cadence, Ansys, Siemens)
+            <div style="background: rgba(100, 200, 255, 0.08); border: 1px solid rgba(100, 200, 255, 0.25); padding: 8px 14px; border-radius: 6px; font-family: var(--font-primary); font-size: 1.05rem; color: var(--accent-cyan);">
+              ✓ Plug-and-Play Enterprise Architecture
             </div>
           </div>
 
-          <!-- Right Tile: IDE Platform Covers Entire Tile Edge-to-Edge -->
-          <div class="card-plot-cover" style="border-color: var(--accent-emerald);">
-            <img src="/qomputing_ide_ui.jpg" alt="Enterprise Platform Integration" />
-            <div class="card-plot-caption" style="color: var(--accent-emerald);">
+          <!-- Right Tile: IDE Platform Fitted Inside Frame with Clean Caption -->
+          <div class="card" style="border-color: var(--accent-emerald); padding: 0.8rem; display: flex; flex-direction: column; justify-content: space-between; background: #020704; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);">
+            <div style="flex: 1; width: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 6px; background: #010402;">
+              <img src="/qomputing_ide_ui.jpg" alt="Enterprise Platform Integration" style="width: 100%; height: 100%; max-height: 100%; object-fit: contain; display: block;" />
+            </div>
+            <div style="font-family: var(--font-primary); font-style: italic; font-size: 1.05rem; color: var(--accent-emerald); text-align: center; margin-top: 0.5rem; flex-shrink: 0;">
               Enterprise In-Tree Solver Interface & PyAnsys SDK
             </div>
           </div>
@@ -946,16 +951,16 @@
           <!-- Tile 1: Land Cover -->
           <div class="card-cover" style="background-image: url('/qomputing_ide_ui.jpg'); border-top: 3px solid var(--accent-emerald);">
             <div class="card-cover-content">
-              <div class="card-header" style="font-size: 1.4rem;">Phase 1: Land (In-Tree OEM Embed)</div>
-              <div class="card-body" style="font-size: 1.15rem; line-height: 1.5;">
-                <p style="margin-bottom: 0.6rem;">
-                  <strong>Distribution via Incumbents:</strong> Partner with established CAE/EDA vendors rather than building a standalone CAD GUI from scratch.
+              <div class="card-header" style="font-size: 1.45rem;">Phase 1: Land (In-Tree OEM)</div>
+              <div class="card-body" style="font-size: 1.2rem; line-height: 1.6;">
+                <p style="margin-bottom: 0.7rem;">
+                  <strong>Incumbent Distribution:</strong> Embed directly inside established CAD platforms without building a standalone GUI.
                 </p>
-                <p style="margin-bottom: 0.6rem;">
-                  <strong>Pilot NRE & SDK Licenses:</strong> $250k–$500k pilot engagements with semiconductor foundry teams and battery OEMs.
+                <p style="margin-bottom: 0.7rem;">
+                  <strong>Paid Pilots:</strong> $250k–$500k pilot engagements with semiconductor foundries and battery OEMs.
                 </p>
-                <div style="display: inline-block; background: rgba(53, 255, 130, 0.15); border: 1px solid var(--border-subtle); padding: 4px 10px; border-radius: 4px; font-family: var(--font-primary); font-size: 1rem; color: var(--accent-emerald);">
-                  Target: 3 Enterprise Foundry Pilots
+                <div style="display: inline-block; background: rgba(53, 255, 130, 0.15); border: 1px solid var(--border-subtle); padding: 4px 12px; border-radius: 4px; font-family: var(--font-primary); font-size: 1.05rem; color: var(--accent-emerald);">
+                  Target: 3 Tier-1 Enterprise Pilots
                 </div>
               </div>
             </div>
@@ -964,15 +969,15 @@
           <!-- Tile 2: Scale Cover -->
           <div class="card-cover" style="background-image: url('/qomputing_university_portal.jpg'); border-top: 3px solid var(--accent-gold);">
             <div class="card-cover-content">
-              <div class="card-header" style="color: var(--accent-gold); font-size: 1.4rem;">Phase 2: Scale (Cloud Token Metering)</div>
-              <div class="card-body" style="font-size: 1.15rem; line-height: 1.5;">
-                <p style="margin-bottom: 0.6rem;">
-                  <strong>Recurring Compute Drawdowns:</strong> Token-based runtime licensing on enterprise GPU clusters (AWS, Azure, OCI, and DGX on-premise).
+              <div class="card-header" style="color: var(--accent-gold); font-size: 1.45rem;">Phase 2: Scale (GPU Drawdowns)</div>
+              <div class="card-body" style="font-size: 1.2rem; line-height: 1.6;">
+                <p style="margin-bottom: 0.7rem;">
+                  <strong>Metered Compute:</strong> Runtime token drawdowns on AWS, Azure, and on-premise DGX clusters as simulation volumes ramp.
                 </p>
-                <p style="margin-bottom: 0.6rem;">
-                  <strong>Compounding Engine:</strong> As automated discovery workflows scale, solver token consumption builds a durable $15M+/year cash engine.
+                <p style="margin-bottom: 0.7rem;">
+                  <strong>Compounding Engine:</strong> High-margin solver consumption creating a durable $15M+/year recurring cash engine.
                 </p>
-                <div style="display: inline-block; background: rgba(245, 197, 66, 0.15); border: 1px solid rgba(245, 197, 66, 0.35); padding: 4px 10px; border-radius: 4px; font-family: var(--font-primary); font-size: 1rem; color: var(--accent-gold);">
+                <div style="display: inline-block; background: rgba(245, 197, 66, 0.15); border: 1px solid rgba(245, 197, 66, 0.35); padding: 4px 12px; border-radius: 4px; font-family: var(--font-primary); font-size: 1.05rem; color: var(--accent-gold);">
                   Target: $15M+/yr Recurring Cash Engine
                 </div>
               </div>
