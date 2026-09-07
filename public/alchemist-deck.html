@@ -7,7 +7,7 @@
   <title>Point Reyes Sound — Master Investor Deck (Q-Boltz)</title>
   <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg" />
 
-  <!-- Google Fonts: EB Garamond, JetBrains Mono, Inter -->
+  <!-- Google Fonts: EB Garamond, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -18,12 +18,11 @@
   <style>
     :root {
       --font-primary: "EB Garamond", Garamond, Georgia, "Times New Roman", serif;
-      --font-serif: "EB Garamond", Garamond, Georgia, "Times New Roman", serif;
       --font-mono: "JetBrains Mono", monospace;
 
       --bg-core: #030704;
       --bg-panel: #07120a;
-      --bg-card: rgba(8, 20, 12, 0.88);
+      --bg-card: rgba(8, 20, 12, 0.92);
       
       --accent-emerald: #35ff82;
       --accent-emerald-dim: rgba(53, 255, 130, 0.12);
@@ -35,7 +34,7 @@
       --text-primary: #f0f7f2;
       --text-secondary: #a3c2ad;
       --text-muted: #62826c;
-      --border-subtle: rgba(53, 255, 130, 0.18);
+      --border-subtle: rgba(53, 255, 130, 0.22);
       --border-active: #35ff82;
     }
 
@@ -185,7 +184,7 @@
       flex-shrink: 0;
     }
 
-    /* Content Area Container (Forces Perfect 16:9 Frame Fit) */
+    /* Content Area Container */
     .slide-body {
       flex: 1;
       min-height: 0;
@@ -219,8 +218,8 @@
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 1rem 1.2rem;
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -228,73 +227,83 @@
       overflow: hidden;
     }
 
-    /* Image Containers That ALWAYS Fit the Frame */
-    .img-box-3col {
-      width: 100%;
-      height: 110px;
-      border-radius: 6px;
-      border: 1px solid rgba(53, 255, 130, 0.2);
-      overflow: hidden;
-      margin-bottom: 0.6rem;
-      background: #020704;
-      flex-shrink: 0;
-    }
-
-    .img-box-3col img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .img-box-2col {
-      width: 100%;
-      height: 120px;
-      border-radius: 6px;
-      border: 1px solid rgba(53, 255, 130, 0.2);
-      overflow: hidden;
-      margin-bottom: 0.6rem;
-      background: #020704;
-      flex-shrink: 0;
-    }
-
-    .img-box-2col img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .img-box-hero {
-      width: 100%;
-      flex: 1;
-      min-height: 0;
-      max-height: 240px;
-      border-radius: 6px;
-      border: 1px solid rgba(53, 255, 130, 0.2);
-      background: #030805;
+    /* Tile Image Cover - Image Covers the Entire Tile Area Edge-to-Edge */
+    .card-cover {
+      position: relative;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.4rem 1.5rem;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: flex-end;
       overflow: hidden;
-      padding: 6px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      transition: all 0.25s ease;
+      height: 100%;
     }
 
-    .img-box-hero img {
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
-      height: auto;
-      object-fit: contain;
+    .card-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(3, 8, 4, 0.15) 0%, rgba(3, 8, 4, 0.72) 42%, rgba(3, 8, 4, 0.97) 80%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .card-cover-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Full-Tile Technical Plot Cover */
+    .card-plot-cover {
+      position: relative;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      background: #020704;
+      height: 100%;
+      min-height: 0;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-plot-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       display: block;
+    }
+
+    .card-plot-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px 16px;
+      background: linear-gradient(to top, rgba(3, 7, 4, 0.96) 0%, rgba(3, 7, 4, 0.7) 70%, transparent 100%);
+      font-family: var(--font-primary);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      z-index: 2;
+      text-align: center;
     }
 
     .card-header {
       font-family: var(--font-primary);
-      font-size: 1.28rem;
+      font-size: 1.4rem;
       font-weight: 600;
       color: var(--accent-emerald);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -303,9 +312,9 @@
 
     .card-body {
       font-family: var(--font-primary);
-      font-size: 1.08rem;
+      font-size: 1.12rem;
       color: var(--text-secondary);
-      line-height: 1.4;
+      line-height: 1.45;
       flex: 1;
       overflow: hidden;
     }
@@ -550,7 +559,7 @@
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">Q-BOLTZ CORE</span>
         </div>
-        <span class="slide-num">01 / 12</span>
+        <span class="slide-num">01 / 10</span>
       </div>
       
       <div class="slide-body" style="flex-direction: row; align-items: center; justify-content: space-between; gap: 3.5%;">
@@ -648,14 +657,14 @@
       </div>
     </section>
 
-    <!-- SLIDE 03: The Convergence of Computational Paradigms (Fitted Images) -->
+    <!-- SLIDE 03: The Convergence of Computational Paradigms (Covered Tiles) -->
     <section class="slide" id="slide-3" data-slide="3">
       <div class="header">
         <div class="brand-lockup">
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">COMPUTATIONAL THESIS</span>
         </div>
-        <span class="slide-num">03 / 12</span>
+        <span class="slide-num">03 / 10</span>
       </div>
       
       <h2>Convergence of Computational Paradigms</h2>
@@ -665,39 +674,39 @@
 
       <div class="slide-body">
         <div class="grid-3">
-          <div class="card" style="border-top: 3px solid var(--accent-cyan);">
-            <div class="img-box-3col">
-              <img src="/vertical_semiconductors.jpg" alt="Sub-2nm Devices" onerror="this.src='/qpu_hero.jpg'" />
-            </div>
-            <div class="card-header" style="color: var(--accent-cyan);">
-              1. Sub-2nm Classical Devices
-            </div>
-            <div class="card-body">
-              GAA-FET transistors have shrunk below continuous scales. Non-equilibrium electron-phonon scattering dictates thermal runaway and leakage.
-            </div>
-          </div>
-
-          <div class="card" style="border-top: 3px solid var(--accent-emerald);">
-            <div class="img-box-3col">
-              <img src="/qpu_hero.jpg" alt="Massively Parallel Hardware" />
-            </div>
-            <div class="card-header">
-              2. Massively Parallel Hardware
-            </div>
-            <div class="card-body">
-              Modern GPUs thrive on streaming spatial stencils. They stall on memory-bound, global matrix diagonalizations scaling at O(N³) to O(N⁴).
+          <!-- Tile 1: Semiconductors Cover -->
+          <div class="card-cover" style="background-image: url('/vertical_semiconductors.jpg'); border-top: 3px solid var(--accent-cyan);">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: var(--accent-cyan);">
+                1. Sub-2nm Classical Devices
+              </div>
+              <div class="card-body">
+                GAA-FET transistors have shrunk below continuous scales. Non-equilibrium electron-phonon scattering dictates thermal limits, leakage, and transistor breakdown.
+              </div>
             </div>
           </div>
 
-          <div class="card" style="border-top: 3px solid var(--accent-gold);">
-            <div class="img-box-3col">
-              <img src="/bottleneck_workflow.jpg" alt="Phase Space Framework" />
+          <!-- Tile 2: GPUs Cover -->
+          <div class="card-cover" style="background-image: url('/qpu_hero.jpg'); border-top: 3px solid var(--accent-emerald);">
+            <div class="card-cover-content">
+              <div class="card-header">
+                2. Massively Parallel Hardware
+              </div>
+              <div class="card-body">
+                Modern GPUs thrive on streaming spatial stencils. They stall on memory-bound, global matrix diagonalizations scaling at O(N³) to O(N⁴).
+              </div>
             </div>
-            <div class="card-header" style="color: var(--accent-gold);">
-              3. Phase-Space Framework
-            </div>
-            <div class="card-body">
-              Phase space provides the unified mathematical representation connecting electronic structure to classical GPU and quantum co-simulation.
+          </div>
+
+          <!-- Tile 3: Phase Space Cover -->
+          <div class="card-cover" style="background-image: url('/bottleneck_workflow.jpg'); border-top: 3px solid var(--accent-gold);">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: var(--accent-gold);">
+                3. Phase-Space Framework
+              </div>
+              <div class="card-body">
+                Phase space provides the unified mathematical representation connecting electronic structure to classical GPU and quantum co-simulation.
+              </div>
             </div>
           </div>
         </div>
@@ -709,14 +718,14 @@
       </div>
     </section>
 
-    <!-- SLIDE 04: The Matrix Diagonalization Bottleneck (Fitted Images) -->
+    <!-- SLIDE 04: The Matrix Diagonalization Bottleneck (Covered Tiles) -->
     <section class="slide" id="slide-4" data-slide="4">
       <div class="header">
         <div class="brand-lockup">
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">THE BOTTLENECK</span>
         </div>
-        <span class="slide-num">04 / 12</span>
+        <span class="slide-num">04 / 10</span>
       </div>
       
       <h2>The Matrix Diagonalization Bottleneck</h2>
@@ -726,27 +735,27 @@
 
       <div class="slide-body">
         <div class="grid-2">
-          <div class="card" style="border-left: 3px solid #ff4d4d;">
-            <div class="img-box-2col">
-              <img src="/bottleneck_matrix.jpg" alt="Matrix Diagonalization Bottleneck" />
-            </div>
-            <div class="card-header" style="color: #ff6b6b;">
-              ✕ The O(N³) to O(N⁴) Scaling Wall
-            </div>
-            <div class="card-body">
-              Iterative dense matrix diagonalizations stall modern streaming GPU clusters, restricting first-principles simulation to tiny toy systems.
+          <!-- Tile 1: Matrix Bottleneck Cover -->
+          <div class="card-cover" style="background-image: url('/bottleneck_matrix.jpg'); border-left: 3px solid #ff4d4d;">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: #ff6b6b; font-size: 1.45rem;">
+                ✕ The O(N³) to O(N⁴) Scaling Wall
+              </div>
+              <div class="card-body" style="font-size: 1.18rem; line-height: 1.5;">
+                Iterative dense matrix diagonalizations choke streaming GPU clusters, restricting first-principles electronic simulation to tiny toy systems.
+              </div>
             </div>
           </div>
 
-          <div class="card" style="border-left: 3px solid #f59e0b;">
-            <div class="img-box-2col">
-              <img src="/bottleneck_singularity.jpg" alt="Potential Energy Surface Instability" />
-            </div>
-            <div class="card-header" style="color: #fbbf24;">
-              ✕ Brittleness & Singularities
-            </div>
-            <div class="card-body">
-              Traditional density functional and continuum approximations diverge and crash automated discovery pipelines during chemical bond dissociation.
+          <!-- Tile 2: Singularity Cover -->
+          <div class="card-cover" style="background-image: url('/bottleneck_singularity.jpg'); border-left: 3px solid #f59e0b;">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: #fbbf24; font-size: 1.45rem;">
+                ✕ Brittleness & Singularities
+              </div>
+              <div class="card-body" style="font-size: 1.18rem; line-height: 1.5;">
+                Traditional density functional and continuum approximations diverge and crash automated discovery pipelines during chemical bond dissociation.
+              </div>
             </div>
           </div>
         </div>
@@ -758,14 +767,14 @@
       </div>
     </section>
 
-    <!-- SLIDE 05: The Q-Boltz Solution (Fitted Hero Plot) -->
+    <!-- SLIDE 05: The Q-Boltz Solution (Full Right-Tile Cover) -->
     <section class="slide" id="slide-5" data-slide="5">
       <div class="header">
         <div class="brand-lockup">
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">Q-BOLTZ SOLVER</span>
         </div>
-        <span class="slide-num">05 / 12</span>
+        <span class="slide-num">05 / 10</span>
       </div>
       
       <h2>Q-Boltz: Kinetic Relaxation in Phase Space</h2>
@@ -790,11 +799,10 @@
             </div>
           </div>
 
-          <div class="card" style="align-items: center; justify-content: center; padding: 0.8rem;">
-            <div class="img-box-hero">
-              <img src="/n2_wigner_4panel_clean.png" alt="N2 Phase-Space Wigner & Cumulant Distributions" />
-            </div>
-            <div style="font-family: var(--font-primary); font-style: italic; font-size: 0.95rem; color: var(--text-muted); margin-top: 6px; text-align: center;">
+          <!-- Right Tile: Wigner Plot Covers Entire Tile Edge-to-Edge -->
+          <div class="card-plot-cover" style="border-color: var(--accent-emerald);">
+            <img src="/n2_wigner_4panel_clean.png" alt="N2 Phase-Space Wigner & Cumulant Distributions" />
+            <div class="card-plot-caption">
               Wigner Phase-Space Electronic Distribution Kernel
             </div>
           </div>
@@ -807,65 +815,14 @@
       </div>
     </section>
 
-    <!-- SLIDE 06: Scientific Validation Benchmarks (Fitted Hero Plot) -->
+    <!-- SLIDE 06: High-Impact Market Verticals (Covered Tiles) -->
     <section class="slide" id="slide-6" data-slide="6">
-      <div class="header">
-        <div class="brand-lockup">
-          <span class="company-tag">POINT REYES SOUND, INC.</span>
-          <span class="header-qboltz-tag">EMPIRICAL BENCHMARKS</span>
-        </div>
-        <span class="slide-num">06 / 12</span>
-      </div>
-      
-      <h2>Reproducing Fundamental Benchmarks</h2>
-      <p class="subtitle">
-        A regularized solver that reproduces fundamental dissociation benchmarks without singularities, demonstrating linear scaling on streaming hardware.
-      </p>
-
-      <div class="slide-body">
-        <div class="grid-2">
-          <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <div class="card-header" style="font-size: 1.35rem;">Dinitrogen (N₂) Triple-Bond Dissociation</div>
-              <div class="card-body" style="font-size: 1.15rem; line-height: 1.5; margin-top: 0.6rem;">
-                <p style="margin-bottom: 0.8rem;">
-                  Breaking the triple bond in <span class="code-text">N₂</span> represents the classic failure point where traditional DFT and SCF methods collapse due to strong correlation singularities.
-                </p>
-                <p style="margin-bottom: 0.8rem;">
-                  Q-Boltz achieves continuous, monotonic convergence across the full potential energy surface with zero numerical divergence.
-                </p>
-              </div>
-            </div>
-            <div style="background: rgba(53, 255, 130, 0.08); border: 1px solid var(--border-subtle); padding: 8px 12px; border-radius: 6px; font-family: var(--font-primary); font-size: 1rem; color: var(--accent-emerald);">
-              ✓ Verified with UChicago Mazziotti Group Benchmarks
-            </div>
-          </div>
-
-          <div class="card" style="align-items: center; justify-content: center; padding: 0.8rem; border-color: var(--accent-cyan);">
-            <div class="img-box-hero">
-              <img src="/n2_wigner_4panel_dark.png" alt="Dinitrogen Polynomial Scaling Dissociation" />
-            </div>
-            <div style="font-family: var(--font-primary); font-style: italic; font-size: 0.95rem; color: var(--accent-cyan); margin-top: 6px; text-align: center;">
-              Singularity-Free Dissociation Dynamics
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer">
-        <span>Point Reyes Sound, Inc. © 2026</span>
-        <span>Validation Data & Numerical Convergence</span>
-      </div>
-    </section>
-
-    <!-- SLIDE 07: High-Impact Market Verticals (Fitted Images) -->
-    <section class="slide" id="slide-7" data-slide="7">
       <div class="header">
         <div class="brand-lockup">
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">MARKET VERTICALS</span>
         </div>
-        <span class="slide-num">07 / 12</span>
+        <span class="slide-num">06 / 10</span>
       </div>
       
       <h2>High-Impact Market Verticals ($35B CAE/EDA)</h2>
@@ -875,39 +832,39 @@
 
       <div class="slide-body">
         <div class="grid-3">
-          <div class="card">
-            <div class="img-box-3col">
-              <img src="/vertical_semiconductors.jpg" alt="Semiconductor GAA-FETs" />
-            </div>
-            <div class="card-header">
-              Semiconductors & GAA-FETs
-            </div>
-            <div class="card-body">
-              Thermal bottlenecks and phonon scattering at sub-2nm nodes throttle leading-edge chip performance. Q-Boltz resolves hot-carrier kinetic transport.
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="img-box-3col">
-              <img src="/vertical_batteries.jpg" alt="Solid-State Batteries" />
-            </div>
-            <div class="card-header">
-              Solid-State Batteries
-            </div>
-            <div class="card-body">
-              Solid-Electrolyte Interphase (SEI) degradation and dendrite formation are invisible to continuum models. Q-Boltz models exact interfacial ion transport.
+          <!-- Tile 1: Semiconductors Cover -->
+          <div class="card-cover" style="background-image: url('/vertical_semiconductors.jpg'); border-top: 3px solid var(--accent-cyan);">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: var(--accent-cyan);">
+                Semiconductors & GAA-FETs
+              </div>
+              <div class="card-body">
+                Thermal bottlenecks and phonon scattering at sub-2nm nodes throttle leading-edge chip performance. Q-Boltz resolves hot-carrier kinetic transport.
+              </div>
             </div>
           </div>
 
-          <div class="card">
-            <div class="img-box-3col">
-              <img src="/vertical_catalysis.jpg" alt="High-Efficiency Catalysis" />
+          <!-- Tile 2: Batteries Cover -->
+          <div class="card-cover" style="background-image: url('/vertical_batteries.jpg'); border-top: 3px solid var(--accent-emerald);">
+            <div class="card-cover-content">
+              <div class="card-header">
+                Solid-State Batteries
+              </div>
+              <div class="card-body">
+                Solid-Electrolyte Interphase (SEI) degradation and dendrite formation are invisible to continuum models. Q-Boltz models exact interfacial ion transport.
+              </div>
             </div>
-            <div class="card-header">
-              High-Efficiency Catalysis
-            </div>
-            <div class="card-body">
-              Transition-state modeling in green hydrogen and carbon capture crashes in DFT. Q-Boltz enables automated, singularity-free screening.
+          </div>
+
+          <!-- Tile 3: Catalysis Cover -->
+          <div class="card-cover" style="background-image: url('/vertical_catalysis.jpg'); border-top: 3px solid var(--accent-gold);">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: var(--accent-gold);">
+                High-Efficiency Catalysis
+              </div>
+              <div class="card-body">
+                Transition-state modeling in green hydrogen and carbon capture crashes in DFT. Q-Boltz enables automated, singularity-free screening.
+              </div>
             </div>
           </div>
         </div>
@@ -919,14 +876,14 @@
       </div>
     </section>
 
-    <!-- SLIDE 08: Q-Boltz as a Product (Fitted IDE View) -->
-    <section class="slide" id="slide-8" data-slide="8">
+    <!-- SLIDE 07: Q-Boltz as a Product (Full Right-Tile Cover) -->
+    <section class="slide" id="slide-7" data-slide="7">
       <div class="header">
         <div class="brand-lockup">
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">PRODUCT ARCHITECTURE</span>
         </div>
-        <span class="slide-num">08 / 12</span>
+        <span class="slide-num">07 / 10</span>
       </div>
       
       <h2>Q-Boltz as a Product: Pre-Compiled Binary</h2>
@@ -938,7 +895,7 @@
         <div class="grid-2">
           <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
             <div>
-              <div class="card-header" style="font-size: 1.35rem;">Seamless In-Tree CAE/EDA Integration</div>
+              <div class="card-header" style="font-size: 1.4rem;">Seamless In-Tree CAE/EDA Integration</div>
               <div class="card-body" style="font-size: 1.15rem; line-height: 1.5; margin-top: 0.6rem;">
                 <p style="margin-bottom: 0.8rem;">
                   Engineered with clean C-ABI entrypoints and PyAnsys / OpenFOAM bindings that embed directly inside tier-1 engineering platforms.
@@ -948,17 +905,16 @@
                 </p>
               </div>
             </div>
-            <div style="background: rgba(100, 200, 255, 0.08); border: 1px solid rgba(100, 200, 255, 0.25); padding: 8px 12px; border-radius: 6px; font-family: var(--font-primary); font-size: 1rem; color: var(--accent-cyan);">
+            <div style="background: rgba(100, 200, 255, 0.08); border: 1px solid rgba(100, 200, 255, 0.25); padding: 8px 12px; border-radius: 6px; font-family: var(--font-primary); font-size: 1.05rem; color: var(--accent-cyan);">
               ✓ Direct In-Tree Embedding (Synopsys, Cadence, Ansys, Siemens)
             </div>
           </div>
 
-          <div class="card" style="align-items: center; justify-content: center; padding: 0.8rem; border-color: var(--accent-emerald);">
-            <div class="img-box-hero">
-              <img src="/qomputing_ide_ui.jpg" alt="Enterprise Platform Integration" />
-            </div>
-            <div style="font-family: var(--font-primary); font-style: italic; font-size: 0.95rem; color: var(--accent-emerald); margin-top: 6px; text-align: center;">
-              Enterprise In-Tree Solver Interface
+          <!-- Right Tile: IDE Platform Covers Entire Tile Edge-to-Edge -->
+          <div class="card-plot-cover" style="border-color: var(--accent-emerald);">
+            <img src="/qomputing_ide_ui.jpg" alt="Enterprise Platform Integration" />
+            <div class="card-plot-caption" style="color: var(--accent-emerald);">
+              Enterprise In-Tree Solver Interface & PyAnsys SDK
             </div>
           </div>
         </div>
@@ -970,14 +926,14 @@
       </div>
     </section>
 
-    <!-- SLIDE 09: Land & Scale Commercial Strategy -->
-    <section class="slide" id="slide-9" data-slide="9">
+    <!-- SLIDE 08: Land & Scale Commercial Strategy (Covered Tiles) -->
+    <section class="slide" id="slide-8" data-slide="8">
       <div class="header">
         <div class="brand-lockup">
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">COMMERCIAL STRATEGY</span>
         </div>
-        <span class="slide-num">09 / 12</span>
+        <span class="slide-num">08 / 10</span>
       </div>
       
       <h2>Commercial Land & Scale Strategy</h2>
@@ -987,37 +943,39 @@
 
       <div class="slide-body">
         <div class="grid-2">
-          <div class="card" style="border-top: 3px solid var(--accent-emerald); display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <div class="card-header" style="font-size: 1.35rem;">Phase 1: Land (In-Tree OEM Embed)</div>
-              <div class="card-body" style="font-size: 1.15rem; line-height: 1.5; margin-top: 0.6rem;">
-                <p style="margin-bottom: 0.8rem;">
+          <!-- Tile 1: Land Cover -->
+          <div class="card-cover" style="background-image: url('/qomputing_ide_ui.jpg'); border-top: 3px solid var(--accent-emerald);">
+            <div class="card-cover-content">
+              <div class="card-header" style="font-size: 1.4rem;">Phase 1: Land (In-Tree OEM Embed)</div>
+              <div class="card-body" style="font-size: 1.15rem; line-height: 1.5;">
+                <p style="margin-bottom: 0.6rem;">
                   <strong>Distribution via Incumbents:</strong> Partner with established CAE/EDA vendors rather than building a standalone CAD GUI from scratch.
                 </p>
-                <p style="margin-bottom: 0.8rem;">
+                <p style="margin-bottom: 0.6rem;">
                   <strong>Pilot NRE & SDK Licenses:</strong> $250k–$500k pilot engagements with semiconductor foundry teams and battery OEMs.
                 </p>
+                <div style="display: inline-block; background: rgba(53, 255, 130, 0.15); border: 1px solid var(--border-subtle); padding: 4px 10px; border-radius: 4px; font-family: var(--font-primary); font-size: 1rem; color: var(--accent-emerald);">
+                  Target: 3 Enterprise Foundry Pilots
+                </div>
               </div>
-            </div>
-            <div style="background: rgba(53, 255, 130, 0.08); border: 1px solid var(--border-subtle); padding: 8px 12px; border-radius: 6px; font-family: var(--font-primary); font-size: 1rem; color: var(--accent-emerald);">
-              Target: 3 Enterprise Foundry Pilots
             </div>
           </div>
 
-          <div class="card" style="border-top: 3px solid var(--accent-gold); display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <div class="card-header" style="color: var(--accent-gold); font-size: 1.35rem;">Phase 2: Scale (Cloud Token Metering)</div>
-              <div class="card-body" style="font-size: 1.15rem; line-height: 1.5; margin-top: 0.6rem;">
-                <p style="margin-bottom: 0.8rem;">
+          <!-- Tile 2: Scale Cover -->
+          <div class="card-cover" style="background-image: url('/qomputing_university_portal.jpg'); border-top: 3px solid var(--accent-gold);">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: var(--accent-gold); font-size: 1.4rem;">Phase 2: Scale (Cloud Token Metering)</div>
+              <div class="card-body" style="font-size: 1.15rem; line-height: 1.5;">
+                <p style="margin-bottom: 0.6rem;">
                   <strong>Recurring Compute Drawdowns:</strong> Token-based runtime licensing on enterprise GPU clusters (AWS, Azure, OCI, and DGX on-premise).
                 </p>
-                <p style="margin-bottom: 0.8rem;">
+                <p style="margin-bottom: 0.6rem;">
                   <strong>Compounding Engine:</strong> As automated discovery workflows scale, solver token consumption builds a durable $15M+/year cash engine.
                 </p>
+                <div style="display: inline-block; background: rgba(245, 197, 66, 0.15); border: 1px solid rgba(245, 197, 66, 0.35); padding: 4px 10px; border-radius: 4px; font-family: var(--font-primary); font-size: 1rem; color: var(--accent-gold);">
+                  Target: $15M+/yr Recurring Cash Engine
+                </div>
               </div>
-            </div>
-            <div style="background: rgba(245, 197, 66, 0.08); border: 1px solid rgba(245, 197, 66, 0.25); padding: 8px 12px; border-radius: 6px; font-family: var(--font-primary); font-size: 1rem; color: var(--accent-gold);">
-              Target: $15M+/yr Recurring Cash Engine
             </div>
           </div>
         </div>
@@ -1029,63 +987,14 @@
       </div>
     </section>
 
-    <!-- SLIDE 10: Defensible IP & Strategic Moat (Fitted Paper Hero) -->
-    <section class="slide" id="slide-10" data-slide="10">
-      <div class="header">
-        <div class="brand-lockup">
-          <span class="company-tag">POINT REYES SOUND, INC.</span>
-          <span class="header-qboltz-tag">DEFENSIBLE MOAT</span>
-        </div>
-        <span class="slide-num">10 / 12</span>
-      </div>
-      
-      <h2>Defensible IP & Strategic Moat</h2>
-      <p class="subtitle">
-        A triple-layer defensive barrier combining patent filings, defensive scientific preprints, and compiled binary distribution.
-      </p>
-
-      <div class="slide-body">
-        <div class="grid-2">
-          <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-            <div class="card" style="flex: 1;">
-              <div class="card-header">1. Patent Portfolio</div>
-              <div class="card-body">
-                <strong>U.S. Prov. Pat. App. 64/033,274:</strong> Broad proprietary claims covering phase-space kinetic relaxation for quantum and atomistic multiphysics simulations.
-              </div>
-            </div>
-            <div class="card" style="flex: 1; border-color: var(--accent-emerald);">
-              <div class="card-header" style="color: var(--accent-emerald);">2. Binary Compilation Moat</div>
-              <div class="card-body">
-                Optimized CUDA streaming routines and mathematical stencils remain encrypted inside compiled binaries, ensuring permanent trade secret protection.
-              </div>
-            </div>
-          </div>
-
-          <div class="card" style="align-items: center; justify-content: center; padding: 0.8rem; border-color: var(--accent-cyan);">
-            <div class="img-box-hero">
-              <img src="/thumbnail_paper1.png" alt="Defensive Science Preprints" onerror="this.src='/thumbnail_qgas.png'" />
-            </div>
-            <div style="font-family: var(--font-primary); font-style: italic; font-size: 0.95rem; color: var(--accent-cyan); margin-top: 6px; text-align: center;">
-              Defensive Preprints (arXiv:2608.14979) Establishing Prior Art
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer">
-        <span>Point Reyes Sound, Inc. © 2026</span>
-        <span>Institutional Intellectual Property Defense</span>
-      </div>
-    </section>
-
-    <!-- SLIDE 11: Proven Leadership & Scientific Advisory Board (Portraits Fitted) -->
-    <section class="slide" id="slide-11" data-slide="11">
+    <!-- SLIDE 09: Proven Leadership & Scientific Advisory Board (Portraits Fitted) -->
+    <section class="slide" id="slide-9" data-slide="9">
       <div class="header">
         <div class="brand-lockup">
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">LEADERSHIP & ADVISORS</span>
         </div>
-        <span class="slide-num">11 / 12</span>
+        <span class="slide-num">09 / 10</span>
       </div>
       
       <h2>Proven Leadership & Advisory Board</h2>
@@ -1096,46 +1005,46 @@
       <div class="slide-body">
         <div class="grid-3">
           <div class="card" style="align-items: center; text-align: center;">
-            <div style="width: 85px; height: 85px; border-radius: 50%; border: 2.5px solid var(--accent-emerald); overflow: hidden; margin-bottom: 0.6rem; background: #06140b; box-shadow: 0 0 20px rgba(53, 255, 130, 0.25); flex-shrink: 0;">
+            <div style="width: 90px; height: 90px; border-radius: 50%; border: 2.5px solid var(--accent-emerald); overflow: hidden; margin-bottom: 0.6rem; background: #06140b; box-shadow: 0 0 20px rgba(53, 255, 130, 0.25); flex-shrink: 0;">
               <img src="/rc_scholar_portrait.jpeg" alt="Romit Chakraborty" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; display: block;" onerror="this.src='/PRS_logo_v2.jpeg'" />
             </div>
-            <div class="card-header" style="font-size: 1.25rem; margin-bottom: 0.1rem; justify-content: center;">
+            <div class="card-header" style="font-size: 1.3rem; margin-bottom: 0.1rem; justify-content: center;">
               Dr. Romit Chakraborty
             </div>
             <div style="font-family: var(--font-primary); font-style: italic; font-size: 0.95rem; color: var(--accent-gold); margin-bottom: 0.4rem;">
               Founder & CSO
             </div>
-            <div class="card-body" style="font-size: 1.05rem; line-height: 1.35;">
+            <div class="card-body" style="font-size: 1.05rem; line-height: 1.4;">
               PhD in Chemical Physics from UC Berkeley; Postdoctoral Fellow at University of Chicago. Author of foundational papers on non-equilibrium phase-space dynamics.
             </div>
           </div>
 
           <div class="card" style="align-items: center; text-align: center;">
-            <div style="width: 85px; height: 85px; border-radius: 50%; border: 2.5px solid var(--accent-cyan); overflow: hidden; margin-bottom: 0.6rem; background: #06140b; box-shadow: 0 0 20px rgba(100, 200, 255, 0.25); flex-shrink: 0;">
+            <div style="width: 90px; height: 90px; border-radius: 50%; border: 2.5px solid var(--accent-cyan); overflow: hidden; margin-bottom: 0.6rem; background: #06140b; box-shadow: 0 0 20px rgba(100, 200, 255, 0.25); flex-shrink: 0;">
               <img src="/david_mazziotti.jpg" alt="David Mazziotti" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.src='/PRS_logo_v2.jpeg'" />
             </div>
-            <div class="card-header" style="font-size: 1.25rem; margin-bottom: 0.1rem; color: var(--accent-cyan); justify-content: center;">
+            <div class="card-header" style="font-size: 1.3rem; margin-bottom: 0.1rem; color: var(--accent-cyan); justify-content: center;">
               Prof. David Mazziotti
             </div>
             <div style="font-family: var(--font-primary); font-style: italic; font-size: 0.95rem; color: var(--accent-gold); margin-bottom: 0.4rem;">
               Scientific Advisor (UChicago)
             </div>
-            <div class="card-body" style="font-size: 1.05rem; line-height: 1.35;">
+            <div class="card-body" style="font-size: 1.05rem; line-height: 1.4;">
               Chair of Chemistry, University of Chicago. Authority in Reduced Density Matrix (RDM) mechanics and electronic correlation theory.
             </div>
           </div>
 
           <div class="card" style="align-items: center; text-align: center;">
-            <div style="width: 85px; height: 85px; border-radius: 50%; border: 2.5px solid var(--accent-gold); overflow: hidden; margin-bottom: 0.6rem; background: #06140b; box-shadow: 0 0 20px rgba(245, 197, 66, 0.25); flex-shrink: 0;">
+            <div style="width: 90px; height: 90px; border-radius: 50%; border: 2.5px solid var(--accent-gold); overflow: hidden; margin-bottom: 0.6rem; background: #06140b; box-shadow: 0 0 20px rgba(245, 197, 66, 0.25); flex-shrink: 0;">
               <img src="/david_schuster.jpg" alt="David Schuster" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.src='/PRS_logo_v2.jpeg'" />
             </div>
-            <div class="card-header" style="font-size: 1.25rem; margin-bottom: 0.1rem; color: var(--accent-gold); justify-content: center;">
+            <div class="card-header" style="font-size: 1.3rem; margin-bottom: 0.1rem; color: var(--accent-gold); justify-content: center;">
               Prof. David Schuster
             </div>
             <div style="font-family: var(--font-primary); font-style: italic; font-size: 0.95rem; color: var(--accent-gold); margin-bottom: 0.4rem;">
               Quantum & Systems Advisor (Stanford)
             </div>
-            <div class="card-body" style="font-size: 1.05rem; line-height: 1.35;">
+            <div class="card-body" style="font-size: 1.05rem; line-height: 1.4;">
               Professor of Applied Physics, Stanford University. Pioneer in superconducting quantum circuits and hybrid simulation architectures.
             </div>
           </div>
@@ -1148,14 +1057,14 @@
       </div>
     </section>
 
-    <!-- SLIDE 12: Pre-Seed Financing & Terms (Capital Allocation Only) -->
-    <section class="slide" id="slide-12" data-slide="12">
+    <!-- SLIDE 10: Pre-Seed Financing & Terms (Capital Allocation Only) -->
+    <section class="slide" id="slide-10" data-slide="10">
       <div class="header">
         <div class="brand-lockup">
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">PRE-SEED FINANCING</span>
         </div>
-        <span class="slide-num">12 / 12</span>
+        <span class="slide-num">10 / 10</span>
       </div>
       
       <h2>Pre-Seed Financing & Strategic Milestones</h2>
@@ -1264,7 +1173,7 @@
   <!-- Persistent Floating Navigation Controls -->
   <div class="deck-controls">
     <button class="deck-btn" id="btn-prev" onclick="prevSlide()">◀ Prev</button>
-    <div class="deck-status" id="deck-status">01 / 12</div>
+    <div class="deck-status" id="deck-status">01 / 10</div>
     <button class="deck-btn" id="btn-next" onclick="nextSlide()">Next ▶</button>
     <button class="deck-btn" onclick="window.print()" title="Export / Print 16:9 PDF">🖨️ PDF</button>
   </div>
@@ -1272,7 +1181,7 @@
   <script>
     // State
     let currentSlide = 1;
-    const totalSlides = 12;
+    const totalSlides = 10;
     const film = document.getElementById('deck-film');
     const progressBar = document.getElementById('progress-bar');
     const progressFilled = document.getElementById('progress-filled');
@@ -1292,7 +1201,7 @@
         }
       }
       const formatted = currentSlide < 10 ? `0${currentSlide}` : `${currentSlide}`;
-      document.getElementById('deck-status').textContent = `${formatted} / 12`;
+      document.getElementById('deck-status').textContent = `${formatted} / 10`;
 
       // Auto pause/play film
       if (film) {
