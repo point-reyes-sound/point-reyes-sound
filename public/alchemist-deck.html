@@ -565,6 +565,57 @@
       min-width: 60px;
       text-align: center;
     }
+
+    /* Print styles for high-fidelity 16:9 PDF export */
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
+    @media print {
+      html, body {
+        background: #030704 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        overflow: visible !important;
+        width: 16in !important;
+        height: auto !important;
+        display: block !important;
+      }
+      .deck-controls,
+      .video-hud-overlay,
+      .play-deck-cta {
+        display: none !important;
+      }
+      .deck-viewport {
+        width: 16in !important;
+        height: auto !important;
+        max-width: none !important;
+        max-height: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        display: block !important;
+        position: static !important;
+      }
+      .slide {
+        position: relative !important;
+        width: 16in !important;
+        height: 9in !important;
+        max-width: 16in !important;
+        max-height: 9in !important;
+        margin: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        display: flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        top: auto !important;
+        left: auto !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1362,6 +1413,7 @@
     <button class="deck-btn" id="btn-prev" onclick="prevSlide()">◀ Prev</button>
     <div class="deck-status" id="deck-status">01 / 07</div>
     <button class="deck-btn" id="btn-next" onclick="nextSlide()">Next ▶</button>
+    <button class="deck-btn" onclick="window.print()" title="Export / Print 16:9 PDF">🖨️ PDF</button>
   </div>
 
   <script>
