@@ -1,7 +1,15 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/anfa-deck",
+      "destination": "/anfa-deck.html"
+    },
+    {
+      "source": "/alchemist-deck",
+      "destination": "/alchemist-deck.html"
+    },
+    {
+      "source": "/((?!.*\\..*).*)",
       "destination": "/index.html"
     }
   ]

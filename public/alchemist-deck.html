@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Point Reyes Sound — Master Investor Deck (Q-Boltz)</title>
+  <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg" />
+
+  <!-- Google Fonts: EB Garamond, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Three.js CDN for 3D Hero -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root {
+      --font-primary: "EB Garamond", Garamond, Georgia, "Times New Roman", serif;
+      --font-mono: "JetBrains Mono", monospace;
+
+      --bg-core: #030704;
+      --bg-panel: #07120a;
+      --bg-card: rgba(8, 20, 12, 0.92);
+      
+      --accent-emerald: #35ff82;
+      --accent-emerald-dim: rgba(53, 255, 130, 0.12);
+      --accent-emerald-glow: rgba(53, 255, 130, 0.35);
+      --accent-cyan: #64c8ff;
+      --accent-gold: #f5c542;
+      --accent-nvidia: #76b900;
+
+      --text-primary: #f0f7f2;
+      --text-secondary: #a3c2ad;
+      --text-muted: #62826c;
+      --border-subtle: rgba(53, 255, 130, 0.22);
+      --border-active: #35ff82;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      background-color: var(--bg-core);
+      color: var(--text-primary);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-image: 
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(53, 255, 130, 0.04) 0%, transparent 80%),
+        linear-gradient(rgba(53, 255, 130, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(53, 255, 130, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    /* Deck Viewport (Aspect Ratio 16:9) */
+    .deck-viewport {
+      width: 100vw;
+      height: 100vh;
+      max-width: 177.78vh; /* 16:9 */
+      max-height: 56.25vw;
+      position: relative;
+      background: radial-gradient(circle at 80% 20%, #08170d 0%, #030704 75%);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(53, 255, 130, 0.05);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.35s ease-in-out;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2.0% 3.8%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      z-index: 10;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.5%;
+      margin-bottom: 0.8%;
+      flex-shrink: 0;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-animated {
+      width: 28px;
+      height: 28px;
+    }
+
+    .company-tag {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      color: var(--accent-emerald);
+      font-weight: 600;
+    }
+
+    .header-qboltz-tag {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent-gold);
+      background: rgba(245, 197, 66, 0.1);
+      border: 1px solid rgba(245, 197, 66, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .slide-num {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Typography - Pure EB Garamond Dominance */
+    h1 {
+      font-family: var(--font-primary);
+      font-size: 4.2rem;
+      font-weight: 600;
+      letter-spacing: -1px;
+      line-height: 1.05;
+      margin-bottom: 0.8rem;
+      color: #fff;
+      text-shadow: 0 0 35px rgba(53, 255, 130, 0.25);
+    }
+
+    h2 {
+      font-family: var(--font-primary);
+      font-size: 2.3rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    p.subtitle {
+      font-family: var(--font-primary);
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--text-secondary);
+      line-height: 1.35;
+      margin-bottom: 0.8rem;
+      max-width: 95%;
+      flex-shrink: 0;
+    }
+
+    /* Content Area Container */
+    .slide-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    /* Cards & Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+      margin-bottom: 0.4rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.1rem;
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+      margin-bottom: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Tile Image Cover - Image Covers the Entire Tile Area Edge-to-Edge */
+    .card-cover {
+      position: relative;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      transition: all 0.25s ease;
+      height: 100%;
+    }
+
+    .card-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(3, 8, 4, 0.15) 0%, rgba(3, 8, 4, 0.72) 42%, rgba(3, 8, 4, 0.97) 80%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .card-cover-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Full-Tile Technical Plot Cover */
+    .card-plot-cover {
+      position: relative;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      background: #020704;
+      height: 100%;
+      min-height: 0;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-plot-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-plot-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px 16px;
+      background: linear-gradient(to top, rgba(3, 7, 4, 0.96) 0%, rgba(3, 7, 4, 0.7) 70%, transparent 100%);
+      font-family: var(--font-primary);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      z-index: 2;
+      text-align: center;
+    }
+
+    .card-header {
+      font-family: var(--font-primary);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--accent-emerald);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .card-body {
+      font-family: var(--font-primary);
+      font-size: 1.12rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .code-text {
+      font-family: var(--font-mono);
+      color: var(--accent-emerald);
+      background: rgba(53, 255, 130, 0.08);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 0.88em;
+    }
+
+    /* Video Slide */
+    .video-slide-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .full-frame-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-hud-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 30px;
+      background: linear-gradient(to top, rgba(3, 7, 4, 0.95) 0%, rgba(3, 7, 4, 0.6) 70%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 20;
+    }
+
+    .video-progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .video-progress-filled {
+      height: 100%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 10px var(--accent-emerald);
+      width: 0%;
+      border-radius: 2px;
+    }
+
+    .video-hud-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hud-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hud-btn {
+      background: rgba(8, 20, 12, 0.85);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .hud-btn:hover {
+      background: var(--accent-emerald-dim);
+      border-color: var(--accent-emerald);
+      color: var(--accent-emerald);
+    }
+
+    .hud-btn-accent {
+      background: var(--accent-emerald);
+      color: #030704;
+      font-weight: 700;
+      border-color: var(--accent-emerald);
+    }
+
+    .hud-btn-accent:hover {
+      background: #4efea0;
+      color: #030704;
+    }
+
+    .hud-timecode {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-left: 10px;
+    }
+
+    /* Footer */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.5%;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* Persistent Floating Navigation Controls */
+    .deck-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 24px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(7, 18, 10, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 6px 12px;
+      border-radius: 30px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .deck-btn {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .deck-btn:hover {
+      background: var(--accent-emerald-dim);
+      border-color: var(--accent-emerald);
+      color: var(--accent-emerald);
+    }
+
+    .deck-status {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-emerald);
+      font-weight: 600;
+      min-width: 65px;
+      text-align: center;
+    }
+
+    /* Print styles for high-fidelity 16:9 PDF export */
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
+    @media print {
+      html, body {
+        background: #030704 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        overflow: visible !important;
+        width: 16in !important;
+        height: auto !important;
+        display: block !important;
+      }
+      .deck-controls,
+      .video-hud-overlay {
+        display: none !important;
+      }
+      .deck-viewport {
+        width: 16in !important;
+        height: auto !important;
+        max-width: none !important;
+        max-height: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        display: block !important;
+        position: static !important;
+      }
+      .slide {
+        position: relative !important;
+        width: 16in !important;
+        height: 9in !important;
+        max-width: 16in !important;
+        max-height: 9in !important;
+        margin: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        display: flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        top: auto !important;
+        left: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck-viewport" id="deck-viewport">
+
+    <!-- SLIDE 01: Title & 3D Orbital Manifold Hero -->
+    <section class="slide active" id="slide-1" data-slide="1">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/>
+            <ellipse cx="16" cy="9.5" rx="5" ry="6.6" fill="#2563eb"/>
+            <ellipse cx="16" cy="22.5" rx="5" ry="6.6" fill="#dc2626"/>
+            <ellipse cx="16" cy="16" rx="8" ry="2.2" stroke="#f59e0b" stroke-width="1.8" fill="none"/>
+            <path d="M10 8 Q16 16 22 24" stroke="#35ff82" stroke-width="1.3" stroke-linecap="round" opacity="0.9" fill="none"/>
+            <path d="M22 8 Q16 16 10 24" stroke="#64c8ff" stroke-width="1.1" stroke-linecap="round" opacity="0.75" fill="none"/>
+          </svg>
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">Q-BOLTZ CORE</span>
+        </div>
+        <span class="slide-num">01 / 09</span>
+      </div>
+      
+      <div class="slide-body" style="flex-direction: row; align-items: center; justify-content: space-between; gap: 3.5%;">
+        <!-- Left Hero Content -->
+        <div style="flex: 1.25;">
+          <div style="font-family: var(--font-mono); color: var(--accent-gold); font-size: 1rem; font-weight: 600; letter-spacing: 2px; margin-bottom: 0.4rem;">
+            PRE-SEED FINANCING · CONFIDENTIAL
+          </div>
+          <h1>
+            Q-Boltz
+          </h1>
+          <p class="subtitle" style="font-size: 1.6rem; color: var(--accent-emerald); margin-bottom: 1.2rem;">
+            Quantum Boltzmann Core for Next-Gen Multiphysics Platforms
+          </p>
+
+          <div style="font-size: 1.25rem; color: var(--text-primary); line-height: 1.45; margin-bottom: 1.2rem;">
+            <p style="font-weight: 600; color: #fff;">Dr. Romit Chakraborty — Founder & CSO</p>
+            <p style="font-family: var(--font-primary); font-style: italic; font-size: 1.1rem; color: var(--text-muted); margin-top: 3px;">
+              PhD UC Berkeley · Postdoctoral Fellow, University of Chicago
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 12px;">
+            <div style="background: rgba(53, 255, 130, 0.08); border: 1px solid var(--border-subtle); padding: 8px 14px; border-radius: 6px; font-family: var(--font-primary); font-size: 1.05rem; color: var(--accent-emerald);">
+              ✓ High-Performance C-ABI Binary
+            </div>
+            <div style="background: rgba(100, 200, 255, 0.08); border: 1px solid rgba(100, 200, 255, 0.25); padding: 8px 14px; border-radius: 6px; font-family: var(--font-primary); font-size: 1.05rem; color: var(--accent-cyan);">
+              ✓ GPU-Native Phase-Space Relaxation
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 3D Viewport -->
+        <div style="flex: 0.95; height: 100%; max-height: 400px; display: flex; align-items: center; justify-content: center; position: relative;">
+          <div id="three-hero-container" style="width: 100%; height: 100%; border-radius: 12px; border: 1px solid var(--border-subtle); background: radial-gradient(circle, rgba(7, 24, 13, 0.6) 0%, rgba(3, 7, 4, 0.95) 75%);"></div>
+          <div style="position: absolute; bottom: 12px; left: 16px; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); pointer-events: none;">
+            LIVE WEBGL · 3D ORBITAL ROTATION
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Point Reyes Sound, Inc. © 2026</span>
+        <span>Executive Overview · Confidential</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 02: Full-Frame Cinema Video Player -->
+    <section class="slide" id="slide-2" data-slide="2" style="padding: 0;">
+      <div class="video-slide-container" id="video-container">
+        
+        <video class="full-frame-video" id="deck-film" playsinline controls preload="auto">
+          <source src="./prs_investor.mp4" type="video/mp4">
+          <source src="../public/prs_investor.mp4" type="video/mp4">
+          <source src="/prs_investor.mp4" type="video/mp4">
+          <source src="./point_reyes_sound_complete_film.mp4" type="video/mp4">
+          <source src="/point_reyes_sound_complete_film.mp4" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+
+        <!-- Video HUD Controls Overlay -->
+        <div class="video-hud-overlay" id="video-hud">
+          <div class="video-progress-bar" id="progress-bar">
+            <div class="video-progress-filled" id="progress-filled"></div>
+          </div>
+
+          <div class="video-hud-row">
+            <div class="hud-btn-group">
+              <button class="hud-btn" id="btn-play-pause" onclick="togglePlay()">
+                <span id="play-icon">▶ Play</span>
+              </button>
+              <button class="hud-btn" id="btn-mute" onclick="toggleMute()">
+                <span id="mute-icon">🔊 Sound</span>
+              </button>
+              <button class="hud-btn" onclick="restartVideo()">
+                <span>↺ Restart</span>
+              </button>
+              <span class="hud-timecode" id="timecode">00:00 / 00:58</span>
+            </div>
+
+            <div class="hud-btn-group">
+              <button class="hud-btn" onclick="goToSlide(1)">
+                <span>⤺ Cover Slide</span>
+              </button>
+              <button class="hud-btn hud-btn-accent" onclick="goToSlide(3)">
+                <span>Convergence Thesis →</span>
+              </button>
+              <button class="hud-btn" onclick="toggleFullscreen()">
+                <span>⛶ Fullscreen</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SLIDE 03: The Convergence of Computational Paradigms (Covered Tiles) -->
+    <section class="slide" id="slide-3" data-slide="3">
+      <div class="header">
+        <div class="brand-lockup">
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">COMPUTATIONAL THESIS</span>
+        </div>
+        <span class="slide-num">03 / 09</span>
+      </div>
+      
+      <h2>Convergence of Computational Paradigms</h2>
+      <p class="subtitle">
+        "At Point Reyes Sound, we are long electrons." Computing is converging on the atomic scale across classical devices, streaming GPU clusters, and quantum processors.
+      </p>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <!-- Tile 1: Semiconductors Cover -->
+          <div class="card-cover" style="background-image: url('/vertical_semiconductors.jpg'); border-top: 3px solid var(--accent-cyan);">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: var(--accent-cyan);">
+                1. Sub-2nm Devices
+              </div>
+              <div class="card-body">
+                GAA-FET transistors operate at atomic scales. Non-equilibrium electron transport now dictates thermal limits and leakage.
+              </div>
+            </div>
+          </div>
+
+          <!-- Tile 2: GPUs Cover -->
+          <div class="card-cover" style="background-image: url('/qpu_hero.jpg'); border-top: 3px solid var(--accent-emerald);">
+            <div class="card-cover-content">
+              <div class="card-header">
+                2. Streaming GPUs
+              </div>
+              <div class="card-body">
+                Modern GPUs excel at local streaming stencils, but choke on global matrix diagonalizations scaling at O(N³).
+              </div>
+            </div>
+          </div>
+
+          <!-- Tile 3: Phase Space Cover -->
+          <div class="card-cover" style="background-image: url('/bottleneck_workflow.jpg'); border-top: 3px solid var(--accent-gold);">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: var(--accent-gold);">
+                3. Phase-Space Core
+              </div>
+              <div class="card-body">
+                Phase space provides the unified mathematical language connecting quantum chemistry to streaming hardware.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Point Reyes Sound, Inc. © 2026</span>
+        <span>Foundational Computing Thesis</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 04: The Matrix Diagonalization Bottleneck (Covered Tiles) -->
+    <section class="slide" id="slide-4" data-slide="4">
+      <div class="header">
+        <div class="brand-lockup">
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">THE BOTTLENECK</span>
+        </div>
+        <span class="slide-num">04 / 09</span>
+      </div>
+      
+      <h2>The Matrix Diagonalization Bottleneck</h2>
+      <p class="subtitle">
+        Legacy algorithms in the $35B CAE/EDA ecosystem depend on global matrix operations that become brittle exactly where quantum effects prevail.
+      </p>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Tile 1: Matrix Bottleneck Cover -->
+          <div class="card-cover" style="background-image: url('/bottleneck_matrix.jpg'); border-left: 3px solid #ff4d4d;">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: #ff6b6b; font-size: 1.45rem;">
+                ✕ The O(N³) Scaling Wall
+              </div>
+              <div class="card-body" style="font-size: 1.25rem; line-height: 1.5;">
+                Dense matrix diagonalizations choke GPUs with global memory transfers. First-principles simulation stalls at just ~100 atoms.
+              </div>
+            </div>
+          </div>
+
+          <!-- Tile 2: Singularity Cover -->
+          <div class="card-cover" style="background-image: url('/bottleneck_singularity.jpg'); border-left: 3px solid #f59e0b;">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: #fbbf24; font-size: 1.45rem;">
+                ✕ Brittleness & Singularities
+              </div>
+              <div class="card-body" style="font-size: 1.25rem; line-height: 1.5;">
+                Standard DFT approximations divide by zero and diverge during chemical bond dissociation, crashing automated discovery pipelines.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Point Reyes Sound, Inc. © 2026</span>
+        <span>Algorithmic Failure Points in Legacy EDA/CAE</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 05: The Q-Boltz Solution (Full Right-Tile Cover) -->
+    <section class="slide" id="slide-5" data-slide="5">
+      <div class="header">
+        <div class="brand-lockup">
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">Q-BOLTZ SOLVER</span>
+        </div>
+        <span class="slide-num">05 / 09</span>
+      </div>
+      
+      <h2>Q-Boltz: Kinetic Relaxation in Phase Space</h2>
+      <p class="subtitle">
+        Q-Boltz changes the computational language: instead of repeatedly diagonalizing a static matrix, we kinetically relax it in continuous phase space.
+      </p>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+            <div class="card" style="flex: 1;">
+              <div class="card-header">Phase-Space Formulation</div>
+              <div class="card-body" style="font-size: 1.25rem; line-height: 1.5;">
+                Converts discrete matrix eigenvalue problems into smooth kinetic fluid transport in <span class="code-text">(x, p)</span> coordinates.
+              </div>
+            </div>
+            <div class="card" style="flex: 1; border-color: var(--accent-emerald);">
+              <div class="card-header" style="color: var(--accent-emerald);">BGK Kinetic Relaxation</div>
+              <div class="card-body" style="font-size: 1.25rem; line-height: 1.5;">
+                Relaxes density toward equilibrium via localized scattering. Provable mathematical convergence with zero global matrix inversions.
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Tile: Wigner Plot Covers Entire Tile Edge-to-Edge -->
+          <div class="card-plot-cover" style="border-color: var(--accent-emerald);">
+            <img src="/n2_wigner_4panel_clean.png" alt="N2 Phase-Space Wigner & Cumulant Distributions" />
+            <div class="card-plot-caption">
+              Wigner Phase-Space Electronic Distribution Kernel
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Point Reyes Sound, Inc. © 2026</span>
+        <span>Protected by U.S. Prov. Pat. App. 64/033,274</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 06: High-Impact Market Verticals (Covered Tiles) -->
+    <section class="slide" id="slide-6" data-slide="6">
+      <div class="header">
+        <div class="brand-lockup">
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">MARKET VERTICALS</span>
+        </div>
+        <span class="slide-num">06 / 09</span>
+      </div>
+      
+      <h2>High-Impact Market Verticals ($35B CAE/EDA)</h2>
+      <p class="subtitle">
+        Deploying the Q-Boltz solver core into critical industrial sectors where sub-2nm and atomistic transport bottleneck global engineering roadmaps.
+      </p>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <!-- Tile 1: Semiconductors Cover -->
+          <div class="card-cover" style="background-image: url('/vertical_semiconductors.jpg'); border-top: 3px solid var(--accent-cyan);">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: var(--accent-cyan);">
+                Sub-2nm GAA-FETs
+              </div>
+              <div class="card-body">
+                Models exact hot-carrier kinetic transport and phonon scattering where continuum device models break down.
+              </div>
+            </div>
+          </div>
+
+          <!-- Tile 2: Batteries Cover -->
+          <div class="card-cover" style="background-image: url('/vertical_batteries.jpg'); border-top: 3px solid var(--accent-emerald);">
+            <div class="card-cover-content">
+              <div class="card-header">
+                Solid-State Batteries
+              </div>
+              <div class="card-body">
+                Simulates interfacial SEI ion transport, capturing dendrite short-circuits invisible to legacy continuum solvers.
+              </div>
+            </div>
+          </div>
+
+          <!-- Tile 3: Catalysis Cover -->
+          <div class="card-cover" style="background-image: url('/vertical_catalysis.jpg'); border-top: 3px solid var(--accent-gold);">
+            <div class="card-cover-content">
+              <div class="card-header" style="color: var(--accent-gold);">
+                Green Catalysis
+              </div>
+              <div class="card-body">
+                Automates transition-state screening for hydrogen and carbon capture without DFT divergence crashes.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Point Reyes Sound, Inc. © 2026</span>
+        <span>Direct Alignment with Advanced Manufacturing</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 07: Q-Boltz (Full Right-Tile Cover) -->
+    <section class="slide" id="slide-7" data-slide="7">
+      <div class="header">
+        <div class="brand-lockup">
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">PRODUCT ARCHITECTURE</span>
+        </div>
+        <span class="slide-num">07 / 09</span>
+      </div>
+      
+      <h2>Q-Boltz</h2>
+      <p class="subtitle">
+        Delivered as a high-performance pre-compiled binary (<span class="code-text">libqbescf.so</span>) that solves simulation bottlenecks without exposing our underlying source code.
+      </p>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div class="card-header" style="font-size: 1.45rem;">In-Tree Solver Engine</div>
+              <div class="card-body" style="font-size: 1.2rem; line-height: 1.6; margin-top: 0.8rem;">
+                <p style="margin-bottom: 0.8rem;">
+                  <strong>What it is:</strong> A pre-compiled C-ABI binary (<span class="code-text">libqbescf.so</span>) with native PyAnsys and OpenFOAM bindings.
+                </p>
+                <p style="margin-bottom: 0.8rem;">
+                  <strong>How it deploys:</strong> Drops directly into Synopsys, Cadence, Ansys, and Siemens enterprise workflows.
+                </p>
+                <p style="margin-bottom: 0.2rem;">
+                  <strong>Zero Source Exposure:</strong> Enterprise runs compiled CUDA machine code on customer HPC without exposing our proprietary algorithms.
+                </p>
+              </div>
+            </div>
+            <div style="background: rgba(100, 200, 255, 0.08); border: 1px solid rgba(100, 200, 255, 0.25); padding: 8px 14px; border-radius: 6px; font-family: var(--font-primary); font-size: 1.05rem; color: var(--accent-cyan);">
+              ✓ Plug-and-Play Enterprise Architecture
+            </div>
+          </div>
+
+          <!-- Right Tile: IDE Platform Fitted Inside Frame with Clean Caption -->
+          <div class="card" style="border-color: var(--accent-emerald); padding: 0.8rem; display: flex; flex-direction: column; justify-content: space-between; background: #020704; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);">
+            <div style="flex: 1; width: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 6px; background: #010402;">
+              <img src="/qomputing_ide_ui.jpg" alt="Enterprise Platform Integration" style="width: 100%; height: 100%; max-height: 100%; object-fit: contain; display: block;" />
+            </div>
+            <div style="font-family: var(--font-primary); font-style: italic; font-size: 1.05rem; color: var(--accent-emerald); text-align: center; margin-top: 0.5rem; flex-shrink: 0;">
+              Enterprise In-Tree Solver Interface & PyAnsys SDK
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Point Reyes Sound, Inc. © 2026</span>
+        <span>Commercial Software Distribution Architecture</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 08: Proven Leadership & Scientific Advisory Board (Portraits Fitted) -->
+    <section class="slide" id="slide-8" data-slide="8">
+      <div class="header">
+        <div class="brand-lockup">
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">LEADERSHIP & ADVISORS</span>
+        </div>
+        <span class="slide-num">08 / 09</span>
+      </div>
+      
+      <h2>Proven Leadership & Advisory Board</h2>
+      <p class="subtitle">
+        Deep technical pedigree bridging quantum theory, mathematical physics, and high-performance hardware systems.
+      </p>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card" style="align-items: center; text-align: center;">
+            <div style="width: 90px; height: 90px; border-radius: 50%; border: 2.5px solid var(--accent-emerald); overflow: hidden; margin-bottom: 0.6rem; background: #06140b; box-shadow: 0 0 20px rgba(53, 255, 130, 0.25); flex-shrink: 0;">
+              <img src="/rc_scholar_portrait.jpeg" alt="Romit Chakraborty" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; display: block;" onerror="this.src='/PRS_logo_v2.jpeg'" />
+            </div>
+            <div class="card-header" style="font-size: 1.3rem; margin-bottom: 0.1rem; justify-content: center;">
+              Dr. Romit Chakraborty
+            </div>
+            <div style="font-family: var(--font-primary); font-style: italic; font-size: 0.95rem; color: var(--accent-gold); margin-bottom: 0.4rem;">
+              Founder & CSO
+            </div>
+            <div class="card-body" style="font-size: 1.05rem; line-height: 1.4;">
+              PhD in Chemical Physics from UC Berkeley; Postdoctoral Fellow at University of Chicago. Author of foundational papers on non-equilibrium phase-space dynamics.
+            </div>
+          </div>
+
+          <div class="card" style="align-items: center; text-align: center;">
+            <div style="width: 90px; height: 90px; border-radius: 50%; border: 2.5px solid var(--accent-cyan); overflow: hidden; margin-bottom: 0.6rem; background: #06140b; box-shadow: 0 0 20px rgba(100, 200, 255, 0.25); flex-shrink: 0;">
+              <img src="/david_mazziotti.jpg" alt="David Mazziotti" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.src='/PRS_logo_v2.jpeg'" />
+            </div>
+            <div class="card-header" style="font-size: 1.3rem; margin-bottom: 0.1rem; color: var(--accent-cyan); justify-content: center;">
+              Prof. David Mazziotti
+            </div>
+            <div style="font-family: var(--font-primary); font-style: italic; font-size: 0.95rem; color: var(--accent-gold); margin-bottom: 0.4rem;">
+              Scientific Advisor (UChicago)
+            </div>
+            <div class="card-body" style="font-size: 1.05rem; line-height: 1.4;">
+              Chair of Chemistry, University of Chicago. Authority in Reduced Density Matrix (RDM) mechanics and electronic correlation theory.
+            </div>
+          </div>
+
+          <div class="card" style="align-items: center; text-align: center;">
+            <div style="width: 90px; height: 90px; border-radius: 50%; border: 2.5px solid var(--accent-gold); overflow: hidden; margin-bottom: 0.6rem; background: #06140b; box-shadow: 0 0 20px rgba(245, 197, 66, 0.25); flex-shrink: 0;">
+              <img src="/david_schuster.jpg" alt="David Schuster" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.src='/PRS_logo_v2.jpeg'" />
+            </div>
+            <div class="card-header" style="font-size: 1.3rem; margin-bottom: 0.1rem; color: var(--accent-gold); justify-content: center;">
+              Prof. David Schuster
+            </div>
+            <div style="font-family: var(--font-primary); font-style: italic; font-size: 0.95rem; color: var(--accent-gold); margin-bottom: 0.4rem;">
+              Quantum & Systems Advisor (Stanford)
+            </div>
+            <div class="card-body" style="font-size: 1.05rem; line-height: 1.4;">
+              Professor of Applied Physics, Stanford University. Pioneer in superconducting quantum circuits and hybrid simulation architectures.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Point Reyes Sound, Inc. © 2026</span>
+        <span>World-Class Academic & Industrial Pedigree</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 09: Pre-Seed Financing & Terms (Capital Allocation Only) -->
+    <section class="slide" id="slide-9" data-slide="9">
+      <div class="header">
+        <div class="brand-lockup">
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">PRE-SEED FINANCING</span>
+        </div>
+        <span class="slide-num">09 / 09</span>
+      </div>
+      
+      <h2>Pre-Seed Financing & Strategic Milestones</h2>
+      <p class="subtitle">
+        Point Reyes Sound is raising a <strong>$750,000 pre-seed round</strong>, anchored by <strong>Anfa with $500,000</strong> on a post-money SAFE at a <strong>$6M valuation cap</strong>.
+      </p>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Card 1: Capital Allocation Donut -->
+          <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 1.2rem 1.4rem;">
+            <div class="card-header" style="font-size: 1.35rem; margin-bottom: 0.4rem;">
+              Capital Allocation ($750,000)
+            </div>
+            
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; flex: 1;">
+              <div style="width: 135px; height: 135px; flex-shrink: 0;">
+                <svg viewBox="0 0 42 42" style="width: 100%; height: 100%; transform: rotate(-90deg);">
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#071a0f" stroke-width="7"></circle>
+                  <!-- NVIDIA Dev: 53.33% (400k) -->
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#35ff82" stroke-width="7" stroke-dasharray="53.33 46.67" stroke-dashoffset="0" style="filter: drop-shadow(0 0 4px rgba(53, 255, 130, 0.6));"></circle>
+                  <!-- Solver Production: 26.67% (200k) -->
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#64c8ff" stroke-width="7" stroke-dasharray="26.67 73.33" stroke-dashoffset="-53.33"></circle>
+                  <!-- Pilot Infrastructure: 20.00% (150k) -->
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#f5c542" stroke-width="7" stroke-dasharray="20.00 80.00" stroke-dashoffset="-80.00"></circle>
+                </svg>
+              </div>
+              <div style="flex: 1; font-family: var(--font-primary); font-size: 1.12rem; line-height: 1.7;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px; background: rgba(53, 255, 130, 0.08); padding: 3px 8px; border-radius: 4px;">
+                  <span style="color: var(--accent-emerald); font-weight: 600;">● NVIDIA Dev Hire:</span>
+                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.95rem;">$400,000 (53%)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px; background: rgba(100, 200, 255, 0.08); padding: 3px 8px; border-radius: 4px;">
+                  <span style="color: var(--accent-cyan); font-weight: 600;">● Productionize Solver:</span>
+                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.95rem;">$200,000 (27%)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; background: rgba(245, 197, 66, 0.08); padding: 3px 8px; border-radius: 4px;">
+                  <span style="color: var(--accent-gold); font-weight: 600;">● Pilot Infrastructure:</span>
+                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.95rem;">$150,000 (20%)</strong>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 0.5rem; margin-top: 0.5rem;">
+              <span style="font-family: var(--font-primary); font-size: 1.1rem; color: var(--accent-gold); font-weight: 600;">
+                +$75,000 USISTEF Allotment
+              </span>
+              <span style="font-family: var(--font-primary); font-style: italic; font-size: 0.95rem; color: var(--text-muted);">
+                Non-Dilutive Federal Grant
+              </span>
+            </div>
+          </div>
+
+          <!-- Card 2: Strategic Milestones & Financing Summary -->
+          <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 1.2rem 1.4rem; border: 2px solid var(--accent-emerald); background: rgba(53, 255, 130, 0.04); box-shadow: 0 0 25px rgba(53, 255, 130, 0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.4rem;">
+              <div>
+                <div style="font-family: var(--font-mono); color: var(--accent-gold); font-size: 0.82rem; font-weight: 700; letter-spacing: 1px;">
+                  PRE-SEED FINANCING ROUND
+                </div>
+                <div style="font-family: var(--font-primary); font-size: 1.6rem; font-weight: 600; color: #fff;">
+                  $750,000 on $6.0M Cap
+                </div>
+              </div>
+              <span style="background: var(--accent-emerald); color: #030704; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 14px;">
+                ANFA ANCHOR · $500K
+              </span>
+            </div>
+
+            <div style="font-family: var(--font-primary); font-size: 1.12rem; line-height: 1.45; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.6rem; flex: 1; justify-content: center;">
+              <div style="display: flex; align-items: flex-start; gap: 10px;">
+                <span style="color: var(--accent-emerald); font-weight: 700; font-family: var(--font-mono); font-size: 0.95rem;">01</span>
+                <div>
+                  <strong style="color: #fff;">Full-Time NVIDIA GPU Compiler Hire:</strong> Dedicated kernel engineer to optimize streaming stencils and build CUDA commercial binary.
+                </div>
+              </div>
+              <div style="display: flex; align-items: flex-start; gap: 10px;">
+                <span style="color: var(--accent-cyan); font-weight: 700; font-family: var(--font-mono); font-size: 0.95rem;">02</span>
+                <div>
+                  <strong style="color: #fff;">Productionize Open-Source Solver:</strong> Package C-ABI shared library (<span class="code-text">libqbescf.so</span>) and PyAnsys SDK integration.
+                </div>
+              </div>
+              <div style="display: flex; align-items: flex-start; gap: 10px;">
+                <span style="color: var(--accent-gold); font-weight: 700; font-family: var(--font-mono); font-size: 0.95rem;">03</span>
+                <div>
+                  <strong style="color: #fff;">3 Pilot-Ready Deployments:</strong> Onboard initial enterprise foundry partners in sub-2nm GAA-FET and battery SEI workflows.
+                </div>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.5rem; font-family: var(--font-primary); font-size: 1.05rem; color: var(--accent-emerald);">
+              ✓ 18-Month Operating Runway to $1.5M+ NRE/ARR
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Point Reyes Sound, Inc. © 2026</span>
+        <span>Confidential — Pre-Seed Financing Round (Post-Money SAFE @ $6M Cap)</span>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Persistent Floating Navigation Controls -->
+  <div class="deck-controls">
+    <button class="deck-btn" id="btn-prev" onclick="prevSlide()">◀ Prev</button>
+    <div class="deck-status" id="deck-status">01 / 09</div>
+    <button class="deck-btn" id="btn-next" onclick="nextSlide()">Next ▶</button>
+    <button class="deck-btn" onclick="window.print()" title="Export / Print 16:9 PDF">🖨️ PDF</button>
+  </div>
+
+  <script>
+    // State
+    let currentSlide = 1;
+    const totalSlides = 9;
+    const film = document.getElementById('deck-film');
+    const progressBar = document.getElementById('progress-bar');
+    const progressFilled = document.getElementById('progress-filled');
+    const timecode = document.getElementById('timecode');
+    const playIcon = document.getElementById('play-icon');
+    const muteIcon = document.getElementById('mute-icon');
+
+    function updateView() {
+      for (let i = 1; i <= totalSlides; i++) {
+        const s = document.getElementById(`slide-${i}`);
+        if (s) {
+          if (i === currentSlide) {
+            s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        }
+      }
+      const formatted = currentSlide < 10 ? `0${currentSlide}` : `${currentSlide}`;
+      document.getElementById('deck-status').textContent = `${formatted} / 09`;
+
+      // Auto pause/play film
+      if (film) {
+        if (currentSlide === 2) {
+          film.play().catch(e => console.log('Autoplay deferred'));
+        } else {
+          film.pause();
+        }
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateView();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateView();
+      }
+    }
+
+    function goToSlide(n) {
+      if (n >= 1 && n <= totalSlides) {
+        currentSlide = n;
+        updateView();
+      }
+    }
+
+    // Keybindings
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+
+    // Video Controls
+    function togglePlay() {
+      if (film.paused || film.ended) {
+        film.play();
+        playIcon.textContent = '⏸ Pause';
+      } else {
+        film.pause();
+        playIcon.textContent = '▶ Play';
+      }
+    }
+
+    function toggleMute() {
+      film.muted = !film.muted;
+      muteIcon.textContent = film.muted ? '🔇 Unmute' : '🔊 Sound';
+    }
+
+    function restartVideo() {
+      film.currentTime = 0;
+      film.play();
+      playIcon.textContent = '⏸ Pause';
+    }
+
+    function toggleFullscreen() {
+      const container = document.getElementById('video-container');
+      if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(err => alert(err.message));
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    if (film) {
+      film.addEventListener('timeupdate', () => {
+        const percent = (film.currentTime / film.duration) * 100;
+        progressFilled.style.width = `${percent}%`;
+
+        const curMins = Math.floor(film.currentTime / 60);
+        const curSecs = Math.floor(film.currentTime % 60);
+        const durMins = Math.floor(film.duration / 60) || 0;
+        const durSecs = Math.floor(film.duration % 60) || 0;
+
+        timecode.textContent = 
+          `${curMins < 10 ? '0' : ''}${curMins}:${curSecs < 10 ? '0' : ''}${curSecs} / ` +
+          `${durMins < 10 ? '0' : ''}${durMins}:${durSecs < 10 ? '0' : ''}${durSecs}`;
+      });
+
+      film.addEventListener('play', () => { playIcon.textContent = '⏸ Pause'; });
+      film.addEventListener('pause', () => { playIcon.textContent = '▶ Play'; });
+
+      if (progressBar) {
+        progressBar.addEventListener('click', (e) => {
+          const rect = progressBar.getBoundingClientRect();
+          const pos = (e.clientX - rect.left) / rect.width;
+          film.currentTime = pos * film.duration;
+        });
+      }
+    }
+
+    // Interactive Three.js 3D Hero on Slide 1
+    function initThreeHero() {
+      const container = document.getElementById('three-hero-container');
+      if (!container || typeof THREE === 'undefined') return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.set(0, 0, 8.5);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      const group = new THREE.Group();
+      scene.add(group);
+
+      // Materials
+      const lobeMatBlue = new THREE.MeshPhongMaterial({
+        color: 0x2563eb,
+        transparent: true,
+        opacity: 0.85,
+        shininess: 90,
+        emissive: 0x1d4ed8,
+        emissiveIntensity: 0.25,
+        wireframe: false
+      });
+
+      const lobeMatRed = new THREE.MeshPhongMaterial({
+        color: 0xdc2626,
+        transparent: true,
+        opacity: 0.85,
+        shininess: 90,
+        emissive: 0xb91c1c,
+        emissiveIntensity: 0.25,
+        wireframe: false
+      });
+
+      // Upper Lobe
+      const geomUp = new THREE.SphereGeometry(1.6, 32, 32);
+      geomUp.scale(0.85, 1.35, 0.85);
+      const meshUp = new THREE.Mesh(geomUp, lobeMatBlue);
+      meshUp.position.y = 1.3;
+      group.add(meshUp);
+
+      // Lower Lobe
+      const geomDown = new THREE.SphereGeometry(1.6, 32, 32);
+      geomDown.scale(0.85, 1.35, 0.85);
+      const meshDown = new THREE.Mesh(geomDown, lobeMatRed);
+      meshDown.position.y = -1.3;
+      group.add(meshDown);
+
+      // Nodal Ring
+      const torusGeom = new THREE.TorusGeometry(2.3, 0.05, 16, 100);
+      const torusMat = new THREE.MeshBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.7 });
+      const torus = new THREE.Mesh(torusGeom, torusMat);
+      torus.rotation.x = Math.PI / 2;
+      group.add(torus);
+
+      // Outer Kinetic Stencil Wireframe
+      const shellGeom = new THREE.IcosahedronGeometry(3.6, 1);
+      const shellMat = new THREE.MeshBasicMaterial({ color: 0x35ff82, wireframe: true, transparent: true, opacity: 0.15 });
+      const shell = new THREE.Mesh(shellGeom, shellMat);
+      group.add(shell);
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0x35ff82, 1.2);
+      dirLight.position.set(5, 10, 7);
+      scene.add(dirLight);
+
+      const dirLightCyan = new THREE.DirectionalLight(0x64c8ff, 0.9);
+      dirLightCyan.position.set(-5, -10, -7);
+      scene.add(dirLightCyan);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        group.rotation.y += 0.008;
+        group.rotation.x = Math.sin(Date.now() * 0.001) * 0.15;
+        shell.rotation.y -= 0.004;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        if (!container.clientWidth || !container.clientHeight) return;
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initThreeHero();
+    });
+  </script>
+</body>
+</html>
