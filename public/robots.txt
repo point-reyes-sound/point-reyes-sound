@@ -5,6 +5,13 @@ User-agent: *
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
+Disallow: /papers/
+Disallow: /nvidia-brief
+Disallow: /nvidia-brief.html
+Disallow: /anfa-deck
+Disallow: /anfa-deck.html
+Disallow: /alchemist-deck
+Disallow: /alchemist-deck.html
 
 # Search Engine Crawlers
 User-agent: Googlebot

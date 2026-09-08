@@ -27,6 +27,8 @@ rchakraborty.dev/
 scratch/
 deck/
 *.pdf
+!public/papers/*.pdf
+!papers/*.pdf
 server/
 *.py
 *.pyc
