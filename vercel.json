@@ -1,12 +1,20 @@
 {
   "rewrites": [
     {
+      "source": "/nvidia-brief",
+      "destination": "/nvidia-brief.html"
+    },
+    {
       "source": "/anfa-deck",
       "destination": "/anfa-deck.html"
     },
     {
       "source": "/alchemist-deck",
       "destination": "/alchemist-deck.html"
+    },
+    {
+      "source": "/papers/(.*)",
+      "destination": "/papers/$1"
     },
     {
       "source": "/((?!.*\\..*).*)",
