@@ -17,6 +17,7 @@
   <style>
     :root {
       --font-serif: "EB Garamond", Georgia, "Times New Roman", serif;
+      --font-primary: "EB Garamond", Georgia, "Times New Roman", serif;
       --font-mono: "JetBrains Mono", monospace;
       --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 
@@ -93,6 +94,14 @@
       display: flex;
       opacity: 1;
       z-index: 10;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 0;
     }
 
     /* Header */
@@ -587,7 +596,7 @@
           </svg>
           <span class="company-tag">POINT REYES SOUND, INC.</span>
         </div>
-        <span class="slide-num">01 / 06</span>
+        <span class="slide-num">01 / 07</span>
       </div>
       
       <div style="flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 4%;">
@@ -633,8 +642,64 @@
       </div>
     </section>
 
-    <!-- SLIDE 2: Full-Frame Cinema Video Player -->
-    <section class="slide" id="slide-2" data-slide="2" style="padding: 0;">
+    <!-- SLIDE 2: AI Revolution -->
+    <section class="slide" id="slide-2" data-slide="2">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/>
+            <ellipse class="lobe-blue" cx="16" cy="9.5" rx="5" ry="6.6" fill="#2563eb"/>
+            <ellipse class="lobe-red" cx="16" cy="22.5" rx="5" ry="6.6" fill="#dc2626"/>
+            <ellipse class="nodal-ring" cx="16" cy="16" rx="8" ry="2.2" stroke="#f59e0b" stroke-width="1.8" fill="none"/>
+            <path class="helix-strand-1" d="M10 8 Q16 16 22 24" stroke="#35ff82" stroke-width="1.3" stroke-linecap="round" opacity="0.9" fill="none"/>
+            <path class="helix-strand-2" d="M22 8 Q16 16 10 24" stroke="#64c8ff" stroke-width="1.1" stroke-linecap="round" opacity="0.75" fill="none"/>
+          </svg>
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">FOUNDATIONAL THESIS</span>
+        </div>
+        <span class="slide-num">02 / 07</span>
+      </div>
+      
+      <div>
+        <h2 style="font-size: 2.8rem; letter-spacing: -0.5px; margin: 0.2rem 0;">AI revolution</h2>
+      </div>
+
+      <div class="slide-body" style="flex-direction: row; align-items: stretch; gap: 2.2rem; margin: 0.8rem 0; flex: 1;">
+        
+        <!-- Left Column: Pure, High-Impact Statements -->
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 1.8rem;">
+          
+          <div style="background: rgba(4, 11, 7, 0.95); border: 1.5px solid var(--border-subtle); border-radius: 12px; padding: 1.8rem 1.6rem; box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--accent-gold);"></div>
+            <div style="font-family: var(--font-primary); font-size: 2.2rem; font-weight: 700; color: #fff; line-height: 1.25;">
+              Power = Moving Electrons
+            </div>
+          </div>
+
+          <div style="background: rgba(4, 11, 7, 0.95); border: 1.5px solid var(--accent-emerald); border-radius: 12px; padding: 1.8rem 1.6rem; box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 25px rgba(53, 255, 130, 0.15); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--accent-emerald);"></div>
+            <div style="font-family: var(--font-primary); font-size: 2.2rem; font-weight: 700; color: var(--accent-emerald); line-height: 1.25;">
+              At Point Reyes Sound we Model Electrons in Motion.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Visual Graphic Showcase -->
+        <div style="flex: 1.25; display: flex; border-radius: 14px; overflow: hidden; border: 1px solid var(--border-subtle); background: #000; box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8);">
+          <img src="/power_electrons_motion.jpg" alt="Power = Moving Electrons" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;" onerror="this.src='./power_electrons_motion.jpg'" />
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <span>Point Reyes Sound, Inc. © 2026</span>
+        <span>Executive Overview · Confidential</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Full-Frame Cinema Video Player -->
+    <section class="slide" id="slide-3" data-slide="3" style="padding: 0;">
       <div class="video-slide-container" id="video-container">
         
         <!-- Video Stream with Compressed 15MB prs_investor.mp4 & Fallbacks -->
@@ -669,10 +734,10 @@
             </div>
 
             <div class="hud-btn-group">
-              <button class="hud-btn" onclick="goToSlide(1)">
-                <span>⤺ Cover Slide</span>
+              <button class="hud-btn" onclick="goToSlide(2)">
+                <span>⤺ AI Revolution</span>
               </button>
-              <button class="hud-btn hud-btn-accent" onclick="goToSlide(3)">
+              <button class="hud-btn hud-btn-accent" onclick="goToSlide(4)">
                 <span>Industry Verticals →</span>
               </button>
               <button class="hud-btn" onclick="toggleFullscreen()">
@@ -685,8 +750,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 3: Target Markets / Industry Verticals -->
-    <section class="slide" id="slide-3" data-slide="3">
+    <!-- SLIDE 4: Target Markets / Industry Verticals -->
+    <section class="slide" id="slide-4" data-slide="4">
       <div class="header">
         <div class="brand-lockup">
           <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none">
@@ -707,7 +772,7 @@
             Q-BOLTZ
           </span>
         </div>
-        <span class="slide-num">03 / 06</span>
+        <span class="slide-num">04 / 07</span>
       </div>
 
       <div>
@@ -756,8 +821,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 4: Quantum Transport for existing workflows -->
-    <section class="slide" id="slide-4" data-slide="4">
+    <!-- SLIDE 5: Quantum Transport for existing workflows -->
+    <section class="slide" id="slide-5" data-slide="5">
       <div class="header">
         <div class="brand-lockup">
           <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none">
@@ -778,7 +843,7 @@
             Q-BOLTZ
           </span>
         </div>
-        <span class="slide-num">04 / 06</span>
+        <span class="slide-num">05 / 07</span>
       </div>
 
       <div>
@@ -858,8 +923,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 5: Land and Scale -->
-    <section class="slide" id="slide-5" data-slide="5">
+    <!-- SLIDE 6: Land and Scale -->
+    <section class="slide" id="slide-6" data-slide="6">
       <div class="header">
         <div class="brand-lockup">
           <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none">
@@ -880,7 +945,7 @@
             Q-BOLTZ
           </span>
         </div>
-        <span class="slide-num">05 / 06</span>
+        <span class="slide-num">06 / 07</span>
       </div>
 
       <div>
@@ -1015,8 +1080,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 6: Founder & Scientific Advisory Board -->
-    <section class="slide" id="slide-6" data-slide="6">
+    <!-- SLIDE 7: Founder & Scientific Advisory Board -->
+    <section class="slide" id="slide-7" data-slide="7">
       <div class="header">
         <div class="brand-lockup">
           <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none">
@@ -1037,7 +1102,7 @@
             Q-BOLTZ
           </span>
         </div>
-        <span class="slide-num">06 / 06</span>
+        <span class="slide-num">07 / 07</span>
       </div>
 
       <!-- Founder & Advisory Layout -->
@@ -1108,14 +1173,14 @@
   <div class="deck-controls">
     <a href="/index.html" class="deck-btn" title="Back to Full 12-Slide Pitch Deck">← 12-Slide Deck</a>
     <button class="deck-btn" id="btn-prev" onclick="prevSlide()">◀ Prev</button>
-    <div class="deck-status" id="deck-status">01 / 06</div>
+    <div class="deck-status" id="deck-status">01 / 07</div>
     <button class="deck-btn" id="btn-next" onclick="nextSlide()">Next ▶</button>
   </div>
 
   <script>
     // State
     let currentSlide = 1;
-    const totalSlides = 6;
+    const totalSlides = 7;
     const film = document.getElementById('deck-film');
     const progressBar = document.getElementById('progress-bar');
     const progressFilled = document.getElementById('progress-filled');
@@ -1141,7 +1206,16 @@
       document.getElementById('btn-prev').disabled = (currentSlide === 1);
       document.getElementById('btn-next').disabled = (currentSlide === totalSlides);
 
-      if (currentSlide === 2) {
+      // Sync URL query parameter without page reload
+      try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('slide') !== String(currentSlide)) {
+          url.searchParams.set('slide', currentSlide);
+          window.history.replaceState(null, '', url.toString());
+        }
+      } catch (e) {}
+
+      if (currentSlide === 3) {
         film.play().then(() => {
           playIcon.textContent = '⏸ Pause';
         }).catch(err => {
@@ -1156,13 +1230,23 @@
       }
     }
 
+    // Initialize slide from URL parameter if present
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const requestedSlide = parseInt(urlParams.get('slide'), 10);
+      if (!isNaN(requestedSlide) && requestedSlide >= 1 && requestedSlide <= totalSlides) {
+        currentSlide = requestedSlide;
+        updateSlide();
+      }
+    } catch (e) {}
+
     function goToSlide(n) {
       currentSlide = Math.max(1, Math.min(totalSlides, n));
       updateSlide();
     }
 
     function playFilmUnmuted() {
-      currentSlide = 2;
+      currentSlide = 3;
       updateSlide();
       film.muted = false;
       film.play().then(() => {
@@ -1232,12 +1316,12 @@
       timecode.textContent = `${curMin}:${curSec} / ${durMin}:${durSec}`;
     });
 
-    // AUTOMATIC ADVANCE: When video ends, advance to Slide 3
+    // AUTOMATIC ADVANCE: When video ends, advance to Slide 4
     film.addEventListener('ended', () => {
       playIcon.textContent = '↺ Replay';
       setTimeout(() => {
-        if (currentSlide === 2) {
-          goToSlide(3);
+        if (currentSlide === 3) {
+          goToSlide(4);
         }
       }, 900);
     });
@@ -1255,7 +1339,7 @@
         nextSlide();
       } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
         prevSlide();
-      } else if (e.key === ' ' && currentSlide === 2) {
+      } else if (e.key === ' ' && currentSlide === 3) {
         e.preventDefault();
         togglePlay();
       } else if (e.key === 'f' || e.key === 'F') {
