@@ -718,52 +718,101 @@
       </div>
     </section>
 
-    <!-- SLIDE 04: The Matrix Diagonalization Bottleneck (Covered Tiles) -->
+    <!-- SLIDE 04: Quantum Transport for existing workflows -->
     <section class="slide" id="slide-4" data-slide="4">
       <div class="header">
         <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/>
+            <ellipse cx="16" cy="9.5" rx="5" ry="6.6" fill="#2563eb"/>
+            <ellipse cx="16" cy="22.5" rx="5" ry="6.6" fill="#dc2626"/>
+            <ellipse cx="16" cy="16" rx="8" ry="2.2" stroke="#f59e0b" stroke-width="1.8" fill="none"/>
+            <path d="M10 8 Q16 16 22 24" stroke="#35ff82" stroke-width="1.3" stroke-linecap="round" opacity="0.9" fill="none"/>
+            <path d="M22 8 Q16 16 10 24" stroke="#64c8ff" stroke-width="1.1" stroke-linecap="round" opacity="0.75" fill="none"/>
+          </svg>
           <span class="company-tag">POINT REYES SOUND, INC.</span>
-          <span class="header-qboltz-tag">THE BOTTLENECK</span>
+          <span class="header-qboltz-tag">Q-BOLTZ CORE</span>
         </div>
         <span class="slide-num">04 / 09</span>
       </div>
-      
-      <h2>The Matrix Diagonalization Bottleneck</h2>
-      <p class="subtitle">
-        Legacy algorithms in the $35B CAE/EDA ecosystem depend on global matrix operations that become brittle exactly where quantum effects prevail.
-      </p>
 
-      <div class="slide-body">
-        <div class="grid-2">
-          <!-- Tile 1: Matrix Bottleneck Cover -->
-          <div class="card-cover" style="background-image: url('/bottleneck_matrix.jpg'); border-left: 3px solid #ff4d4d;">
-            <div class="card-cover-content">
-              <div class="card-header" style="color: #ff6b6b; font-size: 1.45rem;">
-                ✕ The O(N³) Scaling Wall
-              </div>
-              <div class="card-body" style="font-size: 1.25rem; line-height: 1.5;">
-                Dense matrix diagonalizations choke GPUs with global memory transfers. First-principles simulation stalls at just ~100 atoms.
-              </div>
-            </div>
+      <div>
+        <h2>Quantum Transport for existing workflows</h2>
+        <p class="subtitle">
+          Q-Boltz drops directly into existing industrial simulation pipelines as a high-performance C-ABI binary runtime.
+        </p>
+      </div>
+
+      <!-- Centerpiece 3D Fluid Quantum Transport Pipeline -->
+      <div style="flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; margin: 0.6rem 0;">
+        
+        <!-- Left: Host Stack -->
+        <div style="flex: 1; background: rgba(8, 20, 12, 0.9); border: 1px solid rgba(100, 200, 255, 0.35); border-radius: 12px; padding: 1.6rem 1.4rem; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-family: var(--font-mono); color: var(--accent-cyan); font-size: 0.85rem; letter-spacing: 1.5px; font-weight: 700;">HOST STACK</span>
+            <span style="width: 8px; height: 8px; background: var(--accent-cyan); border-radius: 50%; box-shadow: 0 0 8px var(--accent-cyan);"></span>
           </div>
+          <div style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: #fff;">
+            Existing Simulation Workflow
+          </div>
+          <div style="font-family: var(--font-primary); font-size: 1.15rem; color: var(--text-secondary); font-style: italic;">
+            Ansys · COMSOL · Siemens Digital
+          </div>
+          <div style="margin-top: 6px; padding-top: 10px; border-top: 1px solid rgba(100, 200, 255, 0.15); font-family: var(--font-primary); font-size: 1.05rem; color: var(--text-primary); line-height: 1.35;">
+            <span style="color: var(--accent-emerald); font-weight: bold; margin-right: 6px;">✓</span> Precompiled binary integrates into simulation software.
+          </div>
+        </div>
 
-          <!-- Tile 2: Singularity Cover -->
-          <div class="card-cover" style="background-image: url('/bottleneck_singularity.jpg'); border-left: 3px solid #f59e0b;">
-            <div class="card-cover-content">
-              <div class="card-header" style="color: #fbbf24; font-size: 1.45rem;">
-                ✕ Brittleness & Singularities
-              </div>
-              <div class="card-body" style="font-size: 1.25rem; line-height: 1.5;">
-                Standard DFT approximations divide by zero and diverge during chemical bond dissociation, crashing automated discovery pipelines.
-              </div>
+        <!-- Left-to-Center Glowing Arrow -->
+        <div class="pipeline-arrow" style="font-size: 2rem; color: var(--accent-emerald); text-shadow: 0 0 15px var(--accent-emerald); flex-shrink: 0;">➔</div>
+
+        <!-- Center: 3D Q-Boltz Logo with PATENTED SOLVER ENCIRCLEMENT -->
+        <div style="flex: 1.5; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+          
+          <!-- Outer Patented Encirclement Shield -->
+          <div id="qboltz-flow-container" style="width: 370px; height: 350px; position: relative; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 50%, rgba(53, 255, 130, 0.15) 0%, rgba(8, 20, 12, 0.85) 65%, rgba(3, 7, 4, 0.95) 100%); border: 2px dashed rgba(53, 255, 130, 0.5); box-shadow: 0 0 45px rgba(53, 255, 130, 0.25), inset 0 0 30px rgba(53, 255, 130, 0.15);">
+            
+            <!-- Top Insignia Tag -->
+            <div style="position: absolute; top: -12px; background: rgba(3, 7, 4, 0.96); border: 1.5px solid var(--accent-gold); padding: 4px 14px; border-radius: 16px; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 1.5px; box-shadow: 0 0 15px rgba(245, 197, 66, 0.4); display: flex; align-items: center; gap: 6px; z-index: 5;">
+              <span>★</span> SOLVER CORE
+            </div>
+
+            <!-- Three.js Canvas -->
+            <canvas id="qboltz-flow-canvas" style="width: 100%; height: 100%; display: block; border-radius: 50%;"></canvas>
+            
+            <!-- Bottom Floating HUD Badge -->
+            <div style="position: absolute; bottom: -8px; background: rgba(3, 7, 4, 0.96); border: 1.5px solid var(--accent-emerald); padding: 6px 20px; border-radius: 24px; font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; color: #fff; letter-spacing: 2px; box-shadow: 0 0 25px rgba(53, 255, 130, 0.5); display: flex; align-items: center; gap: 8px; z-index: 5;">
+              <span style="width: 8px; height: 8px; background: var(--accent-emerald); border-radius: 50%; display: inline-block; box-shadow: 0 0 10px var(--accent-emerald);"></span>
+              Q-BOLTZ (.so / .dll)
             </div>
           </div>
         </div>
+
+        <!-- Center-to-Right Glowing Arrow -->
+        <div class="pipeline-arrow" style="font-size: 2rem; color: #76b900; text-shadow: 0 0 15px #76b900; flex-shrink: 0;">➔</div>
+
+        <!-- Right: Parallel Acceleration -->
+        <div style="flex: 1; background: rgba(8, 20, 12, 0.9); border: 1px solid rgba(118, 185, 0, 0.35); border-radius: 12px; padding: 1.6rem 1.4rem; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-family: var(--font-mono); color: #76b900; font-size: 0.85rem; letter-spacing: 1.5px; font-weight: 700;">ACCELERATION</span>
+            <span style="width: 8px; height: 8px; background: #76b900; border-radius: 50%; box-shadow: 0 0 8px #76b900;"></span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: #fff;">
+            GPU Clusters
+          </div>
+          <div style="font-family: var(--font-primary); font-size: 1.15rem; color: var(--text-secondary); font-style: italic;">
+            CUDA Streaming Kernels
+          </div>
+          <div style="margin-top: 6px; padding-top: 10px; border-top: 1px solid rgba(118, 185, 0, 0.15); font-family: var(--font-primary); font-size: 1.05rem; color: var(--text-primary); line-height: 1.35;">
+            <span style="color: var(--accent-emerald); font-weight: bold; margin-right: 6px;">✓</span> Customers retain their existing UI, workflow, and distribution channel.
+          </div>
+        </div>
+
       </div>
 
       <div class="footer">
         <span>Point Reyes Sound, Inc. © 2026</span>
-        <span>Algorithmic Failure Points in Legacy EDA/CAE</span>
+        <span>Integration & Deployment Architecture</span>
       </div>
     </section>
 
@@ -1001,19 +1050,19 @@
       </div>
     </section>
 
-    <!-- SLIDE 09: Pre-Seed Financing & Terms (Capital Allocation Only) -->
+    <!-- SLIDE 09: Pre-Seed Financing & Terms (Alchemist Syndicate Allocation) -->
     <section class="slide" id="slide-9" data-slide="9">
       <div class="header">
         <div class="brand-lockup">
           <span class="company-tag">POINT REYES SOUND, INC.</span>
-          <span class="header-qboltz-tag">PRE-SEED FINANCING</span>
+          <span class="header-qboltz-tag">ALCHEMIST SYNDICATE</span>
         </div>
         <span class="slide-num">09 / 09</span>
       </div>
       
-      <h2>Pre-Seed Financing & Strategic Milestones</h2>
+      <h2>Pre-Seed Financing & Enterprise Commercialization</h2>
       <p class="subtitle">
-        Point Reyes Sound is raising a <strong>$750,000 pre-seed round</strong>, anchored by <strong>Anfa with $500,000</strong> on a post-money SAFE at a <strong>$6M valuation cap</strong>.
+        Point Reyes Sound is closing a <strong>$750,000 pre-seed round</strong> ($500K institutional anchor committed) on a post-money SAFE at a <strong>$6M valuation cap</strong>—allocating the remaining <strong>$250,000 for Alchemist & strategic enterprise partners</strong>.
       </p>
 
       <div class="slide-body">
@@ -1028,25 +1077,25 @@
               <div style="width: 135px; height: 135px; flex-shrink: 0;">
                 <svg viewBox="0 0 42 42" style="width: 100%; height: 100%; transform: rotate(-90deg);">
                   <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#071a0f" stroke-width="7"></circle>
-                  <!-- NVIDIA Dev: 53.33% (400k) -->
+                  <!-- GPU Kernel Dev: 53.33% (400k) -->
                   <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#35ff82" stroke-width="7" stroke-dasharray="53.33 46.67" stroke-dashoffset="0" style="filter: drop-shadow(0 0 4px rgba(53, 255, 130, 0.6));"></circle>
-                  <!-- Solver Production: 26.67% (200k) -->
+                  <!-- C-ABI SDK & Integration: 26.67% (200k) -->
                   <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#64c8ff" stroke-width="7" stroke-dasharray="26.67 73.33" stroke-dashoffset="-53.33"></circle>
-                  <!-- Pilot Infrastructure: 20.00% (150k) -->
+                  <!-- Enterprise Pilot Acceleration: 20.00% (150k) -->
                   <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#f5c542" stroke-width="7" stroke-dasharray="20.00 80.00" stroke-dashoffset="-80.00"></circle>
                 </svg>
               </div>
               <div style="flex: 1; font-family: var(--font-primary); font-size: 1.12rem; line-height: 1.7;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 5px; background: rgba(53, 255, 130, 0.08); padding: 3px 8px; border-radius: 4px;">
-                  <span style="color: var(--accent-emerald); font-weight: 600;">● NVIDIA Dev Hire:</span>
+                  <span style="color: var(--accent-emerald); font-weight: 600;">● GPU Kernel & Compiler:</span>
                   <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.95rem;">$400,000 (53%)</strong>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 5px; background: rgba(100, 200, 255, 0.08); padding: 3px 8px; border-radius: 4px;">
-                  <span style="color: var(--accent-cyan); font-weight: 600;">● Productionize Solver:</span>
+                  <span style="color: var(--accent-cyan); font-weight: 600;">● C-ABI Enterprise SDK:</span>
                   <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.95rem;">$200,000 (27%)</strong>
                 </div>
                 <div style="display: flex; justify-content: space-between; background: rgba(245, 197, 66, 0.08); padding: 3px 8px; border-radius: 4px;">
-                  <span style="color: var(--accent-gold); font-weight: 600;">● Pilot Infrastructure:</span>
+                  <span style="color: var(--accent-gold); font-weight: 600;">● Pilot Deployments:</span>
                   <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.95rem;">$150,000 (20%)</strong>
                 </div>
               </div>
@@ -1074,7 +1123,7 @@
                 </div>
               </div>
               <span style="background: var(--accent-emerald); color: #030704; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 14px;">
-                ANFA ANCHOR · $500K
+                $500K ANCHORED · $250K ALCHEMIST
               </span>
             </div>
 
@@ -1082,25 +1131,25 @@
               <div style="display: flex; align-items: flex-start; gap: 10px;">
                 <span style="color: var(--accent-emerald); font-weight: 700; font-family: var(--font-mono); font-size: 0.95rem;">01</span>
                 <div>
-                  <strong style="color: #fff;">Full-Time NVIDIA GPU Compiler Hire:</strong> Dedicated kernel engineer to optimize streaming stencils and build CUDA commercial binary.
+                  <strong style="color: #fff;">Commercial C-ABI Binary (<span class="code-text">libqbescf.so</span>):</strong> Drop-in runtime integration into legacy EDA/multiphysics stacks with PyAnsys SDK bindings.
                 </div>
               </div>
               <div style="display: flex; align-items: flex-start; gap: 10px;">
                 <span style="color: var(--accent-cyan); font-weight: 700; font-family: var(--font-mono); font-size: 0.95rem;">02</span>
                 <div>
-                  <strong style="color: #fff;">Productionize Open-Source Solver:</strong> Package C-ABI shared library (<span class="code-text">libqbescf.so</span>) and PyAnsys SDK integration.
+                  <strong style="color: #fff;">3 Paid Enterprise Foundry Pilots:</strong> Convert sub-2nm GAA-FET and advanced battery design partners into $100K–$250K ACV production licenses.
                 </div>
               </div>
               <div style="display: flex; align-items: flex-start; gap: 10px;">
                 <span style="color: var(--accent-gold); font-weight: 700; font-family: var(--font-mono); font-size: 0.95rem;">03</span>
                 <div>
-                  <strong style="color: #fff;">3 Pilot-Ready Deployments:</strong> Onboard initial enterprise foundry partners in sub-2nm GAA-FET and battery SEI workflows.
+                  <strong style="color: #fff;">Alchemist Enterprise Pipeline Scaling:</strong> Leverage Alchemist corporate partner network to scale industrial, aerospace, and defense pipeline to Series A.
                 </div>
               </div>
             </div>
 
             <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.5rem; font-family: var(--font-primary); font-size: 1.05rem; color: var(--accent-emerald);">
-              ✓ 18-Month Operating Runway to $1.5M+ NRE/ARR
+              ✓ 18-Month Operating Runway to $1.5M+ Enterprise ARR & Series A
             </div>
           </div>
         </div>
@@ -1108,7 +1157,7 @@
 
       <div class="footer">
         <span>Point Reyes Sound, Inc. © 2026</span>
-        <span>Confidential — Pre-Seed Financing Round (Post-Money SAFE @ $6M Cap)</span>
+        <span>Confidential — Alchemist Pre-Seed Syndicate (Post-Money SAFE @ $6M Cap)</span>
       </div>
     </section>
 
@@ -1339,8 +1388,179 @@
       });
     }
 
+    // Slide 4 3D Flow Animation
+    function initQBoltzFlow3D() {
+      try {
+        const canvas = document.getElementById('qboltz-flow-canvas');
+        const container = document.getElementById('qboltz-flow-container');
+        if (!canvas || !container || typeof THREE === 'undefined') return;
+
+        const width = container.clientWidth || 360;
+        const height = container.clientHeight || 320;
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
+        camera.position.set(0, 0.4, 7.5);
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+        scene.add(ambientLight);
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        keyLight.position.set(5, 8, 6);
+        scene.add(keyLight);
+
+        const blueLight = new THREE.PointLight(0x3b82f6, 1.8, 20);
+        blueLight.position.set(-4, 5, 4);
+        scene.add(blueLight);
+
+        const redLight = new THREE.PointLight(0xef4444, 1.8, 20);
+        redLight.position.set(4, -5, 3);
+        scene.add(redLight);
+
+        const coreGroup = new THREE.Group();
+        scene.add(coreGroup);
+
+        function createPWaveLobe(sign = 1) {
+          const uSegs = 32;
+          const vSegs = 32;
+          const positions = [];
+          const uvs = [];
+          const indices = [];
+
+          for (let i = 0; i <= uSegs; i++) {
+            const u = (i / uSegs) * (Math.PI / 2);
+            for (let j = 0; j <= vSegs; j++) {
+              const v = (j / vSegs) * Math.PI * 2;
+              const cosU = Math.cos(u);
+              const sinU = Math.sin(u);
+              const y = sign * (2.45 * Math.pow(cosU, 1.35) + 0.04);
+              const r = 1.32 * sinU * Math.pow(cosU, 0.62);
+              positions.push(r * Math.cos(v), y, r * Math.sin(v));
+              uvs.push(i / uSegs, j / vSegs);
+            }
+          }
+
+          for (let i = 0; i < uSegs; i++) {
+            for (let j = 0; j < vSegs; j++) {
+              const a = i * (vSegs + 1) + j;
+              const b = (i + 1) * (vSegs + 1) + j;
+              const c = (i + 1) * (vSegs + 1) + (j + 1);
+              const d = i * (vSegs + 1) + (j + 1);
+              indices.push(a, b, d);
+              indices.push(b, c, d);
+            }
+          }
+
+          const geo = new THREE.BufferGeometry();
+          geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+          geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+          geo.setIndex(indices);
+          geo.computeVertexNormals();
+          return geo;
+        }
+
+        const topGeo = createPWaveLobe(1);
+        const topMat = new THREE.MeshStandardMaterial({ color: 0x2563eb, emissive: 0x1e40af, emissiveIntensity: 0.4, roughness: 0.2, metalness: 0.2, transparent: true, opacity: 0.88 });
+        const topWireMat = new THREE.MeshBasicMaterial({ color: 0x93c5fd, wireframe: true, transparent: true, opacity: 0.35 });
+        coreGroup.add(new THREE.Mesh(topGeo, topMat));
+        coreGroup.add(new THREE.Mesh(topGeo, topWireMat));
+
+        const botGeo = createPWaveLobe(-1);
+        const botMat = new THREE.MeshStandardMaterial({ color: 0xdc2626, emissive: 0x991b1b, emissiveIntensity: 0.4, roughness: 0.2, metalness: 0.2, transparent: true, opacity: 0.88 });
+        const botWireMat = new THREE.MeshBasicMaterial({ color: 0xfca5a5, wireframe: true, transparent: true, opacity: 0.35 });
+        coreGroup.add(new THREE.Mesh(botGeo, botMat));
+        coreGroup.add(new THREE.Mesh(botGeo, botWireMat));
+
+        const nodalGeo = new THREE.TorusGeometry(1.05, 0.03, 16, 80);
+        const nodalMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, emissive: 0xb45309, emissiveIntensity: 0.45, roughness: 0.2, metalness: 0.85 });
+        const nodalRing = new THREE.Mesh(nodalGeo, nodalMat);
+        nodalRing.rotation.x = Math.PI / 2;
+        coreGroup.add(nodalRing);
+
+        const waveRipples = [];
+        const numWaves = 4;
+        for (let w = 0; w < numWaves; w++) {
+          const ringGeo = new THREE.RingGeometry(0.2, 0.25, 32);
+          const ringMat = new THREE.MeshBasicMaterial({
+            color: (w % 2 === 0 ? 0x35ff82 : 0x64c8ff),
+            transparent: true,
+            opacity: 0.6,
+            side: THREE.DoubleSide
+          });
+          const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+          ringMesh.rotation.x = Math.PI / 2;
+          coreGroup.add(ringMesh);
+          waveRipples.push({ mesh: ringMesh, offset: w * (Math.PI / 2) });
+        }
+
+        const streamCount = 80;
+        const streamGeo = new THREE.BufferGeometry();
+        const streamPositions = new Float32Array(streamCount * 3);
+        const streamSpeeds = new Float32Array(streamCount);
+        for (let i = 0; i < streamCount; i++) {
+          streamPositions[i * 3] = (Math.random() - 0.5) * 6.0;
+          streamPositions[i * 3 + 1] = (Math.random() - 0.5) * 1.8;
+          streamPositions[i * 3 + 2] = (Math.random() - 0.5) * 2.2;
+          streamSpeeds[i] = 0.02 + Math.random() * 0.03;
+        }
+        streamGeo.setAttribute('position', new THREE.BufferAttribute(streamPositions, 3));
+        const streamMat = new THREE.PointsMaterial({
+          color: 0x35ff82,
+          size: 0.07,
+          transparent: true,
+          opacity: 0.8,
+          blending: THREE.AdditiveBlending
+        });
+        const streamParticles = new THREE.Points(streamGeo, streamMat);
+        scene.add(streamParticles);
+
+        coreGroup.rotation.z = 0.25;
+        coreGroup.rotation.x = 0.2;
+
+        let flowClock = new THREE.Clock();
+        function animateFlow() {
+          requestAnimationFrame(animateFlow);
+          const t = flowClock.getElapsedTime();
+
+          coreGroup.rotation.y = t * 0.55;
+          coreGroup.position.y = Math.sin(t * 1.5) * 0.12;
+
+          waveRipples.forEach((ripple) => {
+            const wavePhase = (t * 1.8 + ripple.offset) % (Math.PI * 2);
+            const currentRadius = 0.4 + (wavePhase / (Math.PI * 2)) * 2.2;
+            const currentOpacity = Math.max(0, 1.0 - (currentRadius / 2.6));
+            ripple.mesh.scale.set(currentRadius, currentRadius, currentRadius);
+            ripple.mesh.material.opacity = currentOpacity * 0.65;
+          });
+
+          const posAttr = streamGeo.attributes.position;
+          const posArray = posAttr.array;
+          for (let i = 0; i < streamCount; i++) {
+            posArray[i * 3] += streamSpeeds[i];
+            posArray[i * 3 + 1] += Math.sin(posArray[i * 3] * 2.0 + t * 3.0) * 0.008;
+
+            if (posArray[i * 3] > 3.2) {
+              posArray[i * 3] = -3.2;
+              posArray[i * 3 + 1] = (Math.random() - 0.5) * 1.8;
+            }
+          }
+          posAttr.needsUpdate = true;
+
+          renderer.render(scene, camera);
+        }
+        animateFlow();
+      } catch (err) {
+        console.warn('Q-Boltz flow 3D animation deferred:', err);
+      }
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       initThreeHero();
+      initQBoltzFlow3D();
     });
   </script>
 </body>
