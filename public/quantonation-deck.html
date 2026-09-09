@@ -755,61 +755,17 @@
 
       <div class="slide-body" style="flex-direction: row; align-items: stretch; gap: 2rem; margin: 0.6rem 0; flex: 1;">
         
-        <!-- Left Column: Organized 4-Stage Energy Flow & Video CTA -->
-        <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 0.8rem;">
+        <!-- Left Column: Core Thesis & Executive Film CTA -->
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem 0;">
           
-          <div style="background: rgba(4, 11, 7, 0.9); border: 1px solid rgba(53, 255, 130, 0.25); border-radius: 8px; padding: 0.65rem 1rem; display: flex; align-items: center; justify-content: space-between;">
-            <span style="font-family: 'Menlo', monospace; font-size: 0.85rem; font-weight: 700; color: #35ff82; letter-spacing: 0.5px;">// system flow architecture</span>
-            <span style="font-family: 'Menlo', monospace; font-size: 0.72rem; color: #94a3b8;">4 stages</span>
-          </div>
-
-          <!-- 4 Sequential Flow Cards -->
-          <div class="flow-sequence-list">
-            
-            <!-- Step 1 -->
-            <div class="flow-step-card is-active" id="flow-card-1" onclick="seekFlowStage(0)">
-              <div class="step-badge">01</div>
-              <div class="step-content">
-                <div class="step-title">Generator</div>
-                <div class="step-desc">Electron density flow</div>
-              </div>
-              <div class="step-indicator"></div>
+          <div style="margin: auto 0;">
+            <div style="font-family: 'Menlo', monospace !important; font-size: 2.8rem; font-weight: 700; color: #ffffff; line-height: 1.25; letter-spacing: -0.5px;">
+              Power = Moving Electrons
             </div>
-
-            <!-- Step 2 -->
-            <div class="flow-step-card" id="flow-card-2" onclick="seekFlowStage(3.2)">
-              <div class="step-badge">02</div>
-              <div class="step-content">
-                <div class="step-title">turbine</div>
-                <div class="step-desc">powers electromagnetic turbine core</div>
-              </div>
-              <div class="step-indicator"></div>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="flow-step-card" id="flow-card-3" onclick="seekFlowStage(6.4)">
-              <div class="step-badge">03</div>
-              <div class="step-content">
-                <div class="step-title">fusion plasma</div>
-                <div class="step-desc">powers plasma energy arc</div>
-              </div>
-              <div class="step-indicator"></div>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="flow-step-card" id="flow-card-4" onclick="seekFlowStage(9.6)">
-              <div class="step-badge">04</div>
-              <div class="step-content">
-                <div class="step-title">transformer grid</div>
-                <div class="step-desc">harnessed through transformer module and dispersed to grid</div>
-              </div>
-              <div class="step-indicator"></div>
-            </div>
-
           </div>
 
           <div>
-            <button class="play-deck-cta" id="btn-play-deck" onclick="playFilmUnmuted()" style="margin: 0; width: 100%; justify-content: center; font-family: 'Menlo', monospace; font-size: 0.85rem;">
+            <button class="play-deck-cta" id="btn-play-deck" onclick="playFilmUnmuted()" style="margin: 0; width: 100%; justify-content: center; font-family: 'Menlo', monospace; font-size: 0.92rem;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               play executive film (full frame)
             </button>
@@ -817,19 +773,9 @@
 
         </div>
 
-        <!-- Right Column: Flowing Sequential Video Showcase -->
-        <div style="flex: 1.4; display: flex; align-items: center; justify-content: center; border-radius: 14px; overflow: hidden; border: 1.5px solid rgba(53, 255, 130, 0.3); background: #000000; box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85); position: relative; cursor: pointer;" onclick="toggleFlowVideo()" title="Click to play / pause flow">
-          <video id="power-flow-video" autoplay loop muted playsinline poster="/power_electrons_pure.jpg" style="width: 100%; height: 100%; object-fit: contain; object-position: center; display: block;" onerror="this.style.display='none'; document.getElementById('power-flow-fallback').style.display='block';">
-            <source src="./power_electrons_flow.mp4" type="video/mp4">
-            <source src="../public/power_electrons_flow.mp4" type="video/mp4">
-            <source src="/power_electrons_flow.mp4" type="video/mp4">
-          </video>
-          <img id="power-flow-fallback" src="/power_electrons_pure.jpg" alt="power = moving electrons" style="width: 100%; height: 100%; object-fit: contain; object-position: center; display: none;" onerror="this.src='./power_electrons_pure.jpg'" />
-
-          <!-- ONLY text on the right frame: power = moving electrons -->
-          <div style="position: absolute; bottom: 18px; left: 20px; z-index: 10; font-family: 'Menlo', monospace; font-size: 0.95rem; font-weight: 700; color: #35ff82; letter-spacing: 0.5px; background: rgba(0, 0, 0, 0.75); padding: 6px 14px; border-radius: 6px; border: 1px solid rgba(53, 255, 130, 0.35); text-transform: lowercase; backdrop-filter: blur(8px);">
-            power = moving electrons
-          </div>
+        <!-- Right Column: Pure Flow Elements Visual -->
+        <div style="flex: 1.4; display: flex; align-items: center; justify-content: center; border-radius: 14px; overflow: hidden; border: 1.5px solid rgba(53, 255, 130, 0.3); background: #000000; box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85); position: relative;">
+          <img src="/power_electrons_pure.jpg" alt="Power = Moving Electrons" style="width: 100%; height: 100%; object-fit: contain; object-position: center; display: block;" onerror="this.src='./power_electrons_pure.jpg'" />
         </div>
 
       </div>
