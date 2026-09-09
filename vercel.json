@@ -17,6 +17,10 @@
       "destination": "/plug-and-play-deck.html"
     },
     {
+      "source": "/quantonation-deck",
+      "destination": "/quantonation-deck.html"
+    },
+    {
       "source": "/usistef-qmf-deck",
       "destination": "/usistef-qmf-deck.html"
     },
