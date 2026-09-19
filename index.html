@@ -42,26 +42,30 @@
     <!-- Scite Badge Integration for Verified DOI & Smart Citations -->
     <script async type="application/javascript" src="https://cdn.scite.ai/badge/scite-badge-latest.min.js"></script>
 
-    <!-- Ecosystem Linked-Data JSON-LD Schema (rchakraborty.dev <-> pointreyessound.com) -->
+    <!-- Ecosystem Authoritative Linked-Data JSON-LD Knowledge Graph -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "Person",
-          "@id": "https://rchakraborty.dev",
+          "@id": "https://rchakraborty.dev#person",
           "name": "Dr. Romit Chakraborty",
+          "honorificPrefix": "Dr.",
+          "honorificSuffix": "Ph.D.",
+          "jobTitle": "Founder & Chief Scientific Officer",
           "url": "https://rchakraborty.dev",
+          "email": "romit@pointreyessound.com",
           "alumniOf": [
             { "@type": "EducationalOrganization", "name": "University of Chicago", "url": "https://chemistry.uchicago.edu" },
             { "@type": "EducationalOrganization", "name": "Indian Institute of Technology Bombay", "url": "https://www.iitb.ac.in" },
             { "@type": "EducationalOrganization", "name": "St. Stephen's College, Delhi", "url": "https://www.ststephens.edu" }
           ],
           "affiliation": [
+            { "@type": "Organization", "name": "Point Reyes Sound, Inc.", "url": "https://pointreyessound.com" },
             { "@type": "ResearchOrganization", "name": "University of California, Berkeley", "url": "https://berkeley.edu" },
             { "@type": "ResearchOrganization", "name": "Lawrence Berkeley National Laboratory", "url": "https://www.lbl.gov" },
-            { "@type": "Organization", "name": "PsiQuantum", "url": "https://www.psiquantum.com" },
-            { "@type": "Organization", "name": "Point Reyes Sound, Inc.", "url": "https://pointreyessound.com" }
+            { "@type": "Organization", "name": "PsiQuantum", "url": "https://www.psiquantum.com" }
           ],
           "knowsAbout": [
             "Theoretical Quantum Chemistry",
@@ -69,43 +73,38 @@
             "Kinetic Transport Modeling",
             "Fault-Tolerant Quantum Algorithm Resource Compilation",
             "Electronic Structure Theory",
-            "Q-Chem Quantum Chemistry Software Package"
+            "Q-Chem Quantum Chemistry Software Package",
+            "Reduced Density Matrix Mechanics"
+          ],
+          "sameAs": [
+            "https://rchakraborty.dev",
+            "https://scholar.google.com/citations?user=m4HlFRIAAAAJ",
+            "https://orcid.org/0000-0002-4638-6346",
+            "https://arxiv.org/a/chakraborty_r_1.html",
+            "https://www.semanticscholar.org/author/Romit-Chakraborty/3041935",
+            "https://github.com/RomitChakraborty",
+            "https://www.linkedin.com/in/chakrabortyromit/"
           ]
         },
-        {
-          "@type": "Organization",
-          "@id": "https://pointreyessound.com",
-          "name": "Point Reyes Sound, Inc.",
-          "url": "https://pointreyessound.com",
-          "founder": "https://rchakraborty.dev",
-          "foundingDate": "2026",
-          "knowsAbout": [
-            "Quantum Chemistry",
-            "Artificial Intelligence",
-            "Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF)",
-            "Kinetic Transport Modeling",
-            "Fault-Tolerant Quantum Computing",
-            "Active-Space Resource Compilation"
-          ],
-          "publishingPrinciples": "https://doi.org"
-        }
-      ]
-    }
-    </script>
-
-    <!-- Structured Data / JSON-LD for Search Engines & AI Agents -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
         {
           "@type": "ResearchOrganization",
           "@id": "https://pointreyessound.com/#organization",
           "name": "Point Reyes Sound, Inc.",
           "url": "https://pointreyessound.com",
           "logo": "https://pointreyessound.com/PRS_logo_v2.jpeg",
-          "description": "Autonomous theoretical and computational research pod pioneering kinetic transport methods for quantum chemistry.",
+          "description": "Autonomous theoretical and computational research pod pioneering kinetic transport methods for quantum chemistry and entropic regularization of mean-field singularities.",
           "foundingDate": "2026-04-28",
+          "founder": {
+            "@id": "https://rchakraborty.dev#person"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "2261 Market Street, STE 72927",
+            "addressLocality": "San Francisco",
+            "addressRegion": "CA",
+            "postalCode": "94114",
+            "addressCountry": "US"
+          },
           "sameAs": [
             "https://www.linkedin.com/company/point-reyes-sound/",
             "https://github.com/point-reyes-sound",
@@ -115,49 +114,88 @@
             "https://doi.org/10.48550/arXiv.2608.14979",
             "https://scite.ai/reports/10.48550/arXiv.2608.14979"
           ],
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "2261 Market Street, STE 72927",
-            "addressLocality": "San Francisco",
-            "addressRegion": "CA",
-            "postalCode": "94114",
-            "addressCountry": "US"
-          },
-          "founder": {
-            "@type": "Person",
-            "@id": "https://pointreyessound.com/#founder",
-            "name": "Dr. Romit Chakraborty",
-            "jobTitle": "Founder & Chief Scientific Officer",
-            "email": "romit@pointreyessound.com",
-            "alumniOf": [
-              { "@type": "EducationalOrganization", "name": "University of Chicago", "url": "https://chemistry.uchicago.edu" },
-              { "@type": "EducationalOrganization", "name": "Indian Institute of Technology Bombay", "url": "https://www.iitb.ac.in" }
-            ],
-            "affiliation": [
-              { "@type": "Organization", "name": "Point Reyes Sound, Inc.", "url": "https://pointreyessound.com" },
-              { "@type": "ResearchOrganization", "name": "University of California, Berkeley", "url": "https://berkeley.edu" },
-              { "@type": "ResearchOrganization", "name": "Lawrence Berkeley National Laboratory", "url": "https://www.lbl.gov" },
-              { "@type": "Organization", "name": "PsiQuantum", "url": "https://www.psiquantum.com" }
-            ],
-            "sameAs": [
-              "https://rchakraborty.dev",
-              "https://scholar.google.com/citations?user=m4HlFRIAAAAJ",
-              "https://orcid.org/0000-0002-4638-6346",
-              "https://github.com/RomitChakraborty",
-              "https://www.linkedin.com/in/chakrabortyromit/"
-            ]
-          },
+          "sponsor": [
+            {
+              "@type": "Organization",
+              "name": "NVIDIA Inception Program",
+              "url": "https://www.nvidia.com/en-us/startups/"
+            },
+            {
+              "@type": "Organization",
+              "name": "Google Cloud",
+              "url": "https://cloud.google.com"
+            }
+          ],
+          "funder": [
+            {
+              "@type": "Organization",
+              "name": "Google Cloud Research Credits"
+            },
+            {
+              "@type": "Organization",
+              "name": "United States-India Science & Technology Endowment Fund (USISTEF)",
+              "url": "https://usistef.org"
+            }
+          ],
           "member": [
             {
               "@type": "Person",
+              "@id": "https://chemistry.uchicago.edu/faculty/david-mazziotti#person",
+              "name": "Prof. David A. Mazziotti",
+              "jobTitle": "Scientific Advisor",
+              "worksFor": {
+                "@type": "EducationalOrganization",
+                "name": "University of Chicago",
+                "url": "https://chemistry.uchicago.edu"
+              },
+              "sameAs": [
+                "https://chemistry.uchicago.edu/faculty/david-mazziotti",
+                "https://scholar.google.com/citations?user=d1_qZ_sAAAAJ"
+              ]
+            },
+            {
+              "@type": "Person",
+              "@id": "https://appliedphysics.stanford.edu/people/david-schuster#person",
+              "name": "Prof. David Schuster",
+              "jobTitle": "Quantum & Systems Advisor",
+              "worksFor": {
+                "@type": "EducationalOrganization",
+                "name": "Stanford University",
+                "url": "https://appliedphysics.stanford.edu"
+              },
+              "sameAs": [
+                "https://appliedphysics.stanford.edu/people/david-schuster"
+              ]
+            },
+            {
+              "@type": "Person",
               "@id": "https://pointreyessound.com/#advisor-sayan",
-              "name": "Sayan Chakraborty",
-              "jobTitle": "Research Advisor",
+              "name": "Sayan Chakraborty, Ph.D.",
+              "jobTitle": "Research Collaborator",
+              "worksFor": {
+                "@type": "ResearchOrganization",
+                "name": "TCG CREST",
+                "url": "https://www.tcgcrest.org"
+              },
               "sameAs": [
                 "https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate"
               ]
             }
           ]
+        },
+        {
+          "@type": "Patent",
+          "@id": "https://pointreyessound.com/#patent-64033274",
+          "name": "Method and System for Quantum Boltzmann Self-Consistent Field Computation and Mean-Field Regularization",
+          "patentNumber": "U.S. Provisional Patent Application No. 64/033,274",
+          "inventor": {
+            "@id": "https://rchakraborty.dev#person"
+          },
+          "assignee": {
+            "@id": "https://pointreyessound.com/#organization"
+          },
+          "datePublished": "2026",
+          "description": "Proprietary kinetic transport and Bhatnagar-Gross-Krook (BGK) collision relaxation framework for one-electron reduced density matrices, providing polynomial-time regularization of multireference singularities."
         },
         {
           "@type": "ScholarlyArticle",
@@ -167,7 +205,7 @@
           "identifier": "10.48550/arXiv.2608.14979",
           "sameAs": "https://doi.org/10.48550/arXiv.2608.14979",
           "author": {
-            "@id": "https://pointreyessound.com/#founder"
+            "@id": "https://rchakraborty.dev#person"
           },
           "publisher": {
             "@id": "https://pointreyessound.com/#organization"
@@ -184,7 +222,7 @@
           "identifier": "10.1063/5.0055522",
           "sameAs": "https://doi.org/10.1063/5.0055522",
           "author": [
-            { "@id": "https://pointreyessound.com/#founder" },
+            { "@id": "https://rchakraborty.dev#person" },
             { "@type": "Person", "name": "Martin Head-Gordon" },
             { "@type": "Person", "name": "Anna I. Krylov" }
           ],
@@ -201,7 +239,7 @@
           "headline": "Hardware Resource Compilation for Active-Space Driven Fault-Tolerant Quantum Simulation",
           "name": "Hardware Resource Compilation for Active-Space Driven Fault-Tolerant Quantum Simulation",
           "author": {
-            "@id": "https://pointreyessound.com/#founder"
+            "@id": "https://rchakraborty.dev#person"
           },
           "publisher": {
             "@id": "https://pointreyessound.com/#organization"

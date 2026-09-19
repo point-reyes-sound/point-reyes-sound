@@ -1003,10 +1003,10 @@ export default function App() {
       {/* 7. PEOPLE & CONTACT */}
       <section id="contact" className="section-block dark-tint">
         <div className="section-head">
-          <div className="section-kicker">RESEARCH POD & INQUIRIES</div>
-          <h2 className="section-title">Contact</h2>
+          <div className="section-kicker">RESEARCH POD &amp; ADVISORY BOARD</div>
+          <h2 className="section-title">Leadership &amp; Advisors</h2>
           <p className="section-sub">
-            Point Reyes Sound, Inc. is an agile privately funded theoretical and computational research pod.
+            Point Reyes Sound, Inc. is an agile privately funded theoretical research pod advised by world leaders in quantum chemistry, mathematical physics, and superconducting quantum hardware.
           </p>
         </div>
 
@@ -1020,15 +1020,15 @@ export default function App() {
                 className="person-avatar-img" 
               />
               <div className="person-info">
-                <h3>Romit Chakraborty</h3>
-                <span className="person-role">Founder & Principal Researcher</span>
+                <h3>Dr. Romit Chakraborty</h3>
+                <span className="person-role">Founder &amp; Chief Scientific Officer</span>
                 <div className="person-links-row">
                   <a href="mailto:romit@pointreyessound.com" className="person-contact-link">
                     romit@pointreyessound.com
                   </a>
                   <span className="link-sep">&bull;</span>
                   <a 
-                    href="https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty" 
+                    href="https://scholar.google.com/citations?user=m4HlFRIAAAAJ" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="person-scholar-link"
@@ -1051,7 +1051,7 @@ export default function App() {
                 Founder Dossier (rchakraborty.dev) &rarr;
               </a>
               <a 
-                href="https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty" 
+                href="https://scholar.google.com/citations?user=m4HlFRIAAAAJ" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="tag-scholar-btn"
@@ -1085,6 +1085,94 @@ export default function App() {
             </div>
           </div>
 
+          {/* PROF. DAVID MAZZIOTTI */}
+          <div className="people-card">
+            <div className="person-header">
+              <img 
+                src="/david_mazziotti.jpg" 
+                alt="Prof. David Mazziotti" 
+                className="person-avatar-img" 
+                style={{ borderColor: "var(--accent-cyan)", boxShadow: "0 0 20px rgba(100, 200, 255, 0.25)" }}
+              />
+              <div className="person-info">
+                <h3>Prof. David A. Mazziotti</h3>
+                <span className="person-role">Scientific Advisor</span>
+                <span className="person-affiliation">Chair of Chemistry, University of Chicago</span>
+                <div className="person-links-row">
+                  <a 
+                    href="https://chemistry.uchicago.edu/faculty/david-mazziotti" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="person-scholar-link"
+                  >
+                    UChicago Faculty Profile &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+            <p className="person-bio">
+              Chair of the Department of Chemistry at the University of Chicago. World-renowned pioneer in Reduced Density Matrix (RDM) mechanics, 2-RDM variational theory, and generalized Pauli exclusion constraints. Doctoral advisor to Dr. Romit Chakraborty.
+            </p>
+            <div className="person-tags" style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "12px" }}>
+              <a 
+                href="https://chemistry.uchicago.edu/faculty/david-mazziotti" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="tag-scholar-btn"
+              >
+                Faculty Page &rarr;
+              </a>
+              <a 
+                href="https://scholar.google.com/citations?user=d1_qZ_sAAAAJ" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="tag-scholar-btn"
+              >
+                Google Scholar &rarr;
+              </a>
+            </div>
+          </div>
+
+          {/* PROF. DAVID SCHUSTER */}
+          <div className="people-card">
+            <div className="person-header">
+              <img 
+                src="/david_schuster.jpg" 
+                alt="Prof. David Schuster" 
+                className="person-avatar-img" 
+                style={{ borderColor: "var(--accent-gold)", boxShadow: "0 0 20px rgba(245, 197, 66, 0.25)" }}
+              />
+              <div className="person-info">
+                <h3>Prof. David Schuster</h3>
+                <span className="person-role">Quantum &amp; Systems Advisor</span>
+                <span className="person-affiliation">Applied Physics, Stanford University</span>
+                <div className="person-links-row">
+                  <a 
+                    href="https://appliedphysics.stanford.edu/people/david-schuster" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="person-scholar-link"
+                  >
+                    Stanford Faculty Profile &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+            <p className="person-bio">
+              Professor of Applied Physics at Stanford University. Pioneer in superconducting quantum circuits, circuit QED, hybrid quantum systems, and quantum microwave transducers. Advises Point Reyes Sound on physical architecture translation and hardware co-design.
+            </p>
+            <div className="person-tags" style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "12px" }}>
+              <a 
+                href="https://appliedphysics.stanford.edu/people/david-schuster" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="tag-scholar-btn"
+              >
+                Stanford Faculty Page &rarr;
+              </a>
+            </div>
+          </div>
+
           {/* SAYAN CHAKRABORTY */}
           <div className="people-card">
             <div className="person-header">
@@ -1110,9 +1198,9 @@ export default function App() {
               </div>
             </div>
             <p className="person-bio">
-              Quantum Information and Mathematical Physics.
+              Researcher in Quantum Information, Continuous-Variable States, and Mathematical Physics at TCG CREST.
             </p>
-            <div className="person-tags">
+            <div className="person-tags" style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "12px" }}>
               <a 
                 href="https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate" 
                 target="_blank" 
