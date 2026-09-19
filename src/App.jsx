@@ -924,6 +924,22 @@ export default function App() {
             </div>
             <h3 className="investor-card-title">Technical Briefs &amp; Briefings</h3>
             <div className="brief-links-list">
+              <a href="/public-deck" target="_blank" rel="noopener noreferrer" className="brief-item">
+                <div className="brief-icon">✦</div>
+                <div className="brief-info">
+                  <strong>Executive Overview (16:9 Deck)</strong>
+                  <span>Interactive Pitch &amp; Technical Prospectus · Q-Boltz</span>
+                </div>
+                <span className="ext-arrow">↗</span>
+              </a>
+              <a href="/Point_Reyes_Sound_Executive_Overview.pdf" target="_blank" rel="noopener noreferrer" className="brief-item">
+                <div className="brief-icon">📄</div>
+                <div className="brief-info">
+                  <strong>Download Executive Overview (PDF)</strong>
+                  <span>Official 12-Page Widescreen Diligence Overview</span>
+                </div>
+                <span className="ext-arrow">↓</span>
+              </a>
               <a href="/nvidia-brief" target="_blank" rel="noopener noreferrer" className="brief-item">
                 <div className="brief-icon">⚡</div>
                 <div className="brief-info">
