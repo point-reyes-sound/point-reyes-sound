@@ -1,23 +1,40 @@
 # Point Reyes Sound, Inc.
 
-> Point Reyes Sound is a theoretical and computational research pod pioneering kinetic transport methods for quantum chemistry.
+> Point Reyes Sound is a frontier-tech quantum computing and computational chemistry software company pioneering kinetic transport methods and the Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform.
+
+## Venture Capital & Investment Profile
+- **Stage**: Seed Stage Frontier Tech & Deep Tech.
+- **Headquarters**: San Francisco, California, USA.
+- **Founder & CSO**: Dr. Romit Chakraborty (Ph.D. University of Chicago, postdoctoral training at UC Berkeley / Lawrence Berkeley National Laboratory).
+- **Core Technology & Moat**: Proprietary Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform that eliminates the factorial active-space combinatorial scaling of CASSCF and DMRG, regularizing topological mean-field singularities.
+- **Intellectual Property**: U.S. Provisional Patent Application No. 64/033,274 ("Method and System for Quantum Boltzmann Self-Consistent Field Computation and Mean-Field Regularization").
+- **Commercial Addressable Market (SAM)**: $15B+ high-performance computational chemistry, materials simulation, clean energy storage electrolytes, wide-bandgap power electronics, and semiconductor EDA.
+- **Strategic Accelerator & Cloud Backing**: Member of NVIDIA Inception Program; Google Cloud Research Grant recipient.
+- **Investor Inbound & Seed Deck Requests**: directors@pointreyessound.com | romit@pointreyessound.com
 
 ## Core Research & Capabilities
 - **Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF)**: Reformulates electronic self-consistency as kinetic relaxation of the one-electron reduced density matrix (1-RDM) via a Bhatnagar-Gross-Krook (BGK) collision operator.
 - **Topological Singularity Regularization**: Resolves Coulson-Fischer singular cusps, conical intersections, and static correlation catastrophes without exponential combinatorial active space expansions.
-- **Hardware Acceleration**: High-performance GPU kernels accelerated via NVIDIA Inception Program and Google Cloud Research Grants.
+- **Hardware Acceleration**: High-performance CUDA and Tensor Core GPU kernels accelerated via NVIDIA Inception Program and Google Cloud Research Grants.
 - **Fault-Tolerant Quantum Computing (FTQC)**: Phase-space mapping of open-shell molecular dynamics and quantum error mitigation.
 
 ## Key Publications & Intellectual Property
-- **Lead Preprint**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities", Romit Chakraborty (arXiv:2608.14979 [quant-ph]). URL: https://arxiv.org/abs/2608.14979
+- **Lead Preprint**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities", Romit Chakraborty (arXiv:2608.14979 [quant-ph]). URL: https://arxiv.org/abs/2608.14979 | DOI: 10.48550/arXiv.2608.14979
+- **Smart Citations Index**: https://scite.ai/reports/10.48550/arXiv.2608.14979
 - **Intellectual Property**: U.S. Provisional Patent Application No. 64/033,274.
 
-## Key People
-- **Romit Chakraborty**: Founder & Principal Researcher (romit@pointreyessound.com). Google Scholar: https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty
-- **Sayan Chakraborty**: Research Advisor. Google Scholar: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
+## Key Leadership
+- **Dr. Romit Chakraborty**: Founder & Chief Scientific Officer (romit@pointreyessound.com).
+  - Academic Portal: https://rchakraborty.dev
+  - Google Scholar: https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty
+  - ORCID: 0000-0002-4638-6346
+- **Dr. Sayan Chakraborty**: Research Advisor.
+  - Google Scholar: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
 
-## Canonical URLs
-- Portal: https://pointreyessound.com
+## Canonical URLs & Ecosystem Cross-References
+- Company Portal: https://pointreyessound.com
+- Founder Dossier: https://rchakraborty.dev
+- Crunchbase: https://www.crunchbase.com/organization/point-reyes-sound
 - LinkedIn: https://www.linkedin.com/company/point-reyes-sound/
-- Full LLM Context: https://pointreyessound.com/llms-full.txt
 - GitHub Organization: https://github.com/point-reyes-sound
+- Comprehensive LLM Diligence File: https://pointreyessound.com/llms-full.txt

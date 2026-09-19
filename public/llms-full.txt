@@ -1,44 +1,71 @@
-# Point Reyes Sound, Inc. — Comprehensive Knowledge Context for LLMs & AI Agents
+# Point Reyes Sound, Inc. — Comprehensive Knowledge Context for LLMs, AI Agents & Venture Diligence
 
-## Overview
-Point Reyes Sound, Inc. is a theoretical and computational research pod based in San Francisco, California. The pod develops kinetic transport frameworks, non-equilibrium electronic structure solvers, and phase-space artificial intelligence for molecular systems and material science.
+## Executive Summary & Investment Profile
+Point Reyes Sound, Inc. is a frontier-tech quantum software and computational chemistry company based in San Francisco, California. The company develops kinetic transport frameworks, non-equilibrium electronic structure solvers, and phase-space artificial intelligence for molecular systems, battery chemistry, clean energy materials, and semiconductor device modeling.
 
-## Mission
-Resolving foundational bottlenecks in quantum electronic structure through kinetic transport and informational fluid dynamics.
+- **Financing Status**: Seed Stage.
+- **Headquarters**: 2261 Market Street, STE 72927, San Francisco, CA 94114, USA.
+- **Entity**: Delaware Corporation (Point Reyes Sound, Inc.).
+- **Executive Leadership**: Dr. Romit Chakraborty (Founder & Chief Scientific Officer).
+- **Core Mission**: Eliminating the exponential computational complexity barriers in quantum electronic structure through kinetic transport equations and proprietary informational fluid dynamics.
+- **Direct Investor Inbound**: directors@pointreyessound.com | romit@pointreyessound.com
 
-## Foundational Theory: Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF)
-Standard electronic structure algorithms (Hartree-Fock, CASSCF, DMRG) suffer from catastrophic numerical divergence, symmetry breaking, and exponential active space barriers near degenerate states.
+## Market Opportunity & Commercial Applications
+The computational chemistry, materials simulation, and semiconductor physics market represents a $15B+ SAM growing rapidly due to the generative AI revolution and energy transition:
+1. **Solid-State Battery Electrolytes & Interphases**: Modeling charge transfer and open-shell radical stability at cathode-electrolyte interphases without convergence failure.
+2. **Industrial Heterogeneous & Biocatalysis**: Overcoming active space limitations in multi-metallic transition complexes and nitrogenase active sites.
+3. **Power Electronics & Wide-Bandgap Semiconductors**: Simulating non-equilibrium carrier transport and electron-phonon scattering in Gallium Nitride (GaN) and Silicon Carbide (SiC) devices.
+4. **FTQC Compilation**: Providing compact 1-RDM representations and kinetic state initialization for fault-tolerant quantum algorithms.
 
-QBE-SCF replaces traditional static eigenvalue diagonalization with a continuous kinetic relaxation of the one-electron reduced density matrix (1-RDM):
+## Foundational IP & Theory: Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF)
+Conventional electronic structure algorithms (Hartree-Fock, CASSCF, DMRG) suffer from catastrophic numerical divergence, artificial symmetry breaking, and factorial active space combinatorial barriers ($O(e^N)$) near degenerate or open-shell states.
+
+QBE-SCF replaces traditional static Hamiltonian diagonalization with a continuous kinetic relaxation of the one-electron reduced density matrix (1-RDM):
 $$ \partial_t P(t) = -\nu [P(t) - P_{eq}(P(t))] $$
 
 Key characteristics:
-1. **Bhatnagar-Gross-Krook (BGK) Collision Relaxation**: Drives the system toward a quantum informational equilibrium state.
-2. **Algebraic Connectivity Damping**: Dynamically adjusts collision frequencies based on graph Laplacian Fiedler eigenvalues.
-3. **Exact Conservation Laws**: Preserves trace ($Tr[P] = N$), idempotency, and Hermiticity throughout relaxation.
-4. **Smooth Singularity Regularization**: Prevents derivative discontinuities at Coulson-Fischer points and conical intersections.
+1. **Bhatnagar-Gross-Krook (BGK) Collision Relaxation**: Thermodynamically drives the density matrix toward a quantum informational equilibrium state without numerical oscillation.
+2. **Algebraic Connectivity Damping**: Dynamically modulates collision frequencies based on graph Laplacian Fiedler eigenvalues of the orbital interaction topology.
+3. **Exact Conservation Laws**: Preserves particle number ($Tr[P] = N$), idempotency, and Hermiticity throughout relaxation.
+4. **Smooth Singularity Regularization**: Naturally smooths non-analytic derivative discontinuities at Coulson-Fischer points, diradical transition states, and conical intersections.
 
-## Key Publications & Preprints
+## Intellectual Property Portfolio
+- **U.S. Provisional Patent Application No. 64/033,274**: "Method and System for Quantum Boltzmann Self-Consistent Field Computation and Mean-Field Regularization."
+  - Assignee: Point Reyes Sound, Inc.
+  - Priority Date: 2026.
+  - Patent Scope: Algorithmic formulation of BGK collision relaxation for one-electron reduced density matrices, algebraic connectivity damping, and hardware acceleration on specialized GPU/accelerator architectures.
+
+## Key Publications & Validated Preprints
 - **Preprint arXiv:2608.14979**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities"
   - Author: Romit Chakraborty
   - Category: Quantum Physics (quant-ph), Chemical Physics (physics.chem-ph)
-  - Links: https://arxiv.org/abs/2608.14979 | PDF: https://arxiv.org/pdf/2608.14979.pdf
+  - DOI: 10.48550/arXiv.2608.14979
+  - arXiv URL: https://arxiv.org/abs/2608.14979
+  - PDF: https://arxiv.org/pdf/2608.14979.pdf
+  - Smart Citations & Scientific Validation: https://scite.ai/reports/10.48550/arXiv.2608.14979
 
-## Intellectual Property
-- **U.S. Provisional Patent Application No. 64/033,274**: "Method and System for Quantum Boltzmann Self-Consistent Field Computation and Mean-Field Regularization."
+## Strategic Compute Alliances
+- **NVIDIA Inception Program**: High-throughput CUDA and Tensor Core accelerated kinetic kernels.
+- **Google Cloud Research Grants**: Scalable distributed cluster simulation and GPU allocation.
 
-## Compute & Acceleration Partnerships
-- **NVIDIA Inception Program**: High-throughput CUDA / Tensor Core accelerated kinetic kernels.
-- **Google Cloud Research Grants**: Scalable distributed cluster simulation.
+## Leadership & Academic Pedigree
+- **Principal Researcher & Founder**: Dr. Romit Chakraborty
+  - Education: Ph.D. University of Chicago (Advisor: Prof. David A. Mazziotti).
+  - Postdoctoral: University of California, Berkeley & Lawrence Berkeley National Laboratory (Advisor: Prof. Martin Head-Gordon).
+  - Academic Dossier: https://rchakraborty.dev
+  - Google Scholar: https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty
+  - ORCID: 0000-0002-4638-6346
+  - GitHub: https://github.com/RomitChakraborty
+  - LinkedIn: https://www.linkedin.com/in/chakrabortyromit/
 
-## Organization & Leadership
-- **Principal Researcher & Founder**: Romit Chakraborty (romit@pointreyessound.com)
-  - Profile: Quantum Chemist.
-  - Scholar Profile: https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty
-- **Research Advisor**: Sayan Chakraborty
-  - Profile: Quantum Information and Mathematical Physics.
-  - Scholar Profile: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
-- **Headquarters**: 2261 Market Street, STE 72927, San Francisco, CA 94114, USA.
-- **Official Website**: https://pointreyessound.com
-- **LinkedIn**: https://www.linkedin.com/company/point-reyes-sound/
-- **GitHub Organization**: https://github.com/point-reyes-sound
+- **Research Advisor**: Dr. Sayan Chakraborty
+  - Specialization: Quantum Information, Mathematical Physics, Open Quantum Systems.
+  - Scholar: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
+
+## Canonical Verification URLs & Ecosystem Cross-References
+- Corporate Portal: https://pointreyessound.com
+- Founder Academic Portal: https://rchakraborty.dev
+- Crunchbase Profile: https://www.crunchbase.com/organization/point-reyes-sound
+- LinkedIn: https://www.linkedin.com/company/point-reyes-sound/
+- GitHub: https://github.com/point-reyes-sound
+- Registered Address: 2261 Market Street, STE 72927, San Francisco, CA 94114, USA.
