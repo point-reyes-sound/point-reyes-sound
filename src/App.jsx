@@ -282,7 +282,7 @@ export default function App() {
     affiliation: "",
     subject: "",
     message: "",
-    inquiryType: "investor"
+    inquiryType: "diligence"
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -295,9 +295,9 @@ export default function App() {
     e.preventDefault();
     if (!contactForm.name || !contactForm.email || !contactForm.message) return;
     setFormSubmitted(true);
-    const subject = contactForm.subject || (contactForm.inquiryType === "investor" ? "Seed Round Diligence & Deck Request" : "Point Reyes Sound Inquiry");
+    const subject = contactForm.subject || (contactForm.inquiryType === "diligence" ? "Technical Dossier & Institutional Inquiry" : "Point Reyes Sound Research Inquiry");
     const body = `Inquiry Type: ${contactForm.inquiryType || "General"}\nFrom: ${contactForm.name} (${contactForm.affiliation || "N/A"})\nEmail: ${contactForm.email}\n\n${contactForm.message}`;
-    const mailTo = contactForm.inquiryType === "investor" ? "directors@pointreyessound.com,romit@pointreyessound.com" : "romit@pointreyessound.com";
+    const mailTo = contactForm.inquiryType === "diligence" ? "directors@pointreyessound.com,romit@pointreyessound.com" : "romit@pointreyessound.com";
     window.location.href = `mailto:${mailTo}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
@@ -307,19 +307,6 @@ export default function App() {
       subject: `Inquiry: ${topicTitle}`,
       inquiryType: "commercial",
       message: prev.message || `Hello Romit,\n\nI would like to inquire about Point Reyes Sound's ${topicTitle} initiatives and potential compute access / technical collaboration.\n\nBest regards,`
-    }));
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const handleSelectInvestorRequest = () => {
-    setContactForm((prev) => ({
-      ...prev,
-      subject: "Seed Round Diligence & Technical Pitch Deck Request",
-      inquiryType: "investor",
-      message: prev.message || "Hello Romit & Directors,\n\nWe are evaluating Point Reyes Sound for seed investment and would like to request the Seed Pitch Deck, technical executive summary, and an introductory partner discussion.\n\nFund Name:\nPartner:\nInvestment Scope:"
     }));
     const contactSection = document.getElementById("contact");
     if (contactSection) {
@@ -489,7 +476,7 @@ export default function App() {
                     <button type="submit" className="action-btn primary sales-submit-btn">
                       Transmit Inquiry to Engineering & Sales &rarr;
                     </button>
-                    <span className="sales-guarantee-note">🔒 Direct technical response within 1 business hour</span>
+                    <span className="sales-guarantee-note">Direct technical response within 1 business hour</span>
                   </div>
                 </form>
               )}
@@ -524,9 +511,6 @@ export default function App() {
               <span className="pulse-dot"></span> Research
             </a>
             <a href="#roadmap">Roadmap</a>
-            <a href="#investors" className="nav-investor-link">
-              Investors <span className="nav-seed-pill">Seed</span>
-            </a>
             <a href="#contact">Contact</a>
             <a 
               href="https://github.com/point-reyes-sound" 
@@ -581,14 +565,21 @@ export default function App() {
                 className={`video-audio-toggle-btn ${!isVideoMuted ? 'audio-live' : ''}`}
                 title={isVideoMuted ? "Unmute" : "Mute"}
               >
-                <span className="audio-toggle-icon">{isVideoMuted ? "🔇" : "🔊"}</span> {isVideoMuted ? "Unmute" : "Mute"}
+                <span className="audio-toggle-icon" style={{ display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle', marginRight: '5px' }}>
+                  {isVideoMuted ? (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                  ) : (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                  )}
+                </span>
+                {isVideoMuted ? "Unmute" : "Mute"}
               </button>
             )}
           </div>
         </div>
 
         <div className="hero-kicker-group">
-          <span className="seed-badge">FRONTIER TECH • SEED STAGE</span>
+          <span className="seed-badge">THEORETICAL QUANTUM CHEMISTRY • KINETIC SIMULATION POD</span>
           <span className="hero-location">SAN FRANCISCO, CA</span>
         </div>
 
@@ -600,29 +591,22 @@ export default function App() {
           Point Reyes Sound is commercializing the Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform—breaking the factorial active-space scaling bottleneck of CASSCF to simulate strongly correlated electrons across clean energy materials, wide-bandgap power electronics, and industrial catalysis.
         </p>
 
-        {/* FEATURED PREPRINT CALLOUT BANNER */}
-        <div id="preprint" className="preprint-spotlight-card">
-          <div className="spotlight-header">
-            <div className="spotlight-tag-group">
-              <span className="spotlight-badge">FEATURED ARXIV PREPRINT</span>
-              <span className="spotlight-meta">arXiv:2608.14979 [quant-ph] &bull; August 2026</span>
-            </div>
-            <span className="spotlight-status">Open Access</span>
+        {/* FEATURED RESEARCH PAPER SPOTLIGHT */}
+        <div className="hero-paper-spotlight">
+          <div className="paper-spotlight-header">
+            <span className="spotlight-tag">FOUNDATIONAL THEORY • PREPRINT</span>
+            <span className="spotlight-doi">arXiv:2608.14979 [quant-ph]</span>
           </div>
-
-          <h2 className="spotlight-title">
-            Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities
-          </h2>
-
-          <div className="spotlight-author">
-            <strong>Romit Chakraborty</strong> &bull; Point Reyes Sound, Inc.
-          </div>
-
-          <p className="spotlight-abstract">
-            We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. QBE-SCF achieves entropic regularization across singularities in conventional electronic structure theory.
+          <h3 className="paper-spotlight-title">
+            Entropic Regularization of Multireference Singularities via the Quantum Boltzmann Equation
+          </h3>
+          <p className="paper-spotlight-authors">
+            <strong>Dr. Romit Chakraborty</strong> (Founder &amp; Chief Scientific Officer, Point Reyes Sound, Inc.)
           </p>
-
-          <div className="spotlight-actions">
+          <p className="paper-spotlight-abstract">
+            We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. QBE-SCF achieves entropic regularization across multireference singularities in transition-metal complexes with $O(N^3)$ computational scaling, replacing the exponential $O(e^N)$ wall of full-CI/CASSCF.
+          </p>
+          <div className="paper-spotlight-actions">
             <a 
               href="https://arxiv.org/abs/2608.14979" 
               target="_blank" 
@@ -632,30 +616,12 @@ export default function App() {
               View on arXiv (2608.14979) &rarr;
             </a>
             <a 
-              href="https://doi.org/10.48550/arXiv.2608.14979" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="action-btn secondary"
-              title="Official DataCite/arXiv DOI"
-            >
-              DOI: 10.48550/arXiv.2608.14979 &rarr;
-            </a>
-            <a 
-              href="https://scite.ai/reports/10.48550/arXiv.2608.14979" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="action-btn outline"
-              title="Smart Citations Index on scite.ai"
-            >
-              <span style={{ color: '#38bdf8', marginRight: '4px' }}>✦</span> scite Citations &rarr;
-            </a>
-            <a 
               href="https://arxiv.org/pdf/2608.14979.pdf" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="action-btn secondary"
             >
-              Download PDF
+              Download PDF &darr;
             </a>
             <button 
               onClick={() => handleCopyBibtex(publicationList[0])}
@@ -878,343 +844,19 @@ export default function App() {
         </div>
       </section>
 
-      {/* 6. INVESTOR RELATIONS & SEED FINANCING */}
-      <section id="investors" className="section-block investor-section">
-        <div className="section-head">
-          <div className="section-kicker">VENTURE CAPITAL &amp; STRATEGIC FINANCING</div>
-          <h2 className="section-title">Seed Stage Capital &amp; Compute Moat</h2>
-          <p className="section-sub">
-            Point Reyes Sound is raising seed capital to scale our proprietary GPU kinetic transport solver, expand enterprise computational chemistry pilots, and accelerate downstream patent filings across non-equilibrium quantum simulation.
-          </p>
-        </div>
-
-        <div className="investor-grid">
-          <div className="investor-card highlight">
-            <div className="investor-card-header">
-              <span className="investor-stage-badge">FINANCING ROUND</span>
-              <span className="investor-status-live">● Active Seed Round</span>
-            </div>
-            <h3 className="investor-card-title">Commercial &amp; Compute Highlights</h3>
-            <ul className="investor-metrics-list">
-              <li>
-                <strong>Proprietary IP Moat:</strong> U.S. Provisional Patent Application No. 64/033,274 covering BGK collision relaxation on reduced density matrices and algebraic connectivity damping.
-              </li>
-              <li>
-                <strong>Combinatorial Scaling Breakthrough:</strong> Replaces the factorial combinatorial active-space scaling ($O(e^N)$) of CASSCF and DMRG with polynomial-time kinetic relaxation.
-              </li>
-              <li>
-                <strong>$15B+ Commercial Addressable Market:</strong> High-performance materials simulation across solid-state battery electrolytes, GaN/SiC power semiconductors, and industrial transition-metal catalysis.
-              </li>
-              <li>
-                <strong>Strategic Hardware Backing:</strong> Active member of the NVIDIA Inception Program and Google Cloud Research Grant recipient.
-              </li>
-              <li>
-                <strong>Fault-Tolerant Quantum Compilation:</strong> Proven 1,747&times; Toffoli gate reduction (1.66 &times; 10&sup9; T-gates, 168 logical qubits on Cr&sub2;) demonstrating active-space kinetic relaxation on classical silicon before quantum hardware mapping.
-              </li>
-              <li>
-                <strong>Founder Pedigree:</strong> Dr. Romit Chakraborty (Ph.D. University of Chicago, UC Berkeley &amp; Lawrence Berkeley National Laboratory postdoctoral research, former Senior Computational Scientist at PsiQuantum; co-author of the Q-Chem 5 package).
-              </li>
-            </ul>
-
-            <div className="investor-cta-group">
-              <button 
-                onClick={handleSelectInvestorRequest}
-                className="action-btn primary investor-btn"
-              >
-                Request Seed Deck &amp; Briefing &rarr;
-              </button>
-              <a 
-                href="mailto:directors@pointreyessound.com?subject=Seed%20Round%20Diligence%20-%20Point%20Reyes%20Sound&body=Dear%20Point%20Reyes%20Sound%20Team%2C%0A%0AWe%20are%20evaluating%20Point%20Reyes%20Sound%20for%20our%20fund%20and%20would%20like%20to%20request%20the%20Seed%20Pitch%20Deck%20and%20schedule%20an%20introductory%20partner%20discussion.%0A%0AFund%20Name%3A%0APartner%20Name%3A%0ACheck%20Size%20Range%3A" 
-                className="action-btn outline"
-              >
-                Direct Partner Inbound &rarr;
-              </a>
-            </div>
-          </div>
-
-          <div className="investor-card decks-card">
-            <div className="investor-card-header">
-              <span className="investor-stage-badge">EXECUTIVE DOSSIERS</span>
-              <span className="investor-access-label">Institutional Access</span>
-            </div>
-            <h3 className="investor-card-title">Technical Briefs &amp; Briefings</h3>
-            <div className="brief-links-list">
-              <a href="/public-deck" target="_blank" rel="noopener noreferrer" className="brief-item">
-                <div className="brief-icon">✦</div>
-                <div className="brief-info">
-                  <strong>Executive Overview (16:9 Deck)</strong>
-                  <span>Interactive Pitch &amp; Technical Prospectus · Q-Boltz</span>
-                </div>
-                <span className="ext-arrow">↗</span>
-              </a>
-              <a href="/Point_Reyes_Sound_Executive_Overview.pdf" target="_blank" rel="noopener noreferrer" className="brief-item">
-                <div className="brief-icon">📄</div>
-                <div className="brief-info">
-                  <strong>Download Executive Overview (PDF)</strong>
-                  <span>Official 12-Page Widescreen Diligence Overview</span>
-                </div>
-                <span className="ext-arrow">↓</span>
-              </a>
-              <a href="/nvidia-brief" target="_blank" rel="noopener noreferrer" className="brief-item">
-                <div className="brief-icon">⚡</div>
-                <div className="brief-info">
-                  <strong>NVIDIA Architecture Brief</strong>
-                  <span>GPU-Accelerated QBE-SCF &amp; CUDA Acceleration</span>
-                </div>
-                <span className="ext-arrow">↗</span>
-              </a>
-              <a href="/usistef-qmf-deck" target="_blank" rel="noopener noreferrer" className="brief-item">
-                <div className="brief-icon">🔬</div>
-                <div className="brief-info">
-                  <strong>USISTEF Quantum Materials Foundry</strong>
-                  <span>Hardware Validation &amp; Foundry Roadmaps</span>
-                </div>
-                <span className="ext-arrow">↗</span>
-              </a>
-              <a href="https://rchakraborty.dev" target="_blank" rel="noopener noreferrer" className="brief-item">
-                <div className="brief-icon">🎓</div>
-                <div className="brief-info">
-                  <strong>Founder Academic &amp; Research Dossier</strong>
-                  <span>Dr. Romit Chakraborty (UChicago • UC Berkeley • LBNL • PsiQuantum)</span>
-                </div>
-                <span className="ext-arrow">↗</span>
-              </a>
-              <a href="https://scite.ai/reports/10.48550/arXiv.2608.14979" target="_blank" rel="noopener noreferrer" className="brief-item">
-                <div className="brief-icon">✦</div>
-                <div className="brief-info">
-                  <strong>scite Smart Citations Index</strong>
-                  <span>Independent Citation Verification for arXiv:2608.14979</span>
-                </div>
-                <span className="ext-arrow">↗</span>
-              </a>
-              <a href="https://github.com/point-reyes-sound" target="_blank" rel="noopener noreferrer" className="brief-item">
-                <div className="brief-icon">💻</div>
-                <div className="brief-info">
-                  <strong>Open Research &amp; Solvers (GitHub)</strong>
-                  <span>Point Reyes Sound Open-Source Repositories &amp; Verification Notebooks</span>
-                </div>
-                <span className="ext-arrow">↗</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. PEOPLE & CONTACT */}
+      {/* 6. CONTACT */}
       <section id="contact" className="section-block dark-tint">
+        <span id="investors" style={{ position: "relative", top: "-80px", display: "block" }}></span>
         <span id="team" style={{ position: "relative", top: "-80px", display: "block" }}></span>
         <span id="leadership" style={{ position: "relative", top: "-80px", display: "block" }}></span>
         <span id="advisors" style={{ position: "relative", top: "-80px", display: "block" }}></span>
         <span id="people" style={{ position: "relative", top: "-80px", display: "block" }}></span>
         <div className="section-head">
-          <div className="section-kicker">RESEARCH POD &amp; ADVISORY BOARD</div>
-          <h2 className="section-title">Leadership &amp; Advisors</h2>
+          <div className="section-kicker">COMMUNICATIONS &amp; INQUIRIES</div>
+          <h2 className="section-title">Contact</h2>
           <p className="section-sub">
-            Point Reyes Sound, Inc. is an agile privately funded theoretical research pod advised by world leaders in quantum chemistry, mathematical physics, and superconducting quantum hardware.
+            Direct scientific inquiries, computational chemistry collaboration, and institutional correspondence.
           </p>
-        </div>
-
-        <div className="people-grid" style={{ marginBottom: "2.5rem" }}>
-          {/* ROMIT CHAKRABORTY */}
-          <div className="people-card">
-            <div className="person-header">
-              <img 
-                src="/rc_scholar_portrait.jpeg" 
-                alt="Romit Chakraborty" 
-                className="person-avatar-img" 
-              />
-              <div className="person-info">
-                <h3>Dr. Romit Chakraborty</h3>
-                <span className="person-role">Founder &amp; Chief Scientific Officer</span>
-                <div className="person-links-row">
-                  <a href="mailto:romit@pointreyessound.com" className="person-contact-link">
-                    romit@pointreyessound.com
-                  </a>
-                  <span className="link-sep">&bull;</span>
-                  <a 
-                    href="https://scholar.google.com/citations?user=m4HlFRIAAAAJ" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="person-scholar-link"
-                  >
-                    Google Scholar &rarr;
-                  </a>
-                </div>
-              </div>
-            </div>
-            <p className="person-bio">
-              Theoretical Quantum Chemist and AI Researcher. Ph.D. in Theoretical &amp; Computational Chemistry from the University of Chicago (Advisor: Prof. David A. Mazziotti); Postdoctoral Research Fellow in Computational Materials Science at UC Berkeley &amp; Lawrence Berkeley National Laboratory (Advisor: Prof. Martin Head-Gordon, co-author of the Q-Chem 5 software package); former Senior Computational Scientist at PsiQuantum (Fault-Tolerant Quantum Algorithms &amp; Hardware Compilation). Pioneered the Quantum Boltzmann Equation Self-Consistent-Field (QBE-SCF) framework for non-equilibrium kinetic transport and entropic regularization of mean-field singularities.
-            </p>
-            <div className="person-tags" style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "12px" }}>
-              <a 
-                href="https://rchakraborty.dev" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="tag-scholar-btn"
-              >
-                Founder Dossier (rchakraborty.dev) &rarr;
-              </a>
-              <a 
-                href="https://scholar.google.com/citations?user=m4HlFRIAAAAJ" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="tag-scholar-btn"
-              >
-                Google Scholar &rarr;
-              </a>
-              <a 
-                href="https://www.linkedin.com/in/chakrabortyromit/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="tag-scholar-btn"
-              >
-                LinkedIn &rarr;
-              </a>
-              <a 
-                href="https://github.com/RomitChakraborty" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="tag-scholar-btn"
-              >
-                GitHub &rarr;
-              </a>
-              <a 
-                href="https://orcid.org/0000-0002-4638-6346" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="tag-scholar-btn"
-              >
-                ORCID &rarr;
-              </a>
-            </div>
-          </div>
-
-          {/* PROF. DAVID MAZZIOTTI */}
-          <div className="people-card">
-            <div className="person-header">
-              <img 
-                src="/david_mazziotti.jpg" 
-                alt="Prof. David Mazziotti" 
-                className="person-avatar-img" 
-                style={{ borderColor: "var(--accent-cyan)", boxShadow: "0 0 20px rgba(100, 200, 255, 0.25)" }}
-              />
-              <div className="person-info">
-                <h3>Prof. David A. Mazziotti</h3>
-                <span className="person-role">Scientific Advisor</span>
-                <span className="person-affiliation">Chair of Chemistry, University of Chicago</span>
-                <div className="person-links-row">
-                  <a 
-                    href="https://chemistry.uchicago.edu/faculty/david-mazziotti" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="person-scholar-link"
-                  >
-                    UChicago Faculty Profile &rarr;
-                  </a>
-                </div>
-              </div>
-            </div>
-            <p className="person-bio">
-              Chair of the Department of Chemistry at the University of Chicago. World-renowned pioneer in Reduced Density Matrix (RDM) mechanics, 2-RDM variational theory, and generalized Pauli exclusion constraints. Doctoral advisor to Dr. Romit Chakraborty.
-            </p>
-            <div className="person-tags" style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "12px" }}>
-              <a 
-                href="https://chemistry.uchicago.edu/faculty/david-mazziotti" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="tag-scholar-btn"
-              >
-                Faculty Page &rarr;
-              </a>
-              <a 
-                href="https://scholar.google.com/citations?user=d1_qZ_sAAAAJ" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="tag-scholar-btn"
-              >
-                Google Scholar &rarr;
-              </a>
-            </div>
-          </div>
-
-          {/* PROF. DAVID SCHUSTER */}
-          <div className="people-card">
-            <div className="person-header">
-              <img 
-                src="/david_schuster.jpg" 
-                alt="Prof. David Schuster" 
-                className="person-avatar-img" 
-                style={{ borderColor: "var(--accent-gold)", boxShadow: "0 0 20px rgba(245, 197, 66, 0.25)" }}
-              />
-              <div className="person-info">
-                <h3>Prof. David Schuster</h3>
-                <span className="person-role">Quantum &amp; Systems Advisor</span>
-                <span className="person-affiliation">Applied Physics, Stanford University</span>
-                <div className="person-links-row">
-                  <a 
-                    href="https://appliedphysics.stanford.edu/people/david-schuster" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="person-scholar-link"
-                  >
-                    Stanford Faculty Profile &rarr;
-                  </a>
-                </div>
-              </div>
-            </div>
-            <p className="person-bio">
-              Professor of Applied Physics at Stanford University. Pioneer in superconducting quantum circuits, circuit QED, hybrid quantum systems, and quantum microwave transducers. Advises Point Reyes Sound on physical architecture translation and hardware co-design.
-            </p>
-            <div className="person-tags" style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "12px" }}>
-              <a 
-                href="https://appliedphysics.stanford.edu/people/david-schuster" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="tag-scholar-btn"
-              >
-                Stanford Faculty Page &rarr;
-              </a>
-            </div>
-          </div>
-
-          {/* SAYAN CHAKRABORTY */}
-          <div className="people-card">
-            <div className="person-header">
-              <img 
-                src="/sayan_chakraborty.jpeg" 
-                alt="Sayan Chakraborty, Ph.D." 
-                className="person-avatar-img" 
-              />
-              <div className="person-info">
-                <h3>Sayan Chakraborty, Ph.D.</h3>
-                <span className="person-role">Research Collaborator</span>
-                <span className="person-affiliation">TCG CREST</span>
-                <div className="person-links-row">
-                  <a 
-                    href="https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="person-scholar-link"
-                  >
-                    Google Scholar &rarr;
-                  </a>
-                </div>
-              </div>
-            </div>
-            <p className="person-bio">
-              Researcher in Quantum Information, Continuous-Variable States, and Mathematical Physics at TCG CREST.
-            </p>
-            <div className="person-tags" style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "12px" }}>
-              <a 
-                href="https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="tag-scholar-btn"
-              >
-                Publications on Google Scholar &rarr;
-              </a>
-            </div>
-          </div>
         </div>
 
         <div className="contact-grid">
@@ -1282,11 +924,11 @@ export default function App() {
                   <select 
                     id="inquiryType" 
                     name="inquiryType"
-                    value={contactForm.inquiryType || "investor"}
+                    value={contactForm.inquiryType || "diligence"}
                     onChange={handleContactChange}
                     className="form-select"
                   >
-                    <option value="investor">Venture Capital / Seed Round Diligence &amp; Deck Request</option>
+                    <option value="diligence">Institutional Research &amp; Technical Briefing</option>
                     <option value="commercial">Commercial Enterprise Pilot / Compute Allocation</option>
                     <option value="hardware">Hardware &amp; Accelerator Partnership (GPU / HPC)</option>
                     <option value="academic">Academic &amp; Research Collaboration</option>
@@ -1390,7 +1032,7 @@ export default function App() {
             <h4>Quick Links</h4>
             <a href="#research">Research</a>
             <a href="#roadmap">Roadmap</a>
-            <a href="#investors">Seed Round &amp; Investors</a>
+            <a href="/public-deck" target="_blank" rel="noopener noreferrer">Technical Prospectus &rarr;</a>
             <a href="#contact">Contact</a>
             <a href="https://rchakraborty.dev" target="_blank" rel="noopener noreferrer">Founder Dossier &rarr;</a>
             <a href="https://github.com/point-reyes-sound" target="_blank" rel="noopener noreferrer">GitHub (point-reyes-sound) &rarr;</a>

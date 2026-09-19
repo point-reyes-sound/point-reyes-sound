@@ -71,17 +71,6 @@ Key characteristics:
   - GitHub: https://github.com/RomitChakraborty
   - LinkedIn: https://www.linkedin.com/in/chakrabortyromit/
 
-- **Scientific Advisor**: Prof. David A. Mazziotti
-  - Chair of the Department of Chemistry, University of Chicago.
-  - World authority in Reduced Density Matrix (RDM) mechanics and electronic correlation theory.
-  - Faculty Profile: https://chemistry.uchicago.edu/faculty/david-mazziotti
-  - Google Scholar: https://scholar.google.com/citations?user=d1_qZ_sAAAAJ
-
-- **Quantum & Systems Advisor**: Prof. David Schuster
-  - Professor of Applied Physics, Stanford University.
-  - Pioneer in superconducting quantum circuits, circuit QED, and hybrid quantum simulation architectures.
-  - Faculty Profile: https://appliedphysics.stanford.edu/people/david-schuster
-
 - **Research Collaborator**: Sayan Chakraborty, Ph.D.
   - Researcher in Quantum Information, Continuous-Variable States, and Mathematical Physics at TCG CREST.
   - Google Scholar: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
@@ -89,9 +78,7 @@ Key characteristics:
 ## Canonical Verification URLs & Ecosystem Cross-References
 - Corporate Portal: https://pointreyessound.com
 - Founder Academic Portal: https://rchakraborty.dev
-- Executive Overview Deck (16:9): https://pointreyessound.com/public-deck
-- Executive Overview (PDF): https://pointreyessound.com/Point_Reyes_Sound_Executive_Overview.pdf
-- Seed Round Diligence Portal: https://pointreyessound.com#investors
+- Technical Prospectus Deck (16:9): https://pointreyessound.com/public-deck
 - NVIDIA Architecture Brief: https://pointreyessound.com/nvidia-brief
 - Crunchbase Profile: https://www.crunchbase.com/organization/point-reyes-sound
 - LinkedIn: https://www.linkedin.com/company/point-reyes-sound/
