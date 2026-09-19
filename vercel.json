@@ -35,6 +35,14 @@
   ],
   "rewrites": [
     {
+      "source": "/deck",
+      "destination": "/public-deck.html"
+    },
+    {
+      "source": "/public-deck",
+      "destination": "/public-deck.html"
+    },
+    {
       "source": "/nvidia-brief",
       "destination": "/nvidia-brief.html"
     },
