@@ -184,6 +184,52 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
   color: var(--accent-emerald);
 }
 
+.nav-investor-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-seed-pill {
+  background: rgba(53, 255, 130, 0.15);
+  border: 1px solid rgba(53, 255, 130, 0.4);
+  color: var(--accent-emerald);
+  font-family: var(--font-mono);
+  font-size: 0.70rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.hero-kicker-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.seed-badge {
+  background: rgba(53, 255, 130, 0.12);
+  border: 1px solid rgba(53, 255, 130, 0.35);
+  color: var(--accent-emerald);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.hero-location {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
 .pulse-dot {
   width: 8px;
   height: 8px;
@@ -1306,6 +1352,180 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
 .reset-form-btn:hover {
   border-color: var(--accent-emerald);
   color: var(--accent-emerald);
+}
+
+/* ==========================================================================
+   VENTURE CAPITAL & SEED ROUND SECTION
+   ========================================================================== */
+.investor-section {
+  position: relative;
+}
+
+.investor-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.investor-card {
+  background: rgba(7, 18, 10, 0.75);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 34px;
+  display: flex;
+  flex-direction: column;
+}
+
+.investor-card.highlight {
+  background: linear-gradient(145deg, rgba(9, 24, 14, 0.9), rgba(4, 12, 7, 0.95));
+  border-color: rgba(53, 255, 130, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(53, 255, 130, 0.08);
+}
+
+.investor-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.investor-stage-badge {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent-emerald);
+}
+
+.investor-status-live {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #35ff82;
+  background: rgba(53, 255, 130, 0.12);
+  border: 1px solid rgba(53, 255, 130, 0.25);
+  padding: 3px 9px;
+  border-radius: 12px;
+}
+
+.investor-access-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--accent-cyan);
+  background: rgba(100, 200, 255, 0.1);
+  border: 1px solid rgba(100, 200, 255, 0.25);
+  padding: 3px 9px;
+  border-radius: 12px;
+}
+
+.investor-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.65rem;
+  color: #ffffff;
+  margin-bottom: 18px;
+}
+
+.investor-metrics-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+  flex: 1;
+}
+
+.investor-metrics-list li {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  padding-left: 14px;
+  border-left: 2px solid rgba(53, 255, 130, 0.3);
+}
+
+.investor-metrics-list strong {
+  color: #ffffff;
+}
+
+.investor-cta-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.investor-btn {
+  font-weight: 600;
+}
+
+.brief-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.brief-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(3, 8, 4, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.brief-item:hover {
+  border-color: var(--accent-emerald);
+  transform: translateY(-2px);
+  background: rgba(53, 255, 130, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.brief-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.brief-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.brief-info strong {
+  font-size: 0.98rem;
+  color: #ffffff;
+}
+
+.brief-info span {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.form-select {
+  background: rgba(3, 8, 4, 0.9);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--accent-emerald);
+  box-shadow: 0 0 10px rgba(53, 255, 130, 0.2);
+}
+
+@media (max-width: 992px) {
+  .investor-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ==========================================================================

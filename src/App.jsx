@@ -281,7 +281,8 @@ export default function App() {
     email: "",
     affiliation: "",
     subject: "",
-    message: ""
+    message: "",
+    inquiryType: "investor"
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -294,16 +295,31 @@ export default function App() {
     e.preventDefault();
     if (!contactForm.name || !contactForm.email || !contactForm.message) return;
     setFormSubmitted(true);
-    const subject = contactForm.subject || "Point Reyes Sound Inquiry";
-    const body = `From: ${contactForm.name} (${contactForm.affiliation || "N/A"})\nEmail: ${contactForm.email}\n\n${contactForm.message}`;
-    window.location.href = `mailto:romit@pointreyessound.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const subject = contactForm.subject || (contactForm.inquiryType === "investor" ? "Seed Round Diligence & Deck Request" : "Point Reyes Sound Inquiry");
+    const body = `Inquiry Type: ${contactForm.inquiryType || "General"}\nFrom: ${contactForm.name} (${contactForm.affiliation || "N/A"})\nEmail: ${contactForm.email}\n\n${contactForm.message}`;
+    const mailTo = contactForm.inquiryType === "investor" ? "directors@pointreyessound.com,romit@pointreyessound.com" : "romit@pointreyessound.com";
+    window.location.href = `mailto:${mailTo}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   const handleSelectHardwareCard = (topicTitle, defaultNote) => {
     setContactForm((prev) => ({
       ...prev,
       subject: `Inquiry: ${topicTitle}`,
+      inquiryType: "commercial",
       message: prev.message || `Hello Romit,\n\nI would like to inquire about Point Reyes Sound's ${topicTitle} initiatives and potential compute access / technical collaboration.\n\nBest regards,`
+    }));
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleSelectInvestorRequest = () => {
+    setContactForm((prev) => ({
+      ...prev,
+      subject: "Seed Round Diligence & Technical Pitch Deck Request",
+      inquiryType: "investor",
+      message: prev.message || "Hello Romit & Directors,\n\nWe are evaluating Point Reyes Sound for seed investment and would like to request the Seed Pitch Deck, technical executive summary, and an introductory partner discussion.\n\nFund Name:\nPartner:\nInvestment Scope:"
     }));
     const contactSection = document.getElementById("contact");
     if (contactSection) {
@@ -508,6 +524,9 @@ export default function App() {
               <span className="pulse-dot"></span> Research
             </a>
             <a href="#roadmap">Roadmap</a>
+            <a href="#investors" className="nav-investor-link">
+              Investors <span className="nav-seed-pill">Seed</span>
+            </a>
             <a href="#contact">Contact</a>
             <button 
               className="nav-interactive-link"
@@ -556,12 +575,17 @@ export default function App() {
           </div>
         </div>
 
+        <div className="hero-kicker-group">
+          <span className="seed-badge">FRONTIER TECH • SEED STAGE</span>
+          <span className="hero-location">SAN FRANCISCO, CA</span>
+        </div>
+
         <h1 className="hero-title">
-          Quantum Boltzmann Solver
+          Quantum Boltzmann Solver &amp; Kinetic Simulation Engine
         </h1>
 
         <p className="hero-lead">
-          Point Reyes Sound is a research pod advancing kinetic transport methods for quantum chemistry.
+          Point Reyes Sound is commercializing the Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform—breaking the factorial active-space scaling bottleneck of CASSCF to simulate strongly correlated electrons across clean energy materials, wide-bandgap power electronics, and industrial catalysis.
         </p>
 
         {/* FEATURED PREPRINT CALLOUT BANNER */}
@@ -842,6 +866,101 @@ export default function App() {
         </div>
       </section>
 
+      {/* 6. INVESTOR RELATIONS & SEED FINANCING */}
+      <section id="investors" className="section-block investor-section">
+        <div className="section-head">
+          <div className="section-kicker">VENTURE CAPITAL &amp; STRATEGIC FINANCING</div>
+          <h2 className="section-title">Seed Stage Capital &amp; Compute Moat</h2>
+          <p className="section-sub">
+            Point Reyes Sound is raising seed capital to scale our proprietary GPU kinetic transport solver, expand enterprise computational chemistry pilots, and accelerate downstream patent filings across non-equilibrium quantum simulation.
+          </p>
+        </div>
+
+        <div className="investor-grid">
+          <div className="investor-card highlight">
+            <div className="investor-card-header">
+              <span className="investor-stage-badge">FINANCING ROUND</span>
+              <span className="investor-status-live">● Active Seed Round</span>
+            </div>
+            <h3 className="investor-card-title">Commercial &amp; Compute Highlights</h3>
+            <ul className="investor-metrics-list">
+              <li>
+                <strong>Proprietary IP Moat:</strong> U.S. Provisional Patent Application No. 64/033,274 covering BGK collision relaxation on reduced density matrices and algebraic connectivity damping.
+              </li>
+              <li>
+                <strong>Combinatorial Scaling Breakthrough:</strong> Replaces the factorial combinatorial active-space scaling ($O(e^N)$) of CASSCF and DMRG with polynomial-time kinetic relaxation.
+              </li>
+              <li>
+                <strong>$15B+ Commercial Addressable Market:</strong> High-performance materials simulation across solid-state battery electrolytes, GaN/SiC power semiconductors, and industrial transition-metal catalysis.
+              </li>
+              <li>
+                <strong>Strategic Hardware Backing:</strong> Active member of the NVIDIA Inception Program and Google Cloud Research Grant recipient.
+              </li>
+              <li>
+                <strong>Founder Pedigree:</strong> Dr. Romit Chakraborty (Ph.D. University of Chicago, UC Berkeley &amp; Lawrence Berkeley National Laboratory postdoctoral research).
+              </li>
+            </ul>
+
+            <div className="investor-cta-group">
+              <button 
+                onClick={handleSelectInvestorRequest}
+                className="action-btn primary investor-btn"
+              >
+                Request Seed Deck &amp; Briefing &rarr;
+              </button>
+              <a 
+                href="mailto:directors@pointreyessound.com?subject=Seed%20Round%20Diligence%20-%20Point%20Reyes%20Sound&body=Dear%20Point%20Reyes%20Sound%20Team%2C%0A%0AWe%20are%20evaluating%20Point%20Reyes%20Sound%20for%20our%20fund%20and%20would%20like%20to%20request%20the%20Seed%20Pitch%20Deck%20and%20schedule%20an%20introductory%20partner%20discussion.%0A%0AFund%20Name%3A%0APartner%20Name%3A%0ACheck%20Size%20Range%3A" 
+                className="action-btn outline"
+              >
+                Direct Partner Inbound &rarr;
+              </a>
+            </div>
+          </div>
+
+          <div className="investor-card decks-card">
+            <div className="investor-card-header">
+              <span className="investor-stage-badge">EXECUTIVE DOSSIERS</span>
+              <span className="investor-access-label">Institutional Access</span>
+            </div>
+            <h3 className="investor-card-title">Technical Briefs &amp; Briefings</h3>
+            <div className="brief-links-list">
+              <a href="/nvidia-brief" target="_blank" rel="noopener noreferrer" className="brief-item">
+                <div className="brief-icon">⚡</div>
+                <div className="brief-info">
+                  <strong>NVIDIA Architecture Brief</strong>
+                  <span>GPU-Accelerated QBE-SCF &amp; CUDA Acceleration</span>
+                </div>
+                <span className="ext-arrow">↗</span>
+              </a>
+              <a href="/usistef-qmf-deck" target="_blank" rel="noopener noreferrer" className="brief-item">
+                <div className="brief-icon">🔬</div>
+                <div className="brief-info">
+                  <strong>USISTEF Quantum Materials Foundry</strong>
+                  <span>Hardware Validation &amp; Foundry Roadmaps</span>
+                </div>
+                <span className="ext-arrow">↗</span>
+              </a>
+              <a href="https://rchakraborty.dev" target="_blank" rel="noopener noreferrer" className="brief-item">
+                <div className="brief-icon">🎓</div>
+                <div className="brief-info">
+                  <strong>Founder Academic &amp; Research Dossier</strong>
+                  <span>Dr. Romit Chakraborty (UChicago, UC Berkeley, LBNL)</span>
+                </div>
+                <span className="ext-arrow">↗</span>
+              </a>
+              <a href="https://scite.ai/reports/10.48550/arXiv.2608.14979" target="_blank" rel="noopener noreferrer" className="brief-item">
+                <div className="brief-icon">✦</div>
+                <div className="brief-info">
+                  <strong>scite Smart Citations Index</strong>
+                  <span>Independent Citation Verification for arXiv:2608.14979</span>
+                </div>
+                <span className="ext-arrow">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 7. PEOPLE & CONTACT */}
       <section id="contact" className="section-block dark-tint">
         <div className="section-head">
@@ -995,6 +1114,23 @@ export default function App() {
               </div>
             ) : (
               <form onSubmit={handleContactSubmit} className="inquiry-form">
+                <div className="form-group">
+                  <label htmlFor="inquiryType">Inquiry Category *</label>
+                  <select 
+                    id="inquiryType" 
+                    name="inquiryType"
+                    value={contactForm.inquiryType || "investor"}
+                    onChange={handleContactChange}
+                    className="form-select"
+                  >
+                    <option value="investor">Venture Capital / Seed Round Diligence &amp; Deck Request</option>
+                    <option value="commercial">Commercial Enterprise Pilot / Compute Allocation</option>
+                    <option value="hardware">Hardware &amp; Accelerator Partnership (GPU / HPC)</option>
+                    <option value="academic">Academic &amp; Research Collaboration</option>
+                    <option value="general">General Corporate Inquiry</option>
+                  </select>
+                </div>
+
                 <div className="form-row-2">
                   <div className="form-group">
                     <label htmlFor="name">Full Name *</label>
@@ -1017,21 +1153,21 @@ export default function App() {
                       required 
                       value={contactForm.email} 
                       onChange={handleContactChange} 
-                      placeholder="jane.doe@university.edu"
+                      placeholder="jane.doe@fund.com or university.edu"
                     />
                   </div>
                 </div>
 
                 <div className="form-row-2">
                   <div className="form-group">
-                    <label htmlFor="affiliation">Affiliation / Institution</label>
+                    <label htmlFor="affiliation">Affiliation / Fund / Institution</label>
                     <input 
                       type="text" 
                       id="affiliation" 
                       name="affiliation" 
                       value={contactForm.affiliation} 
                       onChange={handleContactChange} 
-                      placeholder="Department of Chemistry / Lab"
+                      placeholder="Venture Fund / Enterprise R&D / Department"
                     />
                   </div>
                   <div className="form-group">
@@ -1042,7 +1178,7 @@ export default function App() {
                       name="subject" 
                       value={contactForm.subject} 
                       onChange={handleContactChange} 
-                      placeholder="Research Collaboration / Compute Grant"
+                      placeholder="Seed Round Diligence / Compute Grant / Collaboration"
                     />
                   </div>
                 </div>
@@ -1056,7 +1192,7 @@ export default function App() {
                     required 
                     value={contactForm.message} 
                     onChange={handleContactChange} 
-                    placeholder="Describe your research inquiry, proposed collaboration, or question..."
+                    placeholder="Describe your investment focus, check size parameters, or enterprise computing requirements..."
                   />
                 </div>
 
@@ -1080,7 +1216,7 @@ export default function App() {
               </div>
             </div>
             <p className="footer-desc">
-              Resolving foundational bottlenecks in quantum electronic structure.
+              Commercializing non-equilibrium kinetic transport equations for molecular simulation.
             </p>
             <div className="footer-address">
               2261 Market Street, STE 72927 &bull; San Francisco, CA 94114 &bull; United States
@@ -1091,9 +1227,11 @@ export default function App() {
             <h4>Quick Links</h4>
             <a href="#research">Research</a>
             <a href="#roadmap">Roadmap</a>
-            <a href="#people">People</a>
+            <a href="#investors">Seed Round &amp; Investors</a>
             <a href="#contact">Contact</a>
+            <a href="https://rchakraborty.dev" target="_blank" rel="noopener noreferrer">Founder Dossier &rarr;</a>
             <a href="https://www.linkedin.com/company/point-reyes-sound/" target="_blank" rel="noopener noreferrer">LinkedIn &rarr;</a>
+            <a href="https://www.crunchbase.com/organization/point-reyes-sound" target="_blank" rel="noopener noreferrer">Crunchbase &rarr;</a>
           </div>
 
           <div className="footer-col-legal">
