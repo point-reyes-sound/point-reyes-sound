@@ -909,7 +909,10 @@ export default function App() {
                 <strong>Strategic Hardware Backing:</strong> Active member of the NVIDIA Inception Program and Google Cloud Research Grant recipient.
               </li>
               <li>
-                <strong>Founder Pedigree:</strong> Dr. Romit Chakraborty (Ph.D. University of Chicago, UC Berkeley &amp; Lawrence Berkeley National Laboratory postdoctoral research).
+                <strong>Fault-Tolerant Quantum Compilation:</strong> Proven 1,747&times; Toffoli gate reduction (1.66 &times; 10&sup9; T-gates, 168 logical qubits on Cr&sub2;) demonstrating active-space kinetic relaxation on classical silicon before quantum hardware mapping.
+              </li>
+              <li>
+                <strong>Founder Pedigree:</strong> Dr. Romit Chakraborty (Ph.D. University of Chicago, UC Berkeley &amp; Lawrence Berkeley National Laboratory postdoctoral research, former Senior Computational Scientist at PsiQuantum; co-author of the Q-Chem 5 package).
               </li>
             </ul>
 
@@ -972,7 +975,7 @@ export default function App() {
                 <div className="brief-icon">🎓</div>
                 <div className="brief-info">
                   <strong>Founder Academic &amp; Research Dossier</strong>
-                  <span>Dr. Romit Chakraborty (UChicago, UC Berkeley, LBNL)</span>
+                  <span>Dr. Romit Chakraborty (UChicago • UC Berkeley • LBNL • PsiQuantum)</span>
                 </div>
                 <span className="ext-arrow">↗</span>
               </a>
@@ -1036,7 +1039,7 @@ export default function App() {
               </div>
             </div>
             <p className="person-bio">
-              Theoretical Quantum Chemist. Ph.D. in Theoretical &amp; Computational Chemistry from the University of Chicago (Advisor: Prof. David A. Mazziotti); Postdoctoral Research Fellow in Computational Materials Science at UC Berkeley &amp; Lawrence Berkeley National Laboratory (Advisor: Prof. Martin Head-Gordon). Pioneered the Quantum Boltzmann Equation Self-Consistent-Field (QBE-SCF) framework for non-equilibrium kinetic transport and entropic regularization of mean-field singularities.
+              Theoretical Quantum Chemist and AI Researcher. Ph.D. in Theoretical &amp; Computational Chemistry from the University of Chicago (Advisor: Prof. David A. Mazziotti); Postdoctoral Research Fellow in Computational Materials Science at UC Berkeley &amp; Lawrence Berkeley National Laboratory (Advisor: Prof. Martin Head-Gordon, co-author of the Q-Chem 5 software package); former Senior Computational Scientist at PsiQuantum (Fault-Tolerant Quantum Algorithms &amp; Hardware Compilation). Pioneered the Quantum Boltzmann Equation Self-Consistent-Field (QBE-SCF) framework for non-equilibrium kinetic transport and entropic regularization of mean-field singularities.
             </p>
             <div className="person-tags" style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "12px" }}>
               <a 
