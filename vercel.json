@@ -1,4 +1,38 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/research",
+      "destination": "/#research",
+      "permanent": false
+    },
+    {
+      "source": "/roadmap",
+      "destination": "/#roadmap",
+      "permanent": false
+    },
+    {
+      "source": "/publications",
+      "destination": "/#research",
+      "permanent": false
+    },
+    {
+      "source": "/people",
+      "destination": "/#team",
+      "permanent": false
+    },
+    {
+      "source": "/team",
+      "destination": "/#team",
+      "permanent": false
+    },
+    {
+      "source": "/contact",
+      "destination": "/#contact",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/nvidia-brief",
@@ -31,6 +65,51 @@
     {
       "source": "/((?!.*\\..*).*)",
       "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=3600"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=3600"
+        }
+      ]
     }
   ]
 }

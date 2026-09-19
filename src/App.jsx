@@ -91,7 +91,9 @@ const publicationList = [
     affil: "Point Reyes Sound, Inc.",
     journal: "arXiv:2608.14979 [quant-ph, physics.chem-ph]",
     date: "August 2026",
-    doi: "https://arxiv.org/abs/2608.14979",
+    doi: "10.48550/arXiv.2608.14979",
+    doiUrl: "https://doi.org/10.48550/arXiv.2608.14979",
+    arxivUrl: "https://arxiv.org/abs/2608.14979",
     pdf: "https://arxiv.org/pdf/2608.14979.pdf",
     featured: true,
     abstract: "Standard self-consistent field algorithms in quantum chemistry often fail or exhibit catastrophic derivative discontinuities near degenerate or open-shell states. We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. By minimizing the Helmholtz free energy with dynamic algebraic connectivity damping, QBE-SCF achieves smooth entropic regularization across Coulson-Fischer singular cusps and conical intersections without requiring exponential active space expansions.",
@@ -100,6 +102,7 @@ const publicationList = [
   author={Chakraborty, Romit},
   journal={arXiv preprint arXiv:2608.14979},
   year={2026},
+  doi={10.48550/arXiv.2608.14979},
   url={https://arxiv.org/abs/2608.14979}
 }`
   },
@@ -253,6 +256,16 @@ export default function App() {
       }
     }
   };
+
+  React.useEffect(() => {
+    try {
+      if (typeof window !== "undefined" && window.__scite && typeof window.__scite.insertBadges === "function") {
+        window.__scite.insertBadges();
+      }
+    } catch {
+      // Graceful fallback
+    }
+  }, []);
 
   const handleReplay = () => {
     if (videoRef.current) {
@@ -583,6 +596,24 @@ export default function App() {
               View on arXiv (2608.14979) &rarr;
             </a>
             <a 
+              href="https://doi.org/10.48550/arXiv.2608.14979" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="action-btn secondary"
+              title="Official DataCite/arXiv DOI"
+            >
+              DOI: 10.48550/arXiv.2608.14979 &rarr;
+            </a>
+            <a 
+              href="https://scite.ai/reports/10.48550/arXiv.2608.14979" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="action-btn outline"
+              title="Smart Citations Index on scite.ai"
+            >
+              <span style={{ color: '#38bdf8', marginRight: '4px' }}>✦</span> scite Citations &rarr;
+            </a>
+            <a 
               href="https://arxiv.org/pdf/2608.14979.pdf" 
               target="_blank" 
               rel="noopener noreferrer" 
@@ -596,6 +627,16 @@ export default function App() {
             >
               {copiedBibtexId === "arxiv-2608-14979" ? "✓ Citation Copied" : "Copy BibTeX"}
             </button>
+          </div>
+
+          <div style={{ marginTop: '16px' }}>
+            <div 
+              className="scite-badge" 
+              data-doi="10.48550/arXiv.2608.14979" 
+              data-layout="horizontal" 
+              data-show-zero="false" 
+              data-small="true" 
+            />
           </div>
         </div>
       </section>
@@ -657,9 +698,19 @@ export default function App() {
                 <p className="pub-card-abstract">{pub.abstract}</p>
 
                 <div className="pub-card-actions">
-                  {pub.doi && (
-                    <a href={pub.doi} target="_blank" rel="noopener noreferrer" className="pub-link">
+                  {pub.arxivUrl && (
+                    <a href={pub.arxivUrl} target="_blank" rel="noopener noreferrer" className="pub-link">
                       arXiv Page &rarr;
+                    </a>
+                  )}
+                  {pub.doi && (
+                    <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" className="pub-link">
+                      DOI: {pub.doi} &rarr;
+                    </a>
+                  )}
+                  {pub.doi && (
+                    <a href={`https://scite.ai/reports/${pub.doi}`} target="_blank" rel="noopener noreferrer" className="pub-link">
+                      scite Citations &rarr;
                     </a>
                   )}
                   {pub.pdf && (
