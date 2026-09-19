@@ -3,17 +3,6 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.pointreyessound.com"
-        }
-      ],
-      "destination": "https://pointreyessound.com/:path*",
-      "permanent": true
-    },
-    {
       "source": "/research",
       "destination": "/#research",
       "permanent": false
