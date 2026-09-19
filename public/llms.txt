@@ -25,19 +25,11 @@
 - **Q-Chem 5 Package Overview**: "Software for the frontiers of quantum chemistry: An overview of developments in the Q-Chem 5 package", E. Epifanovsky, ..., R. Chakraborty, ..., M. Head-Gordon, J.M. Herbert, A.I. Krylov, J. Chem. Phys. 155, 084801 (2021). DOI: 10.1063/5.0055522
 - **Intellectual Property**: U.S. Provisional Patent Application No. 64/033,274.
 
-## Key Leadership & Advisory Board
+## Key Leadership & Scientific Pod
 - **Dr. Romit Chakraborty**: Founder & Chief Scientific Officer (romit@pointreyessound.com).
   - Academic Dossier: https://rchakraborty.dev
   - Google Scholar: https://scholar.google.com/citations?user=m4HlFRIAAAAJ
   - ORCID: 0000-0002-4638-6346
-- **Prof. David A. Mazziotti**: Scientific Advisor.
-  - Chair of the Department of Chemistry, University of Chicago.
-  - World authority in Reduced Density Matrix (RDM) mechanics and electronic correlation theory.
-  - Faculty Profile: https://chemistry.uchicago.edu/faculty/david-mazziotti
-- **Prof. David Schuster**: Quantum & Systems Advisor.
-  - Professor of Applied Physics, Stanford University.
-  - Pioneer in superconducting quantum circuits, circuit QED, and hybrid quantum simulation architectures.
-  - Faculty Profile: https://appliedphysics.stanford.edu/people/david-schuster
 - **Sayan Chakraborty, Ph.D.**: Research Collaborator.
   - Continuous-variable quantum states and mathematical physics, TCG CREST.
   - Google Scholar: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
