@@ -578,30 +578,35 @@ export default function App() {
           </div>
         </div>
 
-        <h1 className="hero-title">
-          Quantum Boltzmann Solver
-        </h1>
-
-        <p className="hero-lead">
-          Point Reyes Sound is a research pod advancing kinetic transport methods for quantum chemistry.
-        </p>
+        {/* HERO TITLE & MISSION BOX */}
+        <div className="hero-title-box">
+          <h1 className="hero-title">
+            Quantum Boltzmann Solver
+          </h1>
+          <p className="hero-lead">
+            Point Reyes Sound is a research pod advancing kinetic transport methods for quantum chemistry.
+          </p>
+        </div>
 
         {/* FEATURED RESEARCH PAPER SPOTLIGHT */}
-        <div className="hero-paper-spotlight">
-          <div className="paper-spotlight-header">
-            <span className="spotlight-tag">FOUNDATIONAL THEORY • PREPRINT</span>
-            <span className="spotlight-doi">arXiv:2608.14979 [quant-ph]</span>
+        <div className="preprint-spotlight-card">
+          <div className="spotlight-header">
+            <div className="spotlight-tag-group">
+              <span className="spotlight-badge">FOUNDATIONAL THEORY</span>
+              <span className="spotlight-meta">arXiv:2608.14979 [quant-ph] &bull; August 2026</span>
+            </div>
+            <span className="spotlight-status">Open Access</span>
           </div>
-          <h3 className="paper-spotlight-title">
+          <h3 className="spotlight-title">
             Entropic Regularization of Multireference Singularities via the Quantum Boltzmann Equation
           </h3>
-          <p className="paper-spotlight-authors">
-            <strong>Dr. Romit Chakraborty</strong> (Founder &amp; Chief Scientific Officer, Point Reyes Sound, Inc.)
+          <p className="spotlight-author">
+            <strong>Dr. Romit Chakraborty</strong> &bull; Founder &amp; Chief Scientific Officer, Point Reyes Sound, Inc.
           </p>
-          <p className="paper-spotlight-abstract">
+          <p className="spotlight-abstract">
             We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. QBE-SCF achieves entropic regularization across multireference singularities in transition-metal complexes with $O(N^3)$ computational scaling, replacing the exponential $O(e^N)$ wall of full-CI/CASSCF.
           </p>
-          <div className="paper-spotlight-actions">
+          <div className="spotlight-actions">
             <a 
               href="https://arxiv.org/abs/2608.14979" 
               target="_blank" 
