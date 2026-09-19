@@ -578,17 +578,12 @@ export default function App() {
           </div>
         </div>
 
-        <div className="hero-kicker-group">
-          <span className="seed-badge">THEORETICAL QUANTUM CHEMISTRY • KINETIC SIMULATION POD</span>
-          <span className="hero-location">SAN FRANCISCO, CA</span>
-        </div>
-
         <h1 className="hero-title">
-          Quantum Boltzmann Solver &amp; Kinetic Simulation Engine
+          Quantum Boltzmann Solver
         </h1>
 
         <p className="hero-lead">
-          Point Reyes Sound is commercializing the Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform—breaking the factorial active-space scaling bottleneck of CASSCF to simulate strongly correlated electrons across clean energy materials, wide-bandgap power electronics, and industrial catalysis.
+          Point Reyes Sound is a research pod advancing kinetic transport methods for quantum chemistry.
         </p>
 
         {/* FEATURED RESEARCH PAPER SPOTLIGHT */}

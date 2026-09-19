@@ -203,32 +203,6 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
 }
 
-.hero-kicker-group {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.seed-badge {
-  background: rgba(53, 255, 130, 0.12);
-  border: 1px solid rgba(53, 255, 130, 0.35);
-  color: var(--accent-emerald);
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 4px 10px;
-  border-radius: var(--radius-sm);
-}
-
-.hero-location {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  letter-spacing: 0.06em;
-}
 
 .pulse-dot {
   width: 8px;
