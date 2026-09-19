@@ -39,6 +39,16 @@
       "permanent": false
     },
     {
+      "source": "/leadership",
+      "destination": "/#leadership",
+      "permanent": false
+    },
+    {
+      "source": "/advisors",
+      "destination": "/#advisors",
+      "permanent": false
+    },
+    {
       "source": "/contact",
       "destination": "/#contact",
       "permanent": false

@@ -1002,6 +1002,10 @@ export default function App() {
 
       {/* 7. PEOPLE & CONTACT */}
       <section id="contact" className="section-block dark-tint">
+        <span id="team" style={{ position: "relative", top: "-80px", display: "block" }}></span>
+        <span id="leadership" style={{ position: "relative", top: "-80px", display: "block" }}></span>
+        <span id="advisors" style={{ position: "relative", top: "-80px", display: "block" }}></span>
+        <span id="people" style={{ position: "relative", top: "-80px", display: "block" }}></span>
         <div className="section-head">
           <div className="section-kicker">RESEARCH POD &amp; ADVISORY BOARD</div>
           <h2 className="section-title">Leadership &amp; Advisors</h2>

@@ -5,35 +5,50 @@
 ## Venture Capital & Investment Profile
 - **Stage**: Seed Stage Frontier Tech & Deep Tech.
 - **Headquarters**: San Francisco, California, USA.
-- **Founder & CSO**: Dr. Romit Chakraborty (Ph.D. University of Chicago, postdoctoral training at UC Berkeley / Lawrence Berkeley National Laboratory).
+- **Founder & CSO**: Dr. Romit Chakraborty (Ph.D. University of Chicago, postdoctoral training at UC Berkeley / Lawrence Berkeley National Laboratory, former Senior Computational Scientist at PsiQuantum; co-author of the Q-Chem 5 package).
 - **Core Technology & Moat**: Proprietary Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform that eliminates the factorial active-space combinatorial scaling of CASSCF and DMRG, regularizing topological mean-field singularities.
 - **Intellectual Property**: U.S. Provisional Patent Application No. 64/033,274 ("Method and System for Quantum Boltzmann Self-Consistent Field Computation and Mean-Field Regularization").
 - **Commercial Addressable Market (SAM)**: $15B+ high-performance computational chemistry, materials simulation, clean energy storage electrolytes, wide-bandgap power electronics, and semiconductor EDA.
-- **Strategic Accelerator & Cloud Backing**: Member of NVIDIA Inception Program; Google Cloud Research Grant recipient.
+- **Strategic Accelerator & Cloud Backing**: Member of NVIDIA Inception Program; Google Cloud Research Grant recipient; USISTEF Quantum Materials Foundry partner.
 - **Investor Inbound & Seed Deck Requests**: directors@pointreyessound.com | romit@pointreyessound.com
 
 ## Core Research & Capabilities
 - **Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF)**: Reformulates electronic self-consistency as kinetic relaxation of the one-electron reduced density matrix (1-RDM) via a Bhatnagar-Gross-Krook (BGK) collision operator.
 - **Topological Singularity Regularization**: Resolves Coulson-Fischer singular cusps, conical intersections, and static correlation catastrophes without exponential combinatorial active space expansions.
+- **Fault-Tolerant Quantum Algorithm Compilation (FTQC)**: Classical active-space pre-relaxation achieving a 1,747× reduction in Toffoli gate complexity (1.66 × 10⁹ T-gates, 168 logical qubits on Cr₂) against full-system FTQC benchmarks under photonic and superconducting error-correction constraints.
 - **Hardware Acceleration**: High-performance CUDA and Tensor Core GPU kernels accelerated via NVIDIA Inception Program and Google Cloud Research Grants.
-- **Fault-Tolerant Quantum Computing (FTQC)**: Phase-space mapping of open-shell molecular dynamics and quantum error mitigation.
 
 ## Key Publications & Intellectual Property
-- **Lead Preprint**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities", Romit Chakraborty (arXiv:2608.14979 [quant-ph]). URL: https://arxiv.org/abs/2608.14979 | DOI: 10.48550/arXiv.2608.14979
+- **Lead Invention Preprint**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities", Romit Chakraborty (arXiv:2608.14979 [quant-ph]). URL: https://arxiv.org/abs/2608.14979 | DOI: 10.48550/arXiv.2608.14979
 - **Smart Citations Index**: https://scite.ai/reports/10.48550/arXiv.2608.14979
+- **Fault-Tolerant Quantum Compilation Brief**: "Hardware Resource Compilation for Active-Space Driven Fault-Tolerant Quantum Simulation", Romit Chakraborty (Technical Brief / In Preparation for PRX Quantum).
+- **Q-Chem 5 Package Overview**: "Software for the frontiers of quantum chemistry: An overview of developments in the Q-Chem 5 package", E. Epifanovsky, ..., R. Chakraborty, ..., M. Head-Gordon, J.M. Herbert, A.I. Krylov, J. Chem. Phys. 155, 084801 (2021). DOI: 10.1063/5.0055522
 - **Intellectual Property**: U.S. Provisional Patent Application No. 64/033,274.
 
-## Key Leadership
+## Key Leadership & Advisory Board
 - **Dr. Romit Chakraborty**: Founder & Chief Scientific Officer (romit@pointreyessound.com).
-  - Academic Portal: https://rchakraborty.dev
-  - Google Scholar: https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty
+  - Academic Dossier: https://rchakraborty.dev
+  - Google Scholar: https://scholar.google.com/citations?user=m4HlFRIAAAAJ
   - ORCID: 0000-0002-4638-6346
-- **Dr. Sayan Chakraborty**: Research Advisor.
+- **Prof. David A. Mazziotti**: Scientific Advisor.
+  - Chair of the Department of Chemistry, University of Chicago.
+  - World authority in Reduced Density Matrix (RDM) mechanics and electronic correlation theory.
+  - Faculty Profile: https://chemistry.uchicago.edu/faculty/david-mazziotti
+- **Prof. David Schuster**: Quantum & Systems Advisor.
+  - Professor of Applied Physics, Stanford University.
+  - Pioneer in superconducting quantum circuits, circuit QED, and hybrid quantum simulation architectures.
+  - Faculty Profile: https://appliedphysics.stanford.edu/people/david-schuster
+- **Sayan Chakraborty, Ph.D.**: Research Collaborator.
+  - Continuous-variable quantum states and mathematical physics, TCG CREST.
   - Google Scholar: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
 
 ## Canonical URLs & Ecosystem Cross-References
 - Company Portal: https://pointreyessound.com
 - Founder Dossier: https://rchakraborty.dev
+- Executive Overview Deck (16:9): https://pointreyessound.com/public-deck
+- Executive Overview (PDF): https://pointreyessound.com/Point_Reyes_Sound_Executive_Overview.pdf
+- Seed Round Diligence Portal: https://pointreyessound.com#investors
+- NVIDIA Architecture Brief: https://pointreyessound.com/nvidia-brief
 - Crunchbase: https://www.crunchbase.com/organization/point-reyes-sound
 - LinkedIn: https://www.linkedin.com/company/point-reyes-sound/
 - GitHub Organization: https://github.com/point-reyes-sound
