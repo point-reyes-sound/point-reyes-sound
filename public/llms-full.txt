@@ -47,24 +47,52 @@ Key characteristics:
 ## Strategic Compute Alliances
 - **NVIDIA Inception Program**: High-throughput CUDA and Tensor Core accelerated kinetic kernels.
 - **Google Cloud Research Grants**: Scalable distributed cluster simulation and GPU allocation.
+- **USISTEF Quantum Materials Foundry**: Non-dilutive federal hardware prototyping partnership.
 
-## Leadership & Academic Pedigree
-- **Principal Researcher & Founder**: Dr. Romit Chakraborty
-  - Education: Ph.D. University of Chicago (Advisor: Prof. David A. Mazziotti).
-  - Postdoctoral: University of California, Berkeley & Lawrence Berkeley National Laboratory (Advisor: Prof. Martin Head-Gordon).
+## Key Publications, Briefs & Intellectual Property
+- **Preprint arXiv:2608.14979**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities"
+  - Author: Romit Chakraborty
+  - Category: Quantum Physics (quant-ph), Chemical Physics (physics.chem-ph)
+  - DOI: 10.48550/arXiv.2608.14979
+  - arXiv URL: https://arxiv.org/abs/2608.14979
+  - PDF: https://arxiv.org/pdf/2608.14979.pdf
+  - Smart Citations Index: https://scite.ai/reports/10.48550/arXiv.2608.14979
+- **Fault-Tolerant Quantum Algorithm Compilation Brief**: "Hardware Resource Compilation for Active-Space Driven Fault-Tolerant Quantum Simulation", Romit Chakraborty (Technical Brief / In Preparation for PRX Quantum). Demonstrates a 1,747× reduction in Toffoli gate complexity (1.66 × 10⁹ T-gates, 168 logical qubits on Cr₂) by pre-relaxing active spaces via classical kinetic transport.
+- **Q-Chem 5 Software Package Overview**: "Software for the frontiers of quantum chemistry: An overview of developments in the Q-Chem 5 package", E. Epifanovsky, ..., R. Chakraborty, ..., M. Head-Gordon, J.M. Herbert, A.I. Krylov, The Journal of Chemical Physics 155 (8), 084801 (2021). DOI: 10.1063/5.0055522
+
+## Leadership & Advisory Board
+- **Founder & Chief Scientific Officer**: Dr. Romit Chakraborty
+  - Ph.D. in Theoretical & Computational Quantum Chemistry, University of Chicago (Advisor: Prof. David A. Mazziotti).
+  - Postdoctoral Research Fellow in Computational Materials Science, UC Berkeley & Lawrence Berkeley National Laboratory (Advisor: Prof. Martin Head-Gordon; co-author of the Q-Chem 5 package).
+  - Former Senior Computational Scientist at PsiQuantum (Fault-Tolerant Quantum Algorithms & Hardware Compilation).
   - Academic Dossier: https://rchakraborty.dev
-  - Google Scholar: https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty
+  - Google Scholar: https://scholar.google.com/citations?user=m4HlFRIAAAAJ
   - ORCID: 0000-0002-4638-6346
   - GitHub: https://github.com/RomitChakraborty
   - LinkedIn: https://www.linkedin.com/in/chakrabortyromit/
 
-- **Research Advisor**: Dr. Sayan Chakraborty
-  - Specialization: Quantum Information, Mathematical Physics, Open Quantum Systems.
-  - Scholar: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
+- **Scientific Advisor**: Prof. David A. Mazziotti
+  - Chair of the Department of Chemistry, University of Chicago.
+  - World authority in Reduced Density Matrix (RDM) mechanics and electronic correlation theory.
+  - Faculty Profile: https://chemistry.uchicago.edu/faculty/david-mazziotti
+  - Google Scholar: https://scholar.google.com/citations?user=d1_qZ_sAAAAJ
+
+- **Quantum & Systems Advisor**: Prof. David Schuster
+  - Professor of Applied Physics, Stanford University.
+  - Pioneer in superconducting quantum circuits, circuit QED, and hybrid quantum simulation architectures.
+  - Faculty Profile: https://appliedphysics.stanford.edu/people/david-schuster
+
+- **Research Collaborator**: Sayan Chakraborty, Ph.D.
+  - Researcher in Quantum Information, Continuous-Variable States, and Mathematical Physics at TCG CREST.
+  - Google Scholar: https://scholar.google.com/citations?hl=en&user=8dZktLwAAAAJ&view_op=list_works&sortby=pubdate
 
 ## Canonical Verification URLs & Ecosystem Cross-References
 - Corporate Portal: https://pointreyessound.com
 - Founder Academic Portal: https://rchakraborty.dev
+- Executive Overview Deck (16:9): https://pointreyessound.com/public-deck
+- Executive Overview (PDF): https://pointreyessound.com/Point_Reyes_Sound_Executive_Overview.pdf
+- Seed Round Diligence Portal: https://pointreyessound.com#investors
+- NVIDIA Architecture Brief: https://pointreyessound.com/nvidia-brief
 - Crunchbase Profile: https://www.crunchbase.com/organization/point-reyes-sound
 - LinkedIn: https://www.linkedin.com/company/point-reyes-sound/
 - GitHub: https://github.com/point-reyes-sound
