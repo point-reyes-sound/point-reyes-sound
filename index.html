@@ -43,8 +43,55 @@
     <script async type="application/javascript" src="https://cdn.scite.ai/badge/scite-badge-latest.min.js"></script>
 
     <!-- Ecosystem Linked-Data JSON-LD Schema (rchakraborty.dev <-> pointreyessound.com) -->
-    <script type="application/ld+json"> {
-"@context": "https://schema.org", "@graph": [ { "@type": "Person", "@id": "https://rchakraborty.dev", "name": "Dr. Romit Chakraborty", "url": "https://rchakraborty.dev", "alumniOf": { "@type": "EducationalOrganization", "name": "University of Chicago" } }, { "@type": "Organization", "@id": "https://pointreyessound.com", "name": "Point Reyes Sound, Inc.", "url": "https://pointreyessound.com", "founder": "https://rchakraborty.dev", "foundingDate": "2026", "knowsAbout": [ "Quantum Chemistry", "Artificial Intelligence", "Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF)", "Kinetic Transport Modeling" ], "publishingPrinciples": "https://doi.org" } ] } </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://rchakraborty.dev",
+          "name": "Dr. Romit Chakraborty",
+          "url": "https://rchakraborty.dev",
+          "alumniOf": [
+            { "@type": "EducationalOrganization", "name": "University of Chicago", "url": "https://chemistry.uchicago.edu" },
+            { "@type": "EducationalOrganization", "name": "Indian Institute of Technology Bombay", "url": "https://www.iitb.ac.in" },
+            { "@type": "EducationalOrganization", "name": "St. Stephen's College, Delhi", "url": "https://www.ststephens.edu" }
+          ],
+          "affiliation": [
+            { "@type": "ResearchOrganization", "name": "University of California, Berkeley", "url": "https://berkeley.edu" },
+            { "@type": "ResearchOrganization", "name": "Lawrence Berkeley National Laboratory", "url": "https://www.lbl.gov" },
+            { "@type": "Organization", "name": "PsiQuantum", "url": "https://www.psiquantum.com" },
+            { "@type": "Organization", "name": "Point Reyes Sound, Inc.", "url": "https://pointreyessound.com" }
+          ],
+          "knowsAbout": [
+            "Theoretical Quantum Chemistry",
+            "Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF)",
+            "Kinetic Transport Modeling",
+            "Fault-Tolerant Quantum Algorithm Resource Compilation",
+            "Electronic Structure Theory",
+            "Q-Chem Quantum Chemistry Software Package"
+          ]
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://pointreyessound.com",
+          "name": "Point Reyes Sound, Inc.",
+          "url": "https://pointreyessound.com",
+          "founder": "https://rchakraborty.dev",
+          "foundingDate": "2026",
+          "knowsAbout": [
+            "Quantum Chemistry",
+            "Artificial Intelligence",
+            "Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF)",
+            "Kinetic Transport Modeling",
+            "Fault-Tolerant Quantum Computing",
+            "Active-Space Resource Compilation"
+          ],
+          "publishingPrinciples": "https://doi.org"
+        }
+      ]
+    }
+    </script>
 
     <!-- Structured Data / JSON-LD for Search Engines & AI Agents -->
     <script type="application/ld+json">
@@ -79,12 +126,22 @@
           "founder": {
             "@type": "Person",
             "@id": "https://pointreyessound.com/#founder",
-            "name": "Romit Chakraborty",
-            "jobTitle": "Founder & Principal Researcher",
+            "name": "Dr. Romit Chakraborty",
+            "jobTitle": "Founder & Chief Scientific Officer",
             "email": "romit@pointreyessound.com",
+            "alumniOf": [
+              { "@type": "EducationalOrganization", "name": "University of Chicago", "url": "https://chemistry.uchicago.edu" },
+              { "@type": "EducationalOrganization", "name": "Indian Institute of Technology Bombay", "url": "https://www.iitb.ac.in" }
+            ],
+            "affiliation": [
+              { "@type": "Organization", "name": "Point Reyes Sound, Inc.", "url": "https://pointreyessound.com" },
+              { "@type": "ResearchOrganization", "name": "University of California, Berkeley", "url": "https://berkeley.edu" },
+              { "@type": "ResearchOrganization", "name": "Lawrence Berkeley National Laboratory", "url": "https://www.lbl.gov" },
+              { "@type": "Organization", "name": "PsiQuantum", "url": "https://www.psiquantum.com" }
+            ],
             "sameAs": [
               "https://rchakraborty.dev",
-              "https://scholar.google.com/citations?view_op=search_authors&mauthors=Romit+Chakraborty",
+              "https://scholar.google.com/citations?user=m4HlFRIAAAAJ",
               "https://orcid.org/0000-0002-4638-6346",
               "https://github.com/RomitChakraborty",
               "https://www.linkedin.com/in/chakrabortyromit/"
@@ -118,6 +175,39 @@
           "datePublished": "2026-08-18",
           "url": "https://arxiv.org/abs/2608.14979",
           "description": "We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. QBE-SCF achieves entropic regularization across singularities in conventional electronic structure theory."
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "@id": "https://pointreyessound.com/#publication-qchem5",
+          "headline": "Software for the frontiers of quantum chemistry: An overview of developments in the Q-Chem 5 package",
+          "name": "Software for the frontiers of quantum chemistry: An overview of developments in the Q-Chem 5 package",
+          "identifier": "10.1063/5.0055522",
+          "sameAs": "https://doi.org/10.1063/5.0055522",
+          "author": [
+            { "@id": "https://pointreyessound.com/#founder" },
+            { "@type": "Person", "name": "Martin Head-Gordon" },
+            { "@type": "Person", "name": "Anna I. Krylov" }
+          ],
+          "datePublished": "2021-08-28",
+          "isPartOf": {
+            "@type": "Periodical",
+            "name": "The Journal of Chemical Physics",
+            "issn": "0021-9606"
+          }
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "@id": "https://pointreyessound.com/#brief-ftqc-compilation",
+          "headline": "Hardware Resource Compilation for Active-Space Driven Fault-Tolerant Quantum Simulation",
+          "name": "Hardware Resource Compilation for Active-Space Driven Fault-Tolerant Quantum Simulation",
+          "author": {
+            "@id": "https://pointreyessound.com/#founder"
+          },
+          "publisher": {
+            "@id": "https://pointreyessound.com/#organization"
+          },
+          "datePublished": "2026",
+          "description": "Engineered a classical-to-quantum active-space compiler and block-encoded qubitization pipeline, proving a 1,747x reduction in Toffoli gate complexity (1.66 x 10^9 T-gates, 168 logical qubits on Cr2) against full-system fault-tolerant quantum computing benchmarks under photonic and superconducting architecture constraints."
         }
       ]
     }
