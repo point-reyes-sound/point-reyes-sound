@@ -53,16 +53,25 @@ html {
 
 body {
   font-family: var(--font-serif);
-  background-color: #03070b;
+  background-color: #061924;
   color: var(--text-primary);
   line-height: 1.65;
   font-size: 19px;
   -webkit-font-smoothing: antialiased;
   background-image: 
-    /* Deep oceanic atmospheric gradient scrim ensuring 100% text legibility & zero eye fatigue */
-    linear-gradient(180deg, rgba(3, 8, 14, 0.86) 0%, rgba(4, 11, 18, 0.76) 28%, rgba(2, 6, 10, 0.88) 75%, rgba(1, 4, 8, 0.98) 100%),
-    /* Subtle Point Reyes red watchtower beacon ambient twilight warmth */
-    radial-gradient(ellipse 65% 45% at 85% 15%, rgba(248, 113, 113, 0.14) 0%, transparent 60%),
+    /* Lighter oceanic atmospheric gradient scrim illuminating the seabed & continental shelf */
+    linear-gradient(180deg, 
+      rgba(4, 18, 28, 0.70) 0%, 
+      rgba(6, 28, 42, 0.54) 24%, 
+      rgba(8, 38, 54, 0.58) 60%, 
+      rgba(3, 14, 22, 0.78) 100%
+    ),
+    /* Submerged ocean floor / seabed caustics & shelf turquoise luminescence */
+    radial-gradient(ellipse 90% 70% at 50% 88%, rgba(13, 148, 136, 0.32) 0%, transparent 70%),
+    /* Pacific coastal shelf aquamarine ambient wash */
+    radial-gradient(ellipse 75% 55% at 20% 60%, rgba(14, 116, 144, 0.26) 0%, transparent 60%),
+    /* Point Reyes red watchtower beacon ambient twilight warmth */
+    radial-gradient(ellipse 65% 45% at 85% 15%, rgba(248, 113, 113, 0.16) 0%, transparent 60%),
     /* Authentic fine-art Point Reyes waves crashing & red watchtower */
     url('/point_reyes_waves_watchtower.jpg');
   background-size: cover;
@@ -364,12 +373,12 @@ body {
   max-width: 1360px;
   margin: 0 auto 32px auto;
   padding: 40px 48px;
-  background: linear-gradient(180deg, rgba(6, 16, 25, 0.88) 0%, rgba(3, 9, 15, 0.96) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  background: linear-gradient(180deg, rgba(4, 16, 26, 0.90) 0%, rgba(2, 10, 18, 0.96) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.32);
   border-radius: var(--radius-lg);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 35px rgba(56, 189, 248, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.70), 0 0 35px rgba(14, 165, 233, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -401,8 +410,8 @@ body {
   align-items: center;
   gap: 10px;
   padding: 8px 18px;
-  background: rgba(14, 165, 233, 0.10);
-  border: 1px solid rgba(56, 189, 248, 0.32);
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: 999px;
   color: #f0fdf4;
   font-family: var(--font-sans);
@@ -410,14 +419,14 @@ body {
   text-decoration: none;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(56, 189, 248, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(56, 189, 248, 0.15);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-github-badge:hover {
-  background: rgba(14, 165, 233, 0.20);
+  background: rgba(14, 165, 233, 0.22);
   border-color: var(--accent-ocean);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 22px rgba(56, 189, 248, 0.3);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 22px rgba(56, 189, 248, 0.35);
   transform: translateY(-2px);
 }
 
@@ -453,12 +462,13 @@ body {
   letter-spacing: -0.01em;
   margin: 0 0 16px 0;
   text-align: center;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
 }
 
 .hero-title-box .hero-lead {
   font-size: 1.25rem;
   line-height: 1.65;
-  color: var(--text-secondary);
+  color: #f1f5f9;
   max-width: 860px;
   margin: 0;
   text-align: center;
@@ -488,15 +498,15 @@ body {
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  background: linear-gradient(135deg, rgba(6, 17, 26, 0.90), rgba(3, 9, 15, 0.96));
-  border: 1px solid rgba(56, 189, 248, 0.28);
+  background: linear-gradient(135deg, rgba(5, 18, 28, 0.92), rgba(2, 10, 18, 0.97));
+  border: 1px solid rgba(56, 189, 248, 0.32);
   border-radius: var(--radius-lg);
   padding: 38px 44px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.70), 0 0 35px rgba(56, 189, 248, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.70), 0 0 35px rgba(14, 165, 233, 0.10);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .preprint-spotlight-card::before {
@@ -573,13 +583,13 @@ body {
 .spotlight-abstract {
   font-size: 1.2rem;
   line-height: 1.7;
-  color: #e2e8f0;
+  color: #f8fafc;
   font-style: italic;
   margin-bottom: 28px;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(2, 10, 18, 0.68);
   padding: 20px 24px;
   border-radius: var(--radius-md);
-  border-left: 2px solid var(--accent-cyan);
+  border-left: 3px solid var(--accent-cyan);
 }
 
 .spotlight-actions {
@@ -604,16 +614,16 @@ body {
 }
 
 .about-mission-card {
-  background: linear-gradient(145deg, rgba(6, 16, 25, 0.90) 0%, rgba(3, 8, 14, 0.96) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.26);
+  background: linear-gradient(145deg, rgba(5, 18, 28, 0.92) 0%, rgba(2, 10, 18, 0.97) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.30);
   border-radius: var(--radius-lg);
   padding: 38px 42px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(56, 189, 248, 0.06);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(14, 165, 233, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   position: relative;
   overflow: hidden;
 }
@@ -640,7 +650,7 @@ body {
 .about-card-text {
   font-size: 1.15rem;
   line-height: 1.68;
-  color: #cbd5e1;
+  color: #e2e8f0;
   margin-bottom: 16px;
 }
 
@@ -776,11 +786,12 @@ body {
 }
 
 .section-kicker {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-family: var(--font-mono) !important;
+  font-size: 0.82rem;
   letter-spacing: 0.16em;
-  color: var(--accent-emerald);
+  color: var(--accent-ocean);
   margin-bottom: 8px;
+  text-shadow: 0 1px 4px rgba(2, 8, 14, 0.85);
 }
 
 .section-title {
@@ -789,12 +800,14 @@ body {
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 14px;
+  text-shadow: 0 2px 14px rgba(2, 8, 14, 0.90);
 }
 
 .section-sub {
-  font-size: 1.15rem;
-  color: var(--text-secondary);
+  font-size: 1.18rem;
+  color: #f1f5f9;
   max-width: 840px;
+  text-shadow: 0 1px 6px rgba(2, 8, 14, 0.85);
 }
 
 /* ==========================================================================
