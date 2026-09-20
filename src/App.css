@@ -53,18 +53,25 @@ html {
 
 body {
   font-family: var(--font-serif);
-  background-color: #03070b;
+  background-color: #081d2c;
   color: var(--text-primary);
   line-height: 1.65;
   font-size: 19px;
   -webkit-font-smoothing: antialiased;
   background-image: 
-    /* Deep oceanic atmospheric gradient scrim ensuring 100% text legibility & zero eye fatigue */
-    linear-gradient(180deg, rgba(3, 8, 14, 0.86) 0%, rgba(4, 11, 18, 0.76) 28%, rgba(2, 6, 10, 0.88) 75%, rgba(1, 4, 8, 0.98) 100%),
-    /* Subtle Point Reyes red watchtower beacon ambient twilight warmth */
-    radial-gradient(ellipse 65% 45% at 85% 15%, rgba(248, 113, 113, 0.14) 0%, transparent 60%),
-    /* Authentic fine-art Point Reyes waves crashing & red watchtower */
-    url('/point_reyes_waves_watchtower.jpg');
+    /* Radiant Pacific dawn atmospheric gradient: soft morning gold & peach sky over turquoise surf */
+    linear-gradient(180deg, 
+      rgba(8, 22, 34, 0.58) 0%, 
+      rgba(10, 32, 48, 0.45) 20%, 
+      rgba(12, 40, 58, 0.52) 55%, 
+      rgba(6, 20, 32, 0.75) 100%
+    ),
+    /* Sunrise golden hour warmth */
+    radial-gradient(ellipse 80% 50% at 20% 15%, rgba(251, 191, 36, 0.18) 0%, transparent 60%),
+    /* Luminous dawn coastal shelf turquoise wash */
+    radial-gradient(ellipse 90% 70% at 50% 88%, rgba(20, 184, 166, 0.28) 0%, transparent 70%),
+    /* Authentic fine-art Point Reyes dawn waves crashing & glowing red watchtower */
+    url('/point_reyes_dawn_watchtower.jpg');
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -91,7 +98,7 @@ body {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1; /* Strictly behind all page content */
   overflow: hidden;
 }
 
@@ -107,8 +114,8 @@ body {
 .point-reyes-atmospheric-vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 82% 16%, rgba(248, 113, 113, 0.08) 0%, transparent 40%),
-              radial-gradient(circle at 50% 65%, transparent 35%, rgba(2, 6, 10, 0.75) 100%);
+  background: radial-gradient(circle at 82% 16%, rgba(251, 191, 36, 0.08) 0%, transparent 40%),
+              radial-gradient(circle at 50% 65%, transparent 40%, rgba(4, 14, 24, 0.60) 100%);
   pointer-events: none;
 }
 
@@ -364,12 +371,12 @@ body {
   max-width: 1360px;
   margin: 0 auto 32px auto;
   padding: 40px 48px;
-  background: linear-gradient(180deg, rgba(6, 16, 25, 0.88) 0%, rgba(3, 9, 15, 0.96) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  background: linear-gradient(180deg, rgba(6, 20, 32, 0.94) 0%, rgba(4, 14, 24, 0.98) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: var(--radius-lg);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 35px rgba(56, 189, 248, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.60), 0 0 35px rgba(251, 191, 36, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -377,6 +384,7 @@ body {
   justify-content: center;
   position: relative;
   overflow: hidden;
+  z-index: 2;
 }
 
 .hero-title-box::before {
@@ -401,23 +409,23 @@ body {
   align-items: center;
   gap: 10px;
   padding: 8px 18px;
-  background: rgba(14, 165, 233, 0.10);
-  border: 1px solid rgba(56, 189, 248, 0.32);
+  background: rgba(14, 165, 233, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: 999px;
   color: #f0fdf4;
   font-family: var(--font-sans);
   font-size: 0.94rem;
   text-decoration: none;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(56, 189, 248, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(56, 189, 248, 0.15);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-github-badge:hover {
-  background: rgba(14, 165, 233, 0.20);
+  background: rgba(14, 165, 233, 0.24);
   border-color: var(--accent-ocean);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 22px rgba(56, 189, 248, 0.3);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 22px rgba(56, 189, 248, 0.35);
   transform: translateY(-2px);
 }
 
@@ -453,12 +461,13 @@ body {
   letter-spacing: -0.01em;
   margin: 0 0 16px 0;
   text-align: center;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
 }
 
 .hero-title-box .hero-lead {
   font-size: 1.25rem;
   line-height: 1.65;
-  color: var(--text-secondary);
+  color: #f1f5f9;
   max-width: 860px;
   margin: 0;
   text-align: center;
@@ -488,15 +497,16 @@ body {
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  background: linear-gradient(135deg, rgba(6, 17, 26, 0.90), rgba(3, 9, 15, 0.96));
-  border: 1px solid rgba(56, 189, 248, 0.28);
+  background: linear-gradient(135deg, rgba(6, 22, 34, 0.94), rgba(4, 14, 24, 0.98));
+  border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: var(--radius-lg);
   padding: 38px 44px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.70), 0 0 35px rgba(56, 189, 248, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.60), 0 0 35px rgba(56, 189, 248, 0.10);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 2;
 }
 
 .preprint-spotlight-card::before {
@@ -604,18 +614,19 @@ body {
 }
 
 .about-mission-card {
-  background: linear-gradient(145deg, rgba(6, 16, 25, 0.90) 0%, rgba(3, 8, 14, 0.96) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.26);
+  background: linear-gradient(145deg, rgba(6, 20, 32, 0.94) 0%, rgba(4, 14, 24, 0.98) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.32);
   border-radius: var(--radius-lg);
   padding: 38px 42px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(56, 189, 248, 0.06);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 25px rgba(14, 165, 233, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   position: relative;
   overflow: hidden;
+  z-index: 2;
 }
 
 .about-mission-card::before {
@@ -640,7 +651,7 @@ body {
 .about-card-text {
   font-size: 1.15rem;
   line-height: 1.68;
-  color: #cbd5e1;
+  color: #e2e8f0;
   margin-bottom: 16px;
 }
 
@@ -652,17 +663,19 @@ body {
 }
 
 .about-pillars-card {
-  background: rgba(4, 12, 19, 0.84);
-  border: 1px solid var(--border-subtle);
+  background: rgba(6, 20, 32, 0.94);
+  border: 1px solid rgba(56, 189, 248, 0.28);
   border-radius: var(--radius-lg);
   padding: 32px 36px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   gap: 20px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.60);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+  position: relative;
+  z-index: 2;
 }
 
 .about-pillar-item {
@@ -812,27 +825,30 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
-  background: rgba(6, 16, 25, 0.82);
-  border: 1px solid var(--border-subtle);
+  background: rgba(6, 20, 32, 0.94);
+  border: 1px solid rgba(56, 189, 248, 0.28);
   border-radius: var(--radius-md);
   padding: 16px 18px;
   cursor: pointer;
   text-align: left;
   transition: all 0.25s ease;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 2;
 }
 
 .theme-tab-btn:hover {
-  background: rgba(10, 26, 40, 0.92);
-  border-color: rgba(56, 189, 248, 0.4);
+  background: rgba(10, 28, 44, 0.96);
+  border-color: rgba(56, 189, 248, 0.5);
   transform: translateY(-2px);
 }
 
 .theme-tab-btn.active {
-  background: rgba(14, 32, 48, 0.94);
+  background: rgba(14, 38, 60, 0.98);
   border-color: var(--accent-ocean);
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.20);
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.25);
 }
 
 .tab-num {
@@ -846,7 +862,7 @@ body {
   font-family: var(--font-sans);
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: #e2e8f0;
 }
 
 .theme-tab-btn.active .tab-label {
@@ -855,22 +871,24 @@ body {
 
 .theme-display-panel {
   display: block;
-  background: rgba(6, 16, 26, 0.88);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  background: rgba(6, 20, 32, 0.95);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: var(--radius-lg);
   padding: 38px 42px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(14, 165, 233, 0.08);
+  position: relative;
+  z-index: 2;
 }
 
 .theme-badge {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono) !important;
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   color: var(--accent-cyan);
-  background: rgba(100, 200, 255, 0.1);
-  border: 1px solid rgba(100, 200, 255, 0.25);
+  background: rgba(14, 165, 233, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   padding: 4px 10px;
   border-radius: var(--radius-sm);
   display: inline-block;
@@ -887,10 +905,18 @@ body {
 }
 
 .theme-summary {
-  font-size: 1.2rem;
-  color: var(--accent-emerald);
+  font-size: 1.24rem;
+  color: #38bdf8;
   margin-bottom: 18px;
   line-height: 1.55;
+  font-weight: 500;
+}
+
+.theme-body {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  margin-bottom: 32px;
 }
 
 .research-pub-block {
