@@ -507,6 +507,7 @@ export default function App() {
 
           <nav className="header-nav">
             <a href="#overview">Overview</a>
+            <a href="#about">About</a>
             <a href="#research" className="nav-research-link">
               <span className="pulse-dot"></span> Research
             </a>
@@ -639,6 +640,69 @@ export default function App() {
               data-show-zero="false" 
               data-small="true" 
             />
+          </div>
+        </div>
+      </section>
+
+      {/* 2.5 ABOUT SECTION */}
+      <section id="about" className="section-block about-section">
+        <div className="section-head">
+          <div className="section-kicker">ABOUT POINT REYES SOUND</div>
+          <h2 className="section-title">Discovery Without Deference</h2>
+          <p className="section-sub">
+            Continuous phase-space kinetics for strongly correlated electrons.
+          </p>
+        </div>
+
+        <div className="about-grid">
+          <div className="about-card about-mission-card">
+            <h3 className="about-card-title">AI-Amplified Kinetic Transport</h3>
+            <p className="about-card-text">
+              Point Reyes Sound is a theoretical and computational research pod pioneering continuous kinetic methods for strongly correlated electrons. Where traditional electronic structure encounters factorial active-space bottlenecks in multireference systems, we propagate the one-electron reduced density matrix through the Quantum Boltzmann Equation (QBE-SCF).
+            </p>
+            <p className="about-card-text">
+              By coupling AI-amplified phase-space compilation with non-equilibrium transport physics, we regularize mean-field singularities and accurately describe &ldquo;long electrons&rdquo;—delocalized, strongly correlated states that dictate catalytic transformations, wide-bandgap semiconductor transport, and energy storage interfaces.
+            </p>
+            <div className="about-actions">
+              <a 
+                href="https://github.com/point-reyes-sound" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="action-btn primary github-org-btn"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ verticalAlign: "-2px", marginRight: "8px" }}>
+                  <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                </svg>
+                Explore GitHub Organization &rarr;
+              </a>
+              <a href="#research" className="action-btn outline">
+                View Scientific Portfolio &darr;
+              </a>
+            </div>
+          </div>
+
+          <div className="about-pillars-card">
+            <div className="about-pillar-item">
+              <span className="pillar-num">01</span>
+              <div>
+                <strong>Non-Equilibrium Kinetic Theory</strong>
+                <p>Propagating reduced density matrices with BGK collision operators, replacing combinatorial CI scaling with polynomial $O(N^3)$ computational scaling.</p>
+              </div>
+            </div>
+            <div className="about-pillar-item">
+              <span className="pillar-num">02</span>
+              <div>
+                <strong>AI-Amplified Phase Space</strong>
+                <p>Continuous-variable representations and accelerated tensor compilations designed for enterprise GPU and HPC workflows.</p>
+              </div>
+            </div>
+            <div className="about-pillar-item">
+              <span className="pillar-num">03</span>
+              <div>
+                <strong>Open Scientific Benchmarking</strong>
+                <p>Open reproducibility across reference transition-metal dimers, radical singlet-triplet gaps, and multi-reference bond dissociations.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1030,6 +1094,7 @@ export default function App() {
 
           <div className="footer-col-links">
             <h4>Quick Links</h4>
+            <a href="#about">About</a>
             <a href="#research">Research</a>
             <a href="#roadmap">Roadmap</a>
             <a href="/public-deck" target="_blank" rel="noopener noreferrer">Technical Prospectus &rarr;</a>

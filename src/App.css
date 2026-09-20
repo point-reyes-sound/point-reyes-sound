@@ -502,6 +502,122 @@ button, input, textarea, select, a, span, label, p, h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
+   ABOUT SECTION
+   ========================================================================== */
+.about-section {
+  padding-top: 24px;
+  padding-bottom: 64px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+}
+
+.about-mission-card {
+  background: linear-gradient(145deg, rgba(8, 22, 14, 0.85) 0%, rgba(3, 10, 6, 0.94) 100%);
+  border: 1px solid rgba(53, 255, 130, 0.28);
+  border-radius: var(--radius-lg);
+  padding: 38px 42px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(53, 255, 130, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-mission-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent-emerald);
+}
+
+.about-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+.about-card-text {
+  font-size: 1.15rem;
+  line-height: 1.68;
+  color: #cbd5e1;
+  margin-bottom: 16px;
+}
+
+.about-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.about-pillars-card {
+  background: rgba(4, 12, 7, 0.75);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.about-pillar-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.about-pillar-item .pillar-num {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-emerald);
+  background: rgba(53, 255, 130, 0.12);
+  border: 1px solid rgba(53, 255, 130, 0.3);
+  padding: 3px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.about-pillar-item strong {
+  display: block;
+  font-size: 1.12rem;
+  font-family: var(--font-serif);
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.about-pillar-item p {
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+@media (max-width: 960px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
    BUTTONS & ACTIONS
    ========================================================================== */
 .action-btn {
