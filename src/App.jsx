@@ -584,7 +584,7 @@ export default function App() {
             Quantum Boltzmann Solver
           </h1>
           <p className="hero-lead">
-            Point Reyes Sound is a research pod advancing kinetic transport methods for quantum chemistry.
+            Point Reyes Sound. Discovery without deference.
           </p>
         </div>
 
