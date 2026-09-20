@@ -53,24 +53,24 @@ export default function PointReyesSound3DBackground() {
     window.addEventListener("scroll", onScroll, { passive: true });
 
     // 3. 3D Kinetic Ocean Wave Mesh (Continuous phase-space kinetics)
-    const waveWidth = 44;
-    const waveDepth = 32;
+    const waveWidth = 46;
+    const waveDepth = 34;
     const segW = 64;
     const segD = 48;
     const waveGeometry = new THREE.PlaneGeometry(waveWidth, waveDepth, segW, segD);
     waveGeometry.rotateX(-Math.PI / 2.3);
-    waveGeometry.translate(0, -3.8, -2);
+    waveGeometry.translate(0, -6.8, -4);
 
     const posAttr = waveGeometry.attributes.position;
     const originalPositions = new Float32Array(posAttr.array);
 
-    // Custom shader material with soft bioluminescent ocean gradient
+    // Custom shader material with soft bioluminescent dawn ocean gradient
     const waveMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
-        uColorDeep: { value: new THREE.Color("#04141e") },
+        uColorDeep: { value: new THREE.Color("#082132") },
         uColorCrest: { value: new THREE.Color("#38bdf8") },
-        uColorSpray: { value: new THREE.Color("#a7f3d0") }
+        uColorSpray: { value: new THREE.Color("#fef08a") }
       },
       vertexShader: `
         uniform float uTime;
@@ -107,14 +107,14 @@ export default function PointReyesSound3DBackground() {
           float crestFactor = smoothstep(-0.4, 0.7, vElevation);
           vec3 color = mix(uColorDeep, uColorCrest, crestFactor);
           
-          // Foaming spray highlights on breaking crests
+          // Foaming golden spray highlights on breaking crests in dawn sunlight
           if (vElevation > 0.45) {
             float sprayMix = smoothstep(0.45, 0.85, vElevation);
             color = mix(color, uColorSpray, sprayMix * 0.65);
           }
           
-          // Gentle ethereal transparency for zero eye fatigue
-          float alpha = smoothstep(-0.8, 0.6, vElevation) * 0.32 + 0.08;
+          // Soft ethereal transparency for zero eye fatigue & clean text contrast
+          float alpha = smoothstep(-0.8, 0.6, vElevation) * 0.18 + 0.05;
           gl_FragColor = vec4(color, alpha);
         }
       `,
@@ -151,10 +151,10 @@ export default function PointReyesSound3DBackground() {
     );
 
     const particleMat = new THREE.PointsMaterial({
-      color: 0x93c5fd,
+      color: 0xfde68a,
       size: 0.16,
       transparent: true,
-      opacity: 0.42,
+      opacity: 0.32,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
@@ -162,30 +162,30 @@ export default function PointReyesSound3DBackground() {
     const particleSystem = new THREE.Points(particleGeo, particleMat);
     scene.add(particleSystem);
 
-    // 5. Point Reyes Red Watchtower Beacon Beam (Volumetric Ray Sweep)
+    // 5. Point Reyes Red Watchtower Beacon Beam (Dawn Sunrise Warmth)
     // Positioned in 3D camera space at top-right headlands (matching watchtower)
     const beaconGroup = new THREE.Group();
     beaconGroup.position.set(7.5, 4.2, -6);
 
-    // Red watchtower housing light anchor
+    // Red watchtower lantern housing anchor
     const beaconLightGeo = new THREE.SphereGeometry(0.18, 16, 16);
     const beaconLightMat = new THREE.MeshBasicMaterial({
-      color: 0xff4d4d,
+      color: 0xfbbf24,
       transparent: true,
       opacity: 0.85
     });
     const beaconLightMesh = new THREE.Mesh(beaconLightGeo, beaconLightMat);
     beaconGroup.add(beaconLightMesh);
 
-    // Sweeping volumetric beacon cone
+    // Sweeping volumetric beacon cone in morning dawn light
     const beamGeo = new THREE.ConeGeometry(3.5, 14, 24, 1, true);
     beamGeo.rotateZ(Math.PI / 2);
     beamGeo.translate(7, 0, 0);
 
     const beamMat = new THREE.MeshBasicMaterial({
-      color: 0xff6b4a,
+      color: 0xf59e0b,
       transparent: true,
-      opacity: 0.075,
+      opacity: 0.055,
       blending: THREE.AdditiveBlending,
       side: THREE.DoubleSide,
       depthWrite: false
@@ -193,8 +193,8 @@ export default function PointReyesSound3DBackground() {
     const beamMesh = new THREE.Mesh(beamGeo, beamMat);
     beaconGroup.add(beamMesh);
 
-    // Subtle point light for ambient warmth
-    const beaconPointLight = new THREE.PointLight(0xff4433, 1.2, 18);
+    // Subtle point light for morning ambient warmth
+    const beaconPointLight = new THREE.PointLight(0xfbbf24, 1.0, 18);
     beaconGroup.add(beaconPointLight);
 
     scene.add(beaconGroup);
@@ -226,7 +226,7 @@ export default function PointReyesSound3DBackground() {
 
       camera.position.x = mouse.x * 0.65;
       camera.position.y = 1.8 + mouse.y * 0.45 - scrollOffset * 0.8;
-      camera.lookAt(0, -1.0 - scrollOffset * 0.5, 0);
+      camera.lookAt(0, -2.4 - scrollOffset * 0.5, 0);
 
       // Update wave mesh uniform time
       waveMaterial.uniforms.uTime.value = elapsedTime;
