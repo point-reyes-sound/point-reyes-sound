@@ -137,8 +137,11 @@ export default function App() {
     const hash = window.location.hash.toLowerCase().replace(/^#\/?/, "");
     return (
       path === "/interactive" ||
+      path === "/interactive.html" ||
       path === "/lab" ||
+      path === "/lab.html" ||
       path === "/simulator" ||
+      path === "/simulator.html" ||
       path === "/qboltz" ||
       hash === "interactive" ||
       hash === "lab" ||

@@ -81,7 +81,23 @@
       "destination": "/papers/$1"
     },
     {
-      "source": "/((?!.*\\..*).*)",
+      "source": "/interactive",
+      "destination": "/interactive.html"
+    },
+    {
+      "source": "/lab",
+      "destination": "/interactive.html"
+    },
+    {
+      "source": "/simulator",
+      "destination": "/interactive.html"
+    },
+    {
+      "source": "/qboltz",
+      "destination": "/interactive.html"
+    },
+    {
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
