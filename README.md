@@ -67,10 +67,12 @@ npm run build
 
 ```bibtex
 @article{chakraborty2026qbescf,
-  title={Entropic Regularization of Mean-Field Singularities via Quantum Kinetic Transport},
+  title={Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities},
   author={Chakraborty, Romit},
   journal={arXiv preprint arXiv:2608.14979},
-  year={2026}
+  year={2026},
+  doi={10.48550/arXiv.2608.14979},
+  url={https://arxiv.org/abs/2608.14979}
 }
 ```
 

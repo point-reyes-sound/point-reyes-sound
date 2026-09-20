@@ -19,7 +19,7 @@
 - **Hardware Acceleration**: High-performance CUDA and Tensor Core GPU kernels accelerated via NVIDIA Inception Program and Google Cloud Research Grants.
 
 ## Key Publications & Intellectual Property
-- **Lead Invention Preprint**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities", Romit Chakraborty (arXiv:2608.14979 [quant-ph]). URL: https://arxiv.org/abs/2608.14979 | DOI: 10.48550/arXiv.2608.14979
+- **Lead Invention Preprint**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities", Romit Chakraborty (arXiv:2608.14979 [physics.chem-ph, quant-ph]). URL: https://arxiv.org/abs/2608.14979 | DOI: 10.48550/arXiv.2608.14979
 - **Smart Citations Index**: https://scite.ai/reports/10.48550/arXiv.2608.14979
 - **Fault-Tolerant Quantum Compilation Brief**: "Hardware Resource Compilation for Active-Space Driven Fault-Tolerant Quantum Simulation", Romit Chakraborty (Technical Brief / In Preparation for PRX Quantum).
 - **Q-Chem 5 Package Overview**: "Software for the frontiers of quantum chemistry: An overview of developments in the Q-Chem 5 package", E. Epifanovsky, ..., R. Chakraborty, ..., M. Head-Gordon, J.M. Herbert, A.I. Krylov, J. Chem. Phys. 155, 084801 (2021). DOI: 10.1063/5.0055522
