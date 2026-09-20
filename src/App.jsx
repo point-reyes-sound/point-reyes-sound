@@ -1033,7 +1033,7 @@ export default function App() {
                       required 
                       value={contactForm.name} 
                       onChange={handleContactChange} 
-                      placeholder="Dr. Jane Doe"
+                      placeholder="Dr. Marco Mazzeratti"
                     />
                   </div>
                   <div className="form-group">
@@ -1045,7 +1045,7 @@ export default function App() {
                       required 
                       value={contactForm.email} 
                       onChange={handleContactChange} 
-                      placeholder="jane.doe@fund.com or university.edu"
+                      placeholder="marco.mazzeratti@fund.com or university.edu"
                     />
                   </div>
                 </div>
