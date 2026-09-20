@@ -617,12 +617,12 @@ export default function App() {
           <div className="spotlight-header">
             <div className="spotlight-tag-group">
               <span className="spotlight-badge">FOUNDATIONAL THEORY</span>
-              <span className="spotlight-meta">arXiv:2608.14979 [quant-ph] &bull; August 2026</span>
+              <span className="spotlight-meta">arXiv:2608.14979 [physics.chem-ph] &bull; August 2026</span>
             </div>
             <span className="spotlight-status">Open Access</span>
           </div>
           <h3 className="spotlight-title">
-            Entropic Regularization of Multireference Singularities via the Quantum Boltzmann Equation
+            Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities
           </h3>
           <p className="spotlight-author">
             <strong>Dr. Romit Chakraborty</strong> &bull; Founder &amp; Chief Scientific Officer, Point Reyes Sound, Inc.
