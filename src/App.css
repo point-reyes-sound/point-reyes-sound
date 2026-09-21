@@ -164,6 +164,13 @@ body {
   object-fit: cover;
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.brand-lockup:hover .prs-header-logo {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 16px rgba(184, 25, 46, 0.45);
+  transform: translateY(-1px);
 }
 
 .brand-text {

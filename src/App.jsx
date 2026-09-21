@@ -502,16 +502,13 @@ export default function App() {
       {/* 1. TOP GLOBAL NAVIGATION */}
       <header className="pod-header">
         <div className="header-inner">
-          <div className="brand-lockup">
+          <a href="#overview" className="brand-lockup" aria-label="Point Reyes Sound Home" title="Point Reyes Sound">
             <img 
               src="/PRS_logo_v2.jpeg" 
-              alt="Point Reyes Sound Logo" 
+              alt="Point Reyes Sound" 
               className="prs-header-logo" 
             />
-            <div className="brand-text">
-              <span className="brand-name">POINT REYES SOUND, INC.</span>
-            </div>
-          </div>
+          </a>
 
           <nav className="header-nav">
             <a href="#overview">Overview</a>
