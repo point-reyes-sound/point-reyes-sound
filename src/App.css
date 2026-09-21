@@ -151,13 +151,16 @@ body {
 }
 
 .brand-lockup {
-  position: absolute;
-  left: 0;
   display: flex;
   align-items: center;
   gap: 14px;
   text-decoration: none;
   flex-shrink: 0;
+}
+
+.header-inner .brand-lockup {
+  position: absolute;
+  left: 0;
   z-index: 2;
 }
 
@@ -2262,7 +2265,7 @@ body {
     position: static;
   }
 
-  .brand-lockup {
+  .header-inner .brand-lockup {
     position: static;
     display: flex;
     align-items: center;
