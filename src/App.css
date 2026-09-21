@@ -1823,8 +1823,8 @@ body {
   max-width: var(--max-width);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: 1.4fr 1fr 1.1fr 1.2fr;
+  gap: 36px;
 }
 
 .prs-footer-logo {
@@ -1837,43 +1837,57 @@ body {
 }
 
 .footer-desc {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: var(--text-muted);
   margin-top: 14px;
   margin-bottom: 14px;
-  max-width: 440px;
+  line-height: 1.55;
+  max-width: 360px;
 }
 
 .footer-address {
   font-family: var(--font-mono);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
+  line-height: 1.5;
 }
 
-.footer-col-links h4, .footer-col-legal h4 {
-  font-family: var(--font-sans);
-  font-size: 0.88rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #ffffff;
-  margin-bottom: 14px;
-}
-
-.footer-col-links {
+.footer-col-nav,
+.footer-col-resources,
+.footer-col-links,
+.footer-col-legal {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.footer-col-links a {
+.footer-col-nav h4,
+.footer-col-resources h4,
+.footer-col-links h4,
+.footer-col-legal h4 {
   font-family: var(--font-sans);
-  font-size: 0.9rem;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.footer-col-nav a,
+.footer-col-resources a,
+.footer-col-links a,
+.footer-connect-links a {
+  font-family: var(--font-sans);
+  font-size: 0.90rem;
   color: var(--text-secondary);
   text-decoration: none;
   transition: color 0.2s;
 }
 
-.footer-col-links a:hover {
+.footer-col-nav a:hover,
+.footer-col-resources a:hover,
+.footer-col-links a:hover,
+.footer-connect-links a:hover {
   color: var(--accent-emerald);
 }
 
@@ -1882,15 +1896,27 @@ body {
   border: none;
   color: var(--accent-emerald);
   font-family: var(--font-sans);
-  font-size: 0.9rem;
+  font-size: 0.90rem;
   text-align: left;
   cursor: pointer;
   padding: 0;
+  transition: opacity 0.2s;
 }
 
-.footer-col-legal p {
+.footer-link-btn:hover {
+  opacity: 0.85;
+}
+
+.footer-connect-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.footer-notice-text {
   font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-size: 0.80rem;
   color: var(--text-muted);
   line-height: 1.5;
 }
@@ -2223,7 +2249,8 @@ body {
     grid-template-columns: 1fr;
   }
   .footer-inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px;
   }
   .contact-layout {
     grid-template-columns: 1fr;
