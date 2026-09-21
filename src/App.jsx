@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./App.css";
 import LandingPage from "./LandingPage";
+import PreprintSpotlight from "./PreprintSpotlight";
 import { QuantumSonificationEngine } from "./physics/QuantumSonificationEngine";
 import PointReyesSound3DBackground from "./PointReyesSound3DBackground";
 
@@ -612,59 +613,11 @@ export default function App() {
           </p>
         </div>
 
-        {/* FEATURED RESEARCH PAPER SPOTLIGHT */}
-        <div className="preprint-spotlight-card">
-          <div className="spotlight-header">
-            <div className="spotlight-tag-group">
-              <span className="spotlight-badge">FOUNDATIONAL THEORY</span>
-              <span className="spotlight-meta">arXiv:2608.14979 [physics.chem-ph] &bull; August 2026</span>
-            </div>
-            <span className="spotlight-status">Open Access</span>
-          </div>
-          <h3 className="spotlight-title">
-            Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities
-          </h3>
-          <p className="spotlight-author">
-            <strong>Dr. Romit Chakraborty</strong> &bull; Founder &amp; Chief Scientific Officer, Point Reyes Sound, Inc.
-          </p>
-          <p className="spotlight-abstract">
-            We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. QBE-SCF achieves entropic regularization across multireference singularities in transition-metal complexes with $O(N^3)$ computational scaling, replacing the exponential $O(e^N)$ wall of full-CI/CASSCF.
-          </p>
-          <div className="spotlight-actions">
-            <a 
-              href="https://arxiv.org/abs/2608.14979" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="action-btn primary"
-            >
-              View on arXiv (2608.14979) &rarr;
-            </a>
-            <a 
-              href="https://arxiv.org/pdf/2608.14979.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="action-btn secondary"
-            >
-              Download PDF &darr;
-            </a>
-            <button 
-              onClick={() => handleCopyBibtex(publicationList[0])}
-              className="action-btn outline"
-            >
-              {copiedBibtexId === "arxiv-2608-14979" ? "✓ Citation Copied" : "Copy BibTeX"}
-            </button>
-          </div>
-
-          <div style={{ marginTop: '16px' }}>
-            <div 
-              className="scite-badge" 
-              data-doi="10.48550/arXiv.2608.14979" 
-              data-layout="horizontal" 
-              data-show-zero="false" 
-              data-small="true" 
-            />
-          </div>
-        </div>
+        {/* FEATURED RESEARCH PAPER SPOTLIGHT — INTERACTIVE ACTIVE BELT */}
+        <PreprintSpotlight 
+          onCopyBibtex={() => handleCopyBibtex(publicationList[0])}
+          copiedBibtexId={copiedBibtexId}
+        />
       </section>
 
       {/* 2.5 ABOUT SECTION */}
