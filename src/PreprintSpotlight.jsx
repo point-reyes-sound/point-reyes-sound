@@ -5,7 +5,7 @@ const topologicalFeatures = [
   {
     id: "coulson-fischer-h2",
     badge: "TOPOLOGICAL CUSP",
-    system: "H₂ / STO-3G",
+    system: "H₂ / cc-pVTZ",
     featureName: "Coulson-Fischer Crossing",
     sublabel: "Homolytic Bond Cleavage & Cusp Smoothing",
     imageDarkSrc: "/assets/preprint/Fig2_H2_Dissociation_dark.png",
@@ -24,7 +24,7 @@ const topologicalFeatures = [
   {
     id: "static-correlation-h3",
     badge: "STATIC CORRELATION",
-    system: "H₃ / D₃ₕ Trimer",
+    system: "H₃ / cc-pVDZ",
     featureName: "Static Correlation & GVB Limit",
     sublabel: "Symmetric D₃ₕ Stretch & Orbital Near-Degeneracy",
     imageDarkSrc: "/assets/preprint/Fig3_H3_Dissociation_dark.png",
@@ -43,7 +43,7 @@ const topologicalFeatures = [
   {
     id: "berry-phase-h4",
     badge: "BERRY PHASE HOLONOMY",
-    system: "H₄ / Rectangular Loop",
+    system: "H₄ / 6-31G",
     featureName: "H₄ Berry Phase Loop",
     sublabel: "Geometric Phase Loop & Dual Entropy Signature",
     imageDarkSrc: "/assets/preprint/Fig6_H4_Berry_dark.png",
@@ -62,7 +62,7 @@ const topologicalFeatures = [
   {
     id: "conical-intersection-beh2",
     badge: "CONICAL INTERSECTION",
-    system: "BeH₂ / C₂ᵥ Pathway",
+    system: "BeH₂ / 6-31G",
     featureName: "BeH₂ Conical Intersection",
     sublabel: "1¹A₁ ↔ 2¹A₁ Non-Adiabatic Seam Regularization",
     imageDarkSrc: "/assets/preprint/Fig7_Composite_BeH2_dark.png",
@@ -117,7 +117,7 @@ export default function PreprintSpotlight({ onCopyBibtex, copiedBibtexId }) {
         {/* Spotlight Header Bar */}
         <div className="spotlight-top-bar">
           <div className="spotlight-tag-group">
-            <span className="spotlight-badge">FOUNDATIONAL PREPRINT</span>
+            <span className="spotlight-badge">PREPRINT</span>
             <span className="spotlight-meta">
               arXiv:2608.14979 [physics.chem-ph, quant-ph] &bull; August 2026
             </span>
