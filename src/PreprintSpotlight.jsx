@@ -42,7 +42,7 @@ const topologicalFeatures = [
   },
   {
     id: "berry-phase-h4",
-    badge: "BERRY PHASE HOLONOMY",
+    badge: "BERRY PHASE",
     system: "H₄ / 6-31G",
     featureName: "H₄ Berry Phase Loop",
     sublabel: "Geometric Phase Loop & Dual Entropy Signature",
@@ -55,7 +55,7 @@ const topologicalFeatures = [
     telemetry: [
       { label: "Singularity Type", value: "Conical Seam / π Berry Phase" },
       { label: "Trajectory", value: "θ ∈ [0, 2π) Pseudorotation" },
-      { label: "Geometric Holonomy", value: "Gauge-Invariant Sign Flip" },
+      { label: "Geometric Phase", value: "Gauge-Invariant Sign Flip" },
       { label: "Cyclic Stability", value: "Zero Hysteresis" }
     ]
   },
