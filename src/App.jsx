@@ -1047,7 +1047,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 9. FOOTER */}
+      {/* 9. FOOTER: SPREAD ACROSS 4 BALANCED COLUMNS */}
       <footer className="pod-footer">
         <div className="footer-inner">
           <div className="footer-col-brand">
@@ -1065,22 +1065,44 @@ export default function App() {
             </div>
           </div>
 
-          <div className="footer-col-links">
-            <h4>Quick Links</h4>
+          <div className="footer-col-nav">
+            <h4>Platform</h4>
             <a href="#about">About</a>
             <a href="#research">Research</a>
             <a href="#roadmap">Roadmap</a>
-            <a href="/public-deck" target="_blank" rel="noopener noreferrer">Technical Prospectus &rarr;</a>
             <a href="#contact">Contact</a>
-            <a href="https://rchakraborty.dev" target="_blank" rel="noopener noreferrer">Founder Dossier &rarr;</a>
-            <a href="https://github.com/point-reyes-sound" target="_blank" rel="noopener noreferrer">GitHub (point-reyes-sound) &rarr;</a>
-            <a href="https://www.linkedin.com/company/point-reyes-sound/" target="_blank" rel="noopener noreferrer">LinkedIn &rarr;</a>
-            <a href="https://www.crunchbase.com/organization/point-reyes-sound" target="_blank" rel="noopener noreferrer">Crunchbase &rarr;</a>
+            <button className="footer-link-btn" onClick={openInteractiveLab}>
+              Interactive Simulator &rarr;
+            </button>
+          </div>
+
+          <div className="footer-col-resources">
+            <h4>Resources</h4>
+            <a href="https://arxiv.org/abs/2608.14979" target="_blank" rel="noopener noreferrer">
+              Preprint (arXiv:2608.14979) &rarr;
+            </a>
+            <a href="/public-deck" target="_blank" rel="noopener noreferrer">
+              Technical Prospectus &rarr;
+            </a>
+            <a href="https://rchakraborty.dev" target="_blank" rel="noopener noreferrer">
+              Founder Dossier &rarr;
+            </a>
+            <a href="https://github.com/point-reyes-sound" target="_blank" rel="noopener noreferrer">
+              GitHub (point-reyes-sound) &rarr;
+            </a>
           </div>
 
           <div className="footer-col-legal">
-            <h4>Notice</h4>
-            <p>
+            <h4>Connect & Legal</h4>
+            <div className="footer-connect-links">
+              <a href="https://www.linkedin.com/company/point-reyes-sound/" target="_blank" rel="noopener noreferrer">
+                LinkedIn &rarr;
+              </a>
+              <a href="https://www.crunchbase.com/organization/point-reyes-sound" target="_blank" rel="noopener noreferrer">
+                Crunchbase &rarr;
+              </a>
+            </div>
+            <p className="footer-notice-text">
               U.S. Provisional Patent Application No. 64/033,274. &copy; 2026 Point Reyes Sound, Inc. All rights reserved.
             </p>
           </div>
