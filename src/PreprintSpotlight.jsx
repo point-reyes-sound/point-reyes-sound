@@ -8,7 +8,8 @@ const topologicalFeatures = [
     system: "H₂ / STO-3G",
     featureName: "Coulson-Fischer Crossing",
     sublabel: "Homolytic Bond Cleavage & Cusp Smoothing",
-    imageSrc: "/assets/preprint/Fig2_H2_Dissociation.png",
+    imageDarkSrc: "/assets/preprint/Fig2_H2_Dissociation_dark.png",
+    imageWhiteSrc: "/assets/preprint/Fig2_H2_Dissociation.png",
     figureTag: "FIGURE 2: POTENTIAL ENERGY SURFACE",
     caption: "H₂ dissociation showing RHF energy cusp and unphysical spin-symmetry breaking vs smooth QBE-SCF (T = 0.06 Ha) Helmholtz free energy path.",
     scientificTakeaway:
@@ -26,7 +27,8 @@ const topologicalFeatures = [
     system: "H₃ / D₃ₕ Trimer",
     featureName: "Static Correlation & GVB Limit",
     sublabel: "Symmetric D₃ₕ Stretch & Orbital Near-Degeneracy",
-    imageSrc: "/assets/preprint/Fig3_H3_Dissociation.png",
+    imageDarkSrc: "/assets/preprint/Fig3_H3_Dissociation_dark.png",
+    imageWhiteSrc: "/assets/preprint/Fig3_H3_Dissociation.png",
     figureTag: "FIGURE 3: MULTIREFERENCE DECOUPLING",
     caption: "H₃ symmetric equilateral stretch at D₃ₕ geometry: Single-reference failure vs exact QBE-SCF GVB asymptotic plateau.",
     scientificTakeaway:
@@ -44,7 +46,8 @@ const topologicalFeatures = [
     system: "H₄ / Rectangular Loop",
     featureName: "H₄ Berry Phase Loop",
     sublabel: "Geometric Phase Loop & Dual Entropy Signature",
-    imageSrc: "/assets/preprint/Fig6_H4_Berry.png",
+    imageDarkSrc: "/assets/preprint/Fig6_H4_Berry_dark.png",
+    imageWhiteSrc: "/assets/preprint/Fig6_H4_Berry.png",
     figureTag: "FIGURE 6: TOPOLOGICAL GEOMETRIC PHASE",
     caption: "H₄ pseudorotation trajectory encircling the D₄ₕ conical seam: Electronic wavefunction sign inversion and continuous operator transport.",
     scientificTakeaway:
@@ -62,7 +65,8 @@ const topologicalFeatures = [
     system: "BeH₂ / C₂ᵥ Pathway",
     featureName: "BeH₂ Conical Intersection",
     sublabel: "1¹A₁ ↔ 2¹A₁ Non-Adiabatic Seam Regularization",
-    imageSrc: "/assets/preprint/Fig7_Composite_BeH2.png",
+    imageDarkSrc: "/assets/preprint/Fig7_Composite_BeH2_dark.png",
+    imageWhiteSrc: "/assets/preprint/Fig7_Composite_BeH2.png",
     figureTag: "FIGURE 7: COMPOSITE SEAM & HESSIAN MODES",
     caption: "Be insertion into H₂ along C₂ᵥ coordinates: Entropic smoothing of the 1¹A₁/2¹A₁ avoided crossing with positive semi-definite Hessians.",
     scientificTakeaway:
@@ -87,10 +91,13 @@ const PREPRINT_BIBTEX = `@article{chakraborty2026qbescf,
 
 export default function PreprintSpotlight({ onCopyBibtex, copiedBibtexId }) {
   const [activeFeatureIdx, setActiveFeatureIdx] = useState(0);
+  const [plotTheme, setPlotTheme] = useState("dark"); // Default to Dark for marketing promo
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [localCopied, setLocalCopied] = useState(false);
 
   const currentFeature = topologicalFeatures[activeFeatureIdx];
+  const activeImageSrc =
+    plotTheme === "dark" ? currentFeature.imageDarkSrc : currentFeature.imageWhiteSrc;
 
   const handleCopyCitation = () => {
     if (onCopyBibtex) {
@@ -174,26 +181,52 @@ export default function PreprintSpotlight({ onCopyBibtex, copiedBibtexId }) {
                 <span className="plot-kicker">{currentFeature.figureTag}</span>
                 <h3 className="plot-title">{currentFeature.featureName}</h3>
               </div>
-              <button
-                className="plot-inspect-badge"
-                onClick={() => setIsLightboxOpen(true)}
-                title="Expand and zoom figure"
-              >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-                </svg>
-                Zoom Plot
-              </button>
+
+              {/* Theme Toggle (Dark Promo vs Paper White) & Zoom Controls */}
+              <div className="plot-controls-group">
+                <div className="plot-theme-toggle" role="group" aria-label="Plot Theme Palette">
+                  <button
+                    type="button"
+                    className={`theme-toggle-btn ${plotTheme === "dark" ? "active" : ""}`}
+                    onClick={() => setPlotTheme("dark")}
+                    title="Dark Promo Theme (aligned with site UI)"
+                  >
+                    <span className="theme-dot dark-dot"></span>
+                    Dark (Promo)
+                  </button>
+                  <button
+                    type="button"
+                    className={`theme-toggle-btn ${plotTheme === "white" ? "active" : ""}`}
+                    onClick={() => setPlotTheme("white")}
+                    title="Preprint & Paper White Theme"
+                  >
+                    <span className="theme-dot white-dot"></span>
+                    Paper (White)
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  className="plot-inspect-badge"
+                  onClick={() => setIsLightboxOpen(true)}
+                  title="Expand and zoom figure"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                  </svg>
+                  Zoom Plot
+                </button>
+              </div>
             </div>
 
             {/* Central Plot Image Frame */}
             <div
-              className="plot-image-container"
+              className={`plot-image-container ${plotTheme === "dark" ? "dark-mode" : "white-mode"}`}
               onClick={() => setIsLightboxOpen(true)}
               title="Click to view full-resolution figure"
             >
               <img
-                src={currentFeature.imageSrc}
+                src={activeImageSrc}
                 alt={currentFeature.featureName}
                 className="plot-figure-img"
                 loading="eager"
@@ -244,6 +277,7 @@ export default function PreprintSpotlight({ onCopyBibtex, copiedBibtexId }) {
             </a>
 
             <button
+              type="button"
               onClick={handleCopyCitation}
               className={`action-btn-styled outline ${isCopied ? "copied" : ""}`}
             >
@@ -286,14 +320,18 @@ export default function PreprintSpotlight({ onCopyBibtex, copiedBibtexId }) {
           role="dialog"
           aria-modal="true"
         >
-          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className={`lightbox-content ${plotTheme === "dark" ? "dark-mode" : "white-mode"}`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
+              type="button"
               className="lightbox-close-btn"
               onClick={() => setIsLightboxOpen(false)}
             >
               ✕ Close
             </button>
-            <img src={currentFeature.imageSrc} alt={currentFeature.featureName} />
+            <img src={activeImageSrc} alt={currentFeature.featureName} />
             <p className="lightbox-caption">
               <strong>{currentFeature.featureName}:</strong> {currentFeature.caption}
             </p>
