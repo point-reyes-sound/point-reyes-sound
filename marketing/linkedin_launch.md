@@ -1,5 +1,8 @@
 # LinkedIn Launch Release: QBE-SCF
 
+### Scheduled Publication Time
+**11:30 AM PST, Tuesday, September 22, 2026**
+
 ### Exact One-Line LinkedIn Post Copy
 ```text
 Quantum Boltzmann Equation Self-Consistent-Field for the entropic regularization of mean-field singularities: https://pointreyessound.com/#preprint
