@@ -91,19 +91,16 @@ plt.rcParams.update({
 })
 
 # =========================================================================
-# HEADER BAR: Clean Paper Title & arXiv Preprint Number
-# User: "I don't think we need point reyes sound at the top nor the 'physical results overview'
-#        we just need the arxiv preprint number. and neither do we need (QBE-SCF)
-#        nor 'Entropic Regularisation of mean field singularities'"
+# HEADER BAR: Centrally Aligned Paper Title (arXiv number removed)
+# User: "centrally align the 'Quantum Boltzmann Equation Self-Consistent-Field'
+#        and remove the arXiv 2608.14979"
 # =========================================================================
-ax_hdr = fig.add_axes([0.035, 0.905, 0.93, 0.065])
+ax_hdr = fig.add_axes([0.035, 0.908, 0.93, 0.065])
 ax_hdr.set_facecolor(BG_COLOR)
 ax_hdr.axis('off')
 
-ax_hdr.text(0.0, 0.50, "Quantum Boltzmann Equation Self-Consistent-Field",
-            color=TEXT_PRIMARY, fontsize=21.5, fontfamily='serif', fontweight='bold', va='center')
-ax_hdr.text(1.0, 0.50, "arXiv:2608.14979",
-            color=CYAN_ACCENT, fontsize=14.5, fontfamily='monospace', fontweight='bold', ha='right', va='center')
+ax_hdr.text(0.50, 0.50, "Quantum Boltzmann Equation Self-Consistent-Field",
+            color=TEXT_PRIMARY, fontsize=23.5, fontfamily='serif', fontweight='bold', ha='center', va='center')
 
 # Helper to create a styled card container axis with a single centrally aligned title
 def create_card_container(x, y, w, h, title):
@@ -215,13 +212,16 @@ cb.outline.set_edgecolor(CARD_BORDER)
 create_card_container(0.725, 0.09, 0.240, 0.79, title=r"Natural Orbital Fractionalization")
 
 # 3 Orbital Sub-cards showing 'Covalent', 'Open Shell', and 'Multireference'
+# User: "remove 'p1 (a1') 1.71 electrons', 'p2 (e') 1.00 electrons', and 'p3 (e') 0.29 electrons'
+#        make 'Covalent', 'Open Shell', and 'Multireference' centrally aligned with respect to the tile
+#        under sliding bars remove in the second '(exact 1.00 electron)'"
 orb_configs = [
-    (orb_covalent, 0.575, "Covalent", r"p₁ (a₁')  •  1.71 e⁻", "Bonding core pair delocalized across all 3 centers", 1.7089, CYAN_ACCENT),
-    (orb_openshell, 0.345, "Open Shell", r"p₂ (e')  •  1.00 e⁻", "Unentangled spectator radical (exact 1.00 e⁻)", 1.0000, AMBER_ACCENT),
-    (orb_multiref, 0.115, "Multireference", r"p₃ (e')  •  0.29 e⁻", "GVB multireference pair across Coulson-Fischer seam", 0.2911, ROSE_ACCENT)
+    (orb_covalent, 0.575, "Covalent", "Bonding core pair delocalized across all 3 centers", 1.7089, CYAN_ACCENT),
+    (orb_openshell, 0.345, "Open Shell", "Unentangled spectator radical", 1.0000, AMBER_ACCENT),
+    (orb_multiref, 0.115, "Multireference", "GVB multireference pair across Coulson-Fischer seam", 0.2911, ROSE_ACCENT)
 ]
 
-for orb_img, y_pos, role_badge, orb_label, physical_desc, occ_val, accent_color in orb_configs:
+for orb_img, y_pos, role_badge, physical_desc, occ_val, accent_color in orb_configs:
     ax_subcard = fig.add_axes([0.737, y_pos, 0.216, 0.210])
     ax_subcard.set_facecolor(CARD_INNER_BG)
     for spine in ax_subcard.spines.values():
@@ -235,11 +235,9 @@ for orb_img, y_pos, role_badge, orb_label, physical_desc, occ_val, accent_color 
     ax_orb.imshow(orb_img)
     ax_orb.axis('off')
 
-    # Top Header inside subcard: Bold Role ('Covalent', 'Open Shell', 'Multireference') + Telemetry
-    ax_subcard.text(0.06, 0.90, role_badge.upper(), transform=ax_subcard.transAxes,
-                    color=accent_color, fontsize=8.6, fontweight='bold', fontfamily='monospace', va='top')
-    ax_subcard.text(0.94, 0.90, orb_label, transform=ax_subcard.transAxes,
-                    color=TEXT_PRIMARY, fontsize=7.8, fontfamily='monospace', ha='right', va='top')
+    # Top Header inside subcard: Bold Role centrally aligned
+    ax_subcard.text(0.50, 0.90, role_badge.upper(), transform=ax_subcard.transAxes,
+                    color=accent_color, fontsize=9.2, fontweight='bold', fontfamily='monospace', ha='center', va='top')
                     
     # High-tech Occupancy Progress Bar (scale 0.0 to 2.0)
     bar_x = 0.06
@@ -255,22 +253,13 @@ for orb_img, y_pos, role_badge, orb_label, physical_desc, occ_val, accent_color 
                                   facecolor=accent_color, edgecolor='none')
     ax_subcard.add_patch(rect_fill)
 
-    # Physical Reality as posited in preprint text:
-    ax_subcard.text(0.06, 0.045, physical_desc, transform=ax_subcard.transAxes,
-                    color=TEXT_SECONDARY, fontsize=7.1, fontfamily='sans-serif', va='bottom')
+    # Physical Reality as posited in preprint text: Centrally aligned under progress bar
+    ax_subcard.text(0.50, 0.045, physical_desc, transform=ax_subcard.transAxes,
+                    color=TEXT_SECONDARY, fontsize=7.2, fontfamily='sans-serif', ha='center', va='bottom')
 
 # =========================================================================
-# FOOTER: Clean Technical Invariants
+# (Footer removed as requested by user)
 # =========================================================================
-ax_ftr = fig.add_axes([0.035, 0.02, 0.93, 0.05])
-ax_ftr.set_facecolor(BG_COLOR)
-ax_ftr.axis('off')
-
-footer_line = (
-    r"Exact Trace $\mathrm{Tr}[\mathbf{P}] = N$   •   Polynomial $\mathcal{O}(N^3)$ Complexity   •   "
-    r"Continuous Analytic Forces $\nabla_{\mathbf{R}} F$   •   Zero Active Space Truncation   •   Point Reyes Sound"
-)
-ax_ftr.text(0.5, 0.45, footer_line, color=TEXT_MUTED, fontsize=9.0, fontfamily='monospace', ha='center', va='center')
 
 # -------------------------------------------------------------------------
 # Save All Target Images
