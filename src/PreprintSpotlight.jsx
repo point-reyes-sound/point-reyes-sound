@@ -142,12 +142,12 @@ export default function PreprintSpotlight({ onCopyBibtex, copiedBibtexId }) {
           Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities
         </h2>
         <p className="spotlight-author">
-          <strong>Dr. Romit Chakraborty</strong> &bull; Founder &amp; Chief Scientific Officer, Point Reyes Sound, Inc.
+          <strong>Point Reyes Sound</strong>
         </p>
 
         {/* Interactive Topological Stage */}
         <div className="spotlight-stage">
-          {/* Active Belt (Vertical Selector Column) */}
+          {/* Active Belt (2x2 Matrix Grid) */}
           <div className="active-belt" role="tablist" aria-label="Topological Features">
             <div className="belt-header">
               <span className="belt-kicker">ACTIVE BELT &bull; 4 TOPOLOGICAL PHENOMENA</span>
