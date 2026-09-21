@@ -105,8 +105,8 @@ ax_hdr.text(0.0, 0.50, "Quantum Boltzmann Equation Self-Consistent-Field",
 ax_hdr.text(1.0, 0.50, "arXiv:2608.14979",
             color=CYAN_ACCENT, fontsize=14.5, fontfamily='monospace', fontweight='bold', ha='right', va='center')
 
-# Helper to create a styled card container axis
-def create_card_container(x, y, w, h, title, subtitle):
+# Helper to create a styled card container axis with a single centrally aligned title
+def create_card_container(x, y, w, h, title):
     ax_card = fig.add_axes([x, y, w, h])
     ax_card.set_facecolor(CARD_BG)
     for spine in ax_card.spines.values():
@@ -114,19 +114,14 @@ def create_card_container(x, y, w, h, title, subtitle):
         spine.set_linewidth(1.2)
     ax_card.set_xticks([])
     ax_card.set_yticks([])
-    ax_card.text(0.04, 0.96, title, transform=ax_card.transAxes,
-                 color=TEXT_PRIMARY, fontsize=11.5, fontweight='bold', fontfamily='serif', va='top')
-    ax_card.text(0.04, 0.905, subtitle, transform=ax_card.transAxes,
-                 color=CYAN_ACCENT, fontsize=8.8, fontfamily='sans-serif', va='top')
+    ax_card.text(0.50, 0.950, title, transform=ax_card.transAxes,
+                 color=TEXT_PRIMARY, fontsize=13.0, fontweight='bold', fontfamily='serif', ha='center', va='top')
     return ax_card
 
 # =========================================================================
-# COLUMN 1: Potential Energy & Entropy Resolution (Left)
-# Container: x=0.035, w=0.305 (Left border at 0.035, Right border at 0.340)
+# COLUMN 1: H2 Dissociation (Left)
 # =========================================================================
-create_card_container(0.035, 0.09, 0.305, 0.79,
-                      title=r"1. Potential Energy Surface & Entropy",
-                      subtitle=r"H₂ Dissociation (cc-pVTZ) • Cusp Regularization (C¹ Free Energy)")
+create_card_container(0.035, 0.09, 0.305, 0.79, title=r"$\mathrm{H_2}$ Dissociation")
 
 # Internal PES Subplot: x=0.096, w=0.228 -> Labels at x ~ 0.055, fully inside 0.035!
 ax_pes = fig.add_axes([0.096, 0.465, 0.228, 0.30])
@@ -179,12 +174,9 @@ leg_ent = ax_ent.legend(loc='center right', fontsize=7.8, frameon=True, facecolo
 for t in leg_ent.get_texts(): t.set_color(TEXT_SECONDARY)
 
 # =========================================================================
-# COLUMN 2: Phase Space Fluid (Center) - User exact title: "Phase Space Fluid"
-# Container: x=0.360, w=0.345 (Left border at 0.360, Right border at 0.705)
+# COLUMN 2: BeH2 Conical Seam (Center)
 # =========================================================================
-create_card_container(0.360, 0.09, 0.345, 0.79,
-                      title=r"2. Phase Space Fluid",
-                      subtitle=r"BeH₂ Conical Seam (6-31G) • Quantum Interference & Wigner Quasiprobability")
+create_card_container(0.360, 0.09, 0.345, 0.79, title=r"$\mathrm{BeH_2}$ Conical Seam")
 
 # Internal Wigner Plot: x=0.418, w=0.235 -> Labels at x ~ 0.375, fully inside 0.360!
 ax_wig = fig.add_axes([0.418, 0.135, 0.235, 0.63])
@@ -218,15 +210,9 @@ cb.ax.tick_params(labelsize=8, colors=TEXT_MUTED)
 cb.outline.set_edgecolor(CARD_BORDER)
 
 # =========================================================================
-# COLUMN 3: 3D Natural Orbitals with Physical Reality Posited in Paper
-# User: "it should say 'Covalent', 'Open Shell', 'Multireference' and the
-#        figures should speak of the physical reality posited in the paper."
-# User: "use the images in the paper. just pick the right ones and render them professionally!"
-# Container: x=0.725, w=0.240 (Left border at 0.725, Right border at 0.965)
+# COLUMN 3: Natural Orbital Fractionalization (Right)
 # =========================================================================
-create_card_container(0.725, 0.09, 0.240, 0.79,
-                      title=r"3. Natural Orbital Fractionalization",
-                      subtitle=r"H₃ Active Space (R = 1.52 Å) • Covalent / Open Shell / Multireference")
+create_card_container(0.725, 0.09, 0.240, 0.79, title=r"Natural Orbital Fractionalization")
 
 # 3 Orbital Sub-cards showing 'Covalent', 'Open Shell', and 'Multireference'
 orb_configs = [
