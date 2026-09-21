@@ -143,18 +143,22 @@ body {
 .header-inner {
   max-width: 1560px;
   margin: 0 auto;
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 32px;
+  min-height: 48px;
 }
 
 .brand-lockup {
+  position: absolute;
+  left: 0;
   display: flex;
   align-items: center;
   gap: 14px;
   text-decoration: none;
   flex-shrink: 0;
+  z-index: 2;
 }
 
 .prs-header-logo {
@@ -2221,6 +2225,12 @@ body {
   .contact-layout {
     grid-template-columns: 1fr;
   }
+  .header-nav {
+    gap: 20px;
+  }
+  .header-nav a {
+    font-size: 1.06rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2249,12 +2259,14 @@ body {
     gap: 10px;
     align-items: stretch;
     width: 100%;
+    position: static;
   }
 
   .brand-lockup {
+    position: static;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
   }
 
