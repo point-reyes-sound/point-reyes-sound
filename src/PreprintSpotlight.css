@@ -128,23 +128,24 @@
   color: #ffffff;
 }
 
-/* Interactive Interactive Stage: Active Belt + Plot Showcase */
+/* Interactive Stage: Active Belt (2x2 Matrix) + Plot Showcase */
 .spotlight-stage {
-  display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
   margin-bottom: 28px;
 }
 
-/* Active Belt (Vertical Selector Column) */
+/* Active Belt (2x2 Matrix Grid) */
 .active-belt {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
 }
 
 .belt-header {
-  margin-bottom: 4px;
+  grid-column: 1 / -1;
+  margin-bottom: 2px;
 }
 
 .belt-kicker {
@@ -656,16 +657,6 @@
 
 /* Responsive Breakpoints */
 @media (max-width: 1080px) {
-  .spotlight-stage {
-    grid-template-columns: 1fr;
-  }
-
-  .active-belt {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
   .plot-telemetry-grid {
     grid-template-columns: repeat(2, 1fr);
   }
