@@ -41,7 +41,7 @@
 - Executive Overview (PDF): https://pointreyessound.com/Point_Reyes_Sound_Executive_Overview.pdf
 - Seed Round Diligence Portal: https://pointreyessound.com#investors
 - NVIDIA Architecture Brief: https://pointreyessound.com/nvidia-brief
-- Crunchbase: https://www.crunchbase.com/organization/point-reyes-sound
+- Crunchbase: https://www.crunchbase.com/organization/point-reyes-sound-inc-4399
 - LinkedIn: https://www.linkedin.com/company/point-reyes-sound/
 - GitHub Organization: https://github.com/point-reyes-sound
 - Comprehensive LLM Diligence File: https://pointreyessound.com/llms-full.txt
