@@ -80,7 +80,7 @@ Key characteristics:
 - Founder Academic Portal: https://rchakraborty.dev
 - Technical Prospectus Deck (16:9): https://pointreyessound.com/public-deck
 - NVIDIA Architecture Brief: https://pointreyessound.com/nvidia-brief
-- Crunchbase Profile: https://www.crunchbase.com/organization/point-reyes-sound
+- Crunchbase Profile: https://www.crunchbase.com/organization/point-reyes-sound-inc-4399
 - LinkedIn: https://www.linkedin.com/company/point-reyes-sound/
 - GitHub: https://github.com/point-reyes-sound
 - Registered Address: 2261 Market Street, STE 72927, San Francisco, CA 94114, USA.

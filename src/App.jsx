@@ -1098,7 +1098,7 @@ export default function App() {
               <a href="https://www.linkedin.com/company/point-reyes-sound/" target="_blank" rel="noopener noreferrer">
                 LinkedIn &rarr;
               </a>
-              <a href="https://www.crunchbase.com/organization/point-reyes-sound" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.crunchbase.com/organization/point-reyes-sound-inc-4399" target="_blank" rel="noopener noreferrer">
                 Crunchbase &rarr;
               </a>
             </div>
