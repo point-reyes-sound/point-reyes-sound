@@ -1034,7 +1034,7 @@ export default function App() {
                     required 
                     value={contactForm.message} 
                     onChange={handleContactChange} 
-                    placeholder="Describe your investment focus, check size parameters, or enterprise computing requirements..."
+                    placeholder="Describe your investment focus or enterprise computing requirements..."
                   />
                 </div>
 
