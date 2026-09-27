@@ -352,10 +352,10 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
   );
 }
 
-export default function LandingPage() {
+export default function LandingPage({ isActive = true }) {
   const [activeElement, setActiveElement] = useState(ELEMENTS[0]);
   const [moleculeName, setMoleculeName] = useState("H₂");
-  const [isAudioActive, setIsAudioActive] = useState(true);
+  const [isAudioActive, setIsAudioActive] = useState(false);
   const [volume, setVolume] = useState(0.8);
   const [bondDistance, setBondDistance] = useState(0.74);
   const [temperature, setTemperature] = useState(0.05);
@@ -394,28 +394,54 @@ export default function LandingPage() {
       }
     }
 
-    const startAudio = () => {
-      if (audioRef.current) {
-        audioRef.current.unlockMobileAudio();
-        audioRef.current.start();
-        setIsAudioActive(true);
-      }
-    };
-
-    // Attempt direct start immediately on mount
-    startAudio();
-
-    // Universal gesture unlock for iOS Safari and mobile Chrome
-    const unlockEvents = ['touchstart', 'touchend', 'pointerdown', 'click', 'keydown', 'scroll', 'touchmove'];
-    const unlockHandler = () => {
-      startAudio();
-    };
-
-    unlockEvents.forEach((e) => window.addEventListener(e, unlockHandler, { capture: true, passive: true }));
+    // Ensure audio starts OFF by default
+    if (audioRef.current) {
+      audioRef.current.stop();
+    }
+    setIsAudioActive(false);
 
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
-      unlockEvents.forEach((e) => window.removeEventListener(e, unlockHandler, true));
+      if (audioRef.current) audioRef.current.stop();
+      if (typeof window !== "undefined" && window.__prsAudioEngine) {
+        window.__prsAudioEngine.stop();
+      }
+    };
+  }, []);
+
+  // When navigating out of the interactive page (tab switched or deactivated), stop audio immediately
+  useEffect(() => {
+    if (!isActive) {
+      if (audioRef.current) {
+        audioRef.current.stop();
+      }
+      setIsAudioActive(false);
+    }
+  }, [isActive]);
+
+  // Global teardown listeners (route exit, tab switch, page hide, or window backgrounding)
+  useEffect(() => {
+    const handleStopAudio = () => {
+      if (audioRef.current) {
+        audioRef.current.stop();
+      }
+      setIsAudioActive(false);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        handleStopAudio();
+      }
+    };
+
+    window.addEventListener("prs:stop-audio", handleStopAudio);
+    window.addEventListener("pagehide", handleStopAudio);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener("prs:stop-audio", handleStopAudio);
+      window.removeEventListener("pagehide", handleStopAudio);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
@@ -461,8 +487,14 @@ export default function LandingPage() {
 
   const toggleAudio = () => {
     if (!audioRef.current) return;
-    const active = audioRef.current.toggle();
-    setIsAudioActive(active);
+    if (isAudioActive) {
+      audioRef.current.stop();
+      setIsAudioActive(false);
+    } else {
+      audioRef.current.unlockMobileAudio();
+      audioRef.current.start();
+      setIsAudioActive(true);
+    }
   };
 
   const handleVolumeChange = (e) => {
@@ -512,10 +544,6 @@ export default function LandingPage() {
   const handleAnimateBondFormation = () => {
     if (simRef.current) {
       simRef.current.startBondFormationSweep();
-      if (!isAudioActive && audioRef.current) {
-        audioRef.current.start();
-        setIsAudioActive(true);
-      }
     }
   };
 
@@ -802,27 +830,17 @@ export default function LandingPage() {
             ))}
           </div>
 
-          {/* Master Audio Control Hub (Rendered next to centered elements, larger play button) */}
-          <div className="audio-control-hub inline-hub">
+          {/* Dedicated Music ON/OFF Button (Initial state: OFF) */}
+          <div className="music-toggle-container">
             <button 
-              className={`audio-toggle-btn icon-only-btn ${isAudioActive ? 'active' : ''}`}
+              className={`music-toggle-pill ${isAudioActive ? 'active' : 'off'}`}
               onClick={toggleAudio}
-              title={isAudioActive ? "Pause Music" : "Play Music"}
+              title={isAudioActive ? "Turn Sonification Music Off" : "Turn Sonification Music On"}
+              aria-label={isAudioActive ? "Music On" : "Music Off"}
             >
-              {isAudioActive ? "⏸" : "▶"}
+              <span className={`music-dot ${isAudioActive ? 'dot-on' : 'dot-off'}`}></span>
+              <span className="music-label">{isAudioActive ? "MUSIC: ON" : "MUSIC: OFF"}</span>
             </button>
-            
-            <div className="volume-slider-group">
-              <span className="vol-label">VOL</span>
-              <PWaveSlider 
-                min={0} 
-                max={1} 
-                step={0.01} 
-                value={volume} 
-                onChange={handleVolumeChange} 
-                className="vol-pwave-slider"
-              />
-            </div>
           </div>
         </div>
       </div>

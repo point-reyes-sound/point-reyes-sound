@@ -810,7 +810,15 @@ export class QuantumSonificationEngine {
 
   stop() {
     if (this.masterGain && this.audioCtx) {
-      this.masterGain.gain.setValueAtTime(0.0, this.audioCtx.currentTime);
+      try {
+        this.masterGain.gain.cancelScheduledValues(this.audioCtx.currentTime);
+        this.masterGain.gain.setValueAtTime(0.0, this.audioCtx.currentTime);
+      } catch (e) {}
+    }
+    if (this.audioCtx && this.audioCtx.state === 'running') {
+      try {
+        this.audioCtx.suspend().catch(() => {});
+      } catch (e) {}
     }
     this.isPlaying = false;
     return false;
