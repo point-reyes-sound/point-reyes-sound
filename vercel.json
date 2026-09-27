@@ -90,11 +90,11 @@
     },
     {
       "source": "/papermache",
-      "destination": "/index.html"
+      "destination": "/papermache.html"
     },
     {
       "source": "/paper-mache",
-      "destination": "/index.html"
+      "destination": "/papermache.html"
     },
     {
       "source": "/interactive",
