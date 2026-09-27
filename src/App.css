@@ -2050,6 +2050,7 @@ body {
 .app-view-container {
   width: 100%;
   height: calc(100vh - 61px);
+  height: calc(100dvh - 61px);
   position: relative;
   overflow: auto;
 }
@@ -2057,6 +2058,7 @@ body {
 .papermache-fullpage-wrapper {
   width: 100%;
   height: calc(100vh - 61px);
+  height: calc(100dvh - 61px);
   position: relative;
   background: #020503;
   overflow: hidden;
@@ -2369,6 +2371,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 36px;
   }
+  .contact-grid,
   .contact-layout {
     grid-template-columns: 1fr;
   }
@@ -2396,16 +2399,17 @@ body {
 
   /* HEADER & TOP NAVIGATION BAR */
   .pod-header {
-    padding: 10px 14px;
+    padding: 8px 12px;
     position: sticky;
     top: 0;
     z-index: 100;
   }
 
   .header-inner {
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
     gap: 10px;
-    align-items: stretch;
     width: 100%;
     position: static;
   }
@@ -2414,8 +2418,7 @@ body {
     position: static;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    width: 100%;
+    flex-shrink: 0;
   }
 
   .prs-header-logo {
@@ -2425,25 +2428,24 @@ body {
   }
 
   .brand-text {
-    font-size: 1.05rem;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: none;
   }
 
   /* Sleek touch-friendly horizontal pill bar for mobile navigation */
   .header-nav {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
     scrollbar-width: none;
-    padding: 4px 2px 6px 2px;
-    width: 100%;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 2px 0;
+    width: auto;
+    flex: 1;
+    min-width: 0;
+    border-top: none;
   }
 
   .header-nav::-webkit-scrollbar {
@@ -2453,8 +2455,8 @@ body {
   .header-nav a,
   .header-nav button {
     flex-shrink: 0;
-    padding: 6px 13px;
-    font-size: 0.86rem;
+    padding: 6px 12px;
+    font-size: 0.82rem;
     font-weight: 500;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.06);
@@ -2464,7 +2466,7 @@ body {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
-    min-height: 34px;
+    min-height: 32px;
     transition: all 0.2s ease;
   }
 
@@ -2475,10 +2477,17 @@ body {
     border-color: var(--accent-ocean);
   }
 
-  .header-nav .nav-interactive-link {
-    background: rgba(34, 211, 238, 0.20);
-    border-color: rgba(34, 211, 238, 0.5);
-    color: #ffffff;
+  .header-nav .nav-tab-papermache {
+    background: rgba(56, 189, 248, 0.15) !important;
+    border-color: rgba(56, 189, 248, 0.55) !important;
+    color: #38bdf8 !important;
+    font-weight: 600;
+  }
+
+  .header-nav .nav-tab-interactive {
+    background: rgba(52, 211, 153, 0.15) !important;
+    border-color: rgba(52, 211, 153, 0.55) !important;
+    color: #34d399 !important;
     font-weight: 600;
   }
   
@@ -2979,9 +2988,12 @@ body {
   }
 
   /* CONTACT FORM & INPUTS */
+  .contact-grid,
   .contact-layout {
     grid-template-columns: 1fr;
     gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .contact-info-card, 
@@ -2989,6 +3001,39 @@ body {
     padding: 20px 14px;
     border-radius: 14px;
     box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .contact-block {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .contact-value-box,
+  .contact-emails {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .contact-address-text {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 0.94rem;
+    line-height: 1.55;
+    padding: 12px 14px;
+  }
+
+  .contact-emails a {
+    word-break: break-all;
+    overflow-wrap: break-word;
   }
 
   .contact-sub-title {
@@ -3017,6 +3062,8 @@ body {
 
   .form-group {
     margin-bottom: 16px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .form-group label {
@@ -3029,6 +3076,9 @@ body {
     font-size: 16px !important; /* Strictly prevents auto-zoom viewport jump on iOS */
     padding: 12px 14px;
     border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
   }
 
   .submit-btn {
@@ -3036,6 +3086,7 @@ body {
     min-height: 48px;
     font-size: 1rem;
     justify-content: center;
+    box-sizing: border-box;
   }
 
   /* FOOTER */
@@ -3105,6 +3156,12 @@ body {
   .lab-nav-btn {
     padding: 5px 10px;
     font-size: 0.72rem;
+  }
+
+  .app-view-container,
+  .papermache-fullpage-wrapper {
+    height: calc(100vh - 46px);
+    height: calc(100dvh - 46px);
   }
 }
 
