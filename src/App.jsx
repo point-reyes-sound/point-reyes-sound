@@ -459,7 +459,7 @@ export default function App() {
           style={{ display: currentView === "papermache" ? "block" : "none" }}
         >
           <iframe
-            src="/papermache-standalone/index.html"
+            src="/papermache-standalone"
             title="Paper Mâché // Quantum Information Clash Engine"
             className="papermache-fullpage-iframe"
           />
