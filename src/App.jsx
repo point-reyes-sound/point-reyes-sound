@@ -628,22 +628,20 @@ export default function App() {
               </svg>
               GitHub
             </a>
-            <div className="header-top-tabs" role="tablist" aria-label="Applications">
-              <button 
-                className="header-tab-btn header-tab-papermache"
-                onClick={() => openAppView("papermache")}
-                title="Launch Paper Mâché Clash Engine"
-              >
-                Paper Mâché
-              </button>
-              <button 
-                className="header-tab-btn header-tab-interactive"
-                onClick={() => openAppView("interactive")}
-                title="Launch Quantum Gas Reaction Simulator (Q-BOLTZ)"
-              >
-                Quantum Gas
-              </button>
-            </div>
+            <button 
+              className="nav-header-tab nav-tab-papermache"
+              onClick={() => openAppView("papermache")}
+              title="Launch Paper Mâché Clash Engine"
+            >
+              Paper Mâché
+            </button>
+            <button 
+              className="nav-header-tab nav-tab-interactive"
+              onClick={() => openAppView("interactive")}
+              title="Launch Quantum Gas Reaction Simulator (Q-BOLTZ)"
+            >
+              Quantum Gas
+            </button>
           </nav>
         </div>
       </header>

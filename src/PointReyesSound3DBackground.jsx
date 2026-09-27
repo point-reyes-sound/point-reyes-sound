@@ -27,14 +27,20 @@ export default function PointReyesSound3DBackground() {
     );
     camera.position.set(0, 1.8, 12);
 
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true,
-      powerPreference: "high-performance"
-    });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: "high-performance"
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    } catch (err) {
+      console.warn("WebGL not supported or failed to initialize:", err);
+      return;
+    }
 
     // 2. Interactive Mouse Parallax Coordinates
     const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };

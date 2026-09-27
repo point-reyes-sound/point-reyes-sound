@@ -222,7 +222,7 @@ body {
   font-weight: 600 !important;
 }
 
-.nav-interactive-link {
+.nav-header-tab {
   background: transparent;
   border: none;
   cursor: pointer;
@@ -231,50 +231,23 @@ body {
   font-weight: 500;
   color: var(--text-secondary);
   padding: 0;
+  margin: 0;
+  line-height: inherit;
+  vertical-align: baseline;
   transition: color 0.2s ease;
   white-space: nowrap;
 }
 
-.nav-interactive-link:hover {
-  color: var(--accent-emerald);
-}
-
-.header-top-tabs {
-  display: inline-flex;
-  align-items: center;
-  background: rgba(2, 5, 3, 0.7);
-  border: 1px solid rgba(53, 255, 130, 0.25);
-  border-radius: 24px;
-  padding: 3px 4px;
-  gap: 3px;
-  backdrop-filter: blur(8px);
-}
-
-.header-tab-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  padding: 4px 12px;
-  border-radius: 18px;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.header-tab-btn:hover {
+.nav-header-tab:hover {
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
 }
 
-.header-tab-interactive:hover {
-  color: var(--accent-emerald);
-}
-
-.header-tab-papermache:hover {
+.nav-tab-papermache:hover {
   color: #38bdf8;
+}
+
+.nav-tab-interactive:hover {
+  color: var(--accent-emerald);
 }
 
 .nav-investor-link {
@@ -2402,7 +2375,8 @@ body {
   .header-nav {
     gap: 20px;
   }
-  .header-nav a {
+  .header-nav a,
+  .header-nav button.nav-header-tab {
     font-size: 1.06rem;
   }
 }
