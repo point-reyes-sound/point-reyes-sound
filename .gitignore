@@ -28,7 +28,10 @@ scratch/
 deck/
 *.pdf
 !public/papers/*.pdf
+!public/papermache-standalone/papers/*.pdf
 !papers/*.pdf
+*.aux
+*.log
 server/
 *.py
 *.pyc
