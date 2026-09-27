@@ -13,6 +13,8 @@ P1_DATA = "/Users/romitchakraborty/QAI/p1_qbescf/data"
 OUT_LINKEDIN_CARD = "/Users/romitchakraborty/QAI/point-reyes-sound/public/assets/preprint/qbescf_linkedin_card.png"
 OUT_HERO_HOOK = "/Users/romitchakraborty/QAI/point-reyes-sound/public/assets/preprint/qbescf_hero_click_hook.png"
 OUT_MARKETING = "/Users/romitchakraborty/QAI/point-reyes-sound/marketing/linkedin_figure.png"
+OUT_LINKEDIN_BUST = "/Users/romitchakraborty/QAI/point-reyes-sound/public/assets/preprint/qbescf_linkedin_card_boltzmann_bust.png"
+OUT_MARKETING_BUST = "/Users/romitchakraborty/QAI/point-reyes-sound/marketing/linkedin_figure_boltzmann_bust.png"
 
 # -------------------------------------------------------------------------
 # 1. Load Physics Datasets
@@ -39,13 +41,11 @@ captured_T = float(d7['captured_T'])
 # -------------------------------------------------------------------------
 # 2. Authentic Paper Orbital Renders (VMD Tachyon Isosurfaces)
 # -------------------------------------------------------------------------
-# User: "use the images in the paper. just pick the right ones and render them professionally!"
-# "it should say 'Covalent', 'Open Shell', 'Multireference' and the figures should speak
-# of the physical reality posited in the paper."
 ASSETS_DIR = "/Users/romitchakraborty/QAI/point-reyes-sound/public/assets/preprint"
 orb_covalent = Image.open(os.path.join(ASSETS_DIR, "h3_covalent.png"))
 orb_openshell = Image.open(os.path.join(ASSETS_DIR, "h3_openshell.png"))
 orb_multiref = Image.open(os.path.join(ASSETS_DIR, "h3_multireference.png"))
+boltz_bust = Image.open(os.path.join(ASSETS_DIR, "boltzmann_bust_seamless.png"))
 
 # -------------------------------------------------------------------------
 # 3. Styling & Color Palettes
@@ -91,16 +91,14 @@ plt.rcParams.update({
 })
 
 # =========================================================================
-# HEADER BAR: Centrally Aligned Paper Title (arXiv number removed)
-# User: "centrally align the 'Quantum Boltzmann Equation Self-Consistent-Field'
-#        and remove the arXiv 2608.14979"
+# HEADER BAR: Forward-Facing Classical Bust of Boltzmann & His Lattice
+# User: "remove the shiny background behind boltzmann. make his image into a
+#        forward facing bust and make it bigger and shift the tiles downward."
 # =========================================================================
-ax_hdr = fig.add_axes([0.035, 0.908, 0.93, 0.065])
+ax_hdr = fig.add_axes([0.10, 0.748, 0.80, 0.245])
 ax_hdr.set_facecolor(BG_COLOR)
 ax_hdr.axis('off')
-
-ax_hdr.text(0.50, 0.50, "Quantum Boltzmann Equation Self-Consistent-Field",
-            color=TEXT_PRIMARY, fontsize=23.5, fontfamily='serif', fontweight='bold', ha='center', va='center')
+ax_hdr.imshow(boltz_bust, aspect='equal')
 
 # Helper to create a styled card container axis with a single centrally aligned title
 def create_card_container(x, y, w, h, title):
@@ -116,12 +114,12 @@ def create_card_container(x, y, w, h, title):
     return ax_card
 
 # =========================================================================
-# COLUMN 1: H2 Dissociation (Left)
+# COLUMN 1: H2 Dissociation (Left - Shifted Downward)
 # =========================================================================
-create_card_container(0.035, 0.09, 0.305, 0.79, title=r"$\mathrm{H_2}$ Dissociation")
+create_card_container(0.035, 0.030, 0.305, 0.715, title=r"$\mathrm{H_2}$ Dissociation")
 
 # Internal PES Subplot: x=0.096, w=0.228 -> Labels at x ~ 0.055, fully inside 0.035!
-ax_pes = fig.add_axes([0.096, 0.465, 0.228, 0.30])
+ax_pes = fig.add_axes([0.096, 0.370, 0.228, 0.275])
 ax_pes.set_facecolor(CARD_INNER_BG)
 ax_pes.grid(True, linestyle=':', color=CYAN_ACCENT, alpha=0.15)
 
@@ -150,7 +148,7 @@ leg_pes = ax_pes.legend(loc='upper right', fontsize=8.0, frameon=True, facecolor
 for t in leg_pes.get_texts(): t.set_color(TEXT_SECONDARY)
 
 # Internal Entropy Subplot: x=0.096, w=0.228
-ax_ent = fig.add_axes([0.096, 0.135, 0.228, 0.265])
+ax_ent = fig.add_axes([0.096, 0.065, 0.228, 0.245])
 ax_ent.set_facecolor(CARD_INNER_BG)
 ax_ent.grid(True, linestyle=':', color=CYAN_ACCENT, alpha=0.15)
 
@@ -171,12 +169,12 @@ leg_ent = ax_ent.legend(loc='center right', fontsize=7.8, frameon=True, facecolo
 for t in leg_ent.get_texts(): t.set_color(TEXT_SECONDARY)
 
 # =========================================================================
-# COLUMN 2: BeH2 Conical Seam (Center)
+# COLUMN 2: BeH2 Conical Seam (Center - Shifted Downward)
 # =========================================================================
-create_card_container(0.360, 0.09, 0.345, 0.79, title=r"$\mathrm{BeH_2}$ Conical Seam")
+create_card_container(0.360, 0.030, 0.345, 0.715, title=r"$\mathrm{BeH_2}$ Conical Seam")
 
 # Internal Wigner Plot: x=0.418, w=0.235 -> Labels at x ~ 0.375, fully inside 0.360!
-ax_wig = fig.add_axes([0.418, 0.135, 0.235, 0.63])
+ax_wig = fig.add_axes([0.418, 0.065, 0.235, 0.580])
 ax_wig.set_facecolor(CARD_INNER_BG)
 
 extent_w = [q_bohr.min(), q_bohr.max(), k_y.min(), k_y.max()]
@@ -199,30 +197,26 @@ ax_wig.text(0.94, 0.94, r'$T = 0.06\ \mathrm{Ha}$', color='#ffffff',
             fontsize=8.5, fontweight='bold', ha='right', va='top', transform=ax_wig.transAxes,
             bbox=dict(boxstyle='round,pad=0.3', facecolor=CARD_BG, edgecolor=CARD_BORDER, alpha=0.90))
 
-# Colorbar for Wigner: x=0.660, w=0.011, h=0.63 -> Ends at 0.671, well inside 0.705!
-cb_ax = fig.add_axes([0.660, 0.135, 0.011, 0.63])
+# Colorbar for Wigner: x=0.660, w=0.011, h=0.580
+cb_ax = fig.add_axes([0.660, 0.065, 0.011, 0.580])
 cb = fig.colorbar(im, cax=cb_ax)
 cb.set_label(r'Wigner Quasiprobability $W(y, k_y)$', fontsize=8.8, color=TEXT_SECONDARY, rotation=270, labelpad=14)
 cb.ax.tick_params(labelsize=8, colors=TEXT_MUTED)
 cb.outline.set_edgecolor(CARD_BORDER)
 
 # =========================================================================
-# COLUMN 3: Natural Orbital Fractionalization (Right)
+# COLUMN 3: Natural Orbital Fractionalization (Right - Shifted Downward)
 # =========================================================================
-create_card_container(0.725, 0.09, 0.240, 0.79, title=r"Natural Orbital Fractionalization")
+create_card_container(0.725, 0.030, 0.240, 0.715, title=r"Natural Orbital Fractionalization")
 
-# 3 Orbital Sub-cards showing 'Covalent', 'Open Shell', and 'Multireference'
-# User: "remove 'p1 (a1') 1.71 electrons', 'p2 (e') 1.00 electrons', and 'p3 (e') 0.29 electrons'
-#        make 'Covalent', 'Open Shell', and 'Multireference' centrally aligned with respect to the tile
-#        under sliding bars remove in the second '(exact 1.00 electron)'"
 orb_configs = [
-    (orb_covalent, 0.575, "Covalent", "Bonding core pair delocalized across all 3 centers", 1.7089, CYAN_ACCENT),
-    (orb_openshell, 0.345, "Open Shell", "Unentangled spectator radical", 1.0000, AMBER_ACCENT),
-    (orb_multiref, 0.115, "Multireference", "GVB multireference pair across Coulson-Fischer seam", 0.2911, ROSE_ACCENT)
+    (orb_covalent, 0.465, "Covalent", "Bonding core pair delocalized across all 3 centers", 1.7089, CYAN_ACCENT),
+    (orb_openshell, 0.258, "Open Shell", "Unentangled spectator radical", 1.0000, AMBER_ACCENT),
+    (orb_multiref, 0.051, "Multireference", "GVB multireference pair across Coulson-Fischer seam", 0.2911, ROSE_ACCENT)
 ]
 
 for orb_img, y_pos, role_badge, physical_desc, occ_val, accent_color in orb_configs:
-    ax_subcard = fig.add_axes([0.737, y_pos, 0.216, 0.210])
+    ax_subcard = fig.add_axes([0.737, y_pos, 0.216, 0.190])
     ax_subcard.set_facecolor(CARD_INNER_BG)
     for spine in ax_subcard.spines.values():
         spine.set_color(CARD_BORDER)
@@ -230,8 +224,8 @@ for orb_img, y_pos, role_badge, physical_desc, occ_val, accent_color in orb_conf
     ax_subcard.set_xticks([])
     ax_subcard.set_yticks([])
 
-    # Display authentic paper Tachyon rendered orbital image (Centered vertically and horizontally)
-    ax_orb = fig.add_axes([0.762, y_pos + 0.038, 0.166, 0.124])
+    # Display authentic paper Tachyon rendered orbital image
+    ax_orb = fig.add_axes([0.762, y_pos + 0.032, 0.166, 0.112])
     ax_orb.imshow(orb_img)
     ax_orb.axis('off')
 
@@ -258,18 +252,18 @@ for orb_img, y_pos, role_badge, physical_desc, occ_val, accent_color in orb_conf
                     color=TEXT_SECONDARY, fontsize=7.2, fontfamily='sans-serif', ha='center', va='bottom')
 
 # =========================================================================
-# (Footer removed as requested by user)
-# =========================================================================
-
-# -------------------------------------------------------------------------
 # Save All Target Images
-# -------------------------------------------------------------------------
+# =========================================================================
 plt.savefig(OUT_LINKEDIN_CARD, dpi=160, facecolor=BG_COLOR)
 plt.savefig(OUT_HERO_HOOK, dpi=160, facecolor=BG_COLOR)
 plt.savefig(OUT_MARKETING, dpi=160, facecolor=BG_COLOR)
+plt.savefig(OUT_LINKEDIN_BUST, dpi=160, facecolor=BG_COLOR)
+plt.savefig(OUT_MARKETING_BUST, dpi=160, facecolor=BG_COLOR)
 plt.close()
 
 print("✓ Successfully generated SOTA Physical Results Overview image with paper orbital renders:")
 print("  -", OUT_LINKEDIN_CARD)
 print("  -", OUT_HERO_HOOK)
 print("  -", OUT_MARKETING)
+print("  -", OUT_LINKEDIN_BUST)
+print("  -", OUT_MARKETING_BUST)

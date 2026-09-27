@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Papermache // Paper Clashes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="./assets/index-rH8i-N7D.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BkwVT-WS.css">
+</head>
+<body class="point-reyes-theme">
+  <div id="app">
+    <!-- TOP-LEVEL UNIFIED APP TABS -->
+    <header class="papermache-topbar" id="papermache-topbar">
+      <div class="topbar-inner">
+        <a href="/" class="topbar-brand" title="Point Reyes Sound Homepage">
+          <img src="./images/PRS_logo_v2.jpeg" alt="Point Reyes Sound" class="topbar-logo" onerror="this.src='/PRS_logo_v2.jpeg'" />
+          <span class="topbar-brand-name">POINT REYES SOUND</span>
+        </a>
+
+        <nav class="top-level-app-tabs" role="tablist" aria-label="Application Tabs">
+          <a href="/papermache" class="app-tab-btn active" role="tab" aria-selected="true" id="tab-papermache" title="Paper Mâché // Quantum Information Clash Engine">
+            <span class="tab-pill-dot dot-papermache"></span> Paper Mâché
+          </a>
+          <a href="/interactive" class="app-tab-btn" role="tab" id="tab-interactive" title="Launch 3D Quantum Gas Reaction Simulator (Q-BOLTZ)">
+            <span class="tab-pill-dot dot-interactive"></span> Quantum Gas
+          </a>
+        </nav>
+
+        <div class="topbar-actions">
+          <a href="/#research" class="topbar-research-link">Research</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Center-Aligned Clean Brand Header -->
+    <header class="app-header-centered">
+      <div class="brand-centered">
+        <h1 class="brand-title-clean">PAPER<span>MÂCHÉ</span></h1>
+        <p class="brand-tagline">Quantum Chemistry & Information Theory Clash Engine</p>
+      </div>
+    </header>
+
+    <!-- HERO DUAL ARXIV / PDF DROPZONE CENTERPIECE -->
+    <section class="hero-dropzone-section" id="hero-dropzone">
+      <div class="hero-centerpiece-container">
+        <div class="hero-heading">
+          <h2 class="hero-instruction">Paste arXiv IDs or drop PDFs to calculate asymmetric information value, invariant payload, and theorem dominance.</h2>
+        </div>
+
+        <div class="dropzone-duel-grid">
+          <!-- Left Dropzone: Challenger 1 -->
+          <div class="dropzone-box box-challenger-a" id="dropzone-a">
+            <div class="dropzone-header">
+              <span class="box-tag a-tag">CHALLENGER 1</span>
+              <span class="box-status" id="status-a">Ready</span>
+            </div>
+            <div class="dropzone-body">
+              <input type="text" id="input-arxiv-a" class="arxiv-input" placeholder="e.g. arXiv:2608.14979 or URL" value="arXiv:2608.14979" />
+              <div class="drop-divider"><span>OR DROP PDF</span></div>
+              <label class="file-drop-label" id="label-drop-a">
+                <input type="file" id="file-input-a" accept=".pdf" class="hidden-file-input" />
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span class="drop-text" id="drop-text-a">Drop .pdf here or click to browse</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Center Clash Action Trigger -->
+          <div class="clash-trigger-column">
+            <div class="vs-glow-circle">VS</div>
+            <button id="btn-hero-clash" class="btn-hero-clash" title="Clash Papers and calculate Information Value" aria-label="Clash Papers">
+              <span class="bolt-icon">⚡</span>
+            </button>
+            <p class="clash-framework-note">Reflects a defined info-value framework, not scientific truth or quality.</p>
+          </div>
+
+          <!-- Right Dropzone: Challenger 2 -->
+          <div class="dropzone-box box-challenger-b" id="dropzone-b">
+            <div class="dropzone-header">
+              <span class="box-tag b-tag">CHALLENGER 2</span>
+              <span class="box-status" id="status-b">Ready</span>
+            </div>
+            <div class="dropzone-body">
+              <input type="text" id="input-arxiv-b" class="arxiv-input" placeholder="e.g. JCTC 2026 / Shee et al." value="Danilov, Shee et al. (JCTC 2026)" />
+              <div class="drop-divider"><span>OR DROP PDF</span></div>
+              <label class="file-drop-label" id="label-drop-b">
+                <input type="file" id="file-input-b" accept=".pdf" class="hidden-file-input" />
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span class="drop-text" id="drop-text-b">Drop .pdf here or click to browse</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick-Fill Preset Chips -->
+        <div class="quick-preset-chips">
+          <span class="chips-label">Quick Benchmarks:</span>
+          <button class="chip-preset-btn active" data-preset="qbe_vs_afqmc">Chakraborty (2608.14979) vs. Shee (JCTC 2026)</button>
+          <button class="chip-preset-btn" data-preset="info_theory">Shannon (1948) vs. Schumacher (1995)</button>
+          <button class="chip-preset-btn" data-preset="quantum_algos">Shor (1994) vs. HHL (2009)</button>
+        </div>
+
+        <!-- Framework Disclaimer & Methodology Bridge -->
+        <div class="hero-framework-strip">
+          <span class="framework-strip-text">Reflects a defined info-value framework, not scientific truth or quality.</span>
+          <button class="how-calc-trigger" id="btn-how-calc-hero" type="button">How is this calculated? ↗</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAPER CLASHES TABLE -->
+    <section class="table-section">
+      <div class="table-header-clean">
+        <h2>Paper Clashes</h2>
+        <button class="how-calc-trigger" id="btn-how-calc-table" type="button">How is this calculated? ↗</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="clash-table" id="clash-matrix-table">
+          <thead>
+            <tr>
+              <th>Matchup Domain</th>
+              <th>Paper A (Challenger 1)</th>
+              <th>Paper B (Challenger 2)</th>
+              <th>Core Invariant Payload</th>
+              <th>Generative Reach</th>
+              <th>Info Value Score</th>
+              <th>Tournament Verdict</th>
+            </tr>
+          </thead>
+          <tbody id="case-studies-tbody">
+            <!-- Dynamically populated and sorted by Delta V descending -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CASE STUDY INSPECTION SECTION -->
+    <section class="case-study-inspection-section" id="case-study-section">
+      <!-- Side-by-Side Dual Original Papers (Full Screen Focus) -->
+      <div class="dual-papers-container">
+        <!-- Paper A Frame -->
+        <div class="paper-frame-container" id="frame-container-a">
+          <div class="paper-frame-bar">
+            <span class="paper-tag-a">PAPER A</span>
+            <span class="paper-bar-title" id="paper-bar-title-a">Shannon (1948)</span>
+            <div class="frame-bar-right">
+              <span class="page-indicator-badge" id="page-badge-a">p. 1</span>
+              <a id="paper-external-a" href="/papers/shannon1948.pdf" target="_blank" class="open-ext-btn" title="Open full PDF">↗ Open PDF</a>
+            </div>
+          </div>
+          <div class="pdf-embed-box">
+            <iframe id="pdf-frame-a" src="/papers/shannon1948.pdf#view=FitH" type="application/pdf"></iframe>
+          </div>
+        </div>
+
+        <!-- Paper B Frame -->
+        <div class="paper-frame-container" id="frame-container-b">
+          <div class="paper-frame-bar">
+            <span class="paper-tag-b">PAPER B</span>
+            <span class="paper-bar-title" id="paper-bar-title-b">Schumacher (1995)</span>
+            <div class="frame-bar-right">
+              <span class="page-indicator-badge" id="page-badge-b">p. 1</span>
+              <a id="paper-external-b" href="/papers/schumacher1995.pdf" target="_blank" class="open-ext-btn" title="Open full PDF">↗ Open PDF</a>
+            </div>
+          </div>
+          <div class="pdf-embed-box">
+            <iframe id="pdf-frame-b" src="/papers/schumacher1995.pdf#view=FitH" type="application/pdf"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Down Cue -->
+      <div class="scroll-cue">
+        <span>↓ Scroll down for score and invariant analysis ↓</span>
+      </div>
+
+      <!-- Analysis & Scoreboard Area (Appears on Scroll) -->
+      <div class="analysis-scroll-area" id="analysis-area">
+        <!-- Metric Sensitivity Tuner (Pareto Frontier) -->
+        <div class="tuner-card" id="metric-tuner">
+          <div class="tuner-header">
+            <span class="tuner-title">⚙ Metric Sensitivity Tuner (Pareto Frontier)</span>
+            <button id="btn-reset-sliders" class="btn-reset-sliders">Reset Defaults</button>
+          </div>
+          <div class="sliders-grid">
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <label for="slider-alpha">α (Invariant Proof Weight):</label>
+                <span class="slider-val" id="val-alpha">2.0</span>
+              </div>
+              <input type="range" id="slider-alpha" min="0.0" max="5.0" step="0.1" value="2.0" />
+            </div>
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <label for="slider-beta">β (Generative Reach):</label>
+                <span class="slider-val" id="val-beta">0.8</span>
+              </div>
+              <input type="range" id="slider-beta" min="0.0" max="2.0" step="0.1" value="0.8" />
+            </div>
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <label for="slider-gamma">γ (Boilerplate Penalty):</label>
+                <span class="slider-val" id="val-gamma">1.5</span>
+              </div>
+              <input type="range" id="slider-gamma" min="0.0" max="4.0" step="0.1" value="1.5" />
+            </div>
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <label for="slider-mu">μ (Mutual Info Asymmetry):</label>
+                <span class="slider-val" id="val-mu">10.0</span>
+              </div>
+              <input type="range" id="slider-mu" min="0.0" max="30.0" step="1.0" value="10.0" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Scoreboard Bar -->
+        <div class="scoreboard-hero">
+          <div class="score-pillar pillar-a">
+            <span class="pillar-label" id="pillar-name-a">Shannon (1948)</span>
+            <div class="pillar-value" id="pillar-score-a">98.4</div>
+            <span class="pillar-sub" id="pillar-sub-a">23 Foundational Theorems</span>
+          </div>
+
+          <div class="score-vs-block">
+            <span class="vs-text">VS</span>
+            <div class="delta-v-badge" id="delta-v-display">+24.2 ΔV (Paper A)</div>
+            <div class="verdict-banner-text" id="verdict-display">Shannon (1948) Dominates</div>
+            <button class="how-calc-trigger scoreboard-calc-btn" id="btn-how-calc-scoreboard" type="button">How is this calculated? ↗</button>
+          </div>
+
+          <div class="score-pillar pillar-b">
+            <span class="pillar-label" id="pillar-name-b">Schumacher (1995)</span>
+            <div class="pillar-value" id="pillar-score-b">74.2</div>
+            <span class="pillar-sub" id="pillar-sub-b">Quantum Noiseless Coding</span>
+          </div>
+        </div>
+
+        <!-- Expandable Methodology Card: Plain Language Components + Full Methodology Link -->
+        <div class="methodology-card" id="methodology-card">
+          <div class="methodology-card-header">
+            <div class="methodology-header-left">
+              <span class="methodology-badge">FRAMEWORK EXPLAINER</span>
+              <h3>How Papermache Scores Information Value</h3>
+            </div>
+            <button class="btn-toggle-methodology" id="btn-close-methodology" type="button" title="Close explainer">✕ Close</button>
+          </div>
+
+          <div class="methodology-body">
+            <p class="methodology-intro">
+              Papermache scores papers by evaluating how much a manuscript mathematically bounds the physical state space per unit of communication overhead. It measures invariant theorems and compression entropy, rather than prestige, citation volume, or subjective prose.
+            </p>
+
+            <div class="components-grid">
+              <!-- Component 1: Invariant Payload -->
+              <div class="component-item">
+                <div class="component-header">
+                  <span class="component-symbol">Ω</span>
+                  <span class="component-title">Core Invariant Payload</span>
+                </div>
+                <p>Counts non-trivial mathematical theorems, conservation laws, and algorithmic operators proved. Historical summaries and preamble contribute zero score.</p>
+              </div>
+
+              <!-- Component 2: Generative Reach -->
+              <div class="component-item">
+                <div class="component-header">
+                  <span class="component-symbol">Γ</span>
+                  <span class="component-title">Downstream Generative Reach</span>
+                </div>
+                <p>Measures the logarithmic volume of the physical state space permanently constrained. Universal asymptotic theorems rank higher than single-molecule benchmarks.</p>
+              </div>
+
+              <!-- Component 3: Boilerplate Penalty -->
+              <div class="component-item">
+                <div class="component-header">
+                  <span class="component-symbol">𝒫</span>
+                  <span class="component-title">Boilerplate & Fluff Penalty</span>
+                </div>
+                <p>The fraction of discursive narrative, repetitive citations, and non-operative rhetoric. Dense, high-signal manuscripts minimize this penalty.</p>
+              </div>
+
+              <!-- Component 4: Mutual Information Asymmetry -->
+              <div class="component-item">
+                <div class="component-header">
+                  <span class="component-symbol">Î</span>
+                  <span class="component-title">Mutual Info Asymmetry</span>
+                </div>
+                <p>Directed cross-entropy quantification: How much does Paper A predict or compress Paper B versus the reverse? Reveals true foundational dependency.</p>
+              </div>
+            </div>
+
+            <div class="methodology-summary-bar">
+              <div class="formula-box">
+                <span class="formula-label">Composite Tournament Operator:</span>
+                <code>𝒱 = α·Ω + β·Γ - γ·𝒫</code> &nbsp;|&nbsp; <code>Δ𝒱 = 𝒱_A - 𝒱_B + μ(Î_A→B / |A| - Î_B→A / |B|)</code>
+              </div>
+              <div class="methodology-actions">
+                <a href="/papers/papermache_criterion.pdf" target="_blank" class="full-methodology-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  Read Full Mathematical Methodology (PDF) ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clickable Dropdown Boxes (Accordions) -->
+        <div class="dropdown-boxes-stack">
+          <!-- Dropdown 1: Paper A Invariants -->
+          <div class="accordion-item" id="acc-paper-a">
+            <button class="accordion-header" id="acc-btn-a">
+              <span class="acc-title">
+                <span class="acc-badge a-badge">Paper A Invariants</span>
+                <span class="acc-name" id="acc-name-a">Shannon (1948)</span>
+              </span>
+              <span class="acc-chevron">▼</span>
+            </button>
+            <div class="accordion-body">
+              <ul class="invariants-bullet-list" id="invariants-list-a"></ul>
+            </div>
+          </div>
+
+          <!-- Dropdown 2: Paper B Invariants -->
+          <div class="accordion-item" id="acc-paper-b">
+            <button class="accordion-header" id="acc-btn-b">
+              <span class="acc-title">
+                <span class="acc-badge b-badge">Paper B Invariants</span>
+                <span class="acc-name" id="acc-name-b">Schumacher (1995)</span>
+              </span>
+              <span class="acc-chevron">▼</span>
+            </button>
+            <div class="accordion-body">
+              <ul class="invariants-bullet-list" id="invariants-list-b"></ul>
+            </div>
+          </div>
+
+          <!-- Dropdown 3: Operator Information Analysis -->
+          <div class="accordion-item" id="acc-operator">
+            <button class="accordion-header" id="acc-btn-operator">
+              <span class="acc-title">
+                <span class="acc-badge op-badge">Operator Information Analysis</span>
+                <span class="acc-name">von Neumann & Boltzmann Critique</span>
+              </span>
+              <span class="acc-chevron">▼</span>
+            </button>
+            <div class="accordion-body">
+              <div class="operator-critique-content">
+                <div class="critique-entry">
+                  <h4>von Neumann's Operator Analysis</h4>
+                  <p id="critique-vonny"></p>
+                </div>
+                <div class="critique-entry">
+                  <h4>Boltzmann's Thermodynamic Synthesis</h4>
+                  <p id="critique-boltz"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>

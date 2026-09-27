@@ -131,12 +131,21 @@ export default function App() {
   const [activeTheme, setActiveTheme] = useState(0);
   const [copiedBibtexId, setCopiedBibtexId] = useState(null);
 
-  // Deep link helper to detect if URL points to the Interactive Lab
-  const checkIsInteractiveUrl = () => {
-    if (typeof window === "undefined") return false;
+  // Deep link helper to detect if URL points to Interactive (Q-BOLTZ) or Paper Mâché
+  const getInitialActiveView = () => {
+    if (typeof window === "undefined") return "home";
     const path = window.location.pathname.toLowerCase().replace(/\/$/, "");
     const hash = window.location.hash.toLowerCase().replace(/^#\/?/, "");
-    return (
+    if (
+      path === "/papermache" ||
+      path === "/papermache.html" ||
+      path === "/paper-mache" ||
+      hash === "papermache" ||
+      hash === "paper-mache"
+    ) {
+      return "papermache";
+    }
+    if (
       path === "/interactive" ||
       path === "/interactive.html" ||
       path === "/lab" ||
@@ -148,31 +157,90 @@ export default function App() {
       hash === "lab" ||
       hash === "simulator" ||
       hash === "qboltz"
-    );
+    ) {
+      return "interactive";
+    }
+    return "home";
   };
 
-  const [showInteractiveLab, setShowInteractiveLab] = useState(checkIsInteractiveUrl);
+  const [currentView, setCurrentView] = useState(getInitialActiveView);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const videoRef = useRef(null);
 
+  const stopAudioIfPlaying = () => {
+    try {
+      if (typeof window !== "undefined") {
+        if (window.__prsAudioEngine) {
+          window.__prsAudioEngine.stop();
+        }
+        window.dispatchEvent(new CustomEvent("prs:stop-audio"));
+      }
+    } catch {
+      // Audio stop fallback
+    }
+  };
+
+  const openAppView = (tab = "interactive") => {
+    if (tab !== "interactive") {
+      stopAudioIfPlaying();
+    }
+
+    setCurrentView(tab);
+    const targetPath = tab === "papermache" ? "/papermache" : "/interactive";
+    if (typeof window !== "undefined" && window.location.pathname !== targetPath) {
+      window.history.pushState({ page: tab }, "", targetPath);
+    }
+    if (typeof document !== "undefined") {
+      document.title = tab === "papermache"
+        ? "Paper Mâché // Quantum Information Clash Engine | Point Reyes Sound"
+        : "Quantum Gas // Continuous Phase-Space Kinetics | Point Reyes Sound";
+    }
+  };
+
+  const switchAppTab = (tab) => {
+    if (tab !== "interactive") {
+      stopAudioIfPlaying();
+    }
+    openAppView(tab);
+  };
+
+  const closeAppView = () => {
+    stopAudioIfPlaying();
+    setCurrentView("home");
+    if (typeof window !== "undefined" && window.location.pathname !== "/") {
+      window.history.pushState({ page: "home" }, "", "/");
+    }
+    if (typeof document !== "undefined") {
+      document.title = "Point Reyes Sound | Continuous Phase-Space Kinetics for Strongly Correlated Electrons";
+    }
+  };
+
   // Sync state with browser navigation (back/forward buttons and direct URLs)
   React.useEffect(() => {
     const handlePopState = () => {
-      const isLab = checkIsInteractiveUrl();
-      setShowInteractiveLab(isLab);
-      if (isLab) {
-        document.title = "Q-BOLTZ Multimodal Quantum World | Point Reyes Sound";
+      const view = getInitialActiveView();
+      if (view !== "interactive") {
+        stopAudioIfPlaying();
+      }
+      setCurrentView(view);
+      if (view === "interactive") {
+        document.title = "Quantum Gas // Continuous Phase-Space Kinetics | Point Reyes Sound";
+      } else if (view === "papermache") {
+        document.title = "Paper Mâché // Quantum Information Clash Engine | Point Reyes Sound";
       } else {
-        document.title = "Point Reyes Sound | Quantum Electronic Structure";
+        document.title = "Point Reyes Sound | Continuous Phase-Space Kinetics for Strongly Correlated Electrons";
       }
     };
 
     window.addEventListener("popstate", handlePopState);
     window.addEventListener("hashchange", handlePopState);
 
-    if (checkIsInteractiveUrl()) {
-      document.title = "Q-BOLTZ Multimodal Quantum World | Point Reyes Sound";
+    const initView = getInitialActiveView();
+    if (initView === "interactive") {
+      document.title = "Quantum Gas // Continuous Phase-Space Kinetics | Point Reyes Sound";
+    } else if (initView === "papermache") {
+      document.title = "Paper Mâché // Quantum Information Clash Engine | Point Reyes Sound";
     }
 
     return () => {
@@ -181,31 +249,16 @@ export default function App() {
     };
   }, []);
 
-  const openInteractiveLab = () => {
-    try {
-      if (typeof window !== "undefined") {
-        if (!window.__prsAudioEngine) {
-          window.__prsAudioEngine = new QuantumSonificationEngine();
-        }
-        window.__prsAudioEngine.unlockMobileAudio();
-        window.__prsAudioEngine.start();
+  // Listen for tab switch messages from embedded iframes
+  React.useEffect(() => {
+    const handleMessage = (e) => {
+      if (e.data && e.data.type === "SWITCH_APP_TAB") {
+        switchAppTab(e.data.tab);
       }
-    } catch (e) {}
-
-    setShowInteractiveLab(true);
-    if (window.location.pathname !== "/interactive") {
-      window.history.pushState({ page: "interactive" }, "", "/interactive");
-    }
-    document.title = "Q-BOLTZ Multimodal Quantum World | Point Reyes Sound";
-  };
-
-  const closeInteractiveLab = () => {
-    setShowInteractiveLab(false);
-    if (window.location.pathname !== "/") {
-      window.history.pushState({ page: "home" }, "", "/");
-    }
-    document.title = "Point Reyes Sound | Quantum Electronic Structure";
-  };
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   // Attempt unmuted autoplay by default, with instant universal gesture unlock
   React.useEffect(() => {
@@ -340,32 +393,77 @@ export default function App() {
     setSalesSubmitted(true);
   };
 
-  // If user opens the Interactive 3D Lab
-  if (showInteractiveLab) {
+  // If user opens the application view (Interactive 3D Lab or Paper Mâché)
+  if (currentView === "interactive" || currentView === "papermache") {
     return (
       <div className="interactive-wrapper">
         <div className="lab-topbar">
-          <div className="lab-brand">
+          <div 
+            className="lab-brand" 
+            onClick={closeAppView}
+            style={{ cursor: "pointer" }}
+            title="Return to Point Reyes Sound Homepage"
+          >
             <img src="/PRS_logo_v2.jpeg" alt="Point Reyes Sound" className="lab-logo" />
-            <span>POINT REYES SOUND // Q-BOLTZ</span>
+            <span className="lab-brand-title">POINT REYES SOUND</span>
           </div>
+
+          {/* TWO TOP-LEVEL TABS */}
+          <div className="lab-center-tabs" role="tablist" aria-label="Top-Level Application Tabs">
+            <button 
+              className={`lab-tab-pill ${currentView === "papermache" ? "active" : ""}`}
+              onClick={() => switchAppTab("papermache")}
+              role="tab"
+              aria-selected={currentView === "papermache"}
+              id="tab-papermache"
+              title="Paper Mâché // Quantum Information Clash Engine"
+            >
+              <span className="tab-pill-dot dot-papermache"></span>
+              Paper Mâché
+            </button>
+            <button 
+              className={`lab-tab-pill ${currentView === "interactive" ? "active" : ""}`}
+              onClick={() => switchAppTab("interactive")}
+              role="tab"
+              aria-selected={currentView === "interactive"}
+              id="tab-interactive"
+              title="Quantum Gas 3D Simulator (Q-BOLTZ)"
+            >
+              <span className="tab-pill-dot dot-interactive"></span>
+              Quantum Gas
+            </button>
+          </div>
+
           <div className="lab-nav-actions">
             <button 
               className="lab-nav-btn research-nav-btn"
-              onClick={closeInteractiveLab}
+              onClick={closeAppView}
+              title="Return to Research Overview"
             >
               Research
-            </button>
-            <button 
-              className="lab-nav-btn sales-nav-btn"
-              onClick={() => { setShowSalesModal(true); setSalesSubmitted(false); }}
-            >
-              Contact Sales
             </button>
           </div>
         </div>
 
-        <LandingPage />
+        {/* TAB 1: INTERACTIVE (Q-BOLTZ) - Rendered exactly as is */}
+        <div 
+          className="app-view-container"
+          style={{ display: currentView === "interactive" ? "block" : "none" }}
+        >
+          <LandingPage isActive={currentView === "interactive"} />
+        </div>
+
+        {/* TAB 2: PAPER MÂCHÉ - Full-page independent application */}
+        <div 
+          className="papermache-fullpage-wrapper"
+          style={{ display: currentView === "papermache" ? "block" : "none" }}
+        >
+          <iframe
+            src="/papermache-standalone/index.html"
+            title="Paper Mâché // Quantum Information Clash Engine"
+            className="papermache-fullpage-iframe"
+          />
+        </div>
 
         {/* Intelligent Contact & Enterprise Solutions Modal */}
         {showSalesModal && (
@@ -530,13 +628,22 @@ export default function App() {
               </svg>
               GitHub
             </a>
-            <button 
-              className="nav-interactive-link"
-              onClick={openInteractiveLab}
-              title="Launch 3D Quantum Reaction Simulator"
-            >
-              Interactive
-            </button>
+            <div className="header-top-tabs" role="tablist" aria-label="Applications">
+              <button 
+                className="header-tab-btn header-tab-papermache"
+                onClick={() => openAppView("papermache")}
+                title="Launch Paper Mâché Clash Engine"
+              >
+                Paper Mâché
+              </button>
+              <button 
+                className="header-tab-btn header-tab-interactive"
+                onClick={() => openAppView("interactive")}
+                title="Launch Quantum Gas Reaction Simulator (Q-BOLTZ)"
+              >
+                Quantum Gas
+              </button>
+            </div>
           </nav>
         </div>
       </header>
@@ -608,6 +715,15 @@ export default function App() {
           <p className="hero-lead">
             Point Reyes Sound. Discovery without deference.
           </p>
+          <div className="hero-institutional-footnote-wrap">
+            <a 
+              href="/news/alchemist-chicago-2026" 
+              className="hero-institutional-footnote"
+              title="View institutional milestone details"
+            >
+              Point Reyes Sound is excited to join Alchemist Chicago’s final selection stage in Chicago, October 19–23, as one of 30 companies selected for the program.
+            </a>
+          </div>
         </div>
 
         {/* FEATURED RESEARCH PAPER SPOTLIGHT — INTERACTIVE ACTIVE BELT */}
@@ -1071,8 +1187,11 @@ export default function App() {
             <a href="#research">Research</a>
             <a href="#roadmap">Roadmap</a>
             <a href="#contact">Contact</a>
-            <button className="footer-link-btn" onClick={openInteractiveLab}>
-              Interactive Simulator &rarr;
+            <button className="footer-link-btn" onClick={() => openAppView("papermache")}>
+              Paper Mâché Clash Engine &rarr;
+            </button>
+            <button className="footer-link-btn" onClick={() => openAppView("interactive")}>
+              Quantum Gas Simulator &rarr;
             </button>
           </div>
 
@@ -1083,6 +1202,9 @@ export default function App() {
             </a>
             <a href="/public-deck" target="_blank" rel="noopener noreferrer">
               Technical Prospectus &rarr;
+            </a>
+            <a href="/news/alchemist-chicago-2026">
+              Alchemist Chicago Milestone &rarr;
             </a>
             <a href="https://rchakraborty.dev" target="_blank" rel="noopener noreferrer">
               Founder Dossier &rarr;

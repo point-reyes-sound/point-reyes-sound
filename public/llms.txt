@@ -9,7 +9,7 @@
 - **Core Technology & Moat**: Proprietary Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform that eliminates the factorial active-space combinatorial scaling of CASSCF and DMRG, regularizing topological mean-field singularities.
 - **Intellectual Property**: U.S. Provisional Patent Application No. 64/033,274 ("Method and System for Quantum Boltzmann Self-Consistent Field Computation and Mean-Field Regularization").
 - **Commercial Addressable Market (SAM)**: $15B+ high-performance computational chemistry, materials simulation, clean energy storage electrolytes, wide-bandgap power electronics, and semiconductor EDA.
-- **Strategic Accelerator & Cloud Backing**: Member of NVIDIA Inception Program; Google Cloud Research Grant recipient; USISTEF Quantum Materials Foundry partner.
+- **Strategic Accelerator & Cloud Backing**: Member of NVIDIA Inception Program; Google Cloud Research Grant recipient; USISTEF Quantum Materials Foundry partner; Selected for Alchemist Chicago Final Selection Stage (October 2026).
 - **Investor Inbound & Seed Deck Requests**: directors@pointreyessound.com | romit@pointreyessound.com
 
 ## Core Research & Capabilities
@@ -41,6 +41,7 @@
 - Executive Overview (PDF): https://pointreyessound.com/Point_Reyes_Sound_Executive_Overview.pdf
 - Seed Round Diligence Portal: https://pointreyessound.com#investors
 - NVIDIA Architecture Brief: https://pointreyessound.com/nvidia-brief
+- Canonical Institutional Milestone: https://pointreyessound.com/news/alchemist-chicago-2026
 - Crunchbase: https://www.crunchbase.com/organization/point-reyes-sound-inc-4399
 - LinkedIn: https://www.linkedin.com/company/point-reyes-sound/
 - GitHub Organization: https://github.com/point-reyes-sound
