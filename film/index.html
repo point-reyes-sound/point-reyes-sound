@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Point Reyes Sound | Cinematic Overview & Quantum Boltzmann Solver (Film)</title>
+  
+  <meta name="description" content="Cinematic scientific demonstration of Point Reyes Sound and the Quantum Boltzmann Equation Self-Consistent-Field (QBE-SCF) solver for non-equilibrium electronic kinetics." />
+  <meta name="keywords" content="Point Reyes Sound, Quantum Boltzmann Solver, QBE-SCF, Continuous Phase-Space Kinetics, Quantum Chemistry, Electronic Structure, Mean-Field Singularities, Romit Chakraborty, Quantum Gas Simulator" />
+  <meta name="author" content="Point Reyes Sound, Inc." />
+  <link rel="canonical" href="https://pointreyessound.com/film" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg?v=4" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/prs_favicon_32.png?v=4" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/prs_favicon_192.png?v=4" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/prs_favicon_180.png?v=4" />
+  <link rel="shortcut icon" href="/favicon.ico?v=4" />
+
+  <!-- Open Graph / LinkedIn / Facebook -->
+  <meta property="og:type" content="video.other" />
+  <meta property="og:url" content="https://pointreyessound.com/film" />
+  <meta property="og:title" content="Point Reyes Sound | Cinematic Overview & Quantum Boltzmann Solver" />
+  <meta property="og:description" content="Cinematic scientific demonstration of Point Reyes Sound and the Quantum Boltzmann Equation Self-Consistent-Field (QBE-SCF) solver for non-equilibrium electronic kinetics." />
+  <meta property="og:image" content="https://pointreyessound.com/film_watch_poster.jpg" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="720" />
+  <meta property="og:site_name" content="Point Reyes Sound, Inc." />
+  <meta property="og:video" content="https://pointreyessound.com/point_reyes_sound_complete_film.mp4" />
+  <meta property="og:video:type" content="video/mp4" />
+  <meta property="og:video:width" content="1280" />
+  <meta property="og:video:height" content="720" />
+
+  <!-- Twitter / X Cards -->
+  <meta name="twitter:card" content="player" />
+  <meta name="twitter:url" content="https://pointreyessound.com/film" />
+  <meta name="twitter:title" content="Point Reyes Sound | Cinematic Overview & Quantum Boltzmann Solver" />
+  <meta name="twitter:description" content="Cinematic scientific demonstration of Point Reyes Sound and the Quantum Boltzmann Equation Self-Consistent-Field (QBE-SCF) solver for non-equilibrium electronic kinetics." />
+  <meta name="twitter:image" content="https://pointreyessound.com/film_watch_poster.jpg" />
+  <meta name="twitter:player" content="https://pointreyessound.com/film" />
+  <meta name="twitter:player:width" content="1280" />
+  <meta name="twitter:player:height" content="720" />
+
+  <!-- Google Fonts: EB Garamond, JetBrains Mono, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Schema.org VideoObject Structured Data (Google Watch Page Compliant) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "@id": "https://pointreyessound.com/film#video",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://pointreyessound.com/film"
+    },
+    "name": "Point Reyes Sound: Continuous Phase-Space Kinetics & Quantum Boltzmann Solver",
+    "headline": "Continuous Phase-Space Kinetics for Strongly Correlated Electrons",
+    "description": "Full cinematic demonstration and theoretical overview of continuous phase-space kinetics and the Quantum Boltzmann Equation Self-Consistent-Field (QBE-SCF) solver by Point Reyes Sound.",
+    "thumbnailUrl": [
+      "https://pointreyessound.com/film_watch_poster.jpg",
+      "https://pointreyessound.com/hero_video_poster.jpg",
+      "https://pointreyessound.com/assets/preprint/qbescf_linkedin_card.png"
+    ],
+    "uploadDate": "2026-08-29T11:26:00Z",
+    "duration": "PT58S",
+    "contentUrl": "https://pointreyessound.com/point_reyes_sound_complete_film.mp4",
+    "embedUrl": "https://pointreyessound.com/film",
+    "inLanguage": "en",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Point Reyes Sound, Inc.",
+      "url": "https://pointreyessound.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://pointreyessound.com/PRS_logo_v2.jpeg"
+      }
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Dr. Romit Chakraborty",
+      "jobTitle": "Founder & Chief Scientific Officer",
+      "url": "https://rchakraborty.dev"
+    },
+    "hasPart": [
+      {
+        "@type": "Clip",
+        "name": "Orbital Phase-Space & Mean-Field Singularities",
+        "startOffset": 0,
+        "endOffset": 15,
+        "url": "https://pointreyessound.com/film?t=0"
+      },
+      {
+        "@type": "Clip",
+        "name": "BGK Collision Relaxation Operator",
+        "startOffset": 15,
+        "endOffset": 32,
+        "url": "https://pointreyessound.com/film?t=15"
+      },
+      {
+        "@type": "Clip",
+        "name": "Wigner-Weyl Phase-Space Fluid Dynamics",
+        "startOffset": 32,
+        "endOffset": 45,
+        "url": "https://pointreyessound.com/film?t=32"
+      },
+      {
+        "@type": "Clip",
+        "name": "Entropic Convergence & Exact Asymptotic Plateau",
+        "startOffset": 45,
+        "endOffset": 58,
+        "url": "https://pointreyessound.com/film?t=45"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --font-serif: "EB Garamond", Garamond, Georgia, serif;
+      --font-mono: "JetBrains Mono", monospace;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+      --bg-core: #030814;
+      --bg-surface: #061224;
+      --bg-card: rgba(8, 24, 44, 0.70);
+      --border-subtle: rgba(226, 232, 240, 0.12);
+      --border-accent: rgba(56, 189, 248, 0.35);
+
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-core);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation */
+    .film-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(3, 8, 20, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 24px;
+    }
+
+    .film-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      object-fit: cover;
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.08rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-links::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-cyan);
+    }
+
+    .nav-link.back-link {
+      color: var(--accent-emerald);
+      font-weight: 600;
+    }
+
+    /* Main Container */
+    .film-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 44px 20px 80px 20px;
+    }
+
+    /* Header Section */
+    .film-header {
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .film-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent-cyan);
+      margin-bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent-emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    .film-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      line-height: 1.18;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 14px;
+    }
+
+    .film-lead {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* Cinema Video Player Frame */
+    .cinema-stage {
+      margin-bottom: 24px;
+      border-radius: 16px;
+      background: #010409;
+      border: 1px solid var(--border-accent);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(56, 189, 248, 0.12);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cinema-video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      background: #000000;
+    }
+
+    .cinema-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Chapter Quick Cues */
+    .chapter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+      padding: 12px 16px;
+      background: rgba(6, 18, 36, 0.75);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+    }
+
+    .chapter-label {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: 6px;
+    }
+
+    .chapter-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 0.80rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chapter-btn:hover {
+      background: rgba(56, 189, 248, 0.18);
+      border-color: var(--accent-cyan);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .chapter-time {
+      color: var(--accent-emerald);
+      font-weight: 600;
+    }
+
+    /* Technical Pillars Grid */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 40px;
+    }
+
+    .pillar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.25s ease;
+    }
+
+    .pillar-card:hover {
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    .pillar-num {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+    }
+
+    .pillar-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .pillar-card p {
+      font-size: 0.94rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Citation & Reference Block */
+    .citation-box {
+      background: rgba(5, 15, 28, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--accent-emerald);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+    }
+
+    .citation-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .citation-tag {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent-emerald);
+      text-transform: uppercase;
+    }
+
+    .citation-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .citation-meta {
+      font-size: 0.90rem;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .citation-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .action-btn.primary {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid var(--accent-cyan);
+      color: #ffffff;
+    }
+
+    .action-btn.primary:hover {
+      background: var(--accent-cyan);
+      color: #030814;
+    }
+
+    .action-btn.secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: #cbd5e1;
+    }
+
+    .action-btn.secondary:hover {
+      border-color: var(--accent-emerald);
+      color: var(--accent-emerald);
+    }
+
+    /* Footer */
+    .film-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 32px 20px;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .film-footer a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+    }
+
+    .film-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 860px) {
+      .pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .film-header {
+        text-align: left;
+      }
+
+      .film-title {
+        font-size: 1.85rem;
+      }
+
+      .chapter-bar {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="film-nav">
+    <div class="film-nav-inner">
+      <a href="/" class="brand-group" aria-label="Point Reyes Sound Home">
+        <img src="/PRS_logo_v2.jpeg" alt="Point Reyes Sound" class="brand-logo" />
+        <span class="brand-title">POINT REYES SOUND</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="/" class="nav-link back-link">&larr; Back to Platform</a>
+        <a href="/#research" class="nav-link">Research</a>
+        <a href="/interactive" class="nav-link">Quantum Gas</a>
+        <a href="/papermache" class="nav-link">Paper Mâché</a>
+        <a href="/#contact" class="nav-link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="film-container">
+    
+    <!-- Film Header -->
+    <header class="film-header">
+      <div class="film-kicker">
+        <span class="pulse-dot"></span> CINEMATIC OVERVIEW // THEORETICAL FOUNDATION
+      </div>
+      <h1 class="film-title">
+        Continuous Phase-Space Kinetics for Strongly Correlated Electrons
+      </h1>
+      <p class="film-lead">
+        A cinematic scientific demonstration of the Quantum Boltzmann Equation Self-Consistent-Field (QBE-SCF) solver, replacing exponential combinatorial active spaces with continuous thermodynamic density relaxation.
+      </p>
+    </header>
+
+    <!-- Cinema Video Player Stage -->
+    <section class="cinema-stage" aria-label="Video Player">
+      <div class="cinema-video-wrapper">
+        <video 
+          id="mainFilmVideo"
+          class="cinema-video"
+          src="/point_reyes_sound_complete_film.mp4"
+          poster="/film_watch_poster.jpg"
+          controls
+          playsinline
+          preload="metadata"
+        >
+          <source src="/point_reyes_sound_complete_film.mp4" type="video/mp4" />
+          Your browser does not support HTML5 video playback.
+        </video>
+      </div>
+    </section>
+
+    <!-- Interactive Chapter Cues -->
+    <div class="chapter-bar" aria-label="Video Chapter Cues">
+      <span class="chapter-label">Chapter Cues:</span>
+      <button class="chapter-btn" onclick="seekVideo(0)">
+        <span class="chapter-time">00:00</span> Singularity & Cusp
+      </button>
+      <button class="chapter-btn" onclick="seekVideo(15)">
+        <span class="chapter-time">00:15</span> BGK Collision Operator
+      </button>
+      <button class="chapter-btn" onclick="seekVideo(32)">
+        <span class="chapter-time">00:32</span> Wigner Phase Space
+      </button>
+      <button class="chapter-btn" onclick="seekVideo(45)">
+        <span class="chapter-time">00:45</span> Entropy Limit
+      </button>
+    </div>
+
+    <!-- Technical Pillars -->
+    <section class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-num">01 / BOTTLENECK</div>
+        <h3>Mean-Field Singularity</h3>
+        <p>
+          Conventional single-determinant self-consistent field methods (RHF, UHF, DFT) suffer catastrophic derivative cusps and unphysical spin-symmetry breaking at dissociation bifurcations, avoided crossings, and conical seams.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-num">02 / MECHANISM</div>
+        <h3>Kinetic BGK Relaxation</h3>
+        <p>
+          QBE-SCF introduces continuous thermodynamic propagation of one-electron reduced density matrices via a Bhatnagar-Gross-Krook (BGK) collision operator, driving natural orbital populations toward finite-temperature equilibrium.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-num">03 / COMPUTATIONAL MOAT</div>
+        <h3>O(N³) Scaling Bound</h3>
+        <p>
+          Bypassing factorial combinatorial configuration interaction active-space truncation (CASSCF/DMRG), QBE-SCF achieves exact asymptotic multi-reference limits with polynomial $O(N^3)$ computational scaling.
+        </p>
+      </div>
+    </section>
+
+    <!-- Scholarly Citation & Actions -->
+    <section class="citation-box">
+      <div class="citation-header">
+        <span class="citation-tag">Scholarly Paper & Citation</span>
+        <span style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-cyan);">DOI: 10.48550/arXiv.2608.14979</span>
+      </div>
+      <h2 class="citation-title">
+        Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities
+      </h2>
+      <p class="citation-meta">
+        Romit Chakraborty (2026) &bull; Point Reyes Sound, Inc. &bull; arXiv:2608.14979 [physics.chem-ph, quant-ph]
+      </p>
+      <div class="citation-actions">
+        <a href="https://arxiv.org/abs/2608.14979" target="_blank" rel="noopener noreferrer" class="action-btn primary">
+          Read arXiv Preprint &rarr;
+        </a>
+        <a href="/interactive" class="action-btn secondary">
+          Open Quantum Gas Simulator
+        </a>
+        <a href="/papermache" class="action-btn secondary">
+          Open Paper Mâché
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Institutional Footer -->
+  <footer class="film-footer">
+    <p>
+      &copy; 2026 Point Reyes Sound, Inc. &bull; Continuous Phase-Space Kinetics &bull; 
+      <a href="/">Platform Home</a> &bull; 
+      <a href="/news/alchemist-chicago-2026">Alchemist Chicago Milestone</a> &bull; 
+      <a href="https://github.com/point-reyes-sound" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </p>
+  </footer>
+
+  <script>
+    function seekVideo(seconds) {
+      const vid = document.getElementById('mainFilmVideo');
+      if (vid) {
+        vid.currentTime = seconds;
+        vid.play().catch(() => {});
+      }
+    }
+
+    // Handle URL ?t= param if present (e.g., ?t=15)
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const t = parseFloat(params.get('t'));
+      if (!isNaN(t) && t > 0) {
+        seekVideo(t);
+      }
+    });
+  </script>
+
+</body>
+</html>
