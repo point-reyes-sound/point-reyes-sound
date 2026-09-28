@@ -16,6 +16,15 @@ export default defineConfig({
           if (req.url === '/film' || req.url === '/film/') {
             req.url = '/film/index.html';
           }
+          if (req.url === '/genesis-q' || req.url === '/genesis-q/') {
+            req.url = '/genesis-q-deck.html';
+          }
+          if (req.url === '/genesis-q-deck' || req.url === '/genesis-q-deck/') {
+            req.url = '/genesis-q-deck.html';
+          }
+          if (req.url === '/quantonation-deck' || req.url === '/quantonation-deck/') {
+            req.url = '/quantonation-deck.html';
+          }
           next();
         });
       }
