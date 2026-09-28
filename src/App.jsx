@@ -653,6 +653,7 @@ export default function App() {
             <video 
               ref={videoRef}
               src="/prs_video_promo_v2.mp4" 
+              poster="/hero_video_poster.jpg"
               autoPlay 
               muted={isVideoMuted}
               playsInline 
@@ -1185,6 +1186,7 @@ export default function App() {
             <a href="#research">Research</a>
             <a href="#roadmap">Roadmap</a>
             <a href="#contact">Contact</a>
+            <a href="/film">Cinematic Overview (Film) &rarr;</a>
             <button className="footer-link-btn" onClick={() => openAppView("papermache")}>
               Paper Mâché Clash Engine &rarr;
             </button>

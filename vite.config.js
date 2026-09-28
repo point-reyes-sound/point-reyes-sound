@@ -10,8 +10,11 @@ export default defineConfig({
       name: 'clean-urls-dev',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
-          if (req.url === '/news/alchemist-chicago-2026') {
+          if (req.url === '/news/alchemist-chicago-2026' || req.url === '/news/alchemist-chicago-2026/') {
             req.url = '/news/alchemist-chicago-2026/index.html';
+          }
+          if (req.url === '/film' || req.url === '/film/') {
+            req.url = '/film/index.html';
           }
           next();
         });
@@ -26,7 +29,8 @@ export default defineConfig({
         papermache: resolve(__dirname, 'papermache.html'),
         anfa: resolve(__dirname, 'anfa-deck.html'),
         alchemist: resolve(__dirname, 'alchemist-deck.html'),
-        news_alchemist: resolve(__dirname, 'news/alchemist-chicago-2026/index.html')
+        news_alchemist: resolve(__dirname, 'news/alchemist-chicago-2026/index.html'),
+        film: resolve(__dirname, 'film/index.html')
       }
     }
   }
