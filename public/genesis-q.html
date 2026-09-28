@@ -801,6 +801,199 @@
       min-width: 60px;
       text-align: center;
     }
+
+    /* SLIDE 9: Quantum Efficiency in Singlet Fission */
+    .singlet-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.15rem;
+      align-items: stretch;
+      flex: 1;
+      min-height: 0;
+      position: relative;
+    }
+
+    .singlet-card {
+      background: rgba(5, 14, 8, 0.88);
+      border: 1.5px solid rgba(53, 255, 130, 0.18);
+      border-radius: 12px;
+      padding: 1.1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
+      cursor: pointer;
+    }
+
+    .singlet-card:hover,
+    .singlet-card.is-active {
+      transform: translateY(-2px);
+      background: rgba(7, 20, 11, 0.94);
+    }
+
+    .singlet-card.panel-1.is-active {
+      border-color: #38bdf8;
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.28), 0 12px 36px rgba(0, 0, 0, 0.8);
+    }
+
+    .singlet-card.panel-2.is-active {
+      border-color: #f59e0b;
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.28), 0 12px 36px rgba(0, 0, 0, 0.8);
+    }
+
+    .singlet-card.panel-3.is-active {
+      border-color: #ff5722;
+      box-shadow: 0 0 35px rgba(255, 87, 34, 0.32), 0 12px 36px rgba(0, 0, 0, 0.8);
+    }
+
+    .singlet-badge {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      padding: 3px 9px;
+      border-radius: 12px;
+      display: inline-block;
+      width: fit-content;
+      margin-bottom: 0.35rem;
+    }
+
+    .panel-1 .singlet-badge {
+      background: rgba(56, 189, 248, 0.14);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .panel-2 .singlet-badge {
+      background: rgba(245, 158, 11, 0.14);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    .panel-3 .singlet-badge {
+      background: rgba(255, 87, 34, 0.14);
+      color: #ff5722;
+      border: 1px solid rgba(255, 87, 34, 0.35);
+    }
+
+    .singlet-card-title {
+      font-family: var(--font-primary);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.15rem;
+      line-height: 1.2;
+    }
+
+    .singlet-card-desc {
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.35;
+      margin-bottom: 0.4rem;
+    }
+
+    .singlet-svg-stage {
+      width: 100%;
+      height: 175px;
+      flex: 1;
+      display: block;
+      margin: 0.25rem 0;
+      border-radius: 8px;
+      background: radial-gradient(circle at 50% 50%, rgba(20, 45, 28, 0.25) 0%, rgba(3, 8, 4, 0.7) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .singlet-meta-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      padding-top: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Keyframe Animations */
+    @keyframes s1Breath {
+      0%, 100% { filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.65)); transform: translate(202px, 60px) rotate(-24deg) scale(0.78); }
+      50% { filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.95)) drop-shadow(0 0 32px rgba(56, 189, 248, 0.4)); transform: translate(202px, 56px) rotate(-24deg) scale(0.78); }
+    }
+
+    @keyframes fluxCirculate1 {
+      from { stroke-dashoffset: 80; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes fluxCirculate2 {
+      from { stroke-dashoffset: -80; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes tripletDriftA {
+      0%, 100% { transform: translate(100px, 100px) rotate(-32deg) scale(0.74); }
+      50% { transform: translate(92px, 94px) rotate(-35deg) scale(0.74); }
+    }
+
+    @keyframes tripletDriftB {
+      0%, 100% { transform: translate(240px, 100px) rotate(-16deg) scale(0.74); }
+      50% { transform: translate(248px, 106px) rotate(-13deg) scale(0.74); }
+    }
+
+    /* Interactive Timeline Controls */
+    .fission-controls-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(5, 14, 8, 0.9);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 5px 14px;
+      margin-top: 0.5rem;
+    }
+
+    .fission-stage-tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .fission-stage-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 4px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .fission-stage-btn:hover {
+      border-color: var(--accent-emerald);
+      color: #fff;
+    }
+
+    .fission-stage-btn.active {
+      background: var(--accent-emerald);
+      color: #030704;
+      border-color: var(--accent-emerald);
+      font-weight: 700;
+    }
+
+    .fission-equation {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
   </style>
 </head>
 <body>
@@ -823,7 +1016,7 @@
           </svg>
           <span class="company-tag">POINT REYES SOUND, INC.</span>
         </div>
-        <span class="slide-num">01 / 08</span>
+        <span class="slide-num">01 / 09</span>
       </div>
       
       <div style="flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 4%;">
@@ -878,7 +1071,7 @@
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">Q-BOLTZ SOLVER</span>
         </div>
-        <span class="slide-num">02 / 08</span>
+        <span class="slide-num">02 / 09</span>
       </div>
       
       <h2>Q-Boltz: Kinetic Relaxation in Phase Space</h2>
@@ -935,7 +1128,7 @@
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">FOUNDATIONAL THESIS</span>
         </div>
-        <span class="slide-num">03 / 08</span>
+        <span class="slide-num">03 / 09</span>
       </div>
       
       <div>
@@ -1102,7 +1295,7 @@
             Q-BOLTZ
           </span>
         </div>
-        <span class="slide-num">05 / 08</span>
+        <span class="slide-num">05 / 09</span>
       </div>
 
       <div>
@@ -1173,7 +1366,7 @@
             Q-BOLTZ
           </span>
         </div>
-        <span class="slide-num">06 / 08</span>
+        <span class="slide-num">06 / 09</span>
       </div>
 
       <div>
@@ -1275,7 +1468,7 @@
             Q-BOLTZ
           </span>
         </div>
-        <span class="slide-num">07 / 08</span>
+        <span class="slide-num">07 / 09</span>
       </div>
 
       <div>
@@ -1432,7 +1625,7 @@
             Q-BOLTZ
           </span>
         </div>
-        <span class="slide-num">08 / 08</span>
+        <span class="slide-num">08 / 09</span>
       </div>
 
       <!-- Founder & Advisory Layout -->
@@ -1497,10 +1690,298 @@
       </div>
     </section>
 
+    <!-- SLIDE 9: Quantum Efficiency in Singlet Fission -->
+    <section class="slide" id="slide-9" data-slide="9">
+      <div class="header">
+        <div class="brand-lockup">
+          <svg class="brand-logo-animated" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="15" fill="#040b06" stroke="rgba(53, 255, 130, 0.3)" stroke-width="1"/>
+            <ellipse class="lobe-blue" cx="16" cy="9.5" rx="5" ry="6.6" fill="#2563eb"/>
+            <ellipse class="lobe-red" cx="16" cy="22.5" rx="5" ry="6.6" fill="#dc2626"/>
+            <ellipse class="nodal-ring" cx="16" cy="16" rx="8" ry="2.2" stroke="#f59e0b" stroke-width="1.8" fill="none"/>
+            <path class="helix-strand-1" d="M10 8 Q16 16 22 24" stroke="#35ff82" stroke-width="1.3" stroke-linecap="round" opacity="0.9" fill="none"/>
+            <path class="helix-strand-2" d="M22 8 Q16 16 10 24" stroke="#64c8ff" stroke-width="1.1" stroke-linecap="round" opacity="0.75" fill="none"/>
+          </svg>
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">QUANTUM MULTIPLIER</span>
+        </div>
+        <span class="slide-num">09 / 09</span>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.4rem;">
+        <div>
+          <h2 style="margin: 0; font-size: 2.15rem; letter-spacing: -0.3px;">Quantum Efficiency in Singlet Fission</h2>
+          <p class="subtitle" style="margin: 0.2rem 0 0 0; font-size: 1.05rem; color: var(--text-secondary);">
+            Singlet Fission in Tetracene Dimer: An Ultrafast Spin-Correlated Multiplier
+          </p>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.82rem; background: rgba(53, 255, 130, 0.1); border: 1.5px solid rgba(53, 255, 130, 0.35); padding: 5px 14px; border-radius: 16px; color: var(--accent-emerald); font-weight: 700; letter-spacing: 0.5px; box-shadow: 0 0 15px rgba(53, 255, 130, 0.15);">
+          η<sub>int</sub> = 200% THEORETICAL CARRIER YIELD
+        </div>
+      </div>
+
+      <div class="slide-body" style="display: flex; flex-direction: column; justify-content: space-between; flex: 1; min-height: 0;">
+        
+        <!-- 3-Panel Flowing Animation Grid -->
+        <div class="singlet-grid">
+          
+          <!-- PANEL 1: PHOTOEXCITATION -->
+          <div class="singlet-card panel-1 is-active" id="fission-panel-1" onclick="setFissionStage(1)">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="singlet-badge">STAGE 01</span>
+                <span style="font-family: var(--font-mono); font-size: 0.78rem; color: #38bdf8; font-weight: 600;">S₀ → S₁</span>
+              </div>
+              <div class="singlet-card-title">Photoexcitation</div>
+              <div class="singlet-card-desc">Photon Absorption (hν)</div>
+            </div>
+
+            <!-- Stage 1 SVG -->
+            <svg class="singlet-svg-stage" viewBox="0 0 340 200">
+              <defs>
+                <g id="tetracene-skel-p1">
+                  <path d="M -69.28 -10 L -51.96 -20 L -34.64 -10 L -17.32 -20 L 0.00 -10 L 17.32 -20 L 34.64 -10 L 51.96 -20 L 69.28 -10 L 69.28 10 L 51.96 20 L 34.64 10 L 17.32 20 L 0.00 10 L -17.32 20 L -34.64 10 L -51.96 20 L -69.28 10 Z M -34.64 -10 L -34.64 10 M 0.0 -10 L 0.0 10 M 34.64 -10 L 34.64 10" stroke-linecap="round" stroke-linejoin="round" />
+                  <circle cx="-51.96" cy="0" r="3.5" fill="currentColor" opacity="0.3" />
+                  <circle cx="-17.32" cy="0" r="3.5" fill="currentColor" opacity="0.3" />
+                  <circle cx="17.32" cy="0" r="3.5" fill="currentColor" opacity="0.3" />
+                  <circle cx="51.96" cy="0" r="3.5" fill="currentColor" opacity="0.3" />
+                </g>
+                <marker id="arrow-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+                </marker>
+                <filter id="p1-cyan-glow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="3.5" result="blur"/>
+                  <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <!-- State Levels Grid -->
+              <text x="24" y="62" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700">S₁</text>
+              <line x1="44" y1="58" x2="88" y2="58" stroke="#38bdf8" stroke-dasharray="3 3" stroke-width="1.2" opacity="0.7"/>
+
+              <text x="24" y="162" fill="var(--text-muted)" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600">S₀</text>
+              <line x1="44" y1="158" x2="88" y2="158" stroke="rgba(100, 160, 120, 0.4)" stroke-dasharray="3 3" stroke-width="1.2"/>
+
+              <!-- Vertical Excitation Arrow -->
+              <path d="M 66 150 L 66 68" stroke="#38bdf8" stroke-width="2.2" marker-end="url(#arrow-blue)" />
+
+              <!-- Incoming Photon Beam & Sun Icon -->
+              <g class="photon-incoming-group">
+                <circle cx="34" cy="106" r="11" fill="rgba(245, 197, 66, 0.15)" stroke="#f5c542" stroke-width="1.2">
+                  <animate attributeName="r" values="9;13;9" dur="1.8s" repeatCount="indefinite" />
+                </circle>
+                <!-- Sun rays -->
+                <circle cx="34" cy="106" r="4.5" fill="#f5c542" />
+                <path d="M 34 96 L 34 99 M 34 113 L 34 116 M 24 106 L 27 106 M 41 106 L 44 106" stroke="#f5c542" stroke-width="1.5" stroke-linecap="round"/>
+                <!-- Wavy photon ray -->
+                <path class="photon-wave-line" d="M 44 106 Q 60 92, 76 106 T 108 106 T 136 102" fill="none" stroke="#f5c542" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 3">
+                  <animate attributeName="stroke-dashoffset" values="0;-28" dur="1.2s" repeatCount="indefinite" />
+                </path>
+                <text x="18" y="128" fill="#f5c542" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600">hν Photon</text>
+              </g>
+
+              <!-- Molecule A (Excited S1, Neon Electric Cyan) -->
+              <g transform="translate(202, 60) rotate(-24) scale(0.78)" class="molecule-s1-glow" style="animation: s1Breath 3.5s ease-in-out infinite;">
+                <use href="#tetracene-skel-p1" stroke="#38bdf8" stroke-width="2.6" fill="rgba(56, 189, 248, 0.12)" filter="url(#p1-cyan-glow)" color="#38bdf8" />
+              </g>
+
+              <!-- Molecule B (Ground S0, Muted Emerald Slate) -->
+              <g transform="translate(236, 142) rotate(-24) scale(0.78)">
+                <use href="#tetracene-skel-p1" stroke="rgba(100, 160, 120, 0.45)" stroke-width="2.2" fill="rgba(10, 25, 15, 0.4)" color="#64a078" />
+              </g>
+
+              <!-- Labels -->
+              <text x="195" y="24" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700">Molecule A (S₁)</text>
+              <text x="245" y="184" fill="var(--text-muted)" font-family="'JetBrains Mono', monospace" font-size="9.5">Molecule B (S₀)</text>
+            </svg>
+
+            <div class="singlet-meta-footer">
+              <span style="color: #38bdf8;">Optical Absorption</span>
+              <span>Singlet State S₁ Populated</span>
+            </div>
+          </div>
+
+          <!-- PANEL 2: CORRELATED TRIPLET PAIR (¹(TT)) -->
+          <div class="singlet-card panel-2" id="fission-panel-2" onclick="setFissionStage(2)">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="singlet-badge">STAGE 02</span>
+                <span style="font-family: var(--font-mono); font-size: 0.78rem; color: #f59e0b; font-weight: 600;">S₁S₀ ⟷ ¹(TT)</span>
+              </div>
+              <div class="singlet-card-title">Correlated Pair</div>
+              <div class="singlet-card-desc">¹(TT) Intermediate Superposition</div>
+            </div>
+
+            <!-- Stage 2 SVG -->
+            <svg class="singlet-svg-stage" viewBox="0 0 340 200">
+              <defs>
+                <linearGradient id="flux-grad-1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#38bdf8"/>
+                  <stop offset="50%" stop-color="#35ff82"/>
+                  <stop offset="100%" stop-color="#f59e0b"/>
+                </linearGradient>
+                <linearGradient id="flux-grad-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#f59e0b"/>
+                  <stop offset="50%" stop-color="#ff7043"/>
+                  <stop offset="100%" stop-color="#38bdf8"/>
+                </linearGradient>
+                <filter id="p2-amber-glow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="3.5" result="blur"/>
+                  <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <!-- Central Quantum Correlation Halo -->
+              <ellipse cx="170" cy="100" rx="55" ry="46" fill="rgba(53, 255, 130, 0.04)" stroke="rgba(53, 255, 130, 0.25)" stroke-width="1.2" stroke-dasharray="4 4"/>
+              
+              <!-- Upper Entanglement Flow Arc (Molecule A -> B) -->
+              <path d="M 125 72 C 150 42, 190 42, 225 72" fill="none" stroke="url(#flux-grad-1)" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="8 6" style="animation: fluxCirculate1 2.2s linear infinite;" />
+              <polygon points="225,72 216,66 220,76" fill="#f59e0b" />
+
+              <!-- Lower Entanglement Flow Arc (Molecule B -> A) -->
+              <path d="M 225 128 C 190 158, 150 158, 125 128" fill="none" stroke="url(#flux-grad-2)" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="8 6" style="animation: fluxCirculate2 2.2s linear infinite;" />
+              <polygon points="125,128 134,134 130,124" fill="#38bdf8" />
+
+              <!-- Molecule A (Cyan component) -->
+              <g transform="translate(122, 100) rotate(-25) scale(0.74)">
+                <use href="#tetracene-skel-p1" stroke="#38bdf8" stroke-width="2.6" fill="rgba(56, 189, 248, 0.12)" filter="url(#p1-cyan-glow)" color="#38bdf8" />
+              </g>
+
+              <!-- Molecule B (Amber-Gold component) -->
+              <g transform="translate(218, 100) rotate(-25) scale(0.74)">
+                <use href="#tetracene-skel-p1" stroke="#f59e0b" stroke-width="2.6" fill="rgba(245, 158, 11, 0.12)" filter="url(#p2-amber-glow)" color="#f59e0b" />
+              </g>
+
+              <!-- Core State Indicator Badge -->
+              <rect x="135" y="90" width="70" height="20" rx="10" fill="rgba(3, 8, 4, 0.9)" stroke="#35ff82" stroke-width="1.2" />
+              <text x="170" y="104" fill="#35ff82" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">¹(TT) PAIR</text>
+
+              <!-- Flow Annotation Labels -->
+              <text x="170" y="32" fill="var(--accent-emerald)" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600">Spin-Correlated State</text>
+              <text x="170" y="180" fill="var(--accent-gold)" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9">Simultaneous Triplet Character</text>
+            </svg>
+
+            <div class="singlet-meta-footer">
+              <span style="color: #f59e0b;">Non-Radiative Multiplier</span>
+              <span>Zero Spin-Forbidden Loss</span>
+            </div>
+          </div>
+
+          <!-- PANEL 3: TRIPLET DISSOCIATION -->
+          <div class="singlet-card panel-3" id="fission-panel-3" onclick="setFissionStage(3)">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="singlet-badge">STAGE 03</span>
+                <span style="font-family: var(--font-mono); font-size: 0.78rem; color: #ff5722; font-weight: 600;">¹(TT) → 2 × T₁</span>
+              </div>
+              <div class="singlet-card-title">Triplet Dissociation</div>
+              <div class="singlet-card-desc">Independent T₁ States & Carriers</div>
+            </div>
+
+            <!-- Stage 3 SVG -->
+            <svg class="singlet-svg-stage" viewBox="0 0 340 200">
+              <defs>
+                <filter id="p3-orange-glow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="4" result="blur"/>
+                  <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <!-- Outward Expanding Wave Ripples for Exciton 1 -->
+              <circle cx="100" cy="100" r="14" fill="none" stroke="#ff5722" opacity="0.6">
+                <animate attributeName="r" values="8;36" dur="2.4s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.8;0" dur="2.4s" repeatCount="indefinite" />
+              </circle>
+
+              <!-- Outward Expanding Wave Ripples for Exciton 2 -->
+              <circle cx="240" cy="100" r="14" fill="none" stroke="#ff5722" opacity="0.6">
+                <animate attributeName="r" values="8;36" dur="2.4s" begin="0.8s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.8;0" dur="2.4s" begin="0.8s" repeatCount="indefinite" />
+              </circle>
+
+              <!-- Dissociation Separation Arrow -->
+              <path d="M 148 94 Q 170 82, 192 94" fill="none" stroke="#ff5722" stroke-width="1.8" stroke-dasharray="3 3" />
+              <polygon points="192,94 184,90 186,99" fill="#ff5722"/>
+              <text x="170" y="80" fill="#ff7043" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600">Spin Decoherence</text>
+
+              <!-- Molecule A (Decohered Triplet T1, Vibrant Fiery Orange) -->
+              <g transform="translate(100, 100) rotate(-32) scale(0.74)" style="animation: tripletDriftA 4s ease-in-out infinite;">
+                <use href="#tetracene-skel-p1" stroke="#ff5722" stroke-width="2.8" fill="rgba(255, 87, 34, 0.16)" filter="url(#p3-orange-glow)" color="#ff5722" />
+              </g>
+
+              <!-- Molecule B (Decohered Triplet T1, Vibrant Fiery Orange) -->
+              <g transform="translate(240, 100) rotate(-16) scale(0.74)" style="animation: tripletDriftB 4s ease-in-out infinite;">
+                <use href="#tetracene-skel-p1" stroke="#ff5722" stroke-width="2.8" fill="rgba(255, 87, 34, 0.16)" filter="url(#p3-orange-glow)" color="#ff5722" />
+              </g>
+
+              <!-- Free Charge Carrier Badges -->
+              <g transform="translate(68, 38)">
+                <rect width="64" height="20" rx="10" fill="rgba(255, 87, 34, 0.15)" stroke="#ff5722" stroke-width="1.2" />
+                <text x="32" y="14" fill="#ff5722" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700">T₁ State</text>
+              </g>
+              <g transform="translate(208, 38)">
+                <rect width="64" height="20" rx="10" fill="rgba(255, 87, 34, 0.15)" stroke="#ff5722" stroke-width="1.2" />
+                <text x="32" y="14" fill="#ff5722" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700">T₁ State</text>
+              </g>
+
+              <!-- Exciton Diffusion Subtext -->
+              <text x="170" y="180" fill="#ff7043" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="600">Free Excitons (T₁ + T₁)</text>
+            </svg>
+
+            <div class="singlet-meta-footer">
+              <span style="color: #ff5722;">200% Carrier Multiplication</span>
+              <span>2 × Charge Potential</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sleek Interactive Sequence Controller Bar -->
+        <div class="fission-controls-strip">
+          <div class="fission-stage-tabs">
+            <button class="fission-stage-btn" id="fission-play-btn" onclick="toggleFissionPlay()">❚❚ Pause</button>
+            <button class="fission-stage-btn active" id="fission-tab-1" onclick="setFissionStage(1)">01 Photoexcitation (hν)</button>
+            <button class="fission-stage-btn" id="fission-tab-2" onclick="setFissionStage(2)">02 ¹(TT) Correlated Pair</button>
+            <button class="fission-stage-btn" id="fission-tab-3" onclick="setFissionStage(3)">03 Triplet Dissociation (2 × T₁)</button>
+          </div>
+
+          <div class="fission-equation">
+            <span>hν</span>
+            <span style="color: var(--text-muted);">⟶</span>
+            <span style="color: #38bdf8;">S₁S₀</span>
+            <span style="color: var(--text-muted);">⟶</span>
+            <span style="color: #f59e0b;">¹(TT)</span>
+            <span style="color: var(--text-muted);">⟶</span>
+            <strong style="color: #ff5722;">T₁ + T₁ (200% Quantum Yield)</strong>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <span>Point Reyes Sound, Inc. © 2026</span>
+        <span>Confidential — Frontier Deep Tech Seed (Genesis-Q)</span>
+      </div>
+    </section>
+
+  </div>
+
   <!-- Persistent Floating Navigation Controls -->
   <div class="deck-controls">
     <button class="deck-btn" id="btn-prev" onclick="prevSlide()">◀ Prev</button>
-    <div class="deck-status" id="deck-status">01 / 08</div>
+    <div class="deck-status" id="deck-status">01 / 09</div>
     <button class="deck-btn" id="btn-next" onclick="nextSlide()">Next ▶</button>
     <button class="deck-btn" onclick="window.print()" title="Export / Print 16:9 PDF">🖨️ PDF</button>
   </div>
@@ -1508,7 +1989,7 @@
   <script>
     // State
     let currentSlide = 1;
-    const totalSlides = 8;
+    const totalSlides = 9;
     const film = document.getElementById('deck-film');
     const progressBar = document.getElementById('progress-bar');
     const progressFilled = document.getElementById('progress-filled');
@@ -1569,6 +2050,15 @@
         if (!film.paused) {
           film.pause();
           playIcon.textContent = '▶ Play';
+        }
+      }
+
+      if (currentSlide === 9) {
+        startFissionLoop();
+      } else {
+        if (fissionTimer) {
+          clearInterval(fissionTimer);
+          fissionTimer = null;
         }
       }
     }
@@ -2209,6 +2699,47 @@
         renderer.render(scene, camera);
       }
       animateFlow();
+    }
+
+    // Slide 9: Singlet Fission Animation Controller
+    let fissionAutoPlay = true;
+    let fissionStage = 1;
+    let fissionTimer = null;
+
+    function setFissionStage(stageNum) {
+      fissionStage = stageNum;
+      for (let i = 1; i <= 3; i++) {
+        const card = document.getElementById(`fission-panel-${i}`);
+        const tab = document.getElementById(`fission-tab-${i}`);
+        if (card) {
+          if (i === stageNum) card.classList.add('is-active');
+          else card.classList.remove('is-active');
+        }
+        if (tab) {
+          if (i === stageNum) tab.classList.add('active');
+          else tab.classList.remove('active');
+        }
+      }
+    }
+
+    function startFissionLoop() {
+      if (fissionTimer) clearInterval(fissionTimer);
+      fissionTimer = setInterval(() => {
+        if (!fissionAutoPlay) return;
+        fissionStage = (fissionStage % 3) + 1;
+        setFissionStage(fissionStage);
+      }, 3400);
+    }
+
+    function toggleFissionPlay() {
+      fissionAutoPlay = !fissionAutoPlay;
+      const btn = document.getElementById('fission-play-btn');
+      if (btn) {
+        btn.textContent = fissionAutoPlay ? '❚❚ Pause' : '▶ Play';
+      }
+      if (fissionAutoPlay) {
+        startFissionLoop();
+      }
     }
 
     // Initialize
