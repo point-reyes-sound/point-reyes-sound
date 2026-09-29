@@ -89,6 +89,14 @@
       "destination": "/quantonation-deck.html"
     },
     {
+      "source": "/genesis-q",
+      "destination": "/genesis-q-deck.html"
+    },
+    {
+      "source": "/genesis-q-deck",
+      "destination": "/genesis-q-deck.html"
+    },
+    {
       "source": "/usistef-qmf-deck",
       "destination": "/usistef-qmf-deck.html"
     },

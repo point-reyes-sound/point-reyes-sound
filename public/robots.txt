@@ -12,6 +12,12 @@ Disallow: /anfa-deck
 Disallow: /anfa-deck.html
 Disallow: /alchemist-deck
 Disallow: /alchemist-deck.html
+Disallow: /quantonation-deck
+Disallow: /quantonation-deck.html
+Disallow: /genesis-q
+Disallow: /genesis-q.html
+Disallow: /genesis-q-deck
+Disallow: /genesis-q-deck.html
 
 # Search Engine Crawlers
 User-agent: Googlebot
