@@ -131,20 +131,11 @@ export default function App() {
   const [activeTheme, setActiveTheme] = useState(0);
   const [copiedBibtexId, setCopiedBibtexId] = useState(null);
 
-  // Deep link helper to detect if URL points to Interactive (Q-BOLTZ) or Paper Mâché
+  // Deep link helper to detect if URL points to Interactive (Q-BOLTZ)
   const getInitialActiveView = () => {
     if (typeof window === "undefined") return "home";
     const path = window.location.pathname.toLowerCase().replace(/\/$/, "");
     const hash = window.location.hash.toLowerCase().replace(/^#\/?/, "");
-    if (
-      path === "/papermache" ||
-      path === "/papermache.html" ||
-      path === "/paper-mache" ||
-      hash === "papermache" ||
-      hash === "paper-mache"
-    ) {
-      return "papermache";
-    }
     if (
       path === "/interactive" ||
       path === "/interactive.html" ||
@@ -186,15 +177,13 @@ export default function App() {
       stopAudioIfPlaying();
     }
 
-    setCurrentView(tab);
-    const targetPath = tab === "papermache" ? "/papermache" : "/interactive";
+    setCurrentView("interactive");
+    const targetPath = "/interactive";
     if (typeof window !== "undefined" && window.location.pathname !== targetPath) {
-      window.history.pushState({ page: tab }, "", targetPath);
+      window.history.pushState({ page: "interactive" }, "", targetPath);
     }
     if (typeof document !== "undefined") {
-      document.title = tab === "papermache"
-        ? "Paper Mâché // Quantum Information Clash Engine | Point Reyes Sound"
-        : "Quantum Gas // Continuous Phase-Space Kinetics | Point Reyes Sound";
+      document.title = "Quantum Gas // Continuous Phase-Space Kinetics | Point Reyes Sound";
     }
   };
 
@@ -226,8 +215,6 @@ export default function App() {
       setCurrentView(view);
       if (view === "interactive") {
         document.title = "Quantum Gas // Continuous Phase-Space Kinetics | Point Reyes Sound";
-      } else if (view === "papermache") {
-        document.title = "Paper Mâché // Quantum Information Clash Engine | Point Reyes Sound";
       } else {
         document.title = "Point Reyes Sound | Continuous Phase-Space Kinetics for Strongly Correlated Electrons";
       }
@@ -239,25 +226,12 @@ export default function App() {
     const initView = getInitialActiveView();
     if (initView === "interactive") {
       document.title = "Quantum Gas // Continuous Phase-Space Kinetics | Point Reyes Sound";
-    } else if (initView === "papermache") {
-      document.title = "Paper Mâché // Quantum Information Clash Engine | Point Reyes Sound";
     }
 
     return () => {
       window.removeEventListener("popstate", handlePopState);
       window.removeEventListener("hashchange", handlePopState);
     };
-  }, []);
-
-  // Listen for tab switch messages from embedded iframes
-  React.useEffect(() => {
-    const handleMessage = (e) => {
-      if (e.data && e.data.type === "SWITCH_APP_TAB") {
-        switchAppTab(e.data.tab);
-      }
-    };
-    window.addEventListener("message", handleMessage);
-    return () => window.removeEventListener("message", handleMessage);
   }, []);
 
   // Attempt unmuted autoplay by default, with instant universal gesture unlock
@@ -393,8 +367,8 @@ export default function App() {
     setSalesSubmitted(true);
   };
 
-  // If user opens the application view (Interactive 3D Lab or Paper Mâché)
-  if (currentView === "interactive" || currentView === "papermache") {
+  // If user opens the application view (Interactive 3D Lab)
+  if (currentView === "interactive") {
     return (
       <div className="interactive-wrapper">
         <div className="lab-topbar">
@@ -408,30 +382,15 @@ export default function App() {
             <span className="lab-brand-title">POINT REYES SOUND</span>
           </div>
 
-          {/* TWO TOP-LEVEL TABS */}
-          <div className="lab-center-tabs" role="tablist" aria-label="Top-Level Application Tabs">
-            <button 
-              className={`lab-tab-pill ${currentView === "papermache" ? "active" : ""}`}
-              onClick={() => switchAppTab("papermache")}
-              role="tab"
-              aria-selected={currentView === "papermache"}
-              id="tab-papermache"
-              title="Paper Mâché // Quantum Information Clash Engine"
-            >
-              <span className="tab-pill-dot dot-papermache"></span>
-              Paper Mâché
-            </button>
-            <button 
-              className={`lab-tab-pill ${currentView === "interactive" ? "active" : ""}`}
-              onClick={() => switchAppTab("interactive")}
-              role="tab"
-              aria-selected={currentView === "interactive"}
+          <div className="lab-center-tabs" role="tablist" aria-label="Application View">
+            <span 
+              className="lab-tab-pill active"
               id="tab-interactive"
               title="Quantum Gas 3D Simulator (Q-BOLTZ)"
             >
               <span className="tab-pill-dot dot-interactive"></span>
               Quantum Gas
-            </button>
+            </span>
           </div>
 
           <div className="lab-nav-actions">
@@ -445,24 +404,9 @@ export default function App() {
           </div>
         </div>
 
-        {/* TAB 1: INTERACTIVE (Q-BOLTZ) - Rendered exactly as is */}
-        <div 
-          className="app-view-container"
-          style={{ display: currentView === "interactive" ? "block" : "none" }}
-        >
+        {/* INTERACTIVE (Q-BOLTZ) */}
+        <div className="app-view-container">
           <LandingPage isActive={currentView === "interactive"} />
-        </div>
-
-        {/* TAB 2: PAPER MÂCHÉ - Full-page independent application */}
-        <div 
-          className="papermache-fullpage-wrapper"
-          style={{ display: currentView === "papermache" ? "block" : "none" }}
-        >
-          <iframe
-            src="/papermache-standalone/index.html"
-            title="Paper Mâché // Quantum Information Clash Engine"
-            className="papermache-fullpage-iframe"
-          />
         </div>
 
         {/* Intelligent Contact & Enterprise Solutions Modal */}
@@ -628,13 +572,6 @@ export default function App() {
               </svg>
               GitHub
             </a>
-            <button 
-              className="nav-header-tab nav-tab-papermache"
-              onClick={() => openAppView("papermache")}
-              title="Launch Paper Mâché Clash Engine"
-            >
-              Paper Mâché
-            </button>
             <button 
               className="nav-header-tab nav-tab-interactive"
               onClick={() => openAppView("interactive")}
@@ -1187,9 +1124,6 @@ export default function App() {
             <a href="#roadmap">Roadmap</a>
             <a href="#contact">Contact</a>
             <a href="/film">Cinematic Overview (Film) &rarr;</a>
-            <button className="footer-link-btn" onClick={() => openAppView("papermache")}>
-              Paper Mâché Clash Engine &rarr;
-            </button>
             <button className="footer-link-btn" onClick={() => openAppView("interactive")}>
               Quantum Gas Simulator &rarr;
             </button>
