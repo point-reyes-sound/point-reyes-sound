@@ -105,22 +105,6 @@
       "destination": "/papers/$1"
     },
     {
-      "source": "/papermache-standalone",
-      "destination": "/papermache-standalone/index.html"
-    },
-    {
-      "source": "/papermache-standalone/(.*)",
-      "destination": "/papermache-standalone/$1"
-    },
-    {
-      "source": "/papermache",
-      "destination": "/papermache.html"
-    },
-    {
-      "source": "/paper-mache",
-      "destination": "/papermache.html"
-    },
-    {
       "source": "/interactive",
       "destination": "/interactive.html"
     },
@@ -187,23 +171,6 @@
     },
     {
       "source": "/papers/(.*)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/pdf"
-        },
-        {
-          "key": "Content-Disposition",
-          "value": "inline"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400, s-maxage=86400"
-        }
-      ]
-    },
-    {
-      "source": "/papermache-standalone/papers/(.*)",
       "headers": [
         {
           "key": "Content-Type",

@@ -35,7 +35,6 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         interactive: resolve(__dirname, 'interactive.html'),
-        papermache: resolve(__dirname, 'papermache.html'),
         anfa: resolve(__dirname, 'anfa-deck.html'),
         alchemist: resolve(__dirname, 'alchemist-deck.html'),
         news_alchemist: resolve(__dirname, 'news/alchemist-chicago-2026/index.html'),

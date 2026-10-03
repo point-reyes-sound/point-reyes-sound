@@ -242,10 +242,6 @@ body {
   color: #ffffff;
 }
 
-.nav-tab-papermache:hover {
-  color: #38bdf8;
-}
-
 .nav-tab-interactive:hover {
   color: var(--accent-emerald);
 }
@@ -2041,11 +2037,6 @@ body {
   box-shadow: 0 0 8px var(--accent-emerald);
 }
 
-.dot-papermache {
-  background: #38bdf8;
-  box-shadow: 0 0 8px #38bdf8;
-}
-
 /* FULL-PAGE APPLICATION VIEW CONTAINERS */
 .app-view-container {
   width: 100%;
@@ -2053,22 +2044,6 @@ body {
   height: calc(100dvh - 61px);
   position: relative;
   overflow: auto;
-}
-
-.papermache-fullpage-wrapper {
-  width: 100%;
-  height: calc(100vh - 61px);
-  height: calc(100dvh - 61px);
-  position: relative;
-  background: #020503;
-  overflow: hidden;
-}
-
-.papermache-fullpage-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
 }
 
 .lab-logo {
@@ -2475,13 +2450,6 @@ body {
     background: rgba(56, 189, 248, 0.18);
     color: #ffffff;
     border-color: var(--accent-ocean);
-  }
-
-  .header-nav .nav-tab-papermache {
-    background: rgba(56, 189, 248, 0.15) !important;
-    border-color: rgba(56, 189, 248, 0.55) !important;
-    color: #38bdf8 !important;
-    font-weight: 600;
   }
 
   .header-nav .nav-tab-interactive {
@@ -3177,8 +3145,7 @@ body {
     white-space: nowrap;
   }
 
-  .app-view-container,
-  .papermache-fullpage-wrapper {
+  .app-view-container {
     height: calc(100vh - 46px);
     height: calc(100dvh - 46px);
     overflow: hidden;
