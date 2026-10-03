@@ -856,7 +856,10 @@ export default function LandingPage({ isActive = true }) {
 
       {/* Interactive Element Palette Row */}
       <div className="element-strip-container">
-        <div className="strip-title">SELECT OR DRAG ATOM INTO REACTION CHAMBER:</div>
+        <div className="strip-title">
+          <span className="desktop-hint">SELECT OR DRAG ATOM INTO REACTION CHAMBER:</span>
+          <span className="mobile-hint">TAP ATOM TO LOAD INTO REACTION CHAMBER:</span>
+        </div>
 
         <div className="element-strip-wrapper">
           {/* Strictly Centered Element Tiles */}

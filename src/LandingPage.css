@@ -212,6 +212,14 @@
   text-align: center;
 }
 
+.desktop-hint {
+  display: inline;
+}
+
+.mobile-hint {
+  display: none;
+}
+
 .element-strip {
   display: flex;
   justify-content: center;
@@ -889,11 +897,20 @@
 
 @media (max-width: 768px) {
   .phi-quest-container {
-    padding: 0.5rem 0.6rem 2.5rem 0.6rem;
+    padding: 0.5rem 0.65rem calc(env(safe-area-inset-bottom, 0px) + 3.8rem) 0.65rem;
     width: 100%;
     max-width: 100vw;
     overflow-x: hidden;
     box-sizing: border-box;
+  }
+
+  .desktop-hint {
+    display: none;
+  }
+
+  .mobile-hint {
+    display: inline;
+    color: #35ff82;
   }
 
   .phi-badge {
@@ -919,19 +936,9 @@
     width: 100%;
   }
 
-  /* Prominent centered Music icon control on mobile */
+  /* On mobile, use the dedicated floating thumb-reach button; hide duplicate inline control */
   .music-toggle-container {
-    position: static;
-    left: auto;
-    margin: 8px auto 12px auto;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .music-toggle-btn {
-    width: 44px;
-    height: 44px;
+    display: none;
   }
 
   /* Fixed sticky thumb-reach floating Music icon button on phones */
@@ -1107,6 +1114,83 @@
     touch-action: manipulation;
   }
 
+  .chamber-controls-bar {
+    padding: 0.85rem 0.65rem;
+    gap: 0.95rem;
+  }
+
+  .controls-row-top {
+    grid-template-columns: 1fr;
+    gap: 0.95rem;
+    width: 100%;
+  }
+
+  .control-slider-group {
+    width: 100%;
+    gap: 0.4rem;
+  }
+
+  .pwave-slider-wrap {
+    height: 38px;
+    width: 100%;
+  }
+
+  .pwave-native-range {
+    height: 8px;
+  }
+
+  .pwave-native-range::-webkit-slider-thumb {
+    width: 34px;
+    height: 34px;
+  }
+
+  .pwave-native-range::-moz-range-thumb {
+    width: 34px;
+    height: 34px;
+  }
+
+  .pwave-seeker-node {
+    width: 26px;
+    height: 26px;
+  }
+
+  .basis-select-wrapper {
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  .basis-select {
+    width: 100%;
+    min-height: 44px;
+    font-size: 0.85rem;
+    padding: 0.55rem 0.85rem;
+  }
+
+  .controls-action-top .excite-btn,
+  .controls-action-bottom .perturb-btn {
+    width: 100%;
+    min-height: 46px;
+    font-size: 0.88rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .metric-box {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .m-label {
+    font-size: 0.68rem;
+  }
+
+  .m-val {
+    font-size: 0.95rem;
+  }
+
   .scope-canvas {
     height: 85px;
   }
@@ -1127,7 +1211,7 @@
     padding: 0.75rem;
   }
 
-  .telemetry-grid {
+  .metrics-grid {
     grid-template-columns: 1fr 1fr;
     gap: 0.4rem;
   }
@@ -1137,6 +1221,6 @@
   }
 
   .m-val {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
   }
 }
