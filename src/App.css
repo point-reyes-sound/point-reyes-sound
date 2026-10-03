@@ -3126,10 +3126,12 @@ body {
 
   /* LAB TOPBAR MOBILE */
   .lab-topbar {
-    padding: 8px 12px;
-    gap: 8px;
+    padding: 6px 8px;
+    gap: 6px;
     width: 100%;
+    max-width: 100vw;
     box-sizing: border-box;
+    overflow-x: hidden;
   }
 
   .lab-brand {
@@ -3137,9 +3139,11 @@ body {
     gap: 6px;
     letter-spacing: 0.04em;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .lab-brand-title {
+    display: none !important; /* Keep only PRS logo on mobile so tabs and research button fit effortlessly */
   }
 
   .lab-logo {
@@ -3148,25 +3152,68 @@ body {
     flex-shrink: 0;
   }
 
+  .lab-center-tabs {
+    padding: 2px 3px;
+    gap: 2px;
+    flex-shrink: 1;
+  }
+
+  .lab-tab-pill {
+    padding: 4px 8px;
+    font-size: 0.78rem;
+    gap: 4px;
+    min-height: 34px;
+  }
+
   .lab-nav-actions {
-    gap: 6px;
+    gap: 4px;
     flex-shrink: 0;
   }
 
   .lab-nav-btn {
-    padding: 5px 10px;
+    padding: 4px 8px;
     font-size: 0.72rem;
+    min-height: 34px;
+    white-space: nowrap;
   }
 
   .app-view-container,
   .papermache-fullpage-wrapper {
     height: calc(100vh - 46px);
     height: calc(100dvh - 46px);
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
 /* MICRO-VIEWPORT / COMPACT PHONE POLISH (320px – 480px) */
 @media (max-width: 480px) {
+  .lab-brand-title {
+    display: none; /* Keep logo on narrow mobile screens so app tabs fit cleanly without horizontal overflow */
+  }
+
+  .lab-topbar {
+    padding: 4px 8px;
+    gap: 4px;
+  }
+
+  .lab-center-tabs {
+    padding: 2px;
+    gap: 2px;
+  }
+
+  .lab-tab-pill {
+    padding: 4px 8px;
+    font-size: 0.76rem;
+    gap: 4px;
+    min-height: 34px;
+  }
+
+  .lab-nav-btn {
+    padding: 4px 7px;
+    font-size: 0.68rem;
+    min-height: 34px;
+  }
   .hero-section {
     padding: 12px 10px 24px 10px;
   }
