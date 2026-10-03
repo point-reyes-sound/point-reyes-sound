@@ -59,6 +59,10 @@ $$\frac{\partial \gamma}{\partial t} + \frac{i}{\hbar}[F(\gamma), \gamma] = -\fr
 
 ## Core Repositories & Data Suites
 
+> [!IMPORTANT]
+> **Proprietary Technology & IP Notice**: Point Reyes Sound's core Q-BOLTZ™ and QBE-SCF continuous phase-space kinetic transport solver engine, high-performance backends, and proprietary algorithms are closed-source commercial IP. Public repositories host open-access reproduction datasets, potential energy surfaces, and demonstration interfaces to support scientific transparency without exposing solver internals.
+
+
 * ### [`point-reyes-sound/point-reyes-sound`](https://github.com/point-reyes-sound/point-reyes-sound)
   *The Core Research Platform & 3D Interactive Reaction Chamber*
   * High-performance React + Three.js + WebGL interactive 3D simulation of molecular dissociation and non-equilibrium transport.
