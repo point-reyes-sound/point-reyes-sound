@@ -3148,8 +3148,10 @@ body {
   .app-view-container {
     height: calc(100vh - 46px);
     height: calc(100dvh - 46px);
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
   }
 }
 
