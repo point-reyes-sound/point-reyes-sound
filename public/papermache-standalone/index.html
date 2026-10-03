@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <base href="/papermache-standalone/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <title>Papermache // Paper Clashes</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="./assets/index-rH8i-N7D.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-BkwVT-WS.css">
+  <script type="module" crossorigin src="./assets/index-B1kv8tV-.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CYhuuJng.css">
 </head>
 <body class="point-reyes-theme">
   <div id="app">
@@ -119,6 +118,9 @@
         <button class="how-calc-trigger" id="btn-how-calc-table" type="button">How is this calculated? ↗</button>
       </div>
 
+      <div class="mobile-table-hint" aria-hidden="true">
+        <span>↔ Swipe table horizontally to compare proof metrics</span>
+      </div>
       <div class="table-wrap">
         <table class="clash-table" id="clash-matrix-table">
           <thead>
@@ -141,10 +143,22 @@
 
     <!-- CASE STUDY INSPECTION SECTION -->
     <section class="case-study-inspection-section" id="case-study-section">
+      <!-- Mobile Segmented Paper Tab Switcher -->
+      <div class="mobile-paper-switcher" id="mobile-paper-switcher" role="tablist" aria-label="Mobile Paper Viewer Selector">
+        <button class="mobile-paper-tab active" data-paper="a" id="btn-mobile-paper-a" role="tab" aria-selected="true" aria-controls="frame-container-a">
+          <span class="mobile-tab-dot dot-a"></span>
+          <span class="mobile-tab-title" id="mobile-tab-title-a">Paper A: Shannon (1948)</span>
+        </button>
+        <button class="mobile-paper-tab" data-paper="b" id="btn-mobile-paper-b" role="tab" aria-selected="false" aria-controls="frame-container-b">
+          <span class="mobile-tab-dot dot-b"></span>
+          <span class="mobile-tab-title" id="mobile-tab-title-b">Paper B: Schumacher (1995)</span>
+        </button>
+      </div>
+
       <!-- Side-by-Side Dual Original Papers (Full Screen Focus) -->
       <div class="dual-papers-container">
         <!-- Paper A Frame -->
-        <div class="paper-frame-container" id="frame-container-a">
+        <div class="paper-frame-container mobile-active" id="frame-container-a">
           <div class="paper-frame-bar">
             <span class="paper-tag-a">PAPER A</span>
             <span class="paper-bar-title" id="paper-bar-title-a">Shannon (1948)</span>
@@ -155,6 +169,12 @@
           </div>
           <div class="pdf-embed-box">
             <iframe id="pdf-frame-a" src="/papers/shannon1948.pdf#view=FitH" type="application/pdf"></iframe>
+          </div>
+          <div class="mobile-pdf-action-bar">
+            <a id="paper-direct-link-a" href="/papers/shannon1948.pdf" target="_blank" class="mobile-direct-pdf-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              Open Full PDF ↗
+            </a>
           </div>
         </div>
 
@@ -170,6 +190,12 @@
           </div>
           <div class="pdf-embed-box">
             <iframe id="pdf-frame-b" src="/papers/schumacher1995.pdf#view=FitH" type="application/pdf"></iframe>
+          </div>
+          <div class="mobile-pdf-action-bar">
+            <a id="paper-direct-link-b" href="/papers/schumacher1995.pdf" target="_blank" class="mobile-direct-pdf-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              Open Full PDF ↗
+            </a>
           </div>
         </div>
       </div>
