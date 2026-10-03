@@ -64,7 +64,7 @@
   width: 100%;
 }
 
-/* Music ON/OFF Toggle Button - Minimalist Intuitive Icon Button */
+/* Music Play/Pause Button - Circular with Inscribed Media Icons */
 .music-toggle-container {
   position: absolute;
   left: calc(50% + 382px);
@@ -74,59 +74,61 @@
 }
 
 .music-toggle-btn {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  background: rgba(11, 18, 33, 0.88);
+  border: 1.5px solid rgba(226, 232, 240, 0.22);
+  color: #ef4444;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
   touch-action: manipulation;
   padding: 0;
-  border: 1.5px solid transparent;
 }
 
 .music-toggle-btn.off {
   background: rgba(11, 18, 33, 0.85);
-  border-color: rgba(226, 232, 240, 0.2);
-  color: #94a3b8;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  border-color: rgba(226, 232, 240, 0.22);
+  color: #ef4444;
 }
 
 .music-toggle-btn.off:hover {
-  border-color: rgba(52, 211, 153, 0.5);
-  color: #f8fafc;
-  box-shadow: 0 0 12px rgba(52, 211, 153, 0.25);
+  border-color: rgba(239, 68, 68, 0.6);
+  color: #ff4d4d;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.35), 0 4px 14px rgba(0, 0, 0, 0.45);
   transform: scale(1.06);
 }
 
 .music-toggle-btn.active {
-  background: rgba(16, 185, 129, 0.18);
-  border-color: rgba(52, 211, 153, 0.75);
-  color: #34d399;
-  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35), 0 4px 14px rgba(0, 0, 0, 0.45);
-  animation: pulseMusicGlow 3s infinite ease-in-out;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.7);
+  color: #ef4444;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.35), 0 4px 14px rgba(0, 0, 0, 0.45);
+  animation: pulsePlayGlow 3s infinite ease-in-out;
 }
 
 .music-toggle-btn.active:hover {
   transform: scale(1.08);
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.55);
 }
 
 .music-toggle-btn:active {
   transform: scale(0.92);
 }
 
-@keyframes pulseMusicGlow {
+@keyframes pulsePlayGlow {
   0%, 100% {
-    box-shadow: 0 0 14px rgba(16, 185, 129, 0.3), 0 4px 14px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.3), 0 4px 14px rgba(0, 0, 0, 0.45);
   }
   50% {
-    box-shadow: 0 0 22px rgba(16, 185, 129, 0.55), 0 4px 14px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5), 0 4px 14px rgba(0, 0, 0, 0.45);
   }
 }
 
@@ -949,29 +951,31 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    background: rgba(6, 11, 24, 0.94);
+    border: 1.5px solid rgba(226, 232, 240, 0.25);
+    color: #ef4444;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     cursor: pointer;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
-    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     user-select: none;
     touch-action: manipulation;
     padding: 0;
-    border: 1.5px solid transparent;
   }
 
   .mobile-floating-music-btn.active {
-    background: rgba(6, 11, 24, 0.94);
-    border-color: rgba(52, 211, 153, 0.8);
-    color: #34d399;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 16px rgba(16, 185, 129, 0.4);
-    animation: pulseMusicGlow 3s infinite ease-in-out;
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.75);
+    color: #ef4444;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 16px rgba(239, 68, 68, 0.4);
+    animation: pulsePlayGlow 3s infinite ease-in-out;
   }
 
   .mobile-floating-music-btn.off {
     background: rgba(6, 11, 24, 0.94);
     border-color: rgba(226, 232, 240, 0.25);
-    color: #94a3b8;
+    color: #ef4444;
   }
 
   .mobile-floating-music-btn:active {

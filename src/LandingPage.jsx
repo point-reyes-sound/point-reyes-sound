@@ -881,26 +881,23 @@ export default function LandingPage({ isActive = true }) {
             ))}
           </div>
 
-          {/* Dedicated Music ON/OFF Button - Minimalist Icon Toggle */}
+          {/* Dedicated Music Play/Pause Button - Classic Inscribed Circular Toggle */}
           <div className="music-toggle-container">
             <button 
               className={`music-toggle-btn ${isAudioActive ? 'active' : 'off'}`}
               onClick={toggleAudio}
-              title={isAudioActive ? "Mute music" : "Play music"}
-              aria-label={isAudioActive ? "Mute music" : "Play music"}
+              title={isAudioActive ? "Pause music" : "Play music"}
+              aria-label={isAudioActive ? "Pause music" : "Play music"}
               id="quantum-gas-music-toggle"
             >
               {isAudioActive ? (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#ef4444" aria-hidden="true">
+                  <rect x="6" y="4" width="4" height="16" rx="1.5" fill="#ef4444" />
+                  <rect x="14" y="4" width="4" height="16" rx="1.5" fill="#ef4444" />
                 </svg>
               ) : (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 5"></polygon>
-                  <line x1="23" y1="9" x2="17" y2="15"></line>
-                  <line x1="17" y1="9" x2="23" y2="15"></line>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#ef4444" aria-hidden="true" style={{ marginLeft: "2px" }}>
+                  <polygon points="6 4 20 12 6 20 6 4" fill="#ef4444" stroke="#ef4444" strokeWidth="1" strokeLinejoin="round" />
                 </svg>
               )}
             </button>
@@ -1114,26 +1111,23 @@ export default function LandingPage({ isActive = true }) {
         </div>
       </div>
 
-      {/* Mobile Floating Sticky Music Control - Pure Icon Toggle within thumb reach on phone */}
+      {/* Mobile Floating Sticky Music Control - Circular Play/Pause Toggle within thumb reach on phone */}
       <div className="mobile-floating-music-container">
         <button 
           className={`mobile-floating-music-btn ${isAudioActive ? 'active' : 'off'}`}
           onClick={toggleAudio}
-          title={isAudioActive ? "Mute music" : "Play music"}
-          aria-label={isAudioActive ? "Mute music" : "Play music"}
+          title={isAudioActive ? "Pause music" : "Play music"}
+          aria-label={isAudioActive ? "Pause music" : "Play music"}
           id="mobile-floating-music-toggle"
         >
           {isAudioActive ? (
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#ef4444" aria-hidden="true">
+              <rect x="6" y="4" width="4" height="16" rx="1.5" fill="#ef4444" />
+              <rect x="14" y="4" width="4" height="16" rx="1.5" fill="#ef4444" />
             </svg>
           ) : (
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 5"></polygon>
-              <line x1="23" y1="9" x2="17" y2="15"></line>
-              <line x1="17" y1="9" x2="23" y2="15"></line>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#ef4444" aria-hidden="true" style={{ marginLeft: "2px" }}>
+              <polygon points="6 4 20 12 6 20 6 4" fill="#ef4444" stroke="#ef4444" strokeWidth="1" strokeLinejoin="round" />
             </svg>
           )}
         </button>
