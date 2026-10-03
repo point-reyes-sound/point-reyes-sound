@@ -36,6 +36,9 @@
       --text-muted: #62826c;
       --border-subtle: rgba(53, 255, 130, 0.22);
       --border-active: #35ff82;
+
+      /* Responsive auto-fit slide scale */
+      --slide-scale: 1;
     }
 
     @page {
@@ -71,6 +74,7 @@
       align-items: center;
       padding: 24px 0 80px 0;
       gap: 32px;
+      width: 100%;
     }
 
     .slide {
@@ -88,6 +92,15 @@
       overflow: hidden;
       page-break-after: always;
       break-after: page;
+      /* Responsive scale: auto-fits browser window cleanly without zooming issues */
+      zoom: var(--slide-scale, 1);
+      transform-origin: top center;
+    }
+
+    @supports not (zoom: 1) {
+      .slide {
+        transform: scale(var(--slide-scale, 1));
+      }
     }
 
     /* Header */
@@ -378,22 +391,48 @@
     }
 
     /* Single slide presentation mode */
+    body.presentation-mode {
+      overflow: hidden !important;
+      height: 100vh !important;
+      width: 100vw !important;
+    }
+
     body.presentation-mode .deck-container {
-      padding: 0;
-      gap: 0;
-      height: 100vh;
-      justify-content: center;
+      padding: 0 !important;
+      gap: 0 !important;
+      height: 100vh !important;
+      width: 100vw !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
     }
 
     body.presentation-mode .slide {
       display: none;
-      box-shadow: none;
-      border-radius: 0;
-      border: none;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+      border-radius: 8px;
+      margin: auto;
     }
 
     body.presentation-mode .slide.active {
       display: flex;
+    }
+
+    .zoom-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border-left: 1px solid var(--border-subtle);
+      border-right: 1px solid var(--border-subtle);
+      padding: 0 8px;
+    }
+
+    .zoom-btn {
+      padding: 4px 9px;
+      font-size: 11px;
+      min-width: 26px;
+      justify-content: center;
     }
 
     /* Print styles for high-fidelity 16:9 PDF export */
@@ -416,6 +455,8 @@
         width: 16in !important;
       }
       .slide {
+        zoom: 1 !important;
+        transform: none !important;
         width: 16in !important;
         height: 9in !important;
         max-width: 16in !important;
@@ -445,6 +486,11 @@
     <button class="deck-btn" id="prev-btn" title="Previous Slide (Left Arrow)">◀ Prev</button>
     <span class="deck-status" id="slide-indicator">1 / 12</span>
     <button class="deck-btn" id="next-btn" title="Next Slide (Right Arrow)">Next ▶</button>
+    <div class="zoom-controls">
+      <button class="deck-btn zoom-btn" id="zoom-out-btn" title="Zoom Out (-)">−</button>
+      <button class="deck-btn zoom-btn" id="zoom-fit-btn" title="Fit to Window (0)">Fit</button>
+      <button class="deck-btn zoom-btn" id="zoom-in-btn" title="Zoom In (+)">+</button>
+    </div>
     <button class="deck-btn" id="mode-toggle" title="Toggle Slide/Scroll Mode">Presentation Mode</button>
     <button class="deck-btn" onclick="window.print()" title="Export / Print PDF">PDF / Print</button>
   </div>
@@ -1167,8 +1213,80 @@
       isPresentationMode = !isPresentationMode;
       document.body.classList.toggle('presentation-mode', isPresentationMode);
       modeToggleBtn.textContent = isPresentationMode ? 'Scroll Mode' : 'Presentation Mode';
+      customScale = null;
+      updateSlideScale();
       updatePresentationState();
     }
+
+    // Responsive Auto-Fit Scaling System
+    let customScale = null;
+
+    function calculateAutoFitScale() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const baseW = 1536; // 16in at 96dpi
+      const baseH = 864;  // 9in at 96dpi
+
+      if (isPresentationMode) {
+        const padX = 40;
+        const padY = 88; // room for fixed bottom controls
+        return Math.min((vw - padX) / baseW, (vh - padY) / baseH);
+      } else {
+        // Scroll mode: ensure entire slide fits comfortably on screen
+        if (vw < 768) {
+          return Math.min((vw - 20) / baseW, 0.90);
+        }
+        const maxW = Math.min(vw - 48, 1400);
+        const maxH = (vh - 84) * 0.92;
+        return Math.min(maxW / baseW, maxH / baseH, 0.90);
+      }
+    }
+
+    function applyScale(scale) {
+      scale = Math.max(0.2, Math.min(scale, 1.4));
+      document.documentElement.style.setProperty('--slide-scale', scale);
+      
+      const fitBtn = document.getElementById('zoom-fit-btn');
+      if (fitBtn) {
+        const pct = Math.round(scale * 100);
+        fitBtn.textContent = customScale === null ? `Fit (${pct}%)` : `${pct}%`;
+      }
+    }
+
+    function updateSlideScale() {
+      if (window.matchMedia('print').matches) {
+        document.documentElement.style.removeProperty('--slide-scale');
+        return;
+      }
+      const scale = customScale !== null ? customScale : calculateAutoFitScale();
+      applyScale(scale);
+    }
+
+    document.getElementById('zoom-out-btn')?.addEventListener('click', () => {
+      const current = customScale !== null ? customScale : calculateAutoFitScale();
+      customScale = Math.max(0.25, Math.round((current - 0.08) * 100) / 100);
+      applyScale(customScale);
+    });
+
+    document.getElementById('zoom-in-btn')?.addEventListener('click', () => {
+      const current = customScale !== null ? customScale : calculateAutoFitScale();
+      customScale = Math.min(1.4, Math.round((current + 0.08) * 100) / 100);
+      applyScale(customScale);
+    });
+
+    document.getElementById('zoom-fit-btn')?.addEventListener('click', () => {
+      customScale = null;
+      updateSlideScale();
+    });
+
+    window.addEventListener('resize', () => {
+      if (customScale === null) {
+        updateSlideScale();
+      }
+    });
+
+    // Initial scale calculation immediately
+    updateSlideScale();
 
     document.getElementById('prev-btn').addEventListener('click', () => goToSlide(currentSlide - 1));
     document.getElementById('next-btn').addEventListener('click', () => goToSlide(currentSlide + 1));
@@ -1190,6 +1308,20 @@
         goToSlide(totalSlides);
       } else if (e.key.toLowerCase() === 'p') {
         toggleMode();
+      } else if (e.key === '-' || e.key === '_') {
+        e.preventDefault();
+        const current = customScale !== null ? customScale : calculateAutoFitScale();
+        customScale = Math.max(0.25, Math.round((current - 0.08) * 100) / 100);
+        applyScale(customScale);
+      } else if (e.key === '=' || e.key === '+') {
+        e.preventDefault();
+        const current = customScale !== null ? customScale : calculateAutoFitScale();
+        customScale = Math.min(1.4, Math.round((current + 0.08) * 100) / 100);
+        applyScale(customScale);
+      } else if (e.key === '0') {
+        e.preventDefault();
+        customScale = null;
+        updateSlideScale();
       }
     });
 

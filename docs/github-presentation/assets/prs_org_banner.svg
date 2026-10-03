@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#030712" />
+      <stop offset="45%" stop-color="#060e20" />
+      <stop offset="100%" stop-color="#02050d" />
+    </linearGradient>
+    <linearGradient id="cyan-mint" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#67e8f9" />
+    </linearGradient>
+    <linearGradient id="warm-accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    <radialGradient id="glow-center" cx="72%" cy="50%" r="45%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.14" />
+      <stop offset="60%" stop-color="#34d399" stop-opacity="0.04" />
+      <stop offset="100%" stop-color="#030712" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.75" stroke-opacity="0.35" />
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="360" fill="url(#bg-grad)" />
+  <rect width="1200" height="360" fill="url(#glow-center)" />
+  <rect width="1200" height="360" fill="url(#grid-pattern)" />
+
+  <!-- Outer Border Frame -->
+  <rect x="1" y="1" width="1198" height="358" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-opacity="0.6" />
+
+  <!-- Quantum Phase-Space Wigner & Kinetic Flow Lines (Right Side) -->
+  <g opacity="0.85">
+    <!-- Streamline contours -->
+    <path d="M 680 180 C 740 100, 840 70, 930 110 C 1020 150, 1080 110, 1160 80" fill="none" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.45" stroke-dasharray="4 4" />
+    <path d="M 680 180 C 740 260, 840 290, 930 250 C 1020 210, 1080 250, 1160 280" fill="none" stroke="#ef4444" stroke-width="1.2" stroke-opacity="0.4" stroke-dasharray="4 4" />
+    
+    <!-- Central separatrix harmonic loops -->
+    <ellipse cx="910" cy="180" rx="140" ry="75" fill="none" stroke="url(#cyan-mint)" stroke-width="1.6" stroke-opacity="0.55" />
+    <ellipse cx="910" cy="180" rx="85" ry="42" fill="none" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7" />
+    <ellipse cx="910" cy="180" rx="35" ry="18" fill="none" stroke="url(#warm-accent)" stroke-width="1.4" stroke-opacity="0.85" />
+    
+    <!-- Coordinate crosshairs -->
+    <line x1="720" y1="180" x2="1100" y2="180" stroke="#334155" stroke-width="1" stroke-opacity="0.6" />
+    <line x1="910" y1="60" x2="910" y2="300" stroke="#334155" stroke-width="1" stroke-opacity="0.6" />
+    
+    <!-- Phase space labels -->
+    <text x="1108" y="184" font-family="'JetBrains Mono', monospace" font-size="11" fill="#64748b" letter-spacing="1">z (Bohr)</text>
+    <text x="918" y="55" font-family="'JetBrains Mono', monospace" font-size="11" fill="#64748b" letter-spacing="1">pz (a.u.)</text>
+    <text x="840" y="278" font-family="'JetBrains Mono', monospace" font-size="10.5" fill="#38bdf8" opacity="0.8">W(¹)(z, pz; R) PHASE TOMOGRAPHY</text>
+  </g>
+
+  <!-- Left Side: Editorial Typography & Brand Anchor -->
+  <!-- Red Brand Badge with Phi -->
+  <g transform="translate(68, 62)">
+    <rect width="44" height="44" rx="6" fill="#881337" stroke="#e11d48" stroke-width="1.2" />
+    <text x="22" y="31" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="bold" fill="#ffffff" text-anchor="middle">Φ</text>
+  </g>
+
+  <!-- Category Pre-header -->
+  <text x="126" y="80" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="600" fill="#34d399" letter-spacing="3.5">THEORETICAL ELECTRONIC STRUCTURE</text>
+  <text x="126" y="97" font-family="'JetBrains Mono', monospace" font-size="10" fill="#94a3b8" letter-spacing="1.5">CONTINUOUS-VARIABLE QUANTUM KINETICS</text>
+
+  <!-- Main Headline in Editorial Serif -->
+  <text x="68" y="162" font-family="'EB Garamond', Garamond, Georgia, serif" font-size="44" font-weight="700" fill="#f8fafc" letter-spacing="0.5">POINT REYES SOUND</text>
+
+  <!-- Copper Accent Underline -->
+  <rect x="68" y="180" width="110" height="2.5" fill="url(#warm-accent)" rx="1.2" />
+
+  <!-- Clear Value Proposition -->
+  <text x="68" y="218" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="16.5" font-weight="400" fill="#cbd5e1" letter-spacing="0.2">
+    Continuous phase-space kinetics for strongly correlated electrons.
+  </text>
+  <text x="68" y="244" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#94a3b8">
+    Replacing factorial active-space bottlenecks with deterministic O(N³) Quantum Boltzmann relaxation.
+  </text>
+
+  <!-- Architectural Badges / Tags -->
+  <g transform="translate(68, 280)">
+    <!-- Tag 1 -->
+    <rect x="0" y="0" width="158" height="28" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1" />
+    <text x="79" y="18" font-family="'JetBrains Mono', monospace" font-size="11" fill="#38bdf8" text-anchor="middle">QBE-SCF ENGINE</text>
+
+    <!-- Tag 2 -->
+    <rect x="168" y="0" width="190" height="28" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1" />
+    <text x="263" y="18" font-family="'JetBrains Mono', monospace" font-size="11" fill="#34d399" text-anchor="middle">ENTROPIC REGULARIZATION</text>
+
+    <!-- Tag 3 -->
+    <rect x="368" y="0" width="168" height="28" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1" />
+    <text x="452" y="18" font-family="'JetBrains Mono', monospace" font-size="11" fill="#f59e0b" text-anchor="middle">POLYNOMIAL O(N³)</text>
+  </g>
+</svg>
