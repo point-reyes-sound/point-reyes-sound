@@ -352,10 +352,19 @@ function DiatomicMolecularSystem({ simulator, activeElement }) {
   );
 }
 
+const isMobileDevice = () => {
+  if (typeof window === "undefined") return false;
+  return (
+    window.innerWidth <= 768 ||
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent || "")
+  );
+};
+
 export default function LandingPage({ isActive = true }) {
   const [activeElement, setActiveElement] = useState(ELEMENTS[0]);
   const [moleculeName, setMoleculeName] = useState("H₂");
-  const [isAudioActive, setIsAudioActive] = useState(false);
+  const userExplicitlyMutedRef = useRef(false);
+  const [isAudioActive, setIsAudioActive] = useState(() => isMobileDevice());
   const [volume, setVolume] = useState(0.8);
   const [bondDistance, setBondDistance] = useState(0.74);
   const [temperature, setTemperature] = useState(0.05);
@@ -394,11 +403,19 @@ export default function LandingPage({ isActive = true }) {
       }
     }
 
-    // Ensure audio starts OFF by default
-    if (audioRef.current) {
-      audioRef.current.stop();
+    // On phone version, automatically start sonification music
+    if (isMobileDevice() && !userExplicitlyMutedRef.current) {
+      setIsAudioActive(true);
+      if (audioRef.current) {
+        audioRef.current.unlockMobileAudio();
+        audioRef.current.start();
+      }
+    } else {
+      if (audioRef.current) {
+        audioRef.current.stop();
+      }
+      setIsAudioActive(false);
     }
-    setIsAudioActive(false);
 
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
@@ -409,13 +426,45 @@ export default function LandingPage({ isActive = true }) {
     };
   }, []);
 
-  // When navigating out of the interactive page (tab switched or deactivated), stop audio immediately
+  // On mobile phone version, unlock AudioContext on first touch/tap if suspended by mobile browser policy
+  useEffect(() => {
+    if (!isMobileDevice()) return;
+
+    const handleMobileGestureUnlock = () => {
+      if (userExplicitlyMutedRef.current) return;
+      if (audioRef.current) {
+        audioRef.current.unlockMobileAudio();
+        if (!audioRef.current.isPlaying) {
+          audioRef.current.start();
+        }
+      }
+      setIsAudioActive(true);
+    };
+
+    window.addEventListener("touchstart", handleMobileGestureUnlock, { passive: true });
+    window.addEventListener("touchend", handleMobileGestureUnlock, { passive: true });
+    window.addEventListener("click", handleMobileGestureUnlock, { passive: true });
+
+    return () => {
+      window.removeEventListener("touchstart", handleMobileGestureUnlock);
+      window.removeEventListener("touchend", handleMobileGestureUnlock);
+      window.removeEventListener("click", handleMobileGestureUnlock);
+    };
+  }, []);
+
+  // When navigating into/out of the interactive page, synchronize audio state
   useEffect(() => {
     if (!isActive) {
       if (audioRef.current) {
         audioRef.current.stop();
       }
       setIsAudioActive(false);
+    } else if (isMobileDevice() && !userExplicitlyMutedRef.current) {
+      setIsAudioActive(true);
+      if (audioRef.current) {
+        audioRef.current.unlockMobileAudio();
+        audioRef.current.start();
+      }
     }
   }, [isActive]);
 
@@ -488,9 +537,11 @@ export default function LandingPage({ isActive = true }) {
   const toggleAudio = () => {
     if (!audioRef.current) return;
     if (isAudioActive) {
+      userExplicitlyMutedRef.current = true;
       audioRef.current.stop();
       setIsAudioActive(false);
     } else {
+      userExplicitlyMutedRef.current = false;
       audioRef.current.unlockMobileAudio();
       audioRef.current.start();
       setIsAudioActive(true);
@@ -830,16 +881,19 @@ export default function LandingPage({ isActive = true }) {
             ))}
           </div>
 
-          {/* Dedicated Music ON/OFF Button (Initial state: OFF) */}
+          {/* Dedicated Music ON/OFF Button */}
           <div className="music-toggle-container">
             <button 
               className={`music-toggle-pill ${isAudioActive ? 'active' : 'off'}`}
               onClick={toggleAudio}
               title={isAudioActive ? "Turn Sonification Music Off" : "Turn Sonification Music On"}
-              aria-label={isAudioActive ? "Music On" : "Music Off"}
+              aria-label={isAudioActive ? "Turn Sonification Music Off" : "Turn Sonification Music On"}
+              id="quantum-gas-music-toggle"
             >
               <span className={`music-dot ${isAudioActive ? 'dot-on' : 'dot-off'}`}></span>
+              <span className="music-speaker-icon">{isAudioActive ? '🔊' : '🔇'}</span>
               <span className="music-label">{isAudioActive ? "MUSIC: ON" : "MUSIC: OFF"}</span>
+              <span className="music-action-badge">{isAudioActive ? "TURN OFF" : "PLAY"}</span>
             </button>
           </div>
         </div>
@@ -1049,6 +1103,23 @@ export default function LandingPage({ isActive = true }) {
             {pieceInfo.groundDesc}
           </div>
         </div>
+      </div>
+
+      {/* Mobile Floating Sticky Music Control Pill (Ensures OFF button is always within thumb reach on phone) */}
+      <div className="mobile-floating-music-container">
+        <button 
+          className={`mobile-floating-music-btn ${isAudioActive ? 'active' : 'off'}`}
+          onClick={toggleAudio}
+          title={isAudioActive ? "Turn Sonification Music Off" : "Turn Sonification Music On"}
+          aria-label={isAudioActive ? "Turn Sonification Music Off" : "Turn Sonification Music On"}
+          id="mobile-floating-music-toggle"
+        >
+          <span className={`music-dot ${isAudioActive ? 'dot-on' : 'dot-off'}`}></span>
+          <span className="mobile-floating-icon">{isAudioActive ? '🔊' : '🔇'}</span>
+          <span className="mobile-floating-label">
+            {isAudioActive ? "MUSIC ON · TURN OFF" : "MUSIC OFF · PLAY"}
+          </span>
+        </button>
       </div>
     </div>
   );

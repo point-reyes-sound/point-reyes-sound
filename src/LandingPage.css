@@ -86,14 +86,39 @@
   letter-spacing: 0.05em;
   cursor: pointer;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: all 0.22s ease;
   user-select: none;
+  touch-action: manipulation;
+}
+
+.music-speaker-icon {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.music-action-badge {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 10px;
+  margin-left: 2px;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
 }
 
 .music-toggle-pill.off {
   background: rgba(11, 18, 33, 0.75);
   border: 1px solid rgba(226, 232, 240, 0.18);
   color: #94a3b8;
+}
+
+.music-toggle-pill.off .music-action-badge {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.4);
 }
 
 .music-toggle-pill.off:hover {
@@ -109,6 +134,12 @@
   box-shadow: 0 0 14px rgba(16, 185, 129, 0.25);
 }
 
+.music-toggle-pill.active .music-action-badge {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
 .music-dot {
   width: 7px;
   height: 7px;
@@ -120,10 +151,21 @@
 .dot-on {
   background: #10b981;
   box-shadow: 0 0 8px #10b981;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.75; }
 }
 
 .dot-off {
   background: #64748b;
+}
+
+/* Floating mobile sticky music button hidden by default on desktop */
+.mobile-floating-music-container {
+  display: none;
 }
 
 .audio-control-hub.inline-hub {
@@ -908,12 +950,68 @@
     width: 100%;
   }
 
-  .audio-control-hub.inline-hub {
+  /* Prominent centered Music ON/OFF control on mobile */
+  .music-toggle-container {
     position: static;
     left: auto;
-    width: auto;
-    padding: 0.35rem 0.8rem;
-    margin-bottom: 4px;
+    margin: 8px auto 12px auto;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .music-toggle-pill {
+    padding: 8px 18px;
+    font-size: 0.82rem;
+    min-height: 44px;
+  }
+
+  /* Fixed sticky thumb-reach floating Music control on phones */
+  .mobile-floating-music-container {
+    display: flex;
+    position: fixed;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+    right: 14px;
+    z-index: 9999;
+    pointer-events: auto;
+  }
+
+  .mobile-floating-music-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 26px;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+    transition: all 0.22s ease;
+    min-height: 46px;
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  .mobile-floating-music-btn.active {
+    background: rgba(6, 11, 24, 0.94);
+    border: 1.5px solid rgba(16, 185, 129, 0.75);
+    color: #34d399;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 16px rgba(16, 185, 129, 0.35);
+  }
+
+  .mobile-floating-music-btn.off {
+    background: rgba(6, 11, 24, 0.94);
+    border: 1px solid rgba(226, 232, 240, 0.25);
+    color: #94a3b8;
+  }
+
+  .mobile-floating-icon {
+    font-size: 0.9rem;
+    line-height: 1;
   }
 
   .element-strip {
