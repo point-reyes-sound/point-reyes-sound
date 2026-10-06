@@ -378,7 +378,7 @@ export default function App() {
             style={{ cursor: "pointer" }}
             title="Return to Point Reyes Sound Homepage"
           >
-            <img src="/PRS_logo_v2.jpeg" alt="Point Reyes Sound" className="lab-logo" />
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" className="lab-logo" />
             <span className="lab-brand-title">POINT REYES SOUND</span>
           </div>
 
@@ -546,7 +546,7 @@ export default function App() {
         <div className="header-inner">
           <a href="#overview" className="brand-lockup" aria-label="Point Reyes Sound Home" title="Point Reyes Sound">
             <img 
-              src="/PRS_logo_v2.jpeg" 
+              src="/PRS_logo_v2.jpeg?v=5" 
               alt="Point Reyes Sound" 
               className="prs-header-logo" 
             />
@@ -1104,7 +1104,7 @@ export default function App() {
         <div className="footer-inner">
           <div className="footer-col-brand">
             <div className="brand-lockup">
-              <img src="/PRS_logo_v2.jpeg" alt="Point Reyes Sound" className="prs-footer-logo" />
+              <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" className="prs-footer-logo" />
               <div>
                 <span className="brand-name">POINT REYES SOUND, INC.</span>
               </div>
