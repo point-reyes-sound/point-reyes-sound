@@ -18,6 +18,8 @@ Disallow: /genesis-q
 Disallow: /genesis-q.html
 Disallow: /genesis-q-deck
 Disallow: /genesis-q-deck.html
+Disallow: /usistef-qmf-deck
+Disallow: /usistef-qmf-deck.html
 
 # Search Engine Crawlers
 User-agent: Googlebot

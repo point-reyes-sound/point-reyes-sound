@@ -97,10 +97,6 @@
       "destination": "/genesis-q-deck.html"
     },
     {
-      "source": "/usistef-qmf-deck",
-      "destination": "/usistef-qmf-deck.html"
-    },
-    {
       "source": "/papers/(.*)",
       "destination": "/papers/$1"
     },
