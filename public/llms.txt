@@ -28,6 +28,8 @@
 ## Key Leadership & Scientific Pod
 - **Dr. Romit Chakraborty**: Founder & Chief Scientific Officer (romit@pointreyessound.com).
   - Academic Dossier: https://rchakraborty.dev
+  - Curriculum Vitae (PDF): https://rchakraborty.dev/cv.pdf
+  - LinkedIn: https://www.linkedin.com/in/chakrabortyromit/
   - Google Scholar: https://scholar.google.com/citations?user=m4HlFRIAAAAJ
   - ORCID: 0000-0002-4638-6346
 - **Sayan Chakraborty, Ph.D.**: Research Collaborator.

@@ -1141,7 +1141,7 @@ export default function App() {
               Alchemist Chicago Milestone &rarr;
             </a>
             <a href="https://rchakraborty.dev" target="_blank" rel="noopener noreferrer">
-              Founder Dossier &rarr;
+              Romit Chakraborty (Founder Dossier) &rarr;
             </a>
             <a href="https://github.com/point-reyes-sound" target="_blank" rel="noopener noreferrer">
               GitHub (point-reyes-sound) &rarr;
