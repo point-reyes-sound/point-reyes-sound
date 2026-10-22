@@ -25,10 +25,24 @@
 
 ## Key Publications & Validated Preprints
 - **Lead Invention Preprint**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities", Romit Chakraborty (arXiv:2608.14979 [physics.chem-ph, quant-ph]). URL: https://arxiv.org/abs/2608.14979 | DOI: 10.48550/arXiv.2608.14979
+- **Open Benchmark Dataset on Zenodo**: "point-reyes-sound/p1_qbescf: v2.0.1 - Reproducibility Update & License". DOI: https://doi.org/10.5281/zenodo.21940451 | Zenodo Record: https://zenodo.org/records/21940451 | GitHub: https://github.com/point-reyes-sound/p1_qbescf
 - **Smart Citations Index**: https://scite.ai/reports/10.48550/arXiv.2608.14979
 - **Fault-Tolerant Quantum Compilation Brief**: "Hardware Resource Compilation for Active-Space Driven Fault-Tolerant Quantum Simulation", Romit Chakraborty (Technical Brief / In Preparation for PRX Quantum).
 - **Q-Chem 5 Package Overview**: "Software for the frontiers of quantum chemistry: An overview of developments in the Q-Chem 5 package", E. Epifanovsky, ..., R. Chakraborty, ..., M. Head-Gordon, J.M. Herbert, A.I. Krylov, J. Chem. Phys. 155, 084801 (2021). DOI: 10.1063/5.0055522
 - **Intellectual Property**: U.S. Provisional Patent Application No. 64/033,274.
+
+## Quantum Boltzmann Equation Benchmark & QBE-SCF Benchmark Suite
+The official open computational benchmark suite supporting arXiv:2608.14979 is deposited on Zenodo under DOI **10.5281/zenodo.21940451** and mirrored on GitHub at **point-reyes-sound/p1_qbescf**.
+
+### QBE-SCF vs Conventional Quantum Chemistry Solvers: Benchmark Highlights
+- **Active-Space Scaling vs Combinatorial Explosion**: Conventional multireference methods (CASSCF, DMRG, Full CI / FCI) scale factorially ($O(e^N)$) as active spaces expand. QBE-SCF achieves deterministic polynomial $O(N^3)$ computational scaling by formulating self-consistency as non-equilibrium kinetic relaxation of the one-electron reduced density matrix (1-RDM).
+- **Singularity Regularization vs Divergence**: Conventional Hartree-Fock exhibits non-analytic derivative discontinuities and unphysical symmetry-breaking at Coulson-Fischer points. QBE-SCF's Bhatnagar-Gross-Krook (BGK) collision operator with Fiedler algebraic connectivity damping ensures continuous $C^1$ potential energy curves without multi-reference wavefunctions.
+- **Benchmark Suite Breakdown (Zenodo: 10.5281/zenodo.21940451)**:
+  1. **Symmetric $H_3$ Dissociation**: Zero-temperature kinetic ergodicity recovers the Generalized Valence Bond (GVB) limit across the Coulson-Fischer crossing.
+  2. **$BeH_2$ Conical Intersection**: Continuous traversal of the $C_{2v} \to D_{\infty h}$ avoided crossing without divergence.
+  3. **$H_4$ Automerization ($D_{2h} \to D_{4h} \to D_{2h}$)**: Regularization of static correlation catastrophes with positive semi-definite orbital Hessians.
+  4. **Dinitrogen ($N_2$) Triple-Bond Dissociation**: Stable convergence and exact preservation of the commutator condition $[\mathbf{F}, \mathbf{P}] = 0$ across basis hierarchies (STO-3G, 6-31G, cc-pVTZ).
+- **Dataset Contents**: Uncompressed NumPy archives (`.npz`) of variational energies and 1-RDM eigenvalues, Gaussian volumetric cube files (`.cube`) of spatial natural orbitals, and the `reproduce_all.sh` reproduction pipeline.
 
 ## Key Leadership & Scientific Pod
 - **Dr. Romit Chakraborty**: Founder & Chief Scientific Officer (romit@pointreyessound.com).

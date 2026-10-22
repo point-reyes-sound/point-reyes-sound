@@ -95,6 +95,9 @@ const publicationList = [
     date: "August 2026",
     doi: "10.48550/arXiv.2608.14979",
     doiUrl: "https://doi.org/10.48550/arXiv.2608.14979",
+    zenodoDoi: "10.5281/zenodo.21940451",
+    zenodoUrl: "https://doi.org/10.5281/zenodo.21940451",
+    datasetUrl: "https://github.com/point-reyes-sound/p1_qbescf",
     arxivUrl: "https://arxiv.org/abs/2608.14979",
     pdf: "https://arxiv.org/pdf/2608.14979.pdf",
     featured: true,
@@ -105,7 +108,8 @@ const publicationList = [
   journal={arXiv preprint arXiv:2608.14979},
   year={2026},
   doi={10.48550/arXiv.2608.14979},
-  url={https://arxiv.org/abs/2608.14979}
+  url={https://arxiv.org/abs/2608.14979},
+  note={Benchmark suite & dataset: Zenodo DOI 10.5281/zenodo.21940451}
 }`
   },
   {
@@ -797,6 +801,11 @@ export default function App() {
                   {pub.doi && (
                     <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" className="pub-link">
                       DOI: {pub.doi} &rarr;
+                    </a>
+                  )}
+                  {pub.zenodoUrl && (
+                    <a href={pub.zenodoUrl} target="_blank" rel="noopener noreferrer" className="pub-link" title="Quantum Boltzmann Equation Benchmark Suite on Zenodo">
+                      Zenodo Dataset &rarr;
                     </a>
                   )}
                   {pub.doi && (
