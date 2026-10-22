@@ -25,7 +25,8 @@
   <meta property="og:description" content="Point Reyes Sound is excited to join Alchemist Chicago’s final selection stage in Chicago, October 19–23 2026, as one of 30 companies selected for the program." />
   <meta property="og:image" content="https://pointreyessound.com/assets/preprint/qbescf_linkedin_card.png" />
   <meta property="og:site_name" content="Point Reyes Sound, Inc." />
-  <meta property="article:published_time" content="2026-09-27T08:00:00Z" />
+  <meta property="article:published_time" content="2026-10-19T08:00:00Z" />
+  <meta property="article:modified_time" content="2026-10-19T08:00:00Z" />
   <meta property="article:section" content="Institutional Milestones" />
 
   <!-- Twitter / X Cards -->
@@ -54,8 +55,8 @@
     "image": [
       "https://pointreyessound.com/assets/preprint/qbescf_linkedin_card.png"
     ],
-    "datePublished": "2026-09-27T08:00:00Z",
-    "dateModified": "2026-09-27T08:00:00Z",
+    "datePublished": "2026-10-19T08:00:00Z",
+    "dateModified": "2026-10-19T08:00:00Z",
     "author": {
       "@type": "Organization",
       "name": "Point Reyes Sound, Inc.",
@@ -70,12 +71,27 @@
         "url": "https://pointreyessound.com/PRS_logo_v2.jpeg"
       }
     },
+    "isBasedOn": {
+      "@type": "NewsArticle",
+      "headline": "Meet the 30 Semifinalists in Alchemist Chicago’s Second Cohort",
+      "url": "https://polsky.uchicago.edu/2026/10/19/meet-the-30-semifinalists-in-alchemist-chicagos-second-cohort/",
+      "datePublished": "2026-10-19T00:00:00Z",
+      "publisher": {
+        "@type": "EducationalOrganization",
+        "name": "Polsky Center for Entrepreneurship and Innovation | University of Chicago",
+        "url": "https://polsky.uchicago.edu"
+      }
+    },
+    "citation": [
+      "https://polsky.uchicago.edu/2026/10/19/meet-the-30-semifinalists-in-alchemist-chicagos-second-cohort/"
+    ],
     "keywords": [
       "Point Reyes Sound",
       "Alchemist Chicago",
       "Alchemist Accelerator",
-      "Duality",
+      "Polsky Center",
       "University of Chicago",
+      "Duality",
       "quantum computing",
       "deep tech",
       "Chicago",
@@ -99,14 +115,19 @@
         "url": "https://alchemistaccelerator.com"
       },
       {
-        "@type": "Organization",
-        "name": "Duality",
-        "description": "The nation's premier accelerator for quantum startups"
+        "@type": "EducationalOrganization",
+        "name": "Polsky Center for Entrepreneurship and Innovation",
+        "url": "https://polsky.uchicago.edu"
       },
       {
         "@type": "EducationalOrganization",
         "name": "University of Chicago",
         "url": "https://www.uchicago.edu"
+      },
+      {
+        "@type": "Organization",
+        "name": "Duality",
+        "description": "The nation's premier accelerator for quantum startups"
       },
       {
         "@type": "Thing",
@@ -282,6 +303,25 @@
       color: var(--accent-cyan);
     }
 
+    .meta-badge.polsky-badge {
+      background: rgba(16, 185, 129, 0.09);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .meta-badge.polsky-badge:hover {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: rgba(16, 185, 129, 0.6);
+      color: #6ee7b7;
+      transform: translateY(-1px);
+    }
+
+    .meta-badge.polsky-badge .meta-dot {
+      background: #10b981;
+    }
+
     .meta-dot {
       width: 6px;
       height: 6px;
@@ -315,6 +355,150 @@
     .article-body strong {
       color: #ffffff;
       font-weight: 600;
+    }
+
+    /* Polsky Center Press Release Verification Card */
+    .press-release-card {
+      margin: 36px 0 40px;
+      background: linear-gradient(135deg, rgba(6, 22, 44, 0.88) 0%, rgba(3, 12, 26, 0.96) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 10px;
+      padding: 24px 28px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 0 24px rgba(56, 189, 248, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .press-release-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #38bdf8, #10b981, transparent);
+    }
+
+    .press-release-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+    }
+
+    .press-release-kicker-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-cyan);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .press-release-icon {
+      color: #10b981;
+      font-size: 0.85rem;
+    }
+
+    .press-release-date {
+      color: var(--text-muted);
+    }
+
+    .press-release-title {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .press-release-title a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .press-release-title a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .press-release-summary {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .press-release-quote-box {
+      background: rgba(3, 8, 20, 0.6);
+      border-left: 3px solid #10b981;
+      border-radius: 0 6px 6px 0;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+    }
+
+    .press-release-quote-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.70rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #10b981;
+      margin-bottom: 6px;
+    }
+
+    .press-release-quote-text {
+      font-family: var(--font-serif);
+      font-size: 1.08rem;
+      font-style: italic;
+      color: #f1f5f9;
+      line-height: 1.6;
+      margin-bottom: 0 !important;
+    }
+
+    .press-release-action-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(226, 232, 240, 0.08);
+    }
+
+    .press-release-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      color: #e0f2fe;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .press-release-link-btn:hover {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: #38bdf8;
+      color: #ffffff;
+      transform: translateX(2px);
+    }
+
+    .press-release-canonical {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-muted);
     }
 
     /* Institutional Proof Quote Callout */
@@ -409,6 +593,18 @@
       text-decoration: underline;
     }
 
+    .footer-links-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-sep {
+      color: rgba(148, 163, 184, 0.4);
+      font-size: 0.75rem;
+    }
+
     @media (max-width: 640px) {
       .news-nav {
         padding: 12px 18px;
@@ -450,11 +646,15 @@
           Point Reyes Sound is excited to join Alchemist Chicago’s final selection stage in Chicago, October 19–23, as one of 30 companies selected for the program.
         </p>
         <div class="article-meta-row">
-          <span>Date: September 27, 2026</span>
+          <span>Date: October 19, 2026</span>
           <span>&bull;</span>
           <span>Location: Chicago, IL</span>
           <span>&bull;</span>
           <span class="meta-badge"><span class="meta-dot"></span> Institutional Proving Ground</span>
+          <span>&bull;</span>
+          <a href="https://polsky.uchicago.edu/2026/10/19/meet-the-30-semifinalists-in-alchemist-chicagos-second-cohort/" target="_blank" rel="noopener noreferrer" class="meta-badge polsky-badge" title="Read official announcement on University of Chicago Polsky Center">
+            <span class="meta-dot"></span> Polsky Press Release ↗
+          </a>
         </div>
       </header>
 
@@ -465,6 +665,40 @@
 
         <div class="institutional-callout">
           &ldquo;Point Reyes Sound is excited to join Alchemist Chicago’s final selection stage in Chicago, October 19–23, as one of 30 companies selected for the program.&rdquo;
+        </div>
+
+        <!-- Polsky Center Official Press Release Verification Card -->
+        <div class="press-release-card">
+          <div class="press-release-header">
+            <div class="press-release-kicker-group">
+              <span class="press-release-icon">✦</span>
+              <span class="press-release-kicker">University of Chicago // Polsky Center Announcement</span>
+            </div>
+            <span class="press-release-date">Published: October 19, 2026</span>
+          </div>
+          <div class="press-release-body">
+            <h3 class="press-release-title">
+              <a href="https://polsky.uchicago.edu/2026/10/19/meet-the-30-semifinalists-in-alchemist-chicagos-second-cohort/" target="_blank" rel="noopener noreferrer">
+                Meet the 30 Semifinalists in Alchemist Chicago’s Second Cohort ↗
+              </a>
+            </h3>
+            <p class="press-release-summary">
+              Alchemist and the University of Chicago’s Polsky Center for Entrepreneurship and Innovation announced the 30 semifinalists selected for the second cohort of Alchemist Chicago, launching an intensive in-person innovation bootcamp from October 19 to 23.
+            </p>
+            <div class="press-release-quote-box">
+              <span class="press-release-quote-label">Official Polsky Center Cohort Listing:</span>
+              <p class="press-release-quote-text">
+                &ldquo;<strong>Point Reyes Sound</strong> // Point Reyes Sound builds quantum algorithms for molecular and materials simulation, supporting applications in chemical discovery, energy research, and materials development.&rdquo;
+              </p>
+            </div>
+            <div class="press-release-action-row">
+              <a href="https://polsky.uchicago.edu/2026/10/19/meet-the-30-semifinalists-in-alchemist-chicagos-second-cohort/" target="_blank" rel="noopener noreferrer" class="press-release-link-btn">
+                <span>View Full Announcement at polsky.uchicago.edu</span>
+                <span class="press-release-arrow">&rarr;</span>
+              </a>
+              <span class="press-release-canonical">Canonical Source: Polsky Center for Entrepreneurship and Innovation</span>
+            </div>
+          </div>
         </div>
 
         <h2>Selection Overview & Proving Ground</h2>
@@ -513,6 +747,14 @@
                 <td class="value-cell">One of 30 selected companies (up to 15 advancing afterward)</td>
               </tr>
               <tr>
+                <td class="label-cell">Official Release</td>
+                <td class="value-cell">
+                  <a href="https://polsky.uchicago.edu/2026/10/19/meet-the-30-semifinalists-in-alchemist-chicagos-second-cohort/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan); text-decoration: underline; text-underline-offset: 3px;">
+                    Polsky Center (UChicago): &ldquo;Meet the 30 Semifinalists in Alchemist Chicago’s Second Cohort&rdquo; (Oct 19, 2026) ↗
+                  </a>
+                </td>
+              </tr>
+              <tr>
                 <td class="label-cell">Dates</td>
                 <td class="value-cell">October 19–23, 2026</td>
               </tr>
@@ -522,7 +764,9 @@
               </tr>
               <tr>
                 <td class="label-cell">Ecosystem Links</td>
-                <td class="value-cell">University of Chicago &bull; Duality Quantum Accelerator</td>
+                <td class="value-cell">
+                  <a href="https://polsky.uchicago.edu" target="_blank" rel="noopener noreferrer" style="color: #f1f5f9; text-decoration: none;">University of Chicago (Polsky Center)</a> &bull; <a href="https://dualityaccelerator.com" target="_blank" rel="noopener noreferrer" style="color: #f1f5f9; text-decoration: none;">Duality Quantum Accelerator</a> &bull; <a href="https://alchemistaccelerator.com" target="_blank" rel="noopener noreferrer" style="color: #f1f5f9; text-decoration: none;">Alchemist Accelerator</a>
+                </td>
               </tr>
               <tr>
                 <td class="label-cell">Focus Domains</td>
@@ -546,8 +790,10 @@
           <span>Inquiries: </span>
           <a href="mailto:directors@pointreyessound.com">directors@pointreyessound.com</a>
         </div>
-        <div>
+        <div class="footer-links-group">
           <a href="/">&larr; Return to Point Reyes Sound Homepage</a>
+          <span class="footer-sep">&bull;</span>
+          <a href="https://polsky.uchicago.edu/2026/10/19/meet-the-30-semifinalists-in-alchemist-chicagos-second-cohort/" target="_blank" rel="noopener noreferrer">Polsky Press Release ↗</a>
         </div>
       </footer>
     </article>
