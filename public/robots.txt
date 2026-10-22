@@ -28,7 +28,10 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-# AI Agent & LLM Crawlers
+# AI Agent, Search & LLM Crawlers (Generative Engine Optimization)
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: GPTBot
 Allow: /
 
@@ -48,6 +51,15 @@ User-agent: Google-Extended
 Allow: /
 
 User-agent: Applebot-Extended
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Diffbot
 Allow: /
 
 Sitemap: https://pointreyessound.com/sitemap.xml
