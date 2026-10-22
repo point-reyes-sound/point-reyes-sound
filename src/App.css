@@ -498,7 +498,12 @@ body {
 .hero-institutional-footnote-wrap {
   margin: 14px auto 0;
   text-align: center;
-  max-width: 900px;
+  max-width: 960px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
 }
 
 .hero-institutional-footnote {
@@ -517,6 +522,33 @@ body {
 .hero-institutional-footnote:hover {
   color: #cbd5e1;
   border-bottom-color: rgba(203, 213, 225, 0.75);
+}
+
+.hero-institutional-sep {
+  color: rgba(126, 155, 180, 0.45);
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+.hero-institutional-press-link {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--accent-cyan, #38bdf8);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(56, 189, 248, 0.45);
+  padding-bottom: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: color 0.18s ease, border-color 0.18s ease;
+  white-space: nowrap;
+}
+
+.hero-institutional-press-link:hover {
+  color: #7dd3fc;
+  border-bottom-color: rgba(125, 211, 252, 0.85);
 }
 
 .hero-title {

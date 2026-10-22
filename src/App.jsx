@@ -655,9 +655,19 @@ export default function App() {
             <a 
               href="/news/alchemist-chicago-2026" 
               className="hero-institutional-footnote"
-              title="View institutional milestone details"
+              title="View Point Reyes Sound milestone announcement"
             >
               Point Reyes Sound is excited to join Alchemist Chicago’s final selection stage in Chicago, October 19–23, as one of 30 companies selected for the program.
+            </a>
+            <span className="hero-institutional-sep" aria-hidden="true">&bull;</span>
+            <a 
+              href="https://polsky.uchicago.edu/2026/10/19/meet-the-30-semifinalists-in-alchemist-chicagos-second-cohort/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hero-institutional-press-link"
+              title="Read official announcement on University of Chicago Polsky Center"
+            >
+              Polsky Press Release ↗
             </a>
           </div>
         </div>
@@ -1139,6 +1149,9 @@ export default function App() {
             </a>
             <a href="/news/alchemist-chicago-2026">
               Alchemist Chicago Milestone &rarr;
+            </a>
+            <a href="https://polsky.uchicago.edu/2026/10/19/meet-the-30-semifinalists-in-alchemist-chicagos-second-cohort/" target="_blank" rel="noopener noreferrer">
+              Polsky Center (Cohort 2) ↗
             </a>
             <a href="https://rchakraborty.dev" target="_blank" rel="noopener noreferrer">
               Romit Chakraborty (Founder Dossier) &rarr;
