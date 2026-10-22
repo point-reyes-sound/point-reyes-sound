@@ -691,7 +691,7 @@ export default function App() {
 
         <div className="about-grid">
           <div className="about-card about-mission-card">
-            <h3 className="about-card-title">AI-Amplified Kinetic Transport</h3>
+            <h3 className="about-card-title">Quantum Boltzmann Solvers</h3>
             <p className="about-card-text">
               We develop accelerated quantum chemistry solvers for advanced materials simulation and future quantum computers.
             </p>
@@ -723,13 +723,6 @@ export default function App() {
             </div>
             <div className="about-pillar-item">
               <span className="pillar-num">02</span>
-              <div>
-                <strong>AI-Amplified Phase Space</strong>
-                <p>Continuous-variable representations and accelerated tensor compilations designed for enterprise GPU and HPC workflows.</p>
-              </div>
-            </div>
-            <div className="about-pillar-item">
-              <span className="pillar-num">03</span>
               <div>
                 <strong>Open Scientific Benchmarking</strong>
                 <p>Open reproducibility across reference transition-metal dimers, radical singlet-triplet gaps, and multi-reference bond dissociations.</p>
