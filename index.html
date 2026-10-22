@@ -10,11 +10,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Point Reyes Sound | Accelerated Quantum Chemistry Solvers for Advanced Materials &amp; Quantum Computers</title>
     <meta name="description" content="We develop accelerated quantum chemistry solvers for advanced materials simulation and future quantum computers. Point Reyes Sound pioneers continuous phase-space kinetics and QBE-SCF." />
-    <meta name="keywords" content="Quantum Boltzmann Solvers, Quantum Boltzmann Equation, QBE-SCF, Accelerated Quantum Chemistry Solvers, Advanced Materials Simulation, Future Quantum Computers, Strongly Correlated Electrons, Electronic Structure, Mean-Field Singularities, Romit Chakraborty, Point Reyes Sound, Alchemist Chicago" />
+    <meta name="keywords" content="Quantum Boltzmann Solvers, Quantum Boltzmann Equation, QBE-SCF, Quantum Boltzmann Equation Benchmark, QBE-SCF Benchmark, QBE-SCF vs Conventional Quantum Chemistry solvers, Accelerated Quantum Chemistry Solvers, Advanced Materials Simulation, Future Quantum Computers, Strongly Correlated Electrons, Electronic Structure, Mean-Field Singularities, Romit Chakraborty, Point Reyes Sound, Alchemist Chicago, Zenodo 10.5281/zenodo.21940451, p1_qbescf" />
     <meta name="author" content="Point Reyes Sound, Inc." />
     <link rel="canonical" href="https://pointreyessound.com/" />
     <link rel="alternate" type="text/plain" href="https://pointreyessound.com/llms.txt" title="LLM Context (llms.txt)" />
     <link rel="alternate" type="text/plain" href="https://pointreyessound.com/llms-full.txt" title="Full LLM Context (llms-full.txt)" />
+    <link rel="related" type="application/x-research-data" href="https://doi.org/10.5281/zenodo.21940451" title="Quantum Boltzmann Equation Benchmark Dataset (Zenodo: 10.5281/zenodo.21940451)" />
+    <link rel="help" href="https://github.com/point-reyes-sound/p1_qbescf" title="QBE-SCF Benchmark Reproduction Suite (GitHub: p1_qbescf)" />
+    <meta name="citation_data_repository" content="Zenodo" />
+    <meta name="citation_dataset" content="https://doi.org/10.5281/zenodo.21940451" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="google-site-verification" content="Wk88EbDVnwzbIa2KajAvIg4KHCoUxE7sxMHUdWRvhNU" />
 
@@ -223,7 +227,10 @@
           "headline": "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities",
           "name": "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities",
           "identifier": "10.48550/arXiv.2608.14979",
-          "sameAs": "https://doi.org/10.48550/arXiv.2608.14979",
+          "sameAs": [
+            "https://doi.org/10.48550/arXiv.2608.14979",
+            "https://doi.org/10.5281/zenodo.21940451"
+          ],
           "author": {
             "@id": "https://rchakraborty.dev#person"
           },
@@ -232,7 +239,74 @@
           },
           "datePublished": "2026-08-18",
           "url": "https://arxiv.org/abs/2608.14979",
-          "description": "We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. QBE-SCF achieves entropic regularization across singularities in conventional electronic structure theory."
+          "description": "We introduce a Quantum Boltzmann Equation self-consistent-field (QBE-SCF) framework that propagates the one-electron reduced density matrix via a Bhatnagar-Gross-Krook (BGK) collision operator. QBE-SCF achieves entropic regularization across singularities in conventional electronic structure theory.",
+          "associatedMedia": {
+            "@id": "https://pointreyessound.com/#dataset-qbescf-benchmark"
+          }
+        },
+        {
+          "@type": "Dataset",
+          "@id": "https://pointreyessound.com/#dataset-qbescf-benchmark",
+          "name": "Quantum Boltzmann Equation Benchmark Suite & QBE-SCF Numerical Datasets",
+          "alternateName": [
+            "Quantum Boltzmann Equation Benchmark",
+            "QBE-SCF Benchmark",
+            "QBE-SCF vs Conventional Quantum Chemistry solvers",
+            "QBE-SCF vs Conventional Quantum Chemistry Solvers Benchmark Dataset",
+            "point-reyes-sound/p1_qbescf Benchmark Suite",
+            "Zenodo 21940451"
+          ],
+          "description": "Comprehensive open computational benchmark suite and raw numerical datasets comparing the Quantum Boltzmann Equation Self-Consistent-Field (QBE-SCF) solver against conventional quantum chemistry solvers (Hartree-Fock, CASSCF, DMRG, Full CI / FCI). Accompanying the foundational preprint arXiv:2608.14979 ('Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities') and archived permanently on Zenodo under DOI 10.5281/zenodo.21940451. Contains uncompressed NumPy archives (.npz) of variational energies, decoupled spatial and configurational entropy metrics, electronic orbital Hessian spectra, and commutator norms [F, P]=0, alongside Gaussian volumetric cube files (.cube) capturing natural orbitals across symmetric H3 dissociation, BeH2 conical intersection, H4 structural distortion (D2h -> D4h -> D2h), and dinitrogen (N2) triple bond dissociation.",
+          "url": "https://doi.org/10.5281/zenodo.21940451",
+          "sameAs": [
+            "https://zenodo.org/records/21940451",
+            "https://github.com/point-reyes-sound/p1_qbescf"
+          ],
+          "identifier": [
+            "https://doi.org/10.5281/zenodo.21940451",
+            "10.5281/zenodo.21940451",
+            "arXiv:2608.14979"
+          ],
+          "keywords": [
+            "Quantum Boltzmann Equation Benchmark",
+            "QBE-SCF Benchmark",
+            "QBE-SCF vs Conventional Quantum Chemistry solvers",
+            "Quantum Boltzmann Self-Consistent Field",
+            "QBE-SCF",
+            "Entropic Regularization of Mean-Field Singularities",
+            "Coulson-Fischer crossing",
+            "conical intersections",
+            "CASSCF alternative",
+            "DMRG benchmark",
+            "molecular dissociation benchmarks",
+            "Zenodo Dataset 10.5281/zenodo.21940451",
+            "p1_qbescf"
+          ],
+          "license": "https://creativecommons.org/licenses/by/4.0/",
+          "isAccessibleForFree": true,
+          "creator": {
+            "@id": "https://rchakraborty.dev#person"
+          },
+          "publisher": {
+            "@id": "https://pointreyessound.com/#organization"
+          },
+          "citation": {
+            "@id": "https://pointreyessound.com/#preprint-2608-14979"
+          },
+          "distribution": [
+            {
+              "@type": "DataDownload",
+              "name": "Zenodo Archive (v2.0.1)",
+              "encodingFormat": "application/zip",
+              "contentUrl": "https://zenodo.org/records/21940451/files/point-reyes-sound/p1_qbescf-v2.0.1.zip"
+            },
+            {
+              "@type": "DataDownload",
+              "name": "GitHub Open Dataset Repository",
+              "encodingFormat": "text/html",
+              "contentUrl": "https://github.com/point-reyes-sound/p1_qbescf"
+            }
+          ]
         },
         {
           "@type": "ScholarlyArticle",
@@ -368,6 +442,30 @@
                 "@type": "Answer",
                 "text": "Point Reyes Sound is a semifinalist in Alchemist Chicago Cohort 2 (partnered with the University of Chicago Polsky Center for Entrepreneurship and Innovation and Duality Quantum Accelerator), an NVIDIA Inception Program member, a Google Cloud Research Grant recipient, and a partner in the USISTEF Quantum Materials Foundry."
               }
+            },
+            {
+              "@type": "Question",
+              "name": "Where can I find the Quantum Boltzmann Equation Benchmark (QBE-SCF Benchmark) dataset?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The official open-access Quantum Boltzmann Equation Benchmark (QBE-SCF Benchmark) dataset is permanently archived on Zenodo under DOI 10.5281/zenodo.21940451 (https://doi.org/10.5281/zenodo.21940451) and hosted on GitHub at point-reyes-sound/p1_qbescf. It provides uncompressed raw NumPy archives (.npz), volumetric Gaussian cube natural orbital distributions, electronic orbital Hessian spectra, and automated reproduction scripts directly verifying the numerical findings of the foundational preprint arXiv:2608.14979."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does QBE-SCF compare against conventional quantum chemistry solvers (QBE-SCF vs Conventional Quantum Chemistry solvers)?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Conventional quantum chemistry solvers like CASSCF, DMRG, and Full CI (FCI) encounter factorial combinatorial active-space explosion (O(e^N)) or suffer from numerical divergence and symmetry breaking near electronic singularities. In contrast, the Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform reformulates electronic self-consistency as non-equilibrium kinetic transport of the one-electron reduced density matrix (1-RDM) via a Bhatnagar-Gross-Krook (BGK) collision operator. This achieves deterministic polynomial O(N³) computational scaling, continuous regularization of Coulson-Fischer singular cusps, and recovery of the Generalized Valence Bond (GVB) limit without exponential active-space expansions. Full benchmark comparisons across H3, BeH2, H4, and N2 are archived at Zenodo DOI 10.5281/zenodo.21940451."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What benchmark molecular systems are tested in the QBE-SCF Benchmark suite?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The Quantum Boltzmann Equation Benchmark suite evaluates four classic stress cases: 1) Symmetric H3 linear dissociation (Coulson-Fischer singular crossing and GVB limit recovery), 2) BeH2 insertion conical intersection (smooth adiabatic surface traversal), 3) H4 structural distortion (D2h -> D4h -> D2h automerization path), and 4) Dinitrogen (N2) triple-bond dissociation across STO-3G, 6-31G, and cc-pVTZ basis sets with vanishing commutator norm [F, P]=0. All numerical checkpoints and figure generation scripts are provided in the Zenodo archive 10.5281/zenodo.21940451."
+              }
             }
           ]
         },
@@ -432,6 +530,20 @@
             <p>Author: Dr. Romit Chakraborty | DOI: <a href="https://doi.org/10.48550/arXiv.2608.14979">10.48550/arXiv.2608.14979</a> | Preprint: <a href="https://arxiv.org/abs/2608.14979">arXiv:2608.14979</a></p>
             <p>Smart Citations Index: <a href="https://scite.ai/reports/10.48550/arXiv.2608.14979">scite.ai/reports/10.48550/arXiv.2608.14979</a></p>
           </article>
+        </section>
+
+        <section>
+          <h2>Quantum Boltzmann Equation Benchmark &amp; QBE-SCF Benchmark (Zenodo Dataset)</h2>
+          <p><strong>Open Benchmark Dataset &amp; Reproduction Suite:</strong> Permanent Zenodo Archive: <a href="https://doi.org/10.5281/zenodo.21940451">DOI: 10.5281/zenodo.21940451</a> | Open-Access GitHub Reproduction Suite: <a href="https://github.com/point-reyes-sound/p1_qbescf">point-reyes-sound/p1_qbescf</a>.</p>
+          <h3>QBE-SCF vs Conventional Quantum Chemistry Solvers</h3>
+          <p>Conventional multireference solvers (CASSCF, DMRG, and Full Configuration Interaction / FCI) suffer from factorial combinatorial active-space explosion (O(e^N)) and catastrophic numerical divergences at mean-field singularity points. Point Reyes Sound's Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) replaces static Hamiltonian diagonalization with continuous kinetic relaxation of the one-electron reduced density matrix (1-RDM), delivering polynomial O(N³) computational scaling across multireference systems.</p>
+          <h4>Validated Benchmark Suites in the Zenodo Dataset:</h4>
+          <ul>
+            <li><strong>Symmetric H₃ Linear Dissociation:</strong> Resolves the Coulson-Fischer singular crossing and restores the Generalized Valence Bond (GVB) limit via zero-temperature kinetic ergodicity.</li>
+            <li><strong>BeH₂ Conical Intersection:</strong> Continuous traversal of the C₂ᵥ &rarr; D<sub>&infin;h</sub> avoided crossing, reconstructing correlated adiabatic energy surfaces without multi-reference wavefunctions.</li>
+            <li><strong>H₄ Structural Automerization Distortion (D₂ₕ &rarr; D₄ₕ &rarr; D₂ₕ):</strong> Regularizes static correlation catastrophes and multireference degenerate seams with smooth C¹ gradient continuity.</li>
+            <li><strong>Dinitrogen (N₂) Triple-Bond Dissociation:</strong> Smoothly dissociates the strongest homonuclear triple bond across STO-3G, 6-31G, and cc-pVTZ basis sets while strictly preserving the Hartree-Fock condition [F, P] = 0.</li>
+          </ul>
         </section>
 
         <section>

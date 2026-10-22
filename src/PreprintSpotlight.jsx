@@ -86,7 +86,8 @@ const PREPRINT_BIBTEX = `@article{chakraborty2026qbescf,
   journal={arXiv preprint arXiv:2608.14979},
   year={2026},
   doi={10.48550/arXiv.2608.14979},
-  url={https://arxiv.org/abs/2608.14979}
+  url={https://arxiv.org/abs/2608.14979},
+  note={Benchmark suite & dataset: Zenodo DOI 10.5281/zenodo.21940451}
 }`;
 
 export default function PreprintSpotlight({ onCopyBibtex, copiedBibtexId }) {
@@ -130,9 +131,18 @@ export default function PreprintSpotlight({ onCopyBibtex, copiedBibtexId }) {
               target="_blank"
               rel="noopener noreferrer"
               className="spotlight-doi-pill"
-              title="Digital Object Identifier"
+              title="Preprint Digital Object Identifier"
             >
               DOI: 10.48550/arXiv.2608.14979
+            </a>
+            <a
+              href="https://doi.org/10.5281/zenodo.21940451"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="spotlight-doi-pill"
+              title="Zenodo Open Benchmark Dataset (DOI: 10.5281/zenodo.21940451)"
+            >
+              Zenodo: 10.5281/zenodo.21940451
             </a>
           </div>
         </div>
@@ -285,11 +295,24 @@ export default function PreprintSpotlight({ onCopyBibtex, copiedBibtexId }) {
             </button>
 
             <a
-              href="https://github.com/point-reyes-sound"
+              href="https://doi.org/10.5281/zenodo.21940451"
               target="_blank"
               rel="noopener noreferrer"
               className="action-btn-styled outline"
-              title="Raw Datasets and Reproduction Scripts"
+              title="Quantum Boltzmann Equation Benchmark Suite on Zenodo (DOI: 10.5281/zenodo.21940451)"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+              </svg>
+              <span>Zenodo Dataset</span>
+            </a>
+
+            <a
+              href="https://github.com/point-reyes-sound/p1_qbescf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="action-btn-styled outline"
+              title="Open-Source Numerical Benchmark Reproduction Suite on GitHub"
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                 <path

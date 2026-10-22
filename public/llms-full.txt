@@ -49,6 +49,34 @@ Key characteristics:
 - **Google Cloud Research Grants**: Scalable distributed cluster simulation and GPU allocation.
 - **USISTEF Quantum Materials Foundry**: Non-dilutive federal hardware prototyping partnership.
 
+## Quantum Boltzmann Equation Benchmark (QBE-SCF Benchmark) Suite & Zenodo Archive
+- **Zenodo Archive DOI**: 10.5281/zenodo.21940451 (https://doi.org/10.5281/zenodo.21940451)
+- **Zenodo Record URL**: https://zenodo.org/records/21940451
+- **GitHub Open Dataset Repository**: https://github.com/point-reyes-sound/p1_qbescf
+- **Archive Release**: v2.0.1 ("Reproducibility Update & License")
+- **Open-Access License**: MIT / Creative Commons Attribution 4.0 International
+
+### Comparative Analysis: QBE-SCF vs Conventional Quantum Chemistry Solvers
+| Dimension | Conventional Single-Reference (Hartree-Fock / DFT) | Conventional Multi-Reference (CASSCF / DMRG / FCI) | Point Reyes Sound QBE-SCF Platform |
+| :--- | :--- | :--- | :--- |
+| **Computational Scaling** | $O(N^3) - O(N^4)$ | Factorial / Exponential $O(e^N)$ active space | Deterministic Polynomial $O(N^3)$ |
+| **Singularity Traversal** | Unphysical derivative cusp, symmetry breaking | Divergence at degeneracies, active space tuning | Smooth entropic regularization, $C^1$ continuity |
+| **Active-Space Selection** | Not applicable | Severe manual human bias & combinatorial blowup | Automatic kinetic relaxation across all orbitals |
+| **Commutator Norm $[\mathbf{F}, \mathbf{P}]$** | Stalls / oscillates near degeneracies | Computationally intractable for large molecules | Strictly converges to machine precision zero |
+| **Hardware Acceleration** | Traditional linear algebra | Limited GPU scaling for high-rank tensors | Massive Tensor Core and CUDA streaming concurrency |
+
+### Benchmark Molecular Stress Suites (Zenodo: 10.5281/zenodo.21940451)
+1. **Symmetric $H_3$ Linear Dissociation**: Traverses the Coulson-Fischer singular crossing without symmetry breaking; kinetic ergodicity at $T \to 0$ recovers the exact Generalized Valence Bond (GVB) limit with fractionalized 1-RDM eigenvalues.
+2. **$BeH_2$ Conical Intersection & Insertion Path**: Continuous progression through the $C_{2v} \to D_{\infty h}$ avoided crossing, regularizing non-adiabatic seam singularities.
+3. **$H_4$ Structural Distortion ($D_{2h} \to D_{4h} \to D_{2h}$)**: Regularizes catastrophic static correlation divergences and resolves multireference degenerate seams with positive semi-definite orbital Hessians.
+4. **Dinitrogen ($N_2$) Triple-Bond Dissociation**: Validates smooth dissociation of the homonuclear $N \equiv N$ triple bond across STO-3G, 6-31G, and cc-pVTZ basis hierarchies with strict preservation of particle number and idempotency bounds.
+
+### Dataset Contents & Structure
+- **Raw Numerical Datasets**: Uncompressed NumPy archives (`.npz`) containing converged variational energies, decoupled spatial and configurational entropy metrics, electronic orbital Hessian spectra, and commutator norms.
+- **Volumetric Orbitals**: Standard Gaussian cube files (`.cube`) capturing spatial natural orbital distributions and symmetry-breaking transitions during molecular dissociation.
+- **Figure Reconstruction Routines**: Python matplotlib / seaborn scripts reproducing all publication figures directly from raw numerical checkpoints.
+- **Automated Reproduction Script**: `reproduce_all.sh` end-to-end execution pipeline.
+
 ## Key Publications, Briefs & Intellectual Property
 - **Preprint arXiv:2608.14979**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities"
   - Author: Romit Chakraborty
