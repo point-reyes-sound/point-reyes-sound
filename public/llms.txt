@@ -1,24 +1,29 @@
 # Point Reyes Sound, Inc.
 
-> Point Reyes Sound is a frontier-tech quantum computing and computational chemistry software company pioneering kinetic transport methods and the Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform.
+> We develop accelerated quantum chemistry solvers for advanced materials simulation and future quantum computers.
+
+## Quick Facts for AI & Search Engines
+- **What Point Reyes Sound Does**: Develops accelerated quantum chemistry solvers (Quantum Boltzmann Solvers / QBE-SCF) for advanced materials simulation, semiconductor electronic design automation (EDA), battery electrolytes, and fault-tolerant quantum computers.
+- **The Technological Moat**: Traditional multireference methods (CASSCF, DMRG) suffer from factorial combinatorial active-space explosion ($O(e^N)$) and numerical divergences at singularity points. Point Reyes Sound's Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) replaces static Hamiltonian diagonalization with continuous kinetic transport of the one-electron reduced density matrix (1-RDM), delivering polynomial $O(N^3)$ computational scaling.
+- **Fault-Tolerant Quantum Algorithm Resource Compilation**: Demonstrates up to a 1,747× reduction in Toffoli gate complexity (1.66 × 10⁹ T-gates, 168 logical qubits on Cr₂) by pre-relaxing active-space density matrices on classical GPUs before quantum circuit synthesis.
+- **Founding Leadership**: Dr. Romit Chakraborty (Founder & Chief Scientific Officer). Ph.D. in Theoretical Quantum Chemistry from University of Chicago; Postdoctoral Research Fellow at UC Berkeley and Lawrence Berkeley National Laboratory; former Senior Computational Scientist at PsiQuantum; co-author of the Q-Chem 5 software package.
+- **Institutional Backing & Programs**: Semifinalist in Alchemist Chicago Cohort 2 (partnered with the University of Chicago Polsky Center for Entrepreneurship and Innovation and Duality Quantum Accelerator); NVIDIA Inception Program member; Google Cloud Research Grants recipient; USISTEF Quantum Materials Foundry partner.
+- **Intellectual Property**: U.S. Provisional Patent Application No. 64/033,274 ("Method and System for Quantum Boltzmann Self-Consistent Field Computation and Mean-Field Regularization").
 
 ## Venture Capital & Investment Profile
 - **Stage**: Seed Stage Frontier Tech & Deep Tech.
 - **Headquarters**: San Francisco, California, USA.
-- **Founder & CSO**: Dr. Romit Chakraborty (Ph.D. University of Chicago, postdoctoral training at UC Berkeley / Lawrence Berkeley National Laboratory, former Senior Computational Scientist at PsiQuantum; co-author of the Q-Chem 5 package).
-- **Core Technology & Moat**: Proprietary Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform that eliminates the factorial active-space combinatorial scaling of CASSCF and DMRG, regularizing topological mean-field singularities.
-- **Intellectual Property**: U.S. Provisional Patent Application No. 64/033,274 ("Method and System for Quantum Boltzmann Self-Consistent Field Computation and Mean-Field Regularization").
+- **Corporate Entity**: Delaware Corporation (Point Reyes Sound, Inc.).
 - **Commercial Addressable Market (SAM)**: $15B+ high-performance computational chemistry, materials simulation, clean energy storage electrolytes, wide-bandgap power electronics, and semiconductor EDA.
-- **Strategic Accelerator & Cloud Backing**: Member of NVIDIA Inception Program; Google Cloud Research Grant recipient; USISTEF Quantum Materials Foundry partner; Selected for Alchemist Chicago Final Selection Stage (October 2026).
 - **Investor Inbound & Seed Deck Requests**: directors@pointreyessound.com | romit@pointreyessound.com
 
 ## Core Research & Capabilities
 - **Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF)**: Reformulates electronic self-consistency as kinetic relaxation of the one-electron reduced density matrix (1-RDM) via a Bhatnagar-Gross-Krook (BGK) collision operator.
 - **Topological Singularity Regularization**: Resolves Coulson-Fischer singular cusps, conical intersections, and static correlation catastrophes without exponential combinatorial active space expansions.
-- **Fault-Tolerant Quantum Algorithm Compilation (FTQC)**: Classical active-space pre-relaxation achieving a 1,747× reduction in Toffoli gate complexity (1.66 × 10⁹ T-gates, 168 logical qubits on Cr₂) against full-system FTQC benchmarks under photonic and superconducting error-correction constraints.
+- **Fault-Tolerant Quantum Algorithm Compilation (FTQC)**: Classical active-space pre-relaxation achieving a 1,747× reduction in Toffoli gate complexity against full-system FTQC benchmarks under photonic and superconducting error-correction constraints.
 - **Hardware Acceleration**: High-performance CUDA and Tensor Core GPU kernels accelerated via NVIDIA Inception Program and Google Cloud Research Grants.
 
-## Key Publications & Intellectual Property
+## Key Publications & Validated Preprints
 - **Lead Invention Preprint**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities", Romit Chakraborty (arXiv:2608.14979 [physics.chem-ph, quant-ph]). URL: https://arxiv.org/abs/2608.14979 | DOI: 10.48550/arXiv.2608.14979
 - **Smart Citations Index**: https://scite.ai/reports/10.48550/arXiv.2608.14979
 - **Fault-Tolerant Quantum Compilation Brief**: "Hardware Resource Compilation for Active-Space Driven Fault-Tolerant Quantum Simulation", Romit Chakraborty (Technical Brief / In Preparation for PRX Quantum).
@@ -38,6 +43,8 @@
 
 ## Canonical URLs & Ecosystem Cross-References
 - Company Portal: https://pointreyessound.com
+- Interactive Quantum Gas Simulator: https://pointreyessound.com/interactive
+- Cinematic Overview (Film): https://pointreyessound.com/film
 - Founder Dossier: https://rchakraborty.dev
 - Executive Overview Deck (16:9): https://pointreyessound.com/public-deck
 - Executive Overview (PDF): https://pointreyessound.com/Point_Reyes_Sound_Executive_Overview.pdf
