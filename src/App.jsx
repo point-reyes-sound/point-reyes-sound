@@ -693,10 +693,7 @@ export default function App() {
           <div className="about-card about-mission-card">
             <h3 className="about-card-title">AI-Amplified Kinetic Transport</h3>
             <p className="about-card-text">
-              Point Reyes Sound is a theoretical and computational research pod pioneering continuous kinetic methods for strongly correlated electrons. Where traditional electronic structure encounters factorial active-space bottlenecks in multireference systems, we propagate the one-electron reduced density matrix through the Quantum Boltzmann Equation (QBE-SCF).
-            </p>
-            <p className="about-card-text">
-              By coupling AI-amplified phase-space compilation with non-equilibrium transport physics, we regularize mean-field singularities and accurately describe &ldquo;long electrons&rdquo;—delocalized, strongly correlated states that dictate catalytic transformations, wide-bandgap semiconductor transport, and energy storage interfaces.
+              We develop accelerated quantum chemistry solvers for advanced materials simulation and future quantum computers.
             </p>
             <div className="about-actions">
               <a 
