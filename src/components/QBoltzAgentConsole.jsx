@@ -578,7 +578,7 @@ export default function QBoltzAgentConsole({ onClose }) {
         }
         return next;
       });
-    }, 350); // Slower, graceful 350ms step for clear, easy-on-the-eye geometric transitions
+    }, 110); // Dense scan playback (61 frames, ΔR = 0.05 Å) for seamless continuous transitions
     return () => clearInterval(interval);
   }, [isPlaying, hasTrajectory, loopDir, trajectory.length]);
 
@@ -865,7 +865,7 @@ export default function QBoltzAgentConsole({ onClose }) {
                   <div className="playback-right-indicators">
                     <span className="playback-loop-chip">
                       <span className="loop-pulse"></span>
-                      0.50 Å ⇄ 3.50 Å HOMOLYTIC DISSOCIATION LOOP
+                      0.50 Å ⇄ 3.50 Å CONTINUOUS DISSOCIATION (ΔR = 0.05 Å)
                     </span>
                   </div>
                 </div>
