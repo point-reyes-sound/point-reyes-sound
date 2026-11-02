@@ -224,6 +224,7 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
 
 // ---------------------------------------------------------------------------
 // 2D Potential Energy Surface (Dissociation Curve) SVG Component
+// Calibrated & High-Resolution Tile Filling
 // ---------------------------------------------------------------------------
 function DissociationCurvePlot({ curveData, currentPoint }) {
   if (!curveData || !curveData.points || curveData.points.length === 0) return null;
@@ -235,16 +236,16 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
   const allE = points.flatMap((p) => [p.e_qbescf, p.e_standard]);
   const eMin = Math.min(...allE);
   const eMax = Math.max(...allE);
-  const ePadding = (eMax - eMin) * 0.15 || 0.1;
+  const ePadding = (eMax - eMin) * 0.14 || 0.08;
   const yLow = eMin - ePadding;
   const yHigh = eMax + ePadding;
 
-  const width = 380;
-  const height = 180;
-  const padL = 52;
-  const padR = 20;
-  const padT = 20;
-  const padB = 32;
+  const width = 640;
+  const height = 310;
+  const padL = 62;
+  const padR = 25;
+  const padT = 24;
+  const padB = 46;
 
   const toSvgX = (r) => padL + ((r - rMin) / (rMax - rMin)) * (width - padL - padR);
   const toSvgY = (e) => height - padB - ((e - yLow) / (yHigh - yLow)) * (height - padT - padB);
@@ -265,33 +266,145 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
   const singR = curveData.singularity?.r;
   const singX = singR && singR >= rMin && singR <= rMax ? toSvgX(singR) : null;
 
+  // Calibrated Grid Ticks
+  const numXTicks = 6;
+  const xTicks = [];
+  const xStep = (rMax - rMin) / numXTicks;
+  for (let i = 0; i <= numXTicks; i++) {
+    xTicks.push(rMin + i * xStep);
+  }
+
+  const numYTicks = 5;
+  const yTicks = [];
+  const yStep = (yHigh - yLow) / numYTicks;
+  for (let i = 0; i <= numYTicks; i++) {
+    yTicks.push(yLow + i * yStep);
+  }
+
   return (
     <div className="pes-plot-wrapper">
-      <div className="pes-header">
-        <span className="pes-title">POTENTIAL ENERGY SURFACE // {curveData.r_label || "R (Å)"}</span>
-        <div className="pes-legend">
-          <span className="legend-item qbe">
-            <span className="legend-dot green"></span> QBE-SCF (Smooth)
-          </span>
-          <span className="legend-item rhf">
-            <span className="legend-dot red"></span> Mean-Field (RHF)
-          </span>
-        </div>
-      </div>
-
-      <svg viewBox={`0 0 ${width} ${height}`} className="pes-svg">
+      <svg viewBox={`0 0 ${width} ${height}`} className="pes-svg" preserveAspectRatio="none">
         <defs>
           <linearGradient id="qbeCurveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#35ff82" />
             <stop offset="100%" stopColor="#00e5ff" />
           </linearGradient>
+          <filter id="pesGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
         </defs>
 
-        {/* Grid lines */}
-        <line x1={padL} y1={padT} x2={padL} y2={height - padB} stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
-        <line x1={padL} y1={height - padB} x2={width - padR} y2={height - padB} stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+        {/* Outer Plot Box */}
+        <rect
+          x={padL}
+          y={padT}
+          width={width - padL - padR}
+          height={height - padT - padB}
+          fill="rgba(2, 8, 4, 0.65)"
+          stroke="rgba(53, 255, 130, 0.16)"
+          strokeWidth="1"
+        />
 
-        {/* Singularity vertical marker */}
+        {/* Calibrated Y Gridlines and Ticks */}
+        {yTicks.map((val, idx) => {
+          const y = toSvgY(val);
+          return (
+            <g key={`y-grid-${idx}`}>
+              <line
+                x1={padL}
+                y1={y}
+                x2={width - padR}
+                y2={y}
+                stroke="rgba(255,255,255,0.06)"
+                strokeDasharray="3 3"
+                strokeWidth="1"
+              />
+              <line
+                x1={padL - 5}
+                y1={y}
+                x2={padL}
+                y2={y}
+                stroke="rgba(53, 255, 130, 0.4)"
+                strokeWidth="1.2"
+              />
+              <text
+                x={padL - 8}
+                y={y + 3.5}
+                textAnchor="end"
+                fill="#8da399"
+                fontSize="10"
+                fontFamily="'JetBrains Mono', monospace"
+              >
+                {val.toFixed(2)}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Calibrated X Gridlines and Ticks */}
+        {xTicks.map((val, idx) => {
+          const x = toSvgX(val);
+          return (
+            <g key={`x-grid-${idx}`}>
+              <line
+                x1={x}
+                y1={padT}
+                x2={x}
+                y2={height - padB}
+                stroke="rgba(255,255,255,0.06)"
+                strokeDasharray="3 3"
+                strokeWidth="1"
+              />
+              <line
+                x1={x}
+                y1={height - padB}
+                x2={x}
+                y2={height - padB + 5}
+                stroke="rgba(53, 255, 130, 0.4)"
+                strokeWidth="1.2"
+              />
+              <text
+                x={x}
+                y={height - padB + 16}
+                textAnchor="middle"
+                fill="#8da399"
+                fontSize="10"
+                fontFamily="'JetBrains Mono', monospace"
+              >
+                {val.toFixed(1)}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Axis Titles */}
+        <text
+          x={(padL + width - padR) / 2}
+          y={height - 8}
+          textAnchor="middle"
+          fill="#35ff82"
+          fontSize="11"
+          fontFamily="'JetBrains Mono', monospace"
+          fontWeight="600"
+          letterSpacing="0.05em"
+        >
+          Interatomic Distance R ({curveData.r_unit || "Å"})
+        </text>
+
+        <text
+          transform={`rotate(-90) translate(-${(padT + height - padB) / 2}, 18)`}
+          textAnchor="middle"
+          fill="#00e5ff"
+          fontSize="11"
+          fontFamily="'JetBrains Mono', monospace"
+          fontWeight="600"
+          letterSpacing="0.05em"
+        >
+          Potential Energy E (Hartree / E_h)
+        </text>
+
+        {/* Coulson-Fischer Singularity Marker */}
         {singX && (
           <g className="singularity-marker">
             <line
@@ -300,54 +413,81 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
               x2={singX}
               y2={height - padB}
               stroke="#ffaa33"
-              strokeDasharray="3 3"
-              strokeWidth="1.2"
+              strokeDasharray="4 3"
+              strokeWidth="1.6"
             />
-            <text x={singX + 4} y={padT + 12} fill="#ffaa33" fontSize="9" fontFamily="monospace">
-              Coulson-Fischer Cusp
+            <rect
+              x={Math.min(singX + 6, width - padR - 170)}
+              y={padT + 6}
+              width="164"
+              height="18"
+              rx="3"
+              fill="rgba(255, 170, 51, 0.16)"
+              stroke="#ffaa33"
+              strokeWidth="0.8"
+            />
+            <text
+              x={Math.min(singX + 12, width - padR - 164)}
+              y={padT + 19}
+              fill="#ffaa33"
+              fontSize="9"
+              fontFamily="'JetBrains Mono', monospace"
+              fontWeight="700"
+            >
+              Coulson-Fischer Singularity
             </text>
           </g>
         )}
 
-        {/* Standard RHF Line (Dashed) */}
+        {/* Standard RHF Line (Dashed Red) */}
         <path
           d={standardPath}
           fill="none"
           stroke="#ff4466"
-          strokeWidth="1.8"
-          strokeDasharray="4 3"
-          opacity="0.8"
+          strokeWidth="2.2"
+          strokeDasharray="5 4"
+          opacity="0.85"
         />
 
-        {/* QBE-SCF Line (Continuous Smooth C¹) */}
+        {/* QBE-SCF Line (Continuous Smooth C¹ Transport Glowing Gradient) */}
         <path
           d={qbePath}
           fill="none"
           stroke="url(#qbeCurveGrad)"
-          strokeWidth="2.4"
+          strokeWidth="3.2"
+          filter="url(#pesGlow)"
         />
 
-        {/* Current State Marker Ping */}
+        {/* Current State Marker Ping & Coordinates Tag */}
         {currQbePt && (
           <g transform={`translate(${toSvgX(currQbePt.r)}, ${toSvgY(currQbePt.e_qbescf)})`}>
-            <circle r="6" fill="#35ff82" opacity="0.3" className="ping-halo" />
-            <circle r="3.5" fill="#35ff82" stroke="#ffffff" strokeWidth="1.5" />
+            <circle r="9" fill="#35ff82" opacity="0.35" className="ping-halo" />
+            <circle r="4" fill="#35ff82" stroke="#ffffff" strokeWidth="2" />
+            <g transform="translate(0, -18)">
+              <rect
+                x="-50"
+                y="-13"
+                width="100"
+                height="17"
+                rx="4"
+                fill="rgba(2, 9, 5, 0.94)"
+                stroke="#35ff82"
+                strokeWidth="1"
+              />
+              <text
+                x="0"
+                y="0"
+                textAnchor="middle"
+                fill="#35ff82"
+                fontSize="9"
+                fontFamily="'JetBrains Mono', monospace"
+                fontWeight="700"
+              >
+                R = {Number(currR).toFixed(2)} Å
+              </text>
+            </g>
           </g>
         )}
-
-        {/* Axis Labels */}
-        <text x={padL} y={height - padB + 16} fill="#8da399" fontSize="10" fontFamily="monospace">
-          {rMin.toFixed(2)}
-        </text>
-        <text x={width - padR} y={height - padB + 16} textAnchor="end" fill="#8da399" fontSize="10" fontFamily="monospace">
-          {rMax.toFixed(2)} {curveData.r_unit || "Å"}
-        </text>
-        <text x={padL - 6} y={padT + 8} textAnchor="end" fill="#8da399" fontSize="9" fontFamily="monospace">
-          {eMax.toFixed(1)} E_h
-        </text>
-        <text x={padL - 6} y={height - padB} textAnchor="end" fill="#8da399" fontSize="9" fontFamily="monospace">
-          {eMin.toFixed(1)}
-        </text>
       </svg>
     </div>
   );
