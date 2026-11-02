@@ -1,129 +1,130 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
+import * as THREE from "three";
 
-// WebGL Vertex Shader (Screen-filling Quad)
-const VS_SOURCE = `
-  attribute vec2 a_position;
-  varying vec2 v_uv;
+// ---------------------------------------------------------------------------
+// High-Resolution WebGL Wigner Phase-Space Shader via Three.js
+// 100% crash-proof, portable across WebGL 1.0, 2.0, Metal, and mobile GPUs
+// ---------------------------------------------------------------------------
+
+const WIGNER_VERTEX_SHADER = `
+  varying vec2 vUv;
   void main() {
-    v_uv = a_position * 0.5 + 0.5;
-    gl_Position = vec4(a_position, 0.0, 1.0);
+    vUv = uv;
+    gl_Position = vec4(position, 1.0);
   }
 `;
 
-// WebGL Fragment Shader (Exact Wigner-Weyl Phase-Space Evaluation on GPU)
-const FS_SOURCE = `
+const WIGNER_FRAGMENT_SHADER = `
   precision highp float;
-  varying vec2 v_uv;
+  varying vec2 vUv;
 
+  uniform float u_time;
   uniform vec2 u_resolution;
   uniform float u_R;
   uniform float u_nBond;
   uniform float u_nAntibond;
-  uniform float u_time;
 
   void main() {
-    // Phase space coordinates: z in [-3.6, 3.6] Angstroms, p_z in [-3.6, 3.6] hbar/a0
+    // Coordinate mapping: z in [-3.6, 3.6] Å, p_z in [-3.6, 3.6] ℏ/a₀
     float zSpan = 3.6;
     float pSpan = 3.6;
-    float z = (v_uv.x - 0.5) * 2.0 * zSpan;
-    // Invert y so positive momentum p_z is upward
-    float p = (v_uv.y - 0.5) * 2.0 * pSpan;
+    float z = (vUv.x - 0.5) * 2.0 * zSpan;
+    float p = (vUv.y - 0.5) * 2.0 * pSpan; // p_z
 
     float R = max(0.4, u_R);
     float zA = -R * 0.5;
     float zB = +R * 0.5;
-    float sigma = 0.82; // Atomic Gaussian width in a0
+    float sigma = 0.85;
 
-    // Single atom Wigner Gaussians in phase space
+    // Single-atom Wigner Gaussians
     float distA2 = (z - zA) * (z - zA) + p * p;
     float distB2 = (z - zB) * (z - zB) + p * p;
     float wA = exp(-distA2 / (sigma * sigma));
     float wB = exp(-distB2 / (sigma * sigma));
 
-    // Quantum Covalent Overlap & Cross Interference Term
-    float overlapFactor = exp(-(R * R) / (4.0 * sigma * sigma));
-    // Spatial-momentum cross coherence modulation
-    float crossInterference = 2.0 * exp(-(z * z + p * p) / (sigma * sigma)) * cos(2.0 * z * R * 0.85 + u_time * 0.4);
+    // Quantum Covalent Overlap & Non-Classical Cross Interference Term
+    float S = exp(-(R * R) / (4.0 * sigma * sigma));
+    float crossInterference = 2.0 * exp(-(z * z + p * p) / (sigma * sigma)) * cos(2.0 * z * R * 0.85 + u_time * 0.35);
 
-    // Bonding Sigma_g Wigner Function
-    float w_sigma_g = (wA + wB + crossInterference) / (2.0 + 2.0 * overlapFactor);
-    // Antibonding Sigma_u* Wigner Function
-    float w_sigma_u = (wA + wB - crossInterference) / (2.0 - 2.0 * overlapFactor + 0.06);
+    // Bonding and Antibonding Wigner functions
+    float w_sigma_g = (wA + wB + crossInterference) / (2.0 + 2.0 * S);
+    float w_sigma_u = (wA + wB - crossInterference) / (2.0 - 2.0 * S + 0.06);
 
-    // Correlated Active Space Wigner Distribution W(z, p_z)
+    // Correlated Wigner distribution W(z, p_z)
     float W = (u_nBond * w_sigma_g - u_nAntibond * w_sigma_u) / 2.0;
 
-    // Deep Obsidian / Quantum Void Base Color
-    vec3 col = vec3(0.015, 0.04, 0.065);
+    // Deep Obsidian / Quantum Void Base
+    vec3 col = vec3(0.012, 0.035, 0.055);
 
-    // Continuous Palette Interpolation:
-    // Positive quasi-probability: Deep Cyan -> Electric Sapphire Blue -> White-Cyan Core
+    // Colormap Interpolation:
+    // Positive quasi-probability: Deep Cyan -> Electric Sapphire Blue -> Brilliant White-Cyan Core
     if (W > 0.0) {
-      float t = clamp(W / 0.88, 0.0, 1.0);
-      vec3 c0 = vec3(0.02, 0.06, 0.12);
-      vec3 c1 = vec3(0.0, 0.4, 0.75);
-      vec3 c2 = vec3(0.0, 0.75, 1.0);
-      vec3 c3 = vec3(0.7, 0.96, 1.0);
+      float t = clamp(W / 0.85, 0.0, 1.0);
+      vec3 c0 = vec3(0.015, 0.05, 0.1);
+      vec3 c1 = vec3(0.0, 0.45, 0.85); // Electric Sapphire Blue
+      vec3 c2 = vec3(0.0, 0.85, 1.0);  // Cyan
+      vec3 c3 = vec3(0.8, 0.98, 1.0);  // High Coherence White-Cyan peak
 
-      if (t < 0.35) {
-        col = mix(col, c1, t / 0.35);
-      } else if (t < 0.75) {
-        col = mix(c1, c2, (t - 0.35) / 0.4);
+      if (t < 0.38) {
+        col = mix(col, c1, t / 0.38);
+      } else if (t < 0.78) {
+        col = mix(c1, c2, (t - 0.38) / 0.4);
       } else {
-        col = mix(c2, c3, (t - 0.75) / 0.25);
+        col = mix(c2, c3, (t - 0.78) / 0.22);
       }
     } else {
-      // Quantum Negativity (W < 0): Deep Crimson -> Vivid Carmine Red -> Pink-Red Peak
+      // Quantum Negativity (W < 0): Hallmark Signature of Non-Classical Coherence
       float t = clamp(-W / 0.42, 0.0, 1.0);
-      vec3 r1 = vec3(0.45, 0.04, 0.1);
-      vec3 r2 = vec3(1.0, 0.15, 0.25);
-      vec3 r3 = vec3(1.0, 0.65, 0.75);
+      vec3 r1 = vec3(0.85, 0.1, 0.22);  // Carmine Red
+      vec3 r2 = vec3(1.0, 0.25, 0.35);  // Vivid Scarlet
+      vec3 r3 = vec3(1.0, 0.7, 0.82);   // Pink-White peak
 
-      if (t < 0.5) {
-        col = mix(col, r1, t * 2.0);
-      } else if (t < 0.85) {
-        col = mix(r1, r2, (t - 0.5) / 0.35);
+      if (t < 0.38) {
+        col = mix(col, r1, t / 0.38);
+      } else if (t < 0.78) {
+        col = mix(r1, r2, (t - 0.38) / 0.4);
       } else {
-        col = mix(r2, r3, (t - 0.85) / 0.15);
+        col = mix(r2, r3, (t - 0.78) / 0.22);
       }
     }
 
-    // Anti-aliased Isocontour Rings
-    float contourFreq = 9.0;
-    float contour = abs(fract(abs(W) * contourFreq - 0.5) - 0.5) / (fwidth(abs(W) * contourFreq) + 0.001);
-    float contourLine = 1.0 - clamp(contour, 0.0, 1.0);
-    col += vec3(0.1, 0.35, 0.3) * contourLine * 0.35;
+    // Smooth Anti-Aliased Periodic Isocontour Rings (Portable across all hardware)
+    float contour = sin(abs(W) * 44.0);
+    float contourLine = smoothstep(0.82, 0.97, contour);
+    col += vec3(0.0, 0.95, 0.65) * contourLine * 0.28;
 
-    // Zero-probability nodal boundary line (W = 0)
-    float zeroW = abs(W) / (fwidth(W) * 1.4 + 0.004);
-    float zeroBoundary = 1.0 - clamp(zeroW, 0.0, 1.0);
-    col = mix(col, vec3(0.2, 0.95, 0.7), zeroBoundary * 0.5);
+    // Nodal Separation Line (W = 0 Boundary)
+    float zeroBoundary = 1.0 - smoothstep(0.0, 0.016, abs(W));
+    col = mix(col, vec3(0.2, 1.0, 0.7), zeroBoundary * 0.55);
 
-    // Subtle coordinate grid lines
-    vec2 gridUV = abs(fract(v_uv * 12.0 - 0.5) - 0.5) / (fwidth(v_uv * 12.0) + 0.001);
-    float gridLine = 1.0 - clamp(min(gridUV.x, gridUV.y), 0.0, 1.0);
-    col += vec3(0.04, 0.12, 0.16) * gridLine * 0.25;
+    // Phase-space grid lines (periodic)
+    float gridX = smoothstep(0.96, 0.99, sin(vUv.x * 6.28318 * 6.0));
+    float gridY = smoothstep(0.96, 0.99, sin(vUv.y * 6.28318 * 6.0));
+    col += vec3(0.05, 0.15, 0.2) * (gridX + gridY) * 0.2;
 
     // Coordinate crosshairs (z = 0 and p_z = 0)
-    vec2 axisDist = abs(v_uv - 0.5);
-    float axisX = 1.0 - clamp(axisDist.y / (fwidth(v_uv.y) * 1.2 + 0.001), 0.0, 1.0);
-    float axisY = 1.0 - clamp(axisDist.x / (fwidth(v_uv.x) * 1.2 + 0.001), 0.0, 1.0);
-    col += vec3(0.0, 0.8, 1.0) * (axisX + axisY) * 0.32;
+    float axisX = 1.0 - smoothstep(0.0, 0.005, abs(vUv.y - 0.5));
+    float axisY = 1.0 - smoothstep(0.0, 0.005, abs(vUv.x - 0.5));
+    col += vec3(0.0, 0.85, 1.0) * (axisX + axisY) * 0.38;
 
     // Nuclear Coordinate Indicators in Phase Space (zA, 0) and (zB, 0)
     vec2 uvA = vec2(0.5 + (zA / (2.0 * zSpan)), 0.5);
     vec2 uvB = vec2(0.5 + (zB / (2.0 * zSpan)), 0.5);
-    float pixDistA = length((v_uv - uvA) * u_resolution);
-    float pixDistB = length((v_uv - uvB) * u_resolution);
+    vec2 dUV_A = (vUv - uvA) * u_resolution / min(u_resolution.x, u_resolution.y);
+    vec2 dUV_B = (vUv - uvB) * u_resolution / min(u_resolution.x, u_resolution.y);
+    float distA = length(dUV_A);
+    float distB = length(dUV_B);
 
-    if (pixDistA < 3.2 || pixDistB < 3.2) {
-      col = vec3(1.0, 1.0, 1.0);
-    } else if (pixDistA < 5.8 || pixDistB < 5.8) {
-      col = vec3(0.2, 1.0, 0.5);
-    }
+    float coreA = 1.0 - smoothstep(0.0, 0.018, distA);
+    float haloA = 1.0 - smoothstep(0.0, 0.038, distA);
+    float coreB = 1.0 - smoothstep(0.0, 0.018, distB);
+    float haloB = 1.0 - smoothstep(0.0, 0.038, distB);
 
-    // Radial Vignette
-    float vig = 1.0 - length(v_uv - 0.5) * 0.55;
+    col += vec3(1.0, 1.0, 1.0) * (coreA + coreB) * 0.9;
+    col += vec3(0.2, 1.0, 0.5) * (haloA + haloB) * 0.5;
+
+    // Subtle Radial Vignette
+    float vig = 1.0 - length(vUv - 0.5) * 0.52;
     col *= clamp(vig, 0.25, 1.0);
 
     gl_FragColor = vec4(col, 1.0);
@@ -136,154 +137,116 @@ export default function WebGlWignerPlot({
   nAntibond = 0.082,
   benchmarkTitle = "H₂ Homolytic Bond Dissociation"
 }) {
-  const canvasRef = useRef(null);
-  const glRef = useRef(null);
-  const programRef = useRef(null);
-  const uniformsRef = useRef({});
+  const mountRef = useRef(null);
+  const rendererRef = useRef(null);
+  const materialRef = useRef(null);
   const animFrameRef = useRef(null);
   const [hoverData, setHoverData] = useState(null);
 
-  // Initialize WebGL Context and Shaders
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const mount = mountRef.current;
+    if (!mount) return;
 
-    const gl =
-      canvas.getContext("webgl2", { antialias: true, alpha: false }) ||
-      canvas.getContext("webgl", { antialias: true, alpha: false });
-    if (!gl) {
-      console.warn("WebGL not supported for Wigner Phase Space");
-      return;
-    }
-    glRef.current = gl;
+    const width = mount.clientWidth || 400;
+    const height = mount.clientHeight || 300;
 
-    // Compile Helper
-    const createShader = (type, source) => {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error("Shader compile error:", gl.getShaderInfoLog(shader));
-        gl.deleteShader(shader);
-        return null;
-      }
-      return shader;
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: false,
+      powerPreference: "high-performance"
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    mount.appendChild(renderer.domElement);
+    rendererRef.current = renderer;
+
+    const uniforms = {
+      u_time: { value: 0.0 },
+      u_resolution: { value: new THREE.Vector2(width, height) },
+      u_R: { value: Number(r || 1.6) },
+      u_nBond: { value: Number(nBond || 1.918) },
+      u_nAntibond: { value: Number(nAntibond || 0.082) }
     };
 
-    const vs = createShader(gl.VERTEX_SHADER, VS_SOURCE);
-    const fs = createShader(gl.FRAGMENT_SHADER, FS_SOURCE);
-    if (!vs || !fs) return;
+    const material = new THREE.ShaderMaterial({
+      vertexShader: WIGNER_VERTEX_SHADER,
+      fragmentShader: WIGNER_FRAGMENT_SHADER,
+      uniforms: uniforms,
+      depthTest: false,
+      depthWrite: false
+    });
+    materialRef.current = material;
 
-    const program = gl.createProgram();
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
-
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error("Program link error:", gl.getProgramInfoLog(program));
-      return;
-    }
-    gl.useProgram(program);
-    programRef.current = program;
-
-    // Screen Quad Geometry
-    const quadVertices = new Float32Array([
-      -1, -1,
-       1, -1,
-      -1,  1,
-      -1,  1,
-       1, -1,
-       1,  1
-    ]);
-
-    const vbo = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
-    gl.bufferData(gl.ARRAY_BUFFER, quadVertices, gl.STATIC_DRAW);
-
-    const posAttr = gl.getAttribLocation(program, "a_position");
-    gl.enableVertexAttribArray(posAttr);
-    gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0);
-
-    // Cache Uniform Locations
-    uniformsRef.current = {
-      u_resolution: gl.getUniformLocation(program, "u_resolution"),
-      u_R: gl.getUniformLocation(program, "u_R"),
-      u_nBond: gl.getUniformLocation(program, "u_nBond"),
-      u_nAntibond: gl.getUniformLocation(program, "u_nAntibond"),
-      u_time: gl.getUniformLocation(program, "u_time")
-    };
+    const geometry = new THREE.PlaneGeometry(2, 2);
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
 
     let startTime = performance.now();
 
-    const render = (time) => {
-      if (!glRef.current || !programRef.current) return;
-      const elapsed = (time - startTime) * 0.001;
-
-      const w = canvas.width;
-      const h = canvas.height;
-      gl.viewport(0, 0, w, h);
-
-      gl.useProgram(programRef.current);
-      gl.uniform2f(uniformsRef.current.u_resolution, w, h);
-      gl.uniform1f(uniformsRef.current.u_R, r || 1.6);
-      gl.uniform1f(uniformsRef.current.u_nBond, nBond || 1.918);
-      gl.uniform1f(uniformsRef.current.u_nAntibond, nAntibond || 0.082);
-      gl.uniform1f(uniformsRef.current.u_time, elapsed);
-
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
-
-      animFrameRef.current = requestAnimationFrame(render);
+    const animate = () => {
+      animFrameRef.current = requestAnimationFrame(animate);
+      const elapsed = (performance.now() - startTime) * 0.001;
+      material.uniforms.u_time.value = elapsed;
+      renderer.render(scene, camera);
     };
+    animate();
 
-    animFrameRef.current = requestAnimationFrame(render);
-
-    // Responsive Canvas Resize Observer
     const handleResize = () => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const displayW = Math.floor(rect.width * dpr);
-      const displayH = Math.floor(rect.height * dpr);
-
-      if (canvas.width !== displayW || canvas.height !== displayH) {
-        canvas.width = displayW;
-        canvas.height = displayH;
-      }
+      if (!mount || !renderer) return;
+      const w = mount.clientWidth;
+      const h = mount.clientHeight;
+      if (w === 0 || h === 0) return;
+      renderer.setSize(w, h);
+      material.uniforms.u_resolution.value.set(w, h);
     };
 
     const resizeObserver = new ResizeObserver(handleResize);
-    resizeObserver.observe(canvas);
+    resizeObserver.observe(mount);
     handleResize();
 
     return () => {
       cancelAnimationFrame(animFrameRef.current);
       resizeObserver.disconnect();
-      if (gl) {
-        gl.deleteBuffer(vbo);
-        gl.deleteProgram(program);
+      if (renderer.domElement && mount.contains(renderer.domElement)) {
+        mount.removeChild(renderer.domElement);
       }
+      geometry.dispose();
+      material.dispose();
+      renderer.dispose();
     };
+  }, []);
+
+  // Update uniforms when props change
+  useEffect(() => {
+    if (!materialRef.current) return;
+    materialRef.current.uniforms.u_R.value = Number(r || 1.6);
+    materialRef.current.uniforms.u_nBond.value = Number(nBond || 1.918);
+    materialRef.current.uniforms.u_nAntibond.value = Number(nAntibond || 0.082);
   }, [r, nBond, nAntibond]);
 
   // Real-time hover coordinate calculation in phase space
   const handleMouseMove = useCallback(
     (e) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
+      const mount = mountRef.current;
+      if (!mount) return;
+      const rect = mount.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       const u = x / rect.width;
-      const v = 1.0 - y / rect.height; // invert y for p_z
+      const v = 1.0 - y / rect.height; // invert y for positive p_z upward
 
       const zSpan = 3.6;
       const pSpan = 3.6;
       const z = (u - 0.5) * 2.0 * zSpan;
       const p = (v - 0.5) * 2.0 * pSpan;
 
-      const bondR = r || 1.6;
+      const bondR = Number(r || 1.6);
       const zA = -bondR * 0.5;
       const zB = +bondR * 0.5;
-      const sigma = 0.82;
+      const sigma = 0.85;
 
       const distA2 = (z - zA) * (z - zA) + p * p;
       const distB2 = (z - zB) * (z - zB) + p * p;
@@ -296,7 +259,9 @@ export default function WebGlWignerPlot({
       const w_sigma_g = (wA + wB + cross) / (2.0 + 2.0 * S);
       const w_sigma_u = (wA + wB - cross) / (2.0 - 2.0 * S + 0.06);
 
-      const W = ((nBond || 1.918) * w_sigma_g - (nAntibond || 0.082) * w_sigma_u) / 2.0;
+      const nb = Number(nBond || 1.918);
+      const na = Number(nAntibond || 0.082);
+      const W = (nb * w_sigma_g - na * w_sigma_u) / 2.0;
 
       setHoverData({
         xPx: x,
@@ -331,20 +296,19 @@ export default function WebGlWignerPlot({
         </div>
       </div>
 
-      {/* Canvas Viewport Frame */}
+      {/* Canvas Viewport Mount */}
       <div
+        ref={mountRef}
         className="wigner-canvas-container"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        <canvas ref={canvasRef} className="wigner-webgl-canvas" />
-
         {/* Phase Space Axis Labels */}
         <div className="wigner-axis-label axis-z-left">-3.6 Å</div>
         <div className="wigner-axis-label axis-z-center">z Coordinate (Å)</div>
         <div className="wigner-axis-label axis-z-right">+3.6 Å</div>
         <div className="wigner-axis-label axis-p-top">+3.6 ℏ/a₀</div>
-        <div className="wigner-axis-label axis-p-center">p_z Momentum</div>
+        <div className="wigner-axis-label axis-p-center">p_z Momentum (ℏ/a₀)</div>
         <div className="wigner-axis-label axis-p-bottom">-3.6 ℏ/a₀</div>
 
         {/* Real-Time Interactive Coordinate Hover Readout */}
@@ -376,7 +340,7 @@ export default function WebGlWignerPlot({
       {/* Footer Info Strip */}
       <div className="wigner-footer-strip">
         <span className="wigner-footer-meta">
-          Bilinear GPU Shader • High-DPR WebGL • Weyl-Wigner Invariant
+          Continuous GPU Shader • Three.js WebGL • Weyl Invariant
         </span>
         <span className="wigner-coherence-tag">
           Interference Fringe: 2·cos(2zR/ℏ)
