@@ -97,6 +97,18 @@
       "destination": "/genesis-q-deck.html"
     },
     {
+      "source": "/a16z",
+      "destination": "/a16z-deck.html"
+    },
+    {
+      "source": "/a16z-deck",
+      "destination": "/a16z-deck.html"
+    },
+    {
+      "source": "/a16z-appendix",
+      "destination": "/a16z-appendix.html"
+    },
+    {
       "source": "/papers/(.*)",
       "destination": "/papers/$1"
     },

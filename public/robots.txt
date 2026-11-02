@@ -18,6 +18,12 @@ Disallow: /genesis-q
 Disallow: /genesis-q.html
 Disallow: /genesis-q-deck
 Disallow: /genesis-q-deck.html
+Disallow: /a16z
+Disallow: /a16z.html
+Disallow: /a16z-deck
+Disallow: /a16z-deck.html
+Disallow: /a16z-appendix
+Disallow: /a16z-appendix.html
 Disallow: /usistef-qmf-deck
 Disallow: /usistef-qmf-deck.html
 

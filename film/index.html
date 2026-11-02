@@ -279,9 +279,65 @@
       margin: 0 auto;
     }
 
+    /* Video Switcher Tabs */
+    .video-switcher {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .switcher-tab {
+      background: rgba(6, 18, 36, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+      padding: 8px 18px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .switcher-tab:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .switcher-tab.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--accent-cyan);
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+    }
+
+    .tab-badge {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: var(--accent-emerald);
+      padding: 2px 7px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .switcher-tab.active .tab-badge {
+      background: rgba(56, 189, 248, 0.25);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
     /* Cinema Video Player Frame */
     .cinema-stage {
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       border-radius: 16px;
       background: #010409;
       border: 1px solid var(--border-accent);
@@ -295,6 +351,7 @@
       width: 100%;
       padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
       background: #000000;
+      cursor: pointer;
     }
 
     .cinema-video {
@@ -304,6 +361,113 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    /* Hero Play Overlay */
+    .hero-play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, rgba(3, 8, 20, 0.45) 0%, rgba(3, 8, 20, 0.85) 100%);
+      backdrop-filter: blur(2px);
+      z-index: 10;
+      cursor: pointer;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .hero-play-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .hero-play-btn {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10b981 0%, #38bdf8 100%);
+      color: #030814;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 35px rgba(16, 185, 129, 0.6), 0 0 60px rgba(56, 189, 248, 0.3);
+      margin-bottom: 16px;
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+    }
+
+    .hero-play-btn svg {
+      margin-left: 4px;
+    }
+
+    .hero-play-overlay:hover .hero-play-btn {
+      transform: scale(1.1);
+      box-shadow: 0 0 50px rgba(16, 185, 129, 0.85), 0 0 80px rgba(56, 189, 248, 0.5);
+    }
+
+    .hero-play-label {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+      margin-bottom: 6px;
+    }
+
+    .hero-play-sub {
+      font-size: 0.88rem;
+      color: rgba(248, 250, 252, 0.8);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+      max-width: 520px;
+    }
+
+    /* Direct Action Bar */
+    .film-direct-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .direct-link {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 6px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .direct-link:hover {
+      color: #ffffff;
+      border-color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .direct-link.highlight {
+      border-color: rgba(16, 185, 129, 0.4);
+      color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .direct-link.highlight:hover {
+      border-color: var(--accent-emerald);
+      color: #ffffff;
+      background: rgba(16, 185, 129, 0.2);
     }
 
     /* Chapter Quick Cues */
@@ -555,6 +719,18 @@
       </p>
     </header>
 
+    <!-- Video Selection Switcher -->
+    <div class="video-switcher" role="tablist" aria-label="Select Video Presentation">
+      <button id="tabExec" class="switcher-tab active" role="tab" aria-selected="true" onclick="switchVideo('exec')">
+        <span class="tab-badge">0:58</span>
+        <span>Executive Film · Continuous Phase-Space</span>
+      </button>
+      <button id="tabDeck" class="switcher-tab" role="tab" aria-selected="false" onclick="switchVideo('deck')">
+        <span class="tab-badge">2:58</span>
+        <span>Full Pitch Deck Presentation (&lt; 3 Min)</span>
+      </button>
+    </div>
+
     <!-- Cinema Video Player Stage -->
     <section class="cinema-stage" aria-label="Video Player">
       <div class="cinema-video-wrapper">
@@ -565,16 +741,44 @@
           poster="/film_watch_poster.jpg"
           controls
           playsinline
-          preload="metadata"
+          preload="auto"
         >
           <source src="/point_reyes_sound_complete_film.mp4" type="video/mp4" />
+          <source src="./point_reyes_sound_complete_film.mp4" type="video/mp4" />
           Your browser does not support HTML5 video playback.
         </video>
+
+        <!-- Centered Glowing Hero Play Overlay -->
+        <div id="playOverlay" class="hero-play-overlay" onclick="togglePlayFilm()">
+          <div class="hero-play-btn" title="Click to play film">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+          <div class="hero-play-label" id="playOverlayLabel">CLICK TO PLAY EXECUTIVE FILM</div>
+          <div class="hero-play-sub" id="playOverlaySub">Continuous Phase-Space Kinetics & Quantum Boltzmann Solver · 0:58</div>
+        </div>
       </div>
     </section>
 
+    <!-- Direct Action Bar -->
+    <div class="film-direct-bar">
+      <a id="directMp4Link" href="/point_reyes_sound_complete_film.mp4" target="_blank" class="direct-link highlight" title="Open raw video directly in browser player">
+        🎬 Direct MP4 Stream
+      </a>
+      <a id="downloadMp4Link" href="/point_reyes_sound_complete_film.mp4" download="Point_Reyes_Sound_Executive_Film.mp4" class="direct-link" title="Download video file">
+        📥 Download MP4 (1080p)
+      </a>
+      <a href="/point_reyes_sound_a16z_deck.pdf" target="_blank" class="direct-link" title="Open 16:9 presentation PDF">
+        📄 Presentation PDF (16:9)
+      </a>
+      <a href="/a16z" class="direct-link" title="Open interactive slide deck">
+        🚀 Interactive Deck
+      </a>
+    </div>
+
     <!-- Interactive Chapter Cues -->
-    <div class="chapter-bar" aria-label="Video Chapter Cues">
+    <div id="chapterBar" class="chapter-bar" aria-label="Video Chapter Cues">
       <span class="chapter-label">Chapter Cues:</span>
       <button class="chapter-btn" onclick="seekVideo(0)">
         <span class="chapter-time">00:00</span> Singularity & Cusp
@@ -652,18 +856,130 @@
   </footer>
 
   <script>
-    function seekVideo(seconds) {
+    const videoData = {
+      exec: {
+        src: '/point_reyes_sound_complete_film.mp4',
+        poster: '/film_watch_poster.jpg',
+        title: 'Continuous Phase-Space Kinetics for Strongly Correlated Electrons',
+        overlayLabel: 'CLICK TO PLAY EXECUTIVE FILM',
+        overlaySub: 'Continuous Phase-Space Kinetics & Quantum Boltzmann Solver · 0:58',
+        downloadName: 'Point_Reyes_Sound_Executive_Film.mp4',
+        showChapters: true
+      },
+      deck: {
+        src: '/point_reyes_sound_full_deck_film_3min.mp4',
+        poster: '/film_watch_poster.jpg',
+        title: 'Point Reyes Sound · Pitch Deck Walkthrough (< 3 Min)',
+        overlayLabel: 'CLICK TO PLAY PITCH DECK FILM',
+        overlaySub: 'Point Reyes Sound Seed Deck Presentation · 2:58 · Full 1080p',
+        downloadName: 'Point_Reyes_Sound_Deck_Film_3min.mp4',
+        showChapters: false
+      }
+    };
+
+    let currentMode = 'exec';
+
+    function switchVideo(mode, autoStart = false) {
+      currentMode = mode;
+      const data = videoData[mode];
       const vid = document.getElementById('mainFilmVideo');
-      if (vid) {
-        vid.currentTime = seconds;
-        vid.play().catch(() => {});
+      const tabExec = document.getElementById('tabExec');
+      const tabDeck = document.getElementById('tabDeck');
+      const overlay = document.getElementById('playOverlay');
+      const overlayLabel = document.getElementById('playOverlayLabel');
+      const overlaySub = document.getElementById('playOverlaySub');
+      const directMp4 = document.getElementById('directMp4Link');
+      const downloadMp4 = document.getElementById('downloadMp4Link');
+      const chapterBar = document.getElementById('chapterBar');
+
+      // Update tabs
+      if (mode === 'exec') {
+        tabExec.classList.add('active');
+        tabExec.setAttribute('aria-selected', 'true');
+        tabDeck.classList.remove('active');
+        tabDeck.setAttribute('aria-selected', 'false');
+        if (chapterBar) chapterBar.style.display = 'flex';
+      } else {
+        tabDeck.classList.add('active');
+        tabDeck.setAttribute('aria-selected', 'true');
+        tabExec.classList.remove('active');
+        tabExec.setAttribute('aria-selected', 'false');
+        if (chapterBar) chapterBar.style.display = 'none';
+      }
+
+      // Update links
+      directMp4.href = data.src;
+      downloadMp4.href = data.src;
+      downloadMp4.download = data.downloadName;
+
+      // Update overlay text
+      overlayLabel.textContent = data.overlayLabel;
+      overlaySub.textContent = data.overlaySub;
+
+      // Swap video source if needed
+      if (!vid.src.includes(data.src)) {
+        vid.pause();
+        vid.src = data.src;
+        vid.poster = data.poster;
+        vid.load();
+        overlay.classList.remove('hidden');
+      }
+
+      if (autoStart) {
+        vid.play().then(() => {
+          overlay.classList.add('hidden');
+        }).catch(err => {
+          console.warn('Auto playback prevented by browser:', err);
+          overlay.classList.remove('hidden');
+        });
       }
     }
 
-    // Handle URL ?t= param if present (e.g., ?t=15)
+    function togglePlayFilm() {
+      const vid = document.getElementById('mainFilmVideo');
+      const overlay = document.getElementById('playOverlay');
+      if (vid.paused) {
+        vid.play().then(() => {
+          overlay.classList.add('hidden');
+        }).catch(err => {
+          console.error('Playback error:', err);
+        });
+      } else {
+        vid.pause();
+        overlay.classList.remove('hidden');
+      }
+    }
+
+    function seekVideo(seconds) {
+      const vid = document.getElementById('mainFilmVideo');
+      const overlay = document.getElementById('playOverlay');
+      if (vid) {
+        vid.currentTime = seconds;
+        vid.play().then(() => {
+          overlay.classList.add('hidden');
+        }).catch(() => {});
+      }
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
+      const vid = document.getElementById('mainFilmVideo');
+      const overlay = document.getElementById('playOverlay');
+
+      vid.addEventListener('play', () => overlay.classList.add('hidden'));
+      vid.addEventListener('pause', () => overlay.classList.remove('hidden'));
+      vid.addEventListener('ended', () => overlay.classList.remove('hidden'));
+
       const params = new URLSearchParams(window.location.search);
+      const isDeck = params.has('deck') || params.get('v') === 'deck';
+      const autoPlay = params.has('autoplay') || params.has('play') || params.get('auto') === '1';
       const t = parseFloat(params.get('t'));
+
+      if (isDeck) {
+        switchVideo('deck', autoPlay);
+      } else if (autoPlay) {
+        togglePlayFilm();
+      }
+
       if (!isNaN(t) && t > 0) {
         seekVideo(t);
       }

@@ -1,0 +1,4518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Point Reyes Sound — a16z Pitch Deck</title>
+    <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg?v=5" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/prs_favicon_32.png?v=5" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/prs_favicon_180.png?v=5" />
+  <link rel="shortcut icon" href="/favicon.ico?v=5" />
+
+  <!-- Google Fonts: EB Garamond, JetBrains Mono, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Three.js CDN for 3D Hero -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- KaTeX for LaTeX Math Typography -->
+  <link rel="stylesheet" href="/katex/katex.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" crossorigin="anonymous">
+  <script src="/katex/katex.min.js"></script>
+
+  <style>
+    :root {
+      --font-serif: "EB Garamond", Georgia, "Times New Roman", serif;
+      --font-primary: "EB Garamond", Georgia, "Times New Roman", serif;
+      --font-mono: "JetBrains Mono", monospace;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --bg-core: #030704;
+      --bg-panel: #07120a;
+      --bg-card: rgba(8, 20, 12, 0.85);
+      
+      --accent-emerald: #35ff82;
+      --accent-emerald-dim: rgba(53, 255, 130, 0.12);
+      --accent-emerald-glow: rgba(53, 255, 130, 0.35);
+      --accent-cyan: #64c8ff;
+      --accent-gold: #f5c542;
+
+      --text-primary: #f0f7f2;
+      --text-secondary: #a3c2ad;
+      --text-muted: #62826c;
+      --border-subtle: rgba(53, 255, 130, 0.18);
+      --border-active: #35ff82;
+
+      /* Dynamic responsive sizing for circular hero */
+      --hero-circle-size: clamp(330px, min(41vh, 23vw), 620px);
+    }
+
+    @supports (height: 1cqh) {
+      :root {
+        --hero-circle-size: clamp(330px, 41cqh, 620px);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-serif);
+      background-color: var(--bg-core);
+      color: var(--text-primary);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-image: 
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(53, 255, 130, 0.04) 0%, transparent 80%),
+        linear-gradient(rgba(53, 255, 130, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(53, 255, 130, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    /* Deck Viewport (Aspect Ratio 16:9) */
+    .deck-viewport {
+      width: 100vw;
+      height: 100vh;
+      max-width: 177.78vh; /* 16:9 */
+      max-height: 56.25vw;
+      position: relative;
+      background: radial-gradient(circle at 80% 20%, #08170d 0%, #030704 75%);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(53, 255, 130, 0.05);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      container-type: size;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3.0% 4.8%;
+      z-index: 1;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      z-index: 10;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 0;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1.0%;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-animated {
+      width: 26px;
+      height: 26px;
+      border-radius: 5px;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(164, 32, 55, 0.45);
+      border: 1px solid rgba(40, 74, 137, 0.6);
+      flex-shrink: 0;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .brand-logo-animated:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 14px rgba(164, 32, 55, 0.7);
+    }
+
+    .company-tag {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #4169e1;
+      text-shadow: 0 0 16px rgba(65, 105, 225, 0.45);
+    }
+
+    .header-qboltz-tag {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #93c5fd;
+      letter-spacing: 1.2px;
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .slide-num {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: var(--accent-emerald);
+      background: var(--accent-emerald-dim);
+      padding: 4px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    /* Typography */
+    h2 {
+      font-family: var(--font-serif);
+      font-size: 3.1rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      color: #4169e1;
+      text-shadow: 0 0 35px rgba(65, 105, 225, 0.35);
+      margin-top: 0.3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .subtitle {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: var(--accent-emerald);
+      font-style: italic;
+      margin-bottom: 0.9rem;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.9%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Hero Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(53, 255, 130, 0.08);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .play-deck-cta {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #030704;
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 13px 30px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.45);
+      transition: all 0.25s ease;
+      margin-top: 1.2rem;
+    }
+
+    .play-deck-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(16, 185, 129, 0.7);
+      background: linear-gradient(135deg, #34d399, #10b981);
+    }
+
+    /* SLIDE 2: Full-Frame Video Player */
+    .video-slide-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .full-frame-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+      cursor: pointer;
+    }
+
+    /* Video HUD Controls Overlay */
+    .video-hud-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 24px 32px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 60%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 20;
+    }
+
+    .video-slide-container:hover .video-hud-overlay,
+    .video-hud-overlay.visible {
+      opacity: 1;
+    }
+
+    .video-progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .video-progress-filled {
+      height: 100%;
+      background: var(--accent-emerald);
+      border-radius: 4px;
+      width: 0%;
+      box-shadow: 0 0 10px var(--accent-emerald);
+      position: relative;
+    }
+
+    .video-hud-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hud-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .hud-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .hud-btn:hover {
+      background: var(--accent-emerald-dim);
+      border-color: var(--accent-emerald);
+      color: var(--accent-emerald);
+    }
+
+    .hud-btn-accent {
+      background: var(--accent-emerald-dim);
+      border-color: var(--accent-emerald);
+      color: var(--accent-emerald);
+      font-weight: 600;
+    }
+
+    .hud-timecode {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 1.4rem;
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+      margin-bottom: 0.6rem;
+    }
+
+    /* SLIDE 5: Industry Verticals Grid */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+      margin-bottom: 0.6rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+    }
+
+    .card:hover {
+      border-color: var(--accent-emerald);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px var(--accent-emerald-dim);
+      transform: translateY(-2px);
+    }
+
+    .card-header-title {
+      color: var(--accent-emerald);
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-desc {
+      font-family: var(--font-serif);
+      font-size: 0.98rem;
+      line-height: 1.4;
+      color: var(--text-secondary);
+      margin-bottom: 0.8rem;
+    }
+
+    .card-img-wrap {
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(53, 255, 130, 0.25);
+      background: #040b07;
+      flex: 1;
+      min-height: 160px;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* SLIDE 4 & 5 Custom Layouts */
+    .pipeline-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin: 1.4rem 0 2rem 0;
+      padding: 1.6rem 2rem;
+      background: rgba(4, 15, 8, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .pipeline-node {
+      padding: 1.2rem 1.6rem;
+      border-radius: 10px;
+      text-align: center;
+      font-family: var(--font-mono);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .pipeline-arrow {
+      color: var(--accent-emerald);
+      font-size: 1.8rem;
+      animation: pulseArrow 2s infinite ease-in-out;
+    }
+
+    /* Clickable GPU Acceleration Card -> NVIDIA Evaluation Whitepaper */
+    .gpu-card-link {
+      flex: 1;
+      background: rgba(8, 20, 12, 0.9);
+      border: 1.5px solid rgba(118, 185, 0, 0.45);
+      border-radius: 12px;
+      padding: 1.6rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .gpu-card-link:hover {
+      border-color: #76b900 !important;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 32px rgba(118, 185, 0, 0.35) !important;
+      transform: translateY(-3px);
+      background: rgba(10, 26, 15, 0.96) !important;
+    }
+
+    .gpu-card-link .nvidia-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #76b900;
+      background: rgba(118, 185, 0, 0.12);
+      border: 1px solid rgba(118, 185, 0, 0.45);
+      padding: 3px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.5px;
+      transition: all 0.2s ease;
+    }
+
+    .gpu-card-link:hover .nvidia-badge {
+      background: rgba(118, 185, 0, 0.22);
+      border-color: #76b900;
+      box-shadow: 0 0 10px rgba(118, 185, 0, 0.4);
+      color: #fff;
+    }
+
+    .gpu-card-link .nvidia-arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .gpu-card-link:hover .nvidia-arrow {
+      transform: translate(2px, -2px);
+    }
+
+    @keyframes pulseArrow {
+      0%, 100% { opacity: 0.5; transform: translateX(0); }
+      50% { opacity: 1; transform: translateX(4px); }
+    }
+
+    /* Apple Music Aesthetic Play Button */
+    .apple-music-play-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(250, 36, 60, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      outline: none;
+      padding: 0;
+      animation: applePulse 3s infinite ease-in-out;
+    }
+
+    .apple-music-play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7), 0 0 32px rgba(250, 36, 60, 0.65);
+      animation: none;
+    }
+
+    .apple-music-play-btn:active {
+      transform: scale(0.93);
+    }
+
+    .apple-music-play-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: #fa243c; /* Signature Apple Music Red */
+      margin-left: 3px; /* Optical center for triangle */
+      transition: transform 0.2s ease;
+    }
+
+    .apple-music-play-btn:hover svg {
+      transform: scale(1.08);
+    }
+
+    @keyframes applePulse {
+      0%, 100% {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(250, 36, 60, 0.25);
+      }
+      50% {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 28px rgba(250, 36, 60, 0.55);
+      }
+    }
+
+    .apple-music-play-btn.is-playing {
+      background: #35ff82;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 24px rgba(53, 255, 130, 0.6);
+      animation: greenPulse 2s infinite ease-in-out;
+    }
+
+    .apple-music-play-btn.is-playing svg {
+      fill: #030704;
+      margin-left: 0;
+    }
+
+    @keyframes greenPulse {
+      0%, 100% {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(53, 255, 130, 0.35);
+      }
+      50% {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 28px rgba(53, 255, 130, 0.75);
+      }
+    }
+
+    .apple-music-play-btn.film-ready {
+      background: linear-gradient(135deg, #ffffff 0%, #35ff82 100%);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 26px rgba(53, 255, 130, 0.85);
+      animation: filmReadyPulse 2s infinite ease-in-out;
+    }
+
+    .apple-music-play-btn.film-ready svg {
+      fill: #030704;
+      margin-left: 3px;
+    }
+
+    @keyframes filmReadyPulse {
+      0%, 100% {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 18px rgba(53, 255, 130, 0.5);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 34px rgba(53, 255, 130, 0.95);
+        transform: scale(1.06);
+      }
+    }
+
+    /* Interactive 3D Quantum Hero Container */
+    /* Interactive 3D Quantum Hero Container & State Machine (Slide 1) */
+    #qboltz-3d-container {
+      width: var(--hero-circle-size);
+      height: var(--hero-circle-size);
+      aspect-ratio: 1 / 1;
+      flex-shrink: 0;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid rgba(53, 255, 130, 0.2);
+      box-shadow: 0 0 35px rgba(53, 255, 130, 0.16), inset 0 0 25px rgba(53, 255, 130, 0.08);
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+      user-select: none;
+    }
+
+    #qboltz-3d-container:hover {
+      border-color: rgba(53, 255, 130, 0.55) !important;
+      box-shadow: 0 0 45px rgba(53, 255, 130, 0.3), inset 0 0 28px rgba(53, 255, 130, 0.14) !important;
+    }
+
+    #qboltz-3d-container.state-on6 {
+      border-color: rgba(65, 105, 225, 0.7) !important;
+      box-shadow: 0 0 50px rgba(65, 105, 225, 0.45), inset 0 0 30px rgba(65, 105, 225, 0.22) !important;
+    }
+
+    #qboltz-3d-container.state-river,
+    #qboltz-3d-container.video-active {
+      border-color: rgba(59, 130, 246, 0.8) !important;
+      box-shadow: 0 0 55px rgba(59, 130, 246, 0.5), inset 0 0 35px rgba(59, 130, 246, 0.28) !important;
+    }
+
+    #qboltz-3d-container.state-on3 {
+      border-color: rgba(53, 255, 130, 0.85) !important;
+      box-shadow: 0 0 60px rgba(53, 255, 130, 0.55), inset 0 0 35px rgba(53, 255, 130, 0.28) !important;
+    }
+
+    #river-electrons-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(1.06);
+      z-index: 5;
+    }
+
+    #river-electrons-video.is-active,
+    #qboltz-3d-container.state-river #river-electrons-video {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: scale(1) !important;
+    }
+
+    #qboltz-3d-canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+      border-radius: 50%;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(1);
+      z-index: 2;
+    }
+
+    #qboltz-3d-canvas.is-hidden,
+    #qboltz-3d-container.state-on6 #qboltz-3d-canvas,
+    #qboltz-3d-container.state-river #qboltz-3d-canvas,
+    #qboltz-3d-container.state-on3 #qboltz-3d-canvas {
+      opacity: 0 !important;
+      transform: scale(0.9) !important;
+      pointer-events: none !important;
+    }
+
+    .hero-latex-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0.88);
+      pointer-events: none;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 6;
+      background: radial-gradient(circle at 50% 50%, rgba(3, 7, 4, 0.65) 0%, rgba(3, 7, 4, 0.94) 85%);
+      user-select: none;
+    }
+
+    #qboltz-3d-container.state-on6 #hero-latex-on6 {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    #qboltz-3d-container.state-on3 #hero-latex-on3 {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .hero-formula-math {
+      font-size: calc(var(--hero-circle-size) * 0.25);
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.8));
+    }
+
+    .hero-formula-math .katex-display {
+      margin: 0 !important;
+    }
+
+    .hero-formula-math.on6-math {
+      color: #4169e1;
+      text-shadow: 0 0 45px rgba(65, 105, 225, 0.6), 0 0 20px rgba(65, 105, 225, 0.4);
+    }
+    .hero-formula-math.on6-math .katex {
+      font-size: 1em !important;
+      color: #4169e1 !important;
+    }
+
+    .hero-formula-math.on3-math {
+      color: #35ff82;
+      text-shadow: 0 0 55px rgba(53, 255, 130, 0.7), 0 0 24px rgba(100, 200, 255, 0.45);
+    }
+    .hero-formula-math.on3-math .katex {
+      font-size: 1em !important;
+      color: #35ff82 !important;
+    }
+
+    .hero-latex-tag {
+      margin-top: calc(var(--hero-circle-size) * 0.035);
+      font-family: var(--font-mono);
+      font-size: clamp(0.72rem, calc(var(--hero-circle-size) * 0.038), 1.05rem);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+
+    .hero-latex-tag.on6-tag {
+      color: #93c5fd;
+      text-shadow: 0 0 10px rgba(147, 197, 253, 0.4);
+    }
+
+    .hero-latex-tag.on3-tag {
+      color: #35ff82;
+      text-shadow: 0 0 12px rgba(53, 255, 130, 0.6);
+    }
+
+    /* Clickable Static p-Orbital Frame & LaTeX Math Transition on Slide 3 */
+    #static-porbital-container {
+      cursor: pointer;
+      position: relative;
+      border: 1px solid rgba(53, 255, 130, 0.18);
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+      user-select: none;
+    }
+
+    #static-porbital-container:hover {
+      border-color: rgba(65, 105, 225, 0.5) !important;
+      box-shadow: 0 0 45px rgba(65, 105, 225, 0.3), inset 0 0 30px rgba(65, 105, 225, 0.15) !important;
+    }
+
+    #static-porbital-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 50%;
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    #static-porbital-container.show-latex #static-porbital-canvas {
+      opacity: 0;
+      transform: scale(0.85);
+      pointer-events: none;
+    }
+
+    .static-latex-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0.85);
+      pointer-events: none;
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 5;
+    }
+
+    #static-porbital-container.show-latex .static-latex-overlay {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .latex-formula-math {
+      font-size: 5.4rem;
+      line-height: 1;
+      color: #4169e1;
+      text-shadow: 0 0 45px rgba(65, 105, 225, 0.55), 0 0 20px rgba(65, 105, 225, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.8));
+    }
+
+    .latex-formula-math .katex-display {
+      margin: 0 !important;
+    }
+
+    .latex-formula-math .katex {
+      font-size: 1em !important;
+      color: #4169e1 !important;
+    }
+
+    .bullet-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.4rem 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      line-height: 1.45;
+    }
+
+    .bullet-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .bullet-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-emerald);
+      border-radius: 50%;
+      margin-top: 10px;
+      box-shadow: 0 0 8px var(--accent-emerald);
+      flex-shrink: 0;
+    }
+
+    /* Land & Scale Grid */
+    .land-scale-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 1.6rem;
+      flex: 1;
+      align-items: stretch;
+      margin-bottom: 0.6rem;
+    }
+
+    .strategy-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .strategy-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      flex: 1;
+    }
+
+    .strategy-title {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .strategy-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .strategy-list li {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .check-icon {
+      color: var(--accent-emerald);
+      font-weight: bold;
+    }
+
+    /* Revenue Curve Visualization */
+    .revenue-chart-card {
+      background: rgba(4, 15, 8, 0.9);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    /* Slide 2: 4-Stage Flow Sequence Cards & Video */
+    .card-header {
+      font-family: var(--font-primary);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--accent-emerald);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .card-body {
+      font-family: var(--font-primary);
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      flex: 1;
+    }
+
+    .code-text {
+      font-family: var(--font-mono);
+      color: var(--accent-emerald);
+      background: rgba(53, 255, 130, 0.08);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 0.88em;
+    }
+
+    /* Full-Tile Technical Plot Cover */
+    .card-plot-cover {
+      position: relative;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      background: #020704;
+      height: 100%;
+      min-height: 0;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-plot-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .card-plot-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 8px 16px;
+      background: linear-gradient(to top, rgba(3, 7, 4, 0.96) 0%, rgba(3, 7, 4, 0.7) 70%, transparent 100%);
+      font-family: var(--font-primary);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      z-index: 2;
+      text-align: center;
+    }
+
+    #slide-2 .card {
+      justify-content: flex-start;
+      padding: 1.4rem 1.6rem;
+      gap: 0.4rem;
+    }
+
+
+    .flow-sequence-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      flex: 1;
+      justify-content: center;
+    }
+    .flow-step-card {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.75rem 1rem;
+      background: rgba(4, 11, 7, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    }
+    .flow-step-card:hover {
+      background: rgba(8, 22, 14, 0.95);
+      border-color: rgba(53, 255, 130, 0.4);
+      transform: translateX(4px);
+    }
+    .flow-step-card.is-active {
+      background: rgba(6, 26, 15, 0.95);
+      border-color: #35ff82;
+      box-shadow: 0 0 20px rgba(53, 255, 130, 0.22), 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+    .flow-step-card .step-badge {
+      font-family: 'Menlo', monospace !important;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 4px 8px;
+      min-width: 32px;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+    .flow-step-card.is-active .step-badge {
+      color: #040d07;
+      background: #35ff82;
+      border-color: #35ff82;
+      box-shadow: 0 0 10px rgba(53, 255, 130, 0.6);
+    }
+    .flow-step-card .step-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .flow-step-card .step-title {
+      font-family: 'Menlo', monospace !important;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      letter-spacing: -0.2px;
+      transition: color 0.25s ease;
+    }
+    .flow-step-card.is-active .step-title {
+      color: #ffffff;
+    }
+    .flow-step-card .step-desc {
+      font-family: 'Menlo', monospace !important;
+      font-size: 0.76rem;
+      color: #94a3b8;
+      line-height: 1.32;
+      transition: color 0.25s ease;
+    }
+    .flow-step-card.is-active .step-desc {
+      color: #c5ded0;
+    }
+    .flow-step-card .step-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.25s ease;
+    }
+    .flow-badge {
+      position: absolute;
+      background: rgba(2, 10, 5, 0.88);
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 7px 14px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75);
+      z-index: 10;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0.45;
+      transform: scale(0.96);
+      cursor: pointer;
+      user-select: none;
+    }
+    .flow-badge:hover {
+      opacity: 0.9;
+      transform: scale(1.0);
+    }
+    .flow-badge.is-active {
+      opacity: 1.0;
+      transform: scale(1.06);
+      background: rgba(2, 12, 6, 0.94);
+      border-color: var(--badge-border, #35ff82);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 20px var(--badge-glow, rgba(53, 255, 130, 0.4));
+    }
+    .flow-badge-title {
+      font-family: 'Menlo', monospace !important;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .flow-badge-num {
+      color: var(--badge-color, #35ff82);
+      font-weight: 800;
+    }
+    .flow-badge-sub {
+      font-family: 'Menlo', monospace !important;
+      font-size: 0.72rem;
+      color: var(--badge-color, #35ff82);
+      margin-top: 3px;
+      letter-spacing: 0.3px;
+      opacity: 0.85;
+      transition: opacity 0.3s ease;
+    }
+    .flow-badge.is-active .flow-badge-sub {
+      opacity: 1;
+      font-weight: 600;
+    }
+
+    /* Floating Navigation Controls */
+    .deck-controls {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(3, 7, 4, 0.92);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 18px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 1000;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(53, 255, 130, 0.15);
+    }
+
+    .deck-btn {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .deck-btn:hover {
+      background: var(--accent-emerald-dim);
+      border-color: var(--accent-emerald);
+      color: var(--accent-emerald);
+    }
+
+    .deck-status {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-emerald);
+      font-weight: 600;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* Print styles for high-fidelity 16:9 PDF export */
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
+    @media print {
+      html, body {
+        background: #030704 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        overflow: visible !important;
+        width: 16in !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .deck-controls,
+      .video-hud-overlay,
+      .apple-music-play-btn,
+      #slide1-play-label,
+      #slide3-play-label,
+      #slide4-play-label,
+      #slide5-play-label,
+      #slide6-play-label,
+      #slide1-replay-btn,
+      #slide3-replay-btn,
+      #slide4-replay-btn,
+      #slide5-replay-btn,
+      #slide6-replay-btn,
+      #virtual-cursor,
+      #virtual-ripple {
+        display: none !important;
+      }
+      .deck-viewport {
+        width: 16in !important;
+        height: auto !important;
+        max-width: none !important;
+        max-height: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        display: block !important;
+        position: static !important;
+      }
+      .slide {
+        position: relative !important;
+        width: 16in !important;
+        height: 9in !important;
+        max-width: 16in !important;
+        max-height: 9in !important;
+        margin: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        display: flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        top: auto !important;
+        left: auto !important;
+        padding: 3.5rem 5rem 3rem !important;
+        box-sizing: border-box !important;
+      }
+      .slide#slide-2 {
+        padding: 0 !important;
+      }
+
+      /* Slide 2: Executive Film Cover & Clickable Link in PDF */
+      #deck-film,
+      #video-hud {
+        display: none !important;
+      }
+      .slide2-print-cover {
+        display: flex !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-decoration: none !important;
+        background: #010408 !important;
+        overflow: hidden !important;
+      }
+      .slide2-print-poster {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        opacity: 0.8 !important;
+      }
+      .slide2-print-overlay {
+        position: relative !important;
+        z-index: 10 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        background: rgba(3, 8, 16, 0.88) !important;
+        border: 2px solid rgba(56, 189, 248, 0.6) !important;
+        border-radius: 24px !important;
+        padding: 2.8rem 4.5rem !important;
+        box-shadow: 0 0 60px rgba(56, 189, 248, 0.3) !important;
+      }
+      .slide2-print-play-badge {
+        width: 88px !important;
+        height: 88px !important;
+        border-radius: 50% !important;
+        background: linear-gradient(135deg, #35ff82 0%, #64c8ff 100%) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 0 35px rgba(53, 255, 130, 0.7) !important;
+        margin-bottom: 1.5rem !important;
+      }
+      .slide2-print-title {
+        font-family: var(--font-serif) !important;
+        font-size: 2.6rem !important;
+        font-weight: 700 !important;
+        color: #ffffff !important;
+        letter-spacing: 1px !important;
+        margin-bottom: 0.6rem !important;
+      }
+      .slide2-print-sub {
+        font-family: var(--font-primary) !important;
+        font-size: 1.35rem !important;
+        color: #cbd5e1 !important;
+        margin-bottom: 1.5rem !important;
+        max-width: 600px !important;
+      }
+      .slide2-print-cta {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 6px !important;
+        background: rgba(53, 255, 130, 0.12) !important;
+        border: 1.5px solid rgba(53, 255, 130, 0.5) !important;
+        border-radius: 30px !important;
+        padding: 10px 24px !important;
+      }
+      .slide2-print-cta span:first-child {
+        font-family: var(--font-mono) !important;
+        font-size: 1.05rem !important;
+        font-weight: 700 !important;
+        color: #35ff82 !important;
+        letter-spacing: 1.5px !important;
+      }
+      .slide2-print-url {
+        font-family: var(--font-mono) !important;
+        font-size: 0.85rem !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+        letter-spacing: 0.5px !important;
+      }
+
+      /* Slide 4 Full Reveal in Print */
+      #metric-qubits,
+      #metric-operations,
+      #card-qboltz,
+      #qboltz-patent,
+      #revenue-card,
+      #rev-item-1,
+      #rev-item-2,
+      #rev-extra-2,
+      #rev-item-3,
+      #rev-extra-3 {
+        opacity: 1 !important;
+        transform: none !important;
+        visibility: visible !important;
+        display: block !important;
+      }
+      #revenue-step-indicator {
+        content: '● ● ● ● ●' !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck-viewport" id="deck-viewport">
+
+    <!-- SLIDE 1: Cover Slide with Centered EB Garamond Typography & 3D Orbital -->
+    <section class="slide active" id="slide-1" data-slide="1">
+      <div class="header">
+        <div class="brand-lockup">
+          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">A16Z SEED PRESENTATION</span>
+        </div>
+        <span class="slide-num">01 / 06</span>
+      </div>
+      
+      <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; text-align: center; min-height: 0; padding: clamp(0.3rem, 1.2cqh, 1.2rem) 0;">
+        
+        <!-- Centered Title in EB Garamond (Royal Blue) -->
+        <h1 style="font-family: var(--font-serif); font-size: clamp(3.2rem, 6.8cqh, 5.4rem); font-weight: 500; letter-spacing: -0.5px; line-height: 1.05; margin: 0; color: #4169e1; text-shadow: 0 0 45px rgba(65, 105, 225, 0.35), 0 4px 24px rgba(0, 0, 0, 0.7);">
+          Point Reyes Sound
+        </h1>
+
+        <!-- Centered Circular Frame: 3D Q-Boltz Hero with In-Frame River of Electrons Reveal & Scaling Progression -->
+        <div id="qboltz-3d-container" class="state-orbital" title="Move cursor to explore · Click to view O(N⁶) scaling" tabindex="0" role="button" aria-label="Interactive quantum orbital manifold and complexity progression" style="position: relative; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 50%, rgba(53, 255, 130, 0.08) 0%, rgba(3, 7, 4, 0) 70%); margin: 0 auto; cursor: pointer;">
+          <canvas id="qboltz-3d-canvas" style="width: 100%; height: 100%; display: block; border-radius: 50%;"></canvas>
+          
+          <!-- Step 3: O(N^6) Complexity Formula Overlay -->
+          <div id="hero-latex-on6" class="hero-latex-overlay">
+            <div id="hero-math-on6-target" class="hero-formula-math on6-math">
+              <span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="script">O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>6</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{O}(N^6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1141em;vertical-align:-0.25em;"></span><span class="mord mathcal" style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span>
+            </div>
+            <div class="hero-latex-tag on6-tag">CONVENTIONAL SCALING</div>
+          </div>
+
+          <!-- Step 4: Circular Inset River of Electrons Video -->
+          <video id="river-electrons-video" playsinline loop preload="auto">
+            <source src="/river_of_electrons.mp4" type="video/mp4">
+            <source src="./river_of_electrons.mp4" type="video/mp4">
+          </video>
+
+          <!-- Step 5: O(N^3) PRS Scaling Formula Overlay -->
+          <div id="hero-latex-on3" class="hero-latex-overlay">
+            <div id="hero-math-on3-target" class="hero-formula-math on3-math">
+              <span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="script">O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>3</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{O}(N^3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1141em;vertical-align:-0.25em;"></span><span class="mord mathcal" style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span>
+            </div>
+            <div class="hero-latex-tag on3-tag">POINT REYES SOUND · Q-BET</div>
+          </div>
+        </div>
+
+        <!-- Centered Apple Music Aesthetic Play Button Underneath 3D Logo (Slide 1 Voiceover / Executive Film) -->
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <button class="apple-music-play-btn" id="btn-play-deck-slide1" onclick="handleSlide1PlayClick()" title="Play Slide 1 Voiceover" aria-label="Play Slide 1 Voiceover" style="width: clamp(48px, 5.2cqh, 64px); height: clamp(48px, 5.2cqh, 64px);">
+            <svg id="slide1-play-icon" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </button>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span id="slide1-play-label" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER · 0:50</span>
+            <button id="slide1-replay-btn" onclick="replaySlide1Voiceover(event)" style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';" title="Replay Slide 1 Voiceover">↺ Replay Voiceover</button>
+            <a href="/a16z_slide1_voiceover.mp4" target="_blank" rel="noopener noreferrer" style="font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(53, 255, 130, 0.65); text-decoration: none; padding: 2px 6px; border: 1px solid rgba(53, 255, 130, 0.2); border-radius: 4px; transition: all 0.2s ease;" onmouseover="this.style.color='#35ff82'; this.style.borderColor='rgba(53, 255, 130, 0.5)';" onmouseout="this.style.color='rgba(53, 255, 130, 0.65)'; this.style.borderColor='rgba(53, 255, 130, 0.2)';" title="Watch standalone 1080p video">🎬 1080p MP4</a>
+          </div>
+          <audio id="slide1-voiceover-audio" preload="auto">
+            <source src="./a16z_slide1_voiceover.mp3" type="audio/mpeg">
+            <source src="/a16z_slide1_voiceover.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS" style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
+        <span>Confidential — Frontier Deep Tech Seed (a16z)</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Full-Frame Cinema Video Player (Executive Film) -->
+    <section class="slide" id="slide-2" data-slide="2" style="padding: 0;">
+        <!-- Subtle Brand Lockup on Video Slide -->
+        <div style="position: absolute; top: 1.5rem; left: 2rem; z-index: 25; display: flex; align-items: center; gap: 10px; background: rgba(3, 7, 4, 0.75); backdrop-filter: blur(8px); padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(53, 255, 130, 0.18); box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+          <img src="/prs_logo_128.png" alt="Point Reyes Sound" style="width: 20px; height: 20px; border-radius: 4px; object-fit: cover; border: 1px solid rgba(40, 74, 137, 0.6);" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+          <span class="company-tag" style="font-size: 0.85rem; letter-spacing: 1.5px;">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag" style="font-size: 0.75rem;">EXECUTIVE FILM</span>
+        </div>
+      <div class="video-slide-container" id="video-container">
+        
+        <!-- Video Stream with point_reyes_sound_complete_film.mp4 -->
+        <video class="full-frame-video" id="deck-film" playsinline controls preload="auto">
+          <source src="./point_reyes_sound_complete_film.mp4" type="video/mp4">
+          <source src="/point_reyes_sound_complete_film.mp4" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+
+        <!-- PDF / Print Interactive Link Poster (Hidden on screen, Active in Print & PDF) -->
+        <a href="https://pointreyessound.com/film" target="_blank" class="slide2-print-cover" style="display: none;" title="Click to Watch Executive Film">
+          <img src="/film_watch_poster.jpg" alt="Executive Film Poster" class="slide2-print-poster" />
+          <div class="slide2-print-overlay">
+            <div class="slide2-print-play-badge">
+              <svg viewBox="0 0 24 24" width="44" height="44" fill="#030704" style="margin-left: 5px;"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="slide2-print-title">EXECUTIVE FILM · 0:58</div>
+            <div class="slide2-print-sub">Continuous Phase-Space Kinetics &amp; Quantum Boltzmann Solver</div>
+            <div class="slide2-print-cta">
+              <span>▶ CLICK TO WATCH EXECUTIVE FILM</span>
+              <span class="slide2-print-url">https://pointreyessound.com/film ↗</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Video HUD Controls Overlay -->
+        <div class="video-hud-overlay" id="video-hud">
+          <div class="video-progress-bar" id="progress-bar">
+            <div class="video-progress-filled" id="progress-filled"></div>
+          </div>
+
+          <div class="video-hud-row">
+            <div class="hud-btn-group">
+              <button class="hud-btn" id="btn-play-pause" onclick="togglePlay()">
+                <span id="play-icon">▶ Play</span>
+              </button>
+              <button class="hud-btn" id="btn-mute" onclick="toggleMute()">
+                <span id="mute-icon">🔊 Sound</span>
+              </button>
+              <button class="hud-btn" onclick="restartVideo()">
+                <span>↺ Restart</span>
+              </button>
+              <span class="hud-timecode" id="timecode">00:00 / 00:58</span>
+            </div>
+
+            <div class="hud-btn-group">
+              <button class="hud-btn" onclick="goToSlide(1)">
+                <span>⤺ Opening Slide</span>
+              </button>
+              <button class="hud-btn hud-btn-accent" onclick="goToSlide(3)">
+                <span>Static Correlation →</span>
+              </button>
+              <button class="hud-btn" onclick="toggleFullscreen()">
+                <span>⛶ Fullscreen</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Quantum Supremacy 2028 (Industry Verticals) -->
+    <section class="slide" id="slide-3" data-slide="3">
+      <div class="header">
+        <div class="brand-lockup">
+          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">QUANTUM SUPREMACY</span>
+        </div>
+        <span class="slide-num">03 / 06</span>
+      </div>
+
+      <div style="text-align: center; width: 100%; margin: 0.35rem auto 0.4rem;">
+        <h2 style="margin: 0; line-height: 1.15; font-size: 2.3rem;">Quantum Supremacy<br><span style="font-size: 1.95rem; display: block; margin-top: 0.15rem;">2028</span></h2>
+      </div>
+
+      <div class="grid-3" style="margin-bottom: 0.35rem;">
+        <!-- 1. Semiconductors -->
+        <div class="card">
+          <div>
+            <div class="card-header-title">Semiconductors</div>
+            <div class="card-desc">Kinetic relaxation in the sub-2 nanometer regime</div>
+          </div>
+          <div class="card-img-wrap">
+            <img src="./vertical_semiconductors.jpg" alt="Semiconductor GAA-FET quantum p-wave tunneling" class="card-img" onerror="this.src='/vertical_semiconductors.jpg'" />
+          </div>
+        </div>
+
+        <!-- 2. Solid-State Batteries -->
+        <div class="card">
+          <div>
+            <div class="card-header-title">Solid-State Batteries</div>
+            <div class="card-desc">SEI degradation</div>
+          </div>
+          <div class="card-img-wrap">
+            <img src="./vertical_batteries.jpg" alt="Solid-State Battery SEI p-wave phase-space transport" class="card-img" onerror="this.src='/vertical_batteries.jpg'" />
+          </div>
+        </div>
+
+        <!-- 3. Catalysis -->
+        <div class="card">
+          <div>
+            <div class="card-header-title">Catalysis</div>
+            <div class="card-desc">Transition-state searches</div>
+          </div>
+          <div class="card-img-wrap">
+            <img src="./vertical_catalysis.jpg" alt="Chemical Catalysis transition-state p-wave orbital hybridization" class="card-img" onerror="this.src='/vertical_catalysis.jpg'" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Centered Apple Music Aesthetic Play Button (Slide 3 Voiceover) -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0.25rem auto 0.2rem;">
+        <button class="apple-music-play-btn" id="btn-play-deck-slide3" onclick="handleSlide3PlayClick()" title="Play Slide 3 Voiceover" aria-label="Play Slide 3 Voiceover" style="width: clamp(44px, 4.8cqh, 54px); height: clamp(44px, 4.8cqh, 54px);">
+          <svg id="slide3-play-icon" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span id="slide3-play-label" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER · 0:08</span>
+          <button id="slide3-replay-btn" onclick="replaySlide3Voiceover(event)" style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';" title="Replay Slide 3 Voiceover">↺ Replay</button>
+        </div>
+        <audio id="slide3-voiceover-audio" preload="auto">
+          <source src="./a16z_slide3_voiceover.mp3" type="audio/mpeg">
+          <source src="/a16z_slide3_voiceover.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+
+      <div class="footer">
+        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS" style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
+        <span>Quantum Supremacy</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Quantum Supremacy in 2028 -->
+    <section class="slide" id="slide-4" data-slide="4">
+      <div class="header">
+        <div class="brand-lockup">
+          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">QUANTUM SUPREMACY</span>
+        </div>
+        <span class="slide-num">04 / 06</span>
+      </div>
+
+      <div style="text-align: center; width: 100%; margin: 0.4rem auto 0.4rem;">
+        <h2 style="margin: 0; line-height: 1.15;">Quantum Supremacy<br><span style="font-size: 2.2rem; display: block; margin-top: 0.2rem;">2028</span></h2>
+      </div>
+
+      <div class="slide-body" style="flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; padding: 0.25rem 1.5rem 0.5rem;">
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 2rem; width: 100%; max-width: 1400px; height: 100%; max-height: 580px; margin: auto;">
+          
+          <!-- TILE 1: > 100 Logical Qubits -->
+          <div class="card" id="card-qubits" style="border-left: 5px solid var(--accent-cyan); border-color: rgba(100, 200, 255, 0.4); background: rgba(8, 20, 12, 0.92); padding: 2.2rem 2.6rem; border-radius: 16px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55); display: flex; flex-direction: column; justify-content: center; cursor: pointer;">
+            <div style="font-family: var(--font-serif); font-size: 2.3rem; font-weight: 700; color: #fff; margin-bottom: 0.9rem; letter-spacing: -0.02em;">
+              &gt; 100 Logical Qubits
+            </div>
+            <div id="metric-qubits" style="font-family: var(--font-primary); font-size: 1.45rem; color: var(--text-secondary); line-height: 1.5; min-height: 48px; display: flex; align-items: center; opacity: 0; transform: translateY(10px); transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);">
+              <div><span style="color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 700; font-size: 2.1rem; text-shadow: 0 0 20px rgba(0, 229, 255, 0.4);">6.6×</span> <span style="color: #fff; font-weight: 600; font-size: 1.5rem; margin-left: 0.4rem;">compression</span></div>
+            </div>
+          </div>
+
+          <!-- TILE 2: > 1 Million Quantum Operations -->
+          <div class="card" id="card-operations" style="border-left: 5px solid var(--accent-emerald); border-color: rgba(53, 255, 130, 0.4); background: rgba(8, 20, 12, 0.92); padding: 2.2rem 2.6rem; border-radius: 16px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55); display: flex; flex-direction: column; justify-content: center; cursor: pointer;">
+            <div style="font-family: var(--font-serif); font-size: 2.3rem; font-weight: 700; color: #fff; margin-bottom: 0.9rem; letter-spacing: -0.02em;">
+              &gt; 1 Million Quantum Operations
+            </div>
+            <div id="metric-operations" style="font-family: var(--font-primary); font-size: 1.45rem; color: var(--text-secondary); line-height: 1.5; min-height: 48px; display: flex; align-items: center; opacity: 0; transform: translateY(10px); transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);">
+              <div><span style="color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 700; font-size: 2.1rem; text-shadow: 0 0 20px rgba(53, 255, 130, 0.4);">1,748×</span> <span style="color: #fff; font-weight: 600; font-size: 1.5rem; margin-left: 0.4rem;">Toffoli gate reduction</span></div>
+            </div>
+          </div>
+
+          <!-- TILE 3: Q-Boltz Advantage -->
+          <div class="card" id="card-qboltz" style="border-left: 5px solid #60a5fa; border-color: rgba(96, 165, 250, 0.4); background: rgba(8, 20, 12, 0.92); padding: 2.2rem 2.6rem; border-radius: 16px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55); display: flex; flex-direction: column; justify-content: center; opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer;">
+            <div style="font-family: var(--font-serif); font-size: 2.3rem; font-weight: 700; color: #60a5fa; margin-bottom: 0.9rem; letter-spacing: -0.02em; text-shadow: 0 0 20px rgba(96, 165, 250, 0.35);">
+              Q-Boltz Advantage
+            </div>
+            <div style="font-family: var(--font-primary); font-size: 1.35rem; color: var(--text-secondary); line-height: 1.65; display: flex; flex-direction: column; gap: 0.55rem; min-height: 80px; justify-content: center;">
+              <div id="qboltz-time"><span style="color: #60a5fa; font-family: var(--font-mono); font-weight: 700; font-size: 1.85rem; text-shadow: 0 0 20px rgba(96, 165, 250, 0.35);">3 days → 2.25 minutes</span></div>
+              <div id="qboltz-patent" style="opacity: 0; transform: translateY(10px); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);"><strong style="color: #fff;">Patent App No.</strong> <span style="color: #60a5fa; font-family: var(--font-mono); font-weight: 600; font-size: 1.35rem; margin-left: 0.3rem;">64/033,274</span></div>
+            </div>
+          </div>
+
+          <!-- TILE 4: Quantum Solutions (Interactive Build Sequence) -->
+          <div class="card" id="revenue-card" style="border-left: 5px solid var(--accent-gold); border-color: rgba(245, 197, 66, 0.4); background: rgba(8, 20, 12, 0.92); padding: 2.2rem 2.6rem; border-radius: 16px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55); display: flex; flex-direction: column; justify-content: center; cursor: pointer; user-select: none; opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;" title="Click slide or press Space/Right to advance">
+            <div style="font-family: var(--font-serif); font-size: 2.3rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 0.9rem; letter-spacing: -0.02em; text-shadow: 0 0 20px rgba(245, 197, 66, 0.35); display: flex; align-items: center; justify-content: space-between;">
+              <span>Quantum Solutions</span>
+              <span id="revenue-step-indicator" style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-gold); opacity: 0.8; letter-spacing: 3px;">● ○ ○ ○ ○</span>
+            </div>
+            <div style="font-family: var(--font-primary); font-size: 1.25rem; color: var(--text-secondary); line-height: 1.65; display: flex; flex-direction: column; gap: 0.55rem; min-height: 135px; justify-content: center;">
+              <div class="revenue-item" id="rev-item-1" style="opacity: 1; transform: translateY(0); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: auto;">
+                <strong style="color: #fff;">Today:</strong> <span style="color: #60a5fa; font-weight: 600; text-shadow: 0 0 15px rgba(96, 165, 250, 0.4); margin-left: 0.25rem;">AWS and Infleqtion</span> <span style="color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 600; font-size: 1.35rem; margin-left: 0.35rem;">$25k–$50k</span>
+              </div>
+              <div class="revenue-item" id="rev-item-2" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none;">
+                <strong style="color: #fff;">Stage 2 · 2027:</strong> <span style="color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 600; font-size: 1.35rem; margin-left: 0.25rem;">$250k–$750k</span>
+                <span id="rev-extra-2" style="color: #93c5fd; font-weight: 500; font-size: 1.15rem; margin-left: 0.65rem; opacity: 0; transform: translateX(8px); transition: opacity 0.35s ease, transform 0.35s ease; display: inline-block;">· Joint Development Agreement</span>
+              </div>
+              <div class="revenue-item" id="rev-item-3" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none;">
+                <strong style="color: #fff;">Stage 3 · 2028:</strong> <span style="color: var(--accent-gold); font-family: var(--font-mono); font-weight: 600; font-size: 1.35rem; margin-left: 0.25rem;">$15M+ ARR</span>
+                <span id="rev-extra-3" style="color: #fde047; font-weight: 500; font-size: 1.15rem; margin-left: 0.65rem; opacity: 0; transform: translateX(8px); transition: opacity 0.35s ease, transform 0.35s ease; display: inline-block;">· Original Equipment Manufacturer</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Centered Apple Music Aesthetic Play Button (Slide 4 Voiceover) -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0.15rem auto 0.25rem;">
+        <button class="apple-music-play-btn" id="btn-play-deck-slide4" onclick="handleSlide4PlayClick()" title="Play Slide 4 Voiceover" aria-label="Play Slide 4 Voiceover" style="width: clamp(44px, 4.8cqh, 54px); height: clamp(44px, 4.8cqh, 54px);">
+          <svg id="slide4-play-icon" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span id="slide4-play-label" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER · 0:57</span>
+          <button id="slide4-replay-btn" onclick="replaySlide4Voiceover(event)" style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';" title="Replay Slide 4 Voiceover">↺ Replay</button>
+        </div>
+        <audio id="slide4-voiceover-audio" preload="auto">
+          <source src="./a16z_slide4_voiceover.mp3" type="audio/mpeg">
+          <source src="/a16z_slide4_voiceover.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+
+      <div class="footer">
+        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS" style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
+        <span>Commercial Validation &amp; Scaling</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Team -->
+    <section class="slide" id="slide-5" data-slide="5">
+      <div class="header">
+        <div class="brand-lockup">
+          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">TEAM</span>
+        </div>
+        <span class="slide-num">05 / 06</span>
+      </div>
+
+      <div style="text-align: center; width: 100%; margin: 0.6rem auto 0.2rem;">
+        <h2 style="font-size: 2.7rem;">Team</h2>
+      </div>
+
+      <!-- Founder & Advisory Layout -->
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; padding: 0.5rem 0;">
+        
+        <!-- 1. Founder Section -->
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <div style="width: 150px; height: 150px; border-radius: 50%; padding: 4px; background: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.4) 0%, rgba(3, 7, 4, 0.9) 70%); border: 2px solid #60a5fa; box-shadow: 0 0 25px rgba(96, 165, 250, 0.35); margin-bottom: 0.9rem; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <img src="./rc_scholar_portrait.jpeg" alt="Romit Chakraborty" style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%; border-radius: 50%;" onerror="this.src='/rc_scholar_portrait.jpeg'" />
+          </div>
+          <h3 style="font-family: var(--font-serif); font-size: 2.1rem; font-weight: 600; color: #fff; line-height: 1.15;">
+            Romit Chakraborty
+          </h3>
+          <p style="font-family: var(--font-mono); font-size: 1.15rem; color: #60a5fa; font-weight: 600; margin-top: 6px; letter-spacing: 0.5px; text-shadow: 0 0 15px rgba(96, 165, 250, 0.4);">
+            Founder and CEO
+          </p>
+          <p style="font-family: var(--font-primary); font-size: 1.05rem; color: #cbd5e1; font-weight: 400; margin-top: 4px; letter-spacing: 0.3px;">
+            UChicago, Berkeley, LBNL, PsiQuantum
+          </p>
+        </div>
+
+        <!-- Divider -->
+        <div style="width: 60%; height: 1px; background: linear-gradient(90deg, transparent, var(--border-subtle), transparent); margin: 0.4rem 0;"></div>
+
+        <!-- 2. Scientific Advisory Board Section -->
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+          <div style="font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 2px; margin-bottom: 1.1rem; text-transform: uppercase;">
+            Scientific Advisory Board
+          </div>
+
+          <div style="display: flex; justify-content: center; gap: 5rem; align-items: center; width: 100%;">
+            <!-- Advisor 1: David Mazziotti -->
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+              <div style="width: 105px; height: 105px; border-radius: 50%; padding: 3px; background: radial-gradient(circle at 50% 50%, rgba(100, 200, 255, 0.3) 0%, rgba(3, 7, 4, 0.9) 70%); border: 1.5px solid rgba(100, 200, 255, 0.6); box-shadow: 0 0 20px rgba(100, 200, 255, 0.25); margin-bottom: 0.6rem; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <img src="./david_mazziotti.jpg" alt="David Mazziotti" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" onerror="this.src='/david_mazziotti.jpg'" />
+              </div>
+              <div style="font-family: var(--font-serif); font-size: 1.35rem; font-weight: 600; color: #fff;">
+                David Mazziotti
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-cyan); margin-top: 2px;">
+                UChicago
+              </div>
+            </div>
+
+            <!-- Advisor 2: David Schuster -->
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+              <div style="width: 105px; height: 105px; border-radius: 50%; padding: 3px; background: radial-gradient(circle at 50% 50%, rgba(100, 200, 255, 0.3) 0%, rgba(3, 7, 4, 0.9) 70%); border: 1.5px solid rgba(100, 200, 255, 0.6); box-shadow: 0 0 20px rgba(100, 200, 255, 0.25); margin-bottom: 0.6rem; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <img src="./david_schuster.jpg" alt="David Schuster" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" onerror="this.src='/david_schuster.jpg'" />
+              </div>
+              <div style="font-family: var(--font-serif); font-size: 1.35rem; font-weight: 600; color: #fff;">
+                David Schuster
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-cyan); margin-top: 2px;">
+                Stanford
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Centered Apple Music Aesthetic Play Button (Slide 5 Voiceover) -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0.15rem auto 0.25rem;">
+        <button class="apple-music-play-btn" id="btn-play-deck-slide5" onclick="handleSlide5PlayClick()" title="Play Slide 5 Voiceover" aria-label="Play Slide 5 Voiceover" style="width: clamp(44px, 4.8cqh, 54px); height: clamp(44px, 4.8cqh, 54px);">
+          <svg id="slide5-play-icon" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span id="slide5-play-label" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER · 0:27</span>
+          <button id="slide5-replay-btn" onclick="replaySlide5Voiceover(event)" style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';" title="Replay Slide 5 Voiceover">↺ Replay</button>
+        </div>
+        <audio id="slide5-voiceover-audio" preload="auto">
+          <source src="./a16z_slide5_voiceover.mp3" type="audio/mpeg">
+          <source src="/a16z_slide5_voiceover.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+
+      <div class="footer">
+        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS" style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
+        <span>Leadership &amp; Scientific Advisory</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Seed Financing & Strategic Milestones -->
+    <section class="slide" id="slide-6" data-slide="6">
+      <div class="header">
+        <div class="brand-lockup">
+          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+          <span class="company-tag">POINT REYES SOUND, INC.</span>
+          <span class="header-qboltz-tag">SEED FINANCING</span>
+        </div>
+        <span class="slide-num">06 / 06</span>
+      </div>
+      
+      <h2>Seed Financing &amp; Strategic Milestones</h2>
+      <p class="subtitle">
+        Point Reyes Sound is raising a <strong>$750,000 seed round</strong> on a post-money valuation cap of <strong>$6M</strong>.
+      </p>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Card 1: Capital Allocation Donut / Pie Chart -->
+          <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem 1.6rem;">
+            <div class="card-header" style="font-size: 1.35rem; margin-bottom: 0.5rem;">
+              Capital Allocation ($750,000)
+            </div>
+            
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.4rem; flex: 1;">
+              <div style="width: 145px; height: 145px; flex-shrink: 0;">
+                <svg viewBox="0 0 42 42" style="width: 100%; height: 100%; transform: rotate(-90deg);">
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#071a0f" stroke-width="7"></circle>
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#35ff82" stroke-width="7" stroke-dasharray="53.33 46.67" stroke-dashoffset="0" style="filter: drop-shadow(0 0 5px rgba(53, 255, 130, 0.6));"></circle>
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#64c8ff" stroke-width="7" stroke-dasharray="26.67 73.33" stroke-dashoffset="-53.33"></circle>
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#f5c542" stroke-width="7" stroke-dasharray="20.00 80.00" stroke-dashoffset="-80.00"></circle>
+                </svg>
+              </div>
+              <div style="flex: 1; font-family: var(--font-primary); font-size: 1.15rem; line-height: 1.75;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 7px; background: rgba(53, 255, 130, 0.08); padding: 4px 10px; border-radius: 5px;">
+                  <span style="color: var(--accent-emerald); font-weight: 600;">● Compiler Engineer Hire:</span>
+                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.98rem;">$400,000 (53%)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 7px; background: rgba(100, 200, 255, 0.08); padding: 4px 10px; border-radius: 5px;">
+                  <span style="color: var(--accent-cyan); font-weight: 600;">● Productionize Solver:</span>
+                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.98rem;">$200,000 (27%)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; background: rgba(245, 197, 66, 0.08); padding: 4px 10px; border-radius: 5px;">
+                  <span style="color: var(--accent-gold); font-weight: 600;">● Pilot Infrastructure:</span>
+                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.98rem;">$150,000 (20%)</strong>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 0.6rem; margin-top: 0.6rem;">
+              <span style="font-family: var(--font-primary); font-size: 1.15rem; color: var(--accent-gold); font-weight: 600;">
+                +$75,000 Federal Grant Allotment
+              </span>
+              <span style="font-family: var(--font-primary); font-style: italic; font-size: 0.98rem; color: var(--text-muted);">
+                Non-Dilutive Federal Award
+              </span>
+            </div>
+          </div>
+
+          <!-- Card 2: Strategic Milestones & Financing Summary -->
+          <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem 1.6rem; border: 2px solid var(--accent-emerald); background: rgba(53, 255, 130, 0.04); box-shadow: 0 0 30px rgba(53, 255, 130, 0.12);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem;">
+              <div>
+                <div style="font-family: var(--font-mono); color: var(--accent-gold); font-size: 0.85rem; font-weight: 700; letter-spacing: 1px;">
+                  SEED FINANCING ROUND
+                </div>
+                <div style="font-family: var(--font-primary); font-size: 1.7rem; font-weight: 600; color: #fff;">
+                  $750,000 on $6.0M Cap
+                </div>
+              </div>
+              <span style="background: var(--accent-emerald); color: #030704; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 16px; letter-spacing: 0.5px;">
+                SEED ROUND
+              </span>
+            </div>
+
+            <div style="font-family: var(--font-primary); font-size: 1.15rem; line-height: 1.5; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.75rem; flex: 1; justify-content: center;">
+              <div style="display: flex; align-items: flex-start; gap: 10px;">
+                <span style="color: var(--accent-emerald); font-weight: 700; font-family: var(--font-mono); font-size: 1rem;">01</span>
+                <div>
+                  <strong style="color: #fff;">Full-Time Compiler Engineer Hire:</strong> Dedicated kernel engineer.
+                </div>
+              </div>
+              <div style="display: flex; align-items: flex-start; gap: 10px;">
+                <span style="color: var(--accent-cyan); font-weight: 700; font-family: var(--font-mono); font-size: 1rem;">02</span>
+                <div>
+                  <strong style="color: #fff;">Productionize Open-Source Solver:</strong> Package core shared library (<span class="code-text">libqbescf.so</span>).
+                </div>
+              </div>
+              <div style="display: flex; align-items: flex-start; gap: 10px;">
+                <span style="color: var(--accent-gold); font-weight: 700; font-family: var(--font-mono); font-size: 1rem;">03</span>
+                <div>
+                  <strong style="color: #fff;">3 Pilot-Ready Deployments:</strong> Foundry partners in sub-2 nanometer transistor architectures.
+                </div>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.6rem; font-family: var(--font-primary); font-size: 1.1rem; color: var(--accent-emerald); font-weight: 500;">
+              ✓ 18-Month Operating Runway to $1.5M+ commercial revenue
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Centered Apple Music Aesthetic Play Button (Slide 6 Voiceover) -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0.35rem auto 0.15rem;">
+        <button class="apple-music-play-btn" id="btn-play-deck-slide6" onclick="handleSlide6PlayClick()" title="Play Slide 6 Voiceover" aria-label="Play Slide 6 Voiceover" style="width: clamp(44px, 4.8cqh, 54px); height: clamp(44px, 4.8cqh, 54px);">
+          <svg id="slide6-play-icon" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span id="slide6-play-label" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER · 0:09</span>
+          <button id="slide6-replay-btn" onclick="replaySlide6Voiceover(event)" style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';" title="Replay Slide 6 Voiceover">↺ Replay</button>
+        </div>
+        <audio id="slide6-voiceover-audio" preload="auto">
+          <source src="./a16z_slide6_voiceover.mp3" type="audio/mpeg">
+          <source src="/a16z_slide6_voiceover.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+
+      <div class="footer">
+        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS" style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
+        <span>Seed Financing &amp; Strategic Milestones</span>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Persistent Floating Navigation Controls -->
+  <div class="deck-controls">
+    <button class="deck-btn" id="btn-prev" onclick="prevSlide()">◀ Prev</button>
+    <div class="deck-status" id="deck-status">01 / 06</div>
+    <button class="deck-btn" id="btn-next" onclick="nextSlide()">Next ▶</button>
+    <a href="/a16z-appendix" class="deck-btn" style="text-decoration: none; display: inline-flex; align-items: center;" title="Open Appendix Slide Set">Appendix ↗</a>
+    <button class="deck-btn" onclick="window.print()" title="Export / Print 16:9 PDF">🖨️ PDF</button>
+    <a href="/point_reyes_sound_a16z_deck.pdf" download="Point_Reyes_Sound_Seed_Deck.pdf" class="deck-btn" style="text-decoration: none; display: inline-flex; align-items: center;" title="Download Pre-rendered 16:9 PDF">📥 PDF</a>
+  </div>
+
+  <script>
+    // State
+    let currentSlide = 1;
+    const totalSlides = 6;
+    const film = document.getElementById('deck-film');
+    const progressBar = document.getElementById('progress-bar');
+    const progressFilled = document.getElementById('progress-filled');
+    const timecode = document.getElementById('timecode');
+    const playIcon = document.getElementById('play-icon');
+    const muteIcon = document.getElementById('mute-icon');
+
+    // Ensure robust video source fallback
+    if (film) {
+      film.addEventListener('error', function(e) {
+        console.warn("Retrying video source fallback...", e);
+        if (!film.currentSrc.includes('point_reyes_sound_complete_film.mp4')) {
+          film.src = './point_reyes_sound_complete_film.mp4';
+          film.load();
+        }
+      });
+    }
+
+    function updateSlide() {
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      const activeEl = document.getElementById(`slide-${currentSlide}`);
+      if (activeEl) activeEl.classList.add('active');
+
+      document.getElementById('deck-status').textContent = `0${currentSlide} / 0${totalSlides}`;
+      document.getElementById('btn-prev').disabled = (currentSlide === 1);
+      const nextBtn = document.getElementById('btn-next');
+      if (currentSlide === totalSlides) {
+        nextBtn.disabled = false;
+        nextBtn.innerHTML = 'Appendix ↗';
+        nextBtn.title = 'Proceed to Appendix Slide Set';
+      } else {
+        nextBtn.disabled = false;
+        nextBtn.innerHTML = 'Next ▶';
+        nextBtn.title = '';
+      }
+
+      // Sync URL query parameter without page reload
+      try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('slide') !== String(currentSlide)) {
+          url.searchParams.set('slide', currentSlide);
+          window.history.replaceState(null, '', url.toString());
+        }
+      } catch (e) {}
+
+      if (currentSlide === 1 && typeof window.updateHero3DSize === 'function') {
+        window.updateHero3DSize();
+      }
+
+      if (currentSlide !== 1 && typeof advanceHeroCircleState === 'function') {
+        advanceHeroCircleState(0);
+      }
+
+      // Cleanup Slide 1 Voiceover when leaving Slide 1
+      const slide1Audio = document.getElementById('slide1-voiceover-audio');
+      if (currentSlide !== 1 && slide1Audio && !slide1Audio.paused) {
+        slide1Audio.pause();
+        slide1Audio.currentTime = 0;
+        updateSlide1PlayButtonUI(false);
+      }
+
+      // Cleanup Slide 3 Voiceover when leaving Slide 3
+      const slide3Audio = document.getElementById('slide3-voiceover-audio');
+      if (currentSlide !== 3 && slide3Audio && !slide3Audio.paused) {
+        slide3Audio.pause();
+        slide3Audio.currentTime = 0;
+        updateSlide3PlayButtonUI(false);
+      }
+
+      // Cleanup Slide 4 Voiceover when leaving Slide 4
+      const slide4Audio = document.getElementById('slide4-voiceover-audio');
+      if (currentSlide !== 4 && slide4Audio && !slide4Audio.paused) {
+        slide4Audio.pause();
+        slide4Audio.currentTime = 0;
+        updateSlide4PlayButtonUI(false);
+      }
+
+      // Cleanup Slide 5 Voiceover when leaving Slide 5
+      const slide5Audio = document.getElementById('slide5-voiceover-audio');
+      if (currentSlide !== 5 && slide5Audio && !slide5Audio.paused) {
+        slide5Audio.pause();
+        slide5Audio.currentTime = 0;
+        updateSlide5PlayButtonUI(false);
+      }
+
+      // Cleanup Slide 6 Voiceover when leaving Slide 6
+      const slide6Audio = document.getElementById('slide6-voiceover-audio');
+      if (currentSlide !== 6 && slide6Audio && !slide6Audio.paused) {
+        slide6Audio.pause();
+        slide6Audio.currentTime = 0;
+        updateSlide6PlayButtonUI(false);
+      }
+
+      if (currentSlide !== 4 && typeof resetSlide4Step === 'function') {
+        resetSlide4Step();
+      }
+
+      // Slide 2: Executive Film
+      if (currentSlide === 2) {
+        // Strict audio isolation: pause slide 1, 3, 4, and 5 audio immediately
+        if (slide1Audio && !slide1Audio.paused) {
+          slide1Audio.pause();
+          slide1Audio.currentTime = 0;
+          updateSlide1PlayButtonUI(false);
+        }
+        if (slide3Audio && !slide3Audio.paused) {
+          slide3Audio.pause();
+          slide3Audio.currentTime = 0;
+          updateSlide3PlayButtonUI(false);
+        }
+        if (slide4Audio && !slide4Audio.paused) {
+          slide4Audio.pause();
+          slide4Audio.currentTime = 0;
+          updateSlide4PlayButtonUI(false);
+        }
+        if (slide5Audio && !slide5Audio.paused) {
+          slide5Audio.pause();
+          slide5Audio.currentTime = 0;
+          updateSlide5PlayButtonUI(false);
+        }
+        if (slide6Audio && !slide6Audio.paused) {
+          slide6Audio.pause();
+          slide6Audio.currentTime = 0;
+          updateSlide6PlayButtonUI(false);
+        }
+        if (film) {
+          film.muted = false;
+          film.volume = 1.0;
+          if (muteIcon) muteIcon.textContent = '🔊 Sound';
+          film.play().then(() => {
+            if (playIcon) playIcon.textContent = '⏸ Pause';
+          }).catch(err => {
+            console.log("Autoplay waiting for user gesture:", err);
+            if (playIcon) playIcon.textContent = '▶ Play';
+          });
+        }
+      } else {
+        if (film) {
+          film.pause();
+          film.muted = true;
+          if (playIcon) playIcon.textContent = '▶ Play';
+        }
+      }
+    }
+
+    // Initialize slide from URL parameter if present
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const requestedSlide = parseInt(urlParams.get('slide'), 10);
+      if (!isNaN(requestedSlide) && requestedSlide >= 1 && requestedSlide <= totalSlides) {
+        currentSlide = requestedSlide;
+        updateSlide();
+      }
+    } catch (e) {}
+
+    function goToSlide(n) {
+      currentSlide = Math.max(1, Math.min(totalSlides, n));
+      updateSlide();
+    }
+
+    // ==========================================================================
+    // SLIDE 1: DEDICATED VOICEOVER CONTROLLER & SYNC ENGINE
+    // ==========================================================================
+    let slide1VoiceoverActive = false;
+    let slide1VoiceoverCompleted = false;
+
+    function updateSlide1PlayButtonUI(isPlaying) {
+      const btn = document.getElementById('btn-play-deck-slide1');
+      const icon = document.getElementById('slide1-play-icon');
+      const label = document.getElementById('slide1-play-label');
+      const replayBtn = document.getElementById('slide1-replay-btn');
+      if (!btn || !icon) return;
+
+      if (slide1VoiceoverCompleted && !isPlaying) {
+        btn.classList.remove('is-playing');
+        btn.classList.add('film-ready');
+        btn.title = "Play Executive Film (with full audio track)";
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        icon.style.marginLeft = '3px';
+        if (label) {
+          label.innerHTML = '<span style="color: #35ff82; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">PLAY EXECUTIVE FILM ▶</span>';
+        }
+        if (replayBtn) replayBtn.style.display = 'inline-flex';
+        return;
+      }
+
+      btn.classList.remove('film-ready');
+      if (replayBtn && !slide1VoiceoverCompleted) {
+        replayBtn.style.display = 'none';
+      }
+
+      if (isPlaying) {
+        btn.classList.add('is-playing');
+        btn.title = "Pause Slide 1 Voiceover";
+        icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+        icon.style.marginLeft = '0';
+        if (label) {
+          label.textContent = 'PLAYING · 0:50';
+          label.style.color = '#35ff82';
+        }
+      } else {
+        btn.classList.remove('is-playing');
+        btn.title = "Play Slide 1 Voiceover";
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        icon.style.marginLeft = '3px';
+        if (label) {
+          label.textContent = 'VOICEOVER · 0:50';
+          label.style.color = 'rgba(255, 255, 255, 0.45)';
+        }
+      }
+    }
+
+    function handleSlide1PlayClick() {
+      if (slide1VoiceoverCompleted) {
+        // Voiceover on Slide 1 is completed -> play executive film with its proper soundtrack!
+        playExecutiveFilm();
+        return;
+      }
+      toggleSlide1Voiceover();
+    }
+
+    function replaySlide1Voiceover(e) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      slide1VoiceoverCompleted = false;
+      const replayBtn = document.getElementById('slide1-replay-btn');
+      if (replayBtn) replayBtn.style.display = 'none';
+      const audio = document.getElementById('slide1-voiceover-audio');
+      if (audio) {
+        audio.currentTime = 0;
+        if (typeof advanceHeroCircleState === 'function') {
+          advanceHeroCircleState(0);
+        }
+        audio.play().then(() => {
+          slide1VoiceoverActive = true;
+          updateSlide1PlayButtonUI(true);
+        }).catch(err => {
+          console.warn("Audio play blocked by browser gesture policy:", err);
+        });
+      }
+    }
+
+    function toggleSlide1Voiceover() {
+      if (slide1VoiceoverCompleted) {
+        playExecutiveFilm();
+        return;
+      }
+
+      const audio = document.getElementById('slide1-voiceover-audio');
+      if (!audio) return;
+
+      // Absolute audio isolation: silence Slide 2 film & river video
+      if (film) {
+        film.pause();
+        film.muted = true;
+        if (playIcon) playIcon.textContent = '▶ Play';
+      }
+      const riverVid = document.getElementById('river-electrons-video');
+      if (riverVid) {
+        riverVid.pause();
+        riverVid.muted = true;
+      }
+      const s3Audio = document.getElementById('slide3-voiceover-audio');
+      if (s3Audio && !s3Audio.paused) {
+        s3Audio.pause();
+        s3Audio.currentTime = 0;
+        updateSlide3PlayButtonUI(false);
+      }
+      const s4Audio = document.getElementById('slide4-voiceover-audio');
+      if (s4Audio && !s4Audio.paused) {
+        s4Audio.pause();
+        s4Audio.currentTime = 0;
+        updateSlide4PlayButtonUI(false);
+      }
+      const s5Audio = document.getElementById('slide5-voiceover-audio');
+      if (s5Audio && !s5Audio.paused) {
+        s5Audio.pause();
+        s5Audio.currentTime = 0;
+        updateSlide5PlayButtonUI(false);
+      }
+      const s6Audio = document.getElementById('slide6-voiceover-audio');
+      if (s6Audio && !s6Audio.paused) {
+        s6Audio.pause();
+        s6Audio.currentTime = 0;
+        updateSlide6PlayButtonUI(false);
+      }
+
+      if (audio.paused) {
+        if (typeof advanceHeroCircleState === 'function') {
+          advanceHeroCircleState(0);
+        }
+        audio.play().then(() => {
+          slide1VoiceoverActive = true;
+          updateSlide1PlayButtonUI(true);
+        }).catch(err => {
+          console.warn("Audio play blocked by browser gesture policy:", err);
+        });
+      } else {
+        audio.pause();
+        slide1VoiceoverActive = false;
+        window.isVoiceoverSeeking = false;
+        updateSlide1PlayButtonUI(false);
+      }
+    }
+
+    // Attach timeline sync listeners to slide 1 audio for full narrative progression
+    const slide1AudioEl = document.getElementById('slide1-voiceover-audio');
+    if (slide1AudioEl) {
+      slide1AudioEl.addEventListener('timeupdate', () => {
+        const t = slide1AudioEl.currentTime;
+
+        // Stage 1 (0.00s - 8.88s): Static p-orbital resting pose
+        // "All my life I have simulated electrons. What if I told you that this picture of a static electronic orbital is incomplete."
+        if (t < 8.88) {
+          window.isVoiceoverSeeking = false;
+          if (heroCircleState !== 0 && typeof advanceHeroCircleState === 'function') {
+            advanceHeroCircleState(0);
+          }
+        }
+        // Stage 2 (8.88s - 18.50s): Seek into circle with undulating orbital motion
+        // "The laws of quantum mechanics say that as soon as we determine the position of an electron we can't tell how fast it's moving and vice versa"
+        else if (t >= 8.88 && t < 18.50) {
+          window.isVoiceoverSeeking = true;
+          if (heroCircleState !== 0 && typeof advanceHeroCircleState === 'function') {
+            advanceHeroCircleState(0);
+          }
+        }
+        // Stage 3 (18.50s - 29.20s): O(N^6) complexity formula overlay
+        // "This erroneous notion leads to expensive scaling of correlated electronic structure simulations."
+        // "It's like describing a river with a still picture."
+        else if (t >= 18.50 && t < 29.20) {
+          window.isVoiceoverSeeking = false;
+          if (heroCircleState !== 1 && typeof advanceHeroCircleState === 'function') {
+            advanceHeroCircleState(1);
+          }
+        }
+        // Stage 4 (29.20s - 34.25s): Video of the liquid from alchemist deck plays in circular frame
+        // "We simulate electrons as a fluid in motion."
+        else if (t >= 29.20 && t < 34.25) {
+          window.isVoiceoverSeeking = false;
+          if (heroCircleState !== 2 && typeof advanceHeroCircleState === 'function') {
+            advanceHeroCircleState(2);
+          }
+        }
+        // Stage 5 (34.25s - 50.00s): O(N^3) PRS Q-BET scaling formula overlay
+        // "This allows us to build faster solvers that smoothen bottlenecks in molecular and materials simulations."
+        // "Let me introduce you to Q-Boltz. The line of solvers we are building at Point Reyes Sound."
+        else if (t >= 34.25) {
+          window.isVoiceoverSeeking = false;
+          if (heroCircleState !== 3 && typeof advanceHeroCircleState === 'function') {
+            advanceHeroCircleState(3);
+          }
+        }
+
+        if (t >= 49.8) {
+          slide1VoiceoverCompleted = true;
+          updateSlide1PlayButtonUI(false);
+        }
+      });
+
+      slide1AudioEl.addEventListener('play', () => {
+        slide1VoiceoverActive = true;
+        updateSlide1PlayButtonUI(true);
+      });
+
+      slide1AudioEl.addEventListener('ended', () => {
+        slide1VoiceoverActive = false;
+        slide1VoiceoverCompleted = true;
+        window.isVoiceoverSeeking = false;
+        updateSlide1PlayButtonUI(false);
+      });
+
+      slide1AudioEl.addEventListener('pause', () => {
+        slide1VoiceoverActive = false;
+        window.isVoiceoverSeeking = false;
+        updateSlide1PlayButtonUI(false);
+      });
+    }
+
+    // ==========================================================================
+    // SLIDE 2: EXECUTIVE FILM PLAYBACK (ISOLATED)
+    // ==========================================================================
+    function playExecutiveFilm() {
+      // Pause Slide 1 voiceover if active
+      const s1Audio = document.getElementById('slide1-voiceover-audio');
+      if (s1Audio) {
+        s1Audio.pause();
+        s1Audio.currentTime = 0;
+        slide1VoiceoverActive = false;
+        window.isVoiceoverSeeking = false;
+        updateSlide1PlayButtonUI(false);
+      }
+
+      // Pause circular river video if active
+      const riverVid = document.getElementById('river-electrons-video');
+      if (riverVid) {
+        riverVid.pause();
+        riverVid.muted = true;
+      }
+
+      // Pause Slide 3 voiceover if active
+      const s3Audio = document.getElementById('slide3-voiceover-audio');
+      if (s3Audio) {
+        s3Audio.pause();
+        s3Audio.currentTime = 0;
+        updateSlide3PlayButtonUI(false);
+      }
+
+      // Pause Slide 4 voiceover if active
+      const s4Audio = document.getElementById('slide4-voiceover-audio');
+      if (s4Audio) {
+        s4Audio.pause();
+        s4Audio.currentTime = 0;
+        updateSlide4PlayButtonUI(false);
+      }
+
+      // Pause Slide 5 voiceover if active
+      const s5Audio = document.getElementById('slide5-voiceover-audio');
+      if (s5Audio) {
+        s5Audio.pause();
+        s5Audio.currentTime = 0;
+        updateSlide5PlayButtonUI(false);
+      }
+
+      // Pause Slide 6 voiceover if active
+      const s6Audio = document.getElementById('slide6-voiceover-audio');
+      if (s6Audio) {
+        s6Audio.pause();
+        s6Audio.currentTime = 0;
+        updateSlide6PlayButtonUI(false);
+      }
+
+      currentSlide = 2;
+      updateSlide();
+
+      if (film) {
+        if (!film.currentSrc.includes('point_reyes_sound_complete_film.mp4')) {
+          film.src = './point_reyes_sound_complete_film.mp4';
+          film.load();
+        }
+        film.currentTime = 0;
+        film.muted = false;
+        film.volume = 1.0;
+        if (muteIcon) muteIcon.textContent = '🔊 Sound';
+        film.play().then(() => {
+          if (playIcon) playIcon.textContent = '⏸ Pause';
+        }).catch(err => {
+          console.warn("Play gesture restricted, falling back to muted playback:", err);
+          film.muted = true;
+          if (muteIcon) muteIcon.textContent = '🔇 Muted';
+          film.play().catch(e => console.warn(e));
+        });
+      }
+    }
+
+    function playFilmUnmuted() {
+      playExecutiveFilm();
+    }
+
+    function playCompleteFilmUnmuted() {
+      playExecutiveFilm();
+    }
+
+    // ==========================================================================
+    // SLIDE 3: DEDICATED VOICEOVER CONTROLLER
+    // ==========================================================================
+    let slide3VoiceoverActive = false;
+    let slide3VoiceoverCompleted = false;
+
+    function updateSlide3PlayButtonUI(isPlaying) {
+      const btn = document.getElementById('btn-play-deck-slide3');
+      const icon = document.getElementById('slide3-play-icon');
+      const label = document.getElementById('slide3-play-label');
+      const replayBtn = document.getElementById('slide3-replay-btn');
+      if (!btn || !icon) return;
+
+      if (slide3VoiceoverCompleted && !isPlaying) {
+        btn.classList.remove('is-playing');
+        btn.classList.add('film-ready');
+        btn.title = "Proceed to Slide 4 (Quantum Supremacy 2028)";
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        icon.style.marginLeft = '3px';
+        if (label) {
+          label.innerHTML = '<span style="color: #35ff82; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">QUANTUM SUPREMACY ▶</span>';
+        }
+        if (replayBtn) replayBtn.style.display = 'inline-flex';
+        return;
+      }
+
+      btn.classList.remove('film-ready');
+      if (replayBtn && !slide3VoiceoverCompleted) {
+        replayBtn.style.display = 'none';
+      }
+
+      if (isPlaying) {
+        btn.classList.add('is-playing');
+        btn.title = "Pause Slide 3 Voiceover";
+        icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+        icon.style.marginLeft = '0';
+        if (label) {
+          label.textContent = 'PLAYING · 0:08';
+          label.style.color = '#35ff82';
+        }
+      } else {
+        btn.classList.remove('is-playing');
+        btn.title = "Play Slide 3 Voiceover";
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        icon.style.marginLeft = '3px';
+        if (label) {
+          label.textContent = 'VOICEOVER · 0:08';
+          label.style.color = 'rgba(255, 255, 255, 0.45)';
+        }
+      }
+    }
+
+    function handleSlide3PlayClick() {
+      if (slide3VoiceoverCompleted) {
+        goToSlide(4);
+        return;
+      }
+      toggleSlide3Voiceover();
+    }
+
+    function replaySlide3Voiceover(e) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      slide3VoiceoverCompleted = false;
+      const replayBtn = document.getElementById('slide3-replay-btn');
+      if (replayBtn) replayBtn.style.display = 'none';
+      const audio = document.getElementById('slide3-voiceover-audio');
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().then(() => {
+          slide3VoiceoverActive = true;
+          updateSlide3PlayButtonUI(true);
+        }).catch(err => {
+          console.warn("Slide 3 audio play blocked by browser gesture policy:", err);
+        });
+      }
+    }
+
+    function toggleSlide3Voiceover() {
+      if (slide3VoiceoverCompleted) {
+        goToSlide(4);
+        return;
+      }
+
+      const audio = document.getElementById('slide3-voiceover-audio');
+      if (!audio) return;
+
+      // Absolute audio isolation: silence other audio
+      const s1Audio = document.getElementById('slide1-voiceover-audio');
+      if (s1Audio && !s1Audio.paused) {
+        s1Audio.pause();
+        s1Audio.currentTime = 0;
+        updateSlide1PlayButtonUI(false);
+      }
+      const s4Audio = document.getElementById('slide4-voiceover-audio');
+      if (s4Audio && !s4Audio.paused) {
+        s4Audio.pause();
+        s4Audio.currentTime = 0;
+        updateSlide4PlayButtonUI(false);
+      }
+      const s5Audio = document.getElementById('slide5-voiceover-audio');
+      if (s5Audio && !s5Audio.paused) {
+        s5Audio.pause();
+        s5Audio.currentTime = 0;
+        updateSlide5PlayButtonUI(false);
+      }
+      const s6Audio = document.getElementById('slide6-voiceover-audio');
+      if (s6Audio && !s6Audio.paused) {
+        s6Audio.pause();
+        s6Audio.currentTime = 0;
+        updateSlide6PlayButtonUI(false);
+      }
+      if (film) {
+        film.pause();
+        film.muted = true;
+        if (playIcon) playIcon.textContent = '▶ Play';
+      }
+
+      if (audio.paused) {
+        audio.play().then(() => {
+          slide3VoiceoverActive = true;
+          updateSlide3PlayButtonUI(true);
+        }).catch(err => {
+          console.warn("Slide 3 audio play blocked by browser gesture policy:", err);
+        });
+      } else {
+        audio.pause();
+        slide3VoiceoverActive = false;
+        updateSlide3PlayButtonUI(false);
+      }
+    }
+
+    const slide3AudioEl = document.getElementById('slide3-voiceover-audio');
+    if (slide3AudioEl) {
+      slide3AudioEl.addEventListener('play', () => {
+        slide3VoiceoverActive = true;
+        updateSlide3PlayButtonUI(true);
+      });
+
+      slide3AudioEl.addEventListener('ended', () => {
+        slide3VoiceoverActive = false;
+        slide3VoiceoverCompleted = true;
+        updateSlide3PlayButtonUI(false);
+      });
+
+      slide3AudioEl.addEventListener('pause', () => {
+        slide3VoiceoverActive = false;
+        updateSlide3PlayButtonUI(false);
+      });
+
+      slide3AudioEl.addEventListener('timeupdate', () => {
+        if (slide3AudioEl.currentTime >= 8.3) {
+          slide3VoiceoverCompleted = true;
+          updateSlide3PlayButtonUI(false);
+        }
+      });
+    }
+
+    // ==========================================================================
+    // SLIDE 4: DEDICATED VOICEOVER CONTROLLER
+    // ==========================================================================
+    let slide4VoiceoverActive = false;
+    let slide4VoiceoverCompleted = false;
+
+    function updateSlide4PlayButtonUI(isPlaying) {
+      const btn = document.getElementById('btn-play-deck-slide4');
+      const icon = document.getElementById('slide4-play-icon');
+      const label = document.getElementById('slide4-play-label');
+      const replayBtn = document.getElementById('slide4-replay-btn');
+      if (!btn || !icon) return;
+
+      if (slide4VoiceoverCompleted && !isPlaying) {
+        btn.classList.remove('is-playing');
+        btn.classList.add('film-ready');
+        btn.title = "Proceed to Slide 5 (Team)";
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        icon.style.marginLeft = '3px';
+        if (label) {
+          label.innerHTML = '<span style="color: #35ff82; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">NEXT SLIDE ▶</span>';
+        }
+        if (replayBtn) replayBtn.style.display = 'inline-flex';
+        return;
+      }
+
+      btn.classList.remove('film-ready');
+      if (replayBtn && !slide4VoiceoverCompleted) {
+        replayBtn.style.display = 'none';
+      }
+
+      if (isPlaying) {
+        btn.classList.add('is-playing');
+        btn.title = "Pause Slide 4 Voiceover";
+        icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+        icon.style.marginLeft = '0';
+        if (label) {
+          label.textContent = 'PLAYING · 0:57';
+          label.style.color = '#35ff82';
+        }
+      } else {
+        btn.classList.remove('is-playing');
+        btn.title = "Play Slide 4 Voiceover";
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        icon.style.marginLeft = '3px';
+        if (label) {
+          label.textContent = 'VOICEOVER · 0:57';
+          label.style.color = 'rgba(255, 255, 255, 0.45)';
+        }
+      }
+    }
+
+    function handleSlide4PlayClick() {
+      if (slide4VoiceoverCompleted) {
+        goToSlide(5);
+        return;
+      }
+      toggleSlide4Voiceover();
+    }
+
+    function applySlide4FullReveal() {
+      slide4Step = 9;
+      const metricQubits = document.getElementById('metric-qubits');
+      const metricOperations = document.getElementById('metric-operations');
+      const cardQBoltz = document.getElementById('card-qboltz');
+      const qboltzPatent = document.getElementById('qboltz-patent');
+      const cardSolutions = document.getElementById('revenue-card');
+      const item1 = document.getElementById('rev-item-1');
+      const item2 = document.getElementById('rev-item-2');
+      const extra2 = document.getElementById('rev-extra-2');
+      const item3 = document.getElementById('rev-item-3');
+      const extra3 = document.getElementById('rev-extra-3');
+      const indicator = document.getElementById('revenue-step-indicator');
+
+      if (metricQubits) {
+        metricQubits.style.opacity = '1';
+        metricQubits.style.transform = 'translateY(0)';
+      }
+      if (metricOperations) {
+        metricOperations.style.opacity = '1';
+        metricOperations.style.transform = 'translateY(0)';
+      }
+      if (cardQBoltz) {
+        cardQBoltz.style.opacity = '1';
+        cardQBoltz.style.transform = 'translateY(0)';
+        cardQBoltz.style.pointerEvents = 'auto';
+      }
+      if (qboltzPatent) {
+        qboltzPatent.style.opacity = '1';
+        qboltzPatent.style.transform = 'translateY(0)';
+      }
+      if (cardSolutions) {
+        cardSolutions.style.opacity = '1';
+        cardSolutions.style.transform = 'translateY(0)';
+        cardSolutions.style.pointerEvents = 'auto';
+      }
+      if (item1) {
+        item1.style.opacity = '1';
+        item1.style.transform = 'translateY(0)';
+        item1.style.pointerEvents = 'auto';
+      }
+      if (item2) {
+        item2.style.opacity = '1';
+        item2.style.transform = 'translateY(0)';
+        item2.style.pointerEvents = 'auto';
+      }
+      if (extra2) {
+        extra2.style.opacity = '1';
+        extra2.style.transform = 'translateX(0)';
+      }
+      if (item3) {
+        item3.style.opacity = '1';
+        item3.style.transform = 'translateY(0)';
+        item3.style.pointerEvents = 'auto';
+      }
+      if (extra3) {
+        extra3.style.opacity = '1';
+        extra3.style.transform = 'translateX(0)';
+      }
+      if (indicator) {
+        indicator.textContent = '● ● ● ● ●';
+      }
+    }
+
+    function replaySlide4Voiceover(e) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      slide4VoiceoverCompleted = false;
+      const replayBtn = document.getElementById('slide4-replay-btn');
+      if (replayBtn) replayBtn.style.display = 'none';
+      if (typeof resetSlide4Step === 'function') {
+        resetSlide4Step();
+      }
+      const audio = document.getElementById('slide4-voiceover-audio');
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().then(() => {
+          slide4VoiceoverActive = true;
+          updateSlide4PlayButtonUI(true);
+        }).catch(err => {
+          console.warn("Slide 4 audio play blocked by browser gesture policy:", err);
+        });
+      }
+    }
+
+    function toggleSlide4Voiceover() {
+      if (slide4VoiceoverCompleted) {
+        goToSlide(5);
+        return;
+      }
+
+      const audio = document.getElementById('slide4-voiceover-audio');
+      if (!audio) return;
+
+      // Absolute audio isolation
+      const s1Audio = document.getElementById('slide1-voiceover-audio');
+      if (s1Audio && !s1Audio.paused) {
+        s1Audio.pause();
+        s1Audio.currentTime = 0;
+        updateSlide1PlayButtonUI(false);
+      }
+      const s3Audio = document.getElementById('slide3-voiceover-audio');
+      if (s3Audio && !s3Audio.paused) {
+        s3Audio.pause();
+        s3Audio.currentTime = 0;
+        updateSlide3PlayButtonUI(false);
+      }
+      const s5Audio = document.getElementById('slide5-voiceover-audio');
+      if (s5Audio && !s5Audio.paused) {
+        s5Audio.pause();
+        s5Audio.currentTime = 0;
+        updateSlide5PlayButtonUI(false);
+      }
+      const s6Audio = document.getElementById('slide6-voiceover-audio');
+      if (s6Audio && !s6Audio.paused) {
+        s6Audio.pause();
+        s6Audio.currentTime = 0;
+        updateSlide6PlayButtonUI(false);
+      }
+      if (film) {
+        film.pause();
+        film.muted = true;
+        if (playIcon) playIcon.textContent = '▶ Play';
+      }
+
+      if (audio.paused) {
+        audio.play().then(() => {
+          slide4VoiceoverActive = true;
+          updateSlide4PlayButtonUI(true);
+        }).catch(err => {
+          console.warn("Slide 4 audio play blocked by browser gesture policy:", err);
+        });
+      } else {
+        audio.pause();
+        slide4VoiceoverActive = false;
+        updateSlide4PlayButtonUI(false);
+      }
+    }
+
+    const slide4AudioEl = document.getElementById('slide4-voiceover-audio');
+    if (slide4AudioEl) {
+      slide4AudioEl.addEventListener('play', () => {
+        slide4VoiceoverActive = true;
+        updateSlide4PlayButtonUI(true);
+      });
+
+      slide4AudioEl.addEventListener('ended', () => {
+        slide4VoiceoverActive = false;
+        slide4VoiceoverCompleted = true;
+        updateSlide4PlayButtonUI(false);
+        applySlide4FullReveal();
+      });
+
+      slide4AudioEl.addEventListener('pause', () => {
+        slide4VoiceoverActive = false;
+        updateSlide4PlayButtonUI(false);
+      });
+
+      slide4AudioEl.addEventListener('timeupdate', () => {
+        const ct = slide4AudioEl.currentTime;
+
+        const metricQubits = document.getElementById('metric-qubits');
+        const metricOperations = document.getElementById('metric-operations');
+        const cardQBoltz = document.getElementById('card-qboltz');
+        const qboltzPatent = document.getElementById('qboltz-patent');
+        const cardSolutions = document.getElementById('revenue-card');
+        const item1 = document.getElementById('rev-item-1');
+        const item2 = document.getElementById('rev-item-2');
+        const extra2 = document.getElementById('rev-extra-2');
+        const item3 = document.getElementById('rev-item-3');
+        const extra3 = document.getElementById('rev-extra-3');
+        const indicator = document.getElementById('revenue-step-indicator');
+
+        if (ct < 18.0) {
+          if (slide4VoiceoverActive && slide4Step > 1) {
+            resetSlide4Step();
+          }
+          return;
+        }
+
+        // 18.5s: Reveal Toffoli reduction metric in Tile 2
+        if (ct >= 18.5) {
+          if (metricOperations) {
+            metricOperations.style.opacity = '1';
+            metricOperations.style.transform = 'translateY(0)';
+          }
+        }
+
+        // 22.0s: Reveal Logical Qubits compression metric in Tile 1
+        if (ct >= 22.0) {
+          if (metricQubits) {
+            metricQubits.style.opacity = '1';
+            metricQubits.style.transform = 'translateY(0)';
+          }
+        }
+
+        // 27.5s: "Q-Boltz enables simulations that normally take 3 days to converge within minutes with our patented solver."
+        if (ct >= 27.5) {
+          if (cardQBoltz) {
+            cardQBoltz.style.opacity = '1';
+            cardQBoltz.style.transform = 'translateY(0)';
+            cardQBoltz.style.pointerEvents = 'auto';
+          }
+        }
+
+        // 30.5s: Reveal Patent App No in Tile 3
+        if (ct >= 30.5) {
+          if (qboltzPatent) {
+            qboltzPatent.style.opacity = '1';
+            qboltzPatent.style.transform = 'translateY(0)';
+          }
+        }
+
+        // 36.48s: "We are in active engagements with AWS and Infleqtion for paid validations"
+        // Tile 4 appears, Line 1 reveals
+        if (ct >= 36.48) {
+          if (cardSolutions) {
+            cardSolutions.style.opacity = '1';
+            cardSolutions.style.transform = 'translateY(0)';
+            cardSolutions.style.pointerEvents = 'auto';
+          }
+          if (item1) {
+            item1.style.opacity = '1';
+            item1.style.transform = 'translateY(0)';
+            item1.style.pointerEvents = 'auto';
+          }
+          if (indicator && ct < 42.85) {
+            indicator.textContent = '● ○ ○ ○ ○';
+          }
+        }
+
+        // 42.85s: "The next step is to bring a Joint Development Agreement into fruition in 2027..."
+        // Line 2 reveals
+        if (ct >= 42.85) {
+          if (item2) {
+            item2.style.opacity = '1';
+            item2.style.transform = 'translateY(0)';
+            item2.style.pointerEvents = 'auto';
+          }
+          if (extra2) {
+            extra2.style.opacity = '1';
+            extra2.style.transform = 'translateX(0)';
+          }
+          if (indicator && ct < 47.55) {
+            indicator.textContent = '● ● ● ○ ○';
+          }
+        }
+
+        // 47.55s: "...followed by a licensing deal with a hardware vendor that will clear fifteen million dollars in ARR by 2028."
+        // Line 3 reveals
+        if (ct >= 47.55) {
+          if (item3) {
+            item3.style.opacity = '1';
+            item3.style.transform = 'translateY(0)';
+            item3.style.pointerEvents = 'auto';
+          }
+          if (extra3) {
+            extra3.style.opacity = '1';
+            extra3.style.transform = 'translateX(0)';
+          }
+          if (indicator) {
+            indicator.textContent = '● ● ● ● ●';
+          }
+          slide4Step = 9;
+        }
+
+        // 56.2s: Voiceover completed
+        if (ct >= 56.2) {
+          slide4VoiceoverCompleted = true;
+          updateSlide4PlayButtonUI(false);
+          applySlide4FullReveal();
+        }
+      });
+    }
+
+    // ==========================================
+    // SLIDE 5: DEDICATED VOICEOVER CONTROLLER (TEAM)
+    // ==========================================
+    let slide5VoiceoverActive = false;
+    let slide5VoiceoverCompleted = false;
+
+    function updateSlide5PlayButtonUI(isPlaying) {
+      const btn = document.getElementById('btn-play-deck-slide5');
+      const icon = document.getElementById('slide5-play-icon');
+      const label = document.getElementById('slide5-play-label');
+      const replayBtn = document.getElementById('slide5-replay-btn');
+      if (!btn || !icon) return;
+
+      if (slide5VoiceoverCompleted && !isPlaying) {
+        btn.classList.remove('is-playing');
+        btn.classList.add('film-ready');
+        btn.title = "Proceed to Slide 6 (Financing & Milestones)";
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        icon.style.marginLeft = '3px';
+        if (label) {
+          label.innerHTML = '<span style="color: #35ff82; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">FINANCING ▶</span>';
+        }
+        if (replayBtn) replayBtn.style.display = 'inline-flex';
+        return;
+      }
+
+      btn.classList.remove('film-ready');
+      if (replayBtn && !slide5VoiceoverCompleted) {
+        replayBtn.style.display = 'none';
+      }
+
+      if (isPlaying) {
+        btn.classList.add('is-playing');
+        btn.title = "Pause Slide 5 Voiceover";
+        icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+        icon.style.marginLeft = '0';
+        if (label) {
+          label.textContent = 'PLAYING · 0:27';
+          label.style.color = '#35ff82';
+        }
+      } else {
+        btn.classList.remove('is-playing');
+        btn.title = "Play Slide 5 Voiceover";
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        icon.style.marginLeft = '3px';
+        if (label) {
+          label.textContent = 'VOICEOVER · 0:27';
+          label.style.color = 'rgba(255, 255, 255, 0.45)';
+        }
+      }
+    }
+
+    function handleSlide5PlayClick() {
+      if (slide5VoiceoverCompleted) {
+        goToSlide(6);
+        return;
+      }
+      toggleSlide5Voiceover();
+    }
+
+    function replaySlide5Voiceover(e) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      slide5VoiceoverCompleted = false;
+      const replayBtn = document.getElementById('slide5-replay-btn');
+      if (replayBtn) replayBtn.style.display = 'none';
+      const audio = document.getElementById('slide5-voiceover-audio');
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().then(() => {
+          slide5VoiceoverActive = true;
+          updateSlide5PlayButtonUI(true);
+        }).catch(err => {
+          console.warn("Replay gesture error:", err);
+        });
+      }
+    }
+
+    function toggleSlide5Voiceover() {
+      const audio = document.getElementById('slide5-voiceover-audio');
+      if (!audio) return;
+
+      // Absolute audio isolation: silence other audio & film
+      const film = document.getElementById('main-film');
+      const playIcon = document.getElementById('film-play-icon');
+      const s1Audio = document.getElementById('slide1-voiceover-audio');
+      if (s1Audio && !s1Audio.paused) {
+        s1Audio.pause();
+        s1Audio.currentTime = 0;
+        updateSlide1PlayButtonUI(false);
+      }
+      const s3Audio = document.getElementById('slide3-voiceover-audio');
+      if (s3Audio && !s3Audio.paused) {
+        s3Audio.pause();
+        s3Audio.currentTime = 0;
+        updateSlide3PlayButtonUI(false);
+      }
+      const s4Audio = document.getElementById('slide4-voiceover-audio');
+      if (s4Audio && !s4Audio.paused) {
+        s4Audio.pause();
+        s4Audio.currentTime = 0;
+        updateSlide4PlayButtonUI(false);
+      }
+      const s6Audio = document.getElementById('slide6-voiceover-audio');
+      if (s6Audio && !s6Audio.paused) {
+        s6Audio.pause();
+        s6Audio.currentTime = 0;
+        updateSlide6PlayButtonUI(false);
+      }
+      if (film) {
+        film.pause();
+        film.muted = true;
+        if (playIcon) playIcon.textContent = '▶ Play';
+      }
+
+      if (audio.paused) {
+        audio.play().then(() => {
+          slide5VoiceoverActive = true;
+          updateSlide5PlayButtonUI(true);
+        }).catch(err => {
+          console.warn("Slide 5 audio play blocked by browser gesture policy:", err);
+        });
+      } else {
+        audio.pause();
+        slide5VoiceoverActive = false;
+        updateSlide5PlayButtonUI(false);
+      }
+    }
+
+    const slide5AudioEl = document.getElementById('slide5-voiceover-audio');
+    if (slide5AudioEl) {
+      slide5AudioEl.addEventListener('play', () => {
+        slide5VoiceoverActive = true;
+        updateSlide5PlayButtonUI(true);
+      });
+
+      slide5AudioEl.addEventListener('ended', () => {
+        slide5VoiceoverActive = false;
+        slide5VoiceoverCompleted = true;
+        updateSlide5PlayButtonUI(false);
+      });
+
+      slide5AudioEl.addEventListener('pause', () => {
+        slide5VoiceoverActive = false;
+        updateSlide5PlayButtonUI(false);
+      });
+
+      slide5AudioEl.addEventListener('timeupdate', () => {
+        const ct = slide5AudioEl.currentTime;
+        // 26.0s: Voiceover completed
+        if (ct >= 26.0 && !slide5VoiceoverCompleted) {
+          slide5VoiceoverCompleted = true;
+          updateSlide5PlayButtonUI(false);
+        }
+      });
+    }
+
+    // ==========================================
+    // SLIDE 6: DEDICATED VOICEOVER CONTROLLER (FINANCING)
+    // ==========================================
+    let slide6VoiceoverActive = false;
+    let slide6VoiceoverCompleted = false;
+
+    function updateSlide6PlayButtonUI(isPlaying) {
+      const btn = document.getElementById('btn-play-deck-slide6');
+      const icon = document.getElementById('slide6-play-icon');
+      const label = document.getElementById('slide6-play-label');
+      const replayBtn = document.getElementById('slide6-replay-btn');
+      if (!btn || !icon) return;
+
+      if (slide6VoiceoverCompleted && !isPlaying) {
+        btn.classList.remove('is-playing');
+        btn.classList.add('film-ready');
+        btn.title = "Proceed to Technical Appendix";
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        icon.style.marginLeft = '3px';
+        if (label) {
+          label.innerHTML = '<span style="color: #35ff82; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">APPENDIX ▶</span>';
+        }
+        if (replayBtn) replayBtn.style.display = 'inline-flex';
+        return;
+      }
+
+      btn.classList.remove('film-ready');
+      if (replayBtn && !slide6VoiceoverCompleted) {
+        replayBtn.style.display = 'none';
+      }
+
+      if (isPlaying) {
+        btn.classList.add('is-playing');
+        btn.title = "Pause Slide 6 Voiceover";
+        icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+        icon.style.marginLeft = '0';
+        if (label) {
+          label.textContent = 'PLAYING · 0:09';
+          label.style.color = '#35ff82';
+        }
+      } else {
+        btn.classList.remove('is-playing');
+        btn.title = "Play Slide 6 Voiceover";
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        icon.style.marginLeft = '3px';
+        if (label) {
+          label.textContent = 'VOICEOVER · 0:09';
+          label.style.color = 'rgba(255, 255, 255, 0.45)';
+        }
+      }
+    }
+
+    function handleSlide6PlayClick() {
+      if (slide6VoiceoverCompleted) {
+        window.location.href = '/a16z-appendix';
+        return;
+      }
+      toggleSlide6Voiceover();
+    }
+
+    function replaySlide6Voiceover(e) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      slide6VoiceoverCompleted = false;
+      const replayBtn = document.getElementById('slide6-replay-btn');
+      if (replayBtn) replayBtn.style.display = 'none';
+      const audio = document.getElementById('slide6-voiceover-audio');
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().then(() => {
+          slide6VoiceoverActive = true;
+          updateSlide6PlayButtonUI(true);
+        }).catch(err => {
+          console.warn("Replay gesture error:", err);
+        });
+      }
+    }
+
+    function toggleSlide6Voiceover() {
+      const audio = document.getElementById('slide6-voiceover-audio');
+      if (!audio) return;
+
+      // Absolute audio isolation: silence other audio & film
+      const film = document.getElementById('main-film');
+      const playIcon = document.getElementById('film-play-icon');
+      const s1Audio = document.getElementById('slide1-voiceover-audio');
+      if (s1Audio && !s1Audio.paused) {
+        s1Audio.pause();
+        s1Audio.currentTime = 0;
+        updateSlide1PlayButtonUI(false);
+      }
+      const s3Audio = document.getElementById('slide3-voiceover-audio');
+      if (s3Audio && !s3Audio.paused) {
+        s3Audio.pause();
+        s3Audio.currentTime = 0;
+        updateSlide3PlayButtonUI(false);
+      }
+      const s4Audio = document.getElementById('slide4-voiceover-audio');
+      if (s4Audio && !s4Audio.paused) {
+        s4Audio.pause();
+        s4Audio.currentTime = 0;
+        updateSlide4PlayButtonUI(false);
+      }
+      const s5Audio = document.getElementById('slide5-voiceover-audio');
+      if (s5Audio && !s5Audio.paused) {
+        s5Audio.pause();
+        s5Audio.currentTime = 0;
+        updateSlide5PlayButtonUI(false);
+      }
+      if (film) {
+        film.pause();
+        film.muted = true;
+        if (playIcon) playIcon.textContent = '▶ Play';
+      }
+
+      if (audio.paused) {
+        audio.play().then(() => {
+          slide6VoiceoverActive = true;
+          updateSlide6PlayButtonUI(true);
+        }).catch(err => {
+          console.warn("Slide 6 audio play blocked by browser gesture policy:", err);
+        });
+      } else {
+        audio.pause();
+        slide6VoiceoverActive = false;
+        updateSlide6PlayButtonUI(false);
+      }
+    }
+
+    const slide6AudioEl = document.getElementById('slide6-voiceover-audio');
+    if (slide6AudioEl) {
+      slide6AudioEl.addEventListener('play', () => {
+        slide6VoiceoverActive = true;
+        updateSlide6PlayButtonUI(true);
+      });
+
+      slide6AudioEl.addEventListener('ended', () => {
+        slide6VoiceoverActive = false;
+        slide6VoiceoverCompleted = true;
+        updateSlide6PlayButtonUI(false);
+      });
+
+      slide6AudioEl.addEventListener('pause', () => {
+        slide6VoiceoverActive = false;
+        updateSlide6PlayButtonUI(false);
+      });
+
+      slide6AudioEl.addEventListener('timeupdate', () => {
+        const ct = slide6AudioEl.currentTime;
+        // 8.5s: Voiceover completed
+        if (ct >= 8.5 && !slide6VoiceoverCompleted) {
+          slide6VoiceoverCompleted = true;
+          updateSlide6PlayButtonUI(false);
+        }
+      });
+    }
+
+    function nextSlide() {
+      if (currentSlide === 4 && typeof slide4Step !== 'undefined' && slide4Step < 9) {
+        advanceSlide4Step();
+        return;
+      }
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      } else if (currentSlide === totalSlides) {
+        window.location.href = '/a16z-appendix';
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide === 4 && typeof slide4Step !== 'undefined' && slide4Step > 1) {
+        slide4Step--;
+        updateSlide4Step();
+        return;
+      }
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    // Video Controls (Executive Film - Slide 2)
+    function togglePlay() {
+      if (!film) return;
+      if (film.paused) {
+        film.play();
+        if (playIcon) playIcon.textContent = '⏸ Pause';
+      } else {
+        film.pause();
+        if (playIcon) playIcon.textContent = '▶ Play';
+      }
+    }
+
+    function toggleMute() {
+      if (!film) return;
+      film.muted = !film.muted;
+      if (muteIcon) muteIcon.textContent = film.muted ? '🔇 Muted' : '🔊 Sound';
+    }
+
+    function restartVideo() {
+      if (!film) return;
+      film.currentTime = 0;
+      film.play();
+      if (playIcon) playIcon.textContent = '⏸ Pause';
+    }
+
+    function toggleFullscreen() {
+      const container = document.getElementById('deck-viewport');
+      if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(err => console.log(err));
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Video Progress Tracking (Slide 2: Executive Film)
+    if (film) {
+      film.addEventListener('timeupdate', () => {
+        const current = film.currentTime;
+        const duration = film.duration || 57.87;
+        const pct = (current / duration) * 100;
+        if (progressFilled) progressFilled.style.width = `${pct}%`;
+
+        const curMin = String(Math.floor(current / 60)).padStart(2, '0');
+        const curSec = String(Math.floor(current % 60)).padStart(2, '0');
+        const durMin = String(Math.floor(duration / 60)).padStart(2, '0');
+        const durSec = String(Math.floor(duration % 60)).padStart(2, '0');
+        if (timecode) timecode.textContent = `${curMin}:${curSec} / ${durMin}:${durSec}`;
+      });
+
+      // AUTOMATIC ADVANCE: When video ends, advance to Slide 3
+      film.addEventListener('ended', () => {
+        if (playIcon) playIcon.textContent = '↺ Replay';
+        setTimeout(() => {
+          if (currentSlide === 2) {
+            goToSlide(3);
+          }
+        }, 900);
+      });
+    }
+
+    if (progressBar) {
+      progressBar.addEventListener('click', (e) => {
+        if (!film) return;
+        const rect = progressBar.getBoundingClientRect();
+        const pos = (e.clientX - rect.left) / rect.width;
+        film.currentTime = pos * (film.duration || 57.87);
+      });
+    }
+
+    // ==========================================================================
+    // HERO CIRCLE INTERACTIVE FINITE STATE MACHINE (SLIDE 1)
+    // 0: Static p-Orbital (Interactive Hover & Seek Dynamics)
+    // 1: O(N^6) Complexity Formula
+    // 2: River of Electrons Video (In Circular Inset)
+    // 3: O(N^3) Point Reyes Sound Q-BET Scaling
+    // -> Cycles back to 0
+    // ==========================================================================
+    let heroCircleState = 0; // 0 = orbital, 1 = on6, 2 = river, 3 = on3
+    let lastHeroClickTime = 0;
+
+    function advanceHeroCircleState(targetState) {
+      const container = document.getElementById('qboltz-3d-container');
+      const canvas = document.getElementById('qboltz-3d-canvas');
+      const riverVideo = document.getElementById('river-electrons-video');
+      if (!container) return;
+
+      if (typeof targetState === 'number') {
+        heroCircleState = targetState % 4;
+      } else {
+        heroCircleState = (heroCircleState + 1) % 4;
+      }
+
+      container.classList.remove('state-orbital', 'state-on6', 'state-river', 'state-on3', 'video-active');
+
+      if (heroCircleState === 0) {
+        // Step 1 & 2: Static p-orbital manifold with interactive seek on hover
+        container.classList.add('state-orbital');
+        container.title = "Move cursor to explore · Click to view O(N⁶) scaling";
+        if (riverVideo) {
+          riverVideo.pause();
+          riverVideo.currentTime = 0;
+        }
+      } else if (heroCircleState === 1) {
+        // Step 3: O(N^6) complexity formula
+        container.classList.add('state-on6');
+        container.title = "Click to view River of Electrons within frame";
+        if (riverVideo) {
+          riverVideo.pause();
+          riverVideo.currentTime = 0;
+        }
+      } else if (heroCircleState === 2) {
+        // Step 4: River video plays in circular inset
+        container.classList.add('state-river', 'video-active');
+        container.title = "Click to view O(N³) scaling";
+        if (riverVideo) {
+          riverVideo.currentTime = 0;
+          riverVideo.muted = true;
+          riverVideo.volume = 0;
+          const p = riverVideo.play();
+          if (p !== undefined) {
+            p.catch(e => console.warn(e));
+          }
+        }
+      } else if (heroCircleState === 3) {
+        // Step 5: O(N^3) scaling formula
+        container.classList.add('state-on3');
+        container.title = "Click to return to p-orbital manifold";
+        if (riverVideo) {
+          riverVideo.pause();
+        }
+      }
+    }
+
+    // Alias for legacy calls
+    function toggleRiverVideo(forceState) {
+      if (typeof forceState === 'boolean') {
+        advanceHeroCircleState(forceState ? 2 : 0);
+      } else {
+        advanceHeroCircleState();
+      }
+    }
+
+    function renderHeroLatex() {
+      if (typeof katex === 'undefined') return;
+      const targetOn6 = document.getElementById('hero-math-on6-target');
+      const targetOn3 = document.getElementById('hero-math-on3-target');
+      try {
+        if (targetOn6) {
+          katex.render('\\mathcal{O}(N^6)', targetOn6, { displayMode: true, throwOnError: false });
+        }
+        if (targetOn3) {
+          katex.render('\\mathcal{O}(N^3)', targetOn3, { displayMode: true, throwOnError: false });
+        }
+      } catch (e) {
+        console.warn('Hero LaTeX render note:', e);
+      }
+    }
+
+    // ==========================================================================
+    // SLIDE 4 INTERACTIVE STEP-BY-STEP PRESENTATION BUILD (QUANTUM SUPREMACY 2028)
+    // 1: Initial Open -> Cards 1 & 2 headings only (> 100 Logical Qubits, > 1 Million Quantum Operations)
+    // 2: + 6.6x compression & 1,748x Toffoli gate reduction
+    // 3: + Card 3 (Q-Boltz Advantage) with 3 days → 2.25 minutes
+    // 4: + Patent App No. 64/033,274
+    // 5: + Card 4 (Quantum Solutions) with Today: AWS and Infleqtion ($25k–$50k) (● ○ ○ ○ ○)
+    // 6: + Stage 2 · 2027: $250k–$750k (● ● ○ ○ ○)
+    // 7: + Joint Development Agreement (● ● ● ○ ○)
+    // 8: + Stage 3 · 2028: $15M+ ARR (● ● ● ● ○)
+    // 9: + Original Equipment Manufacturer (● ● ● ● ●)
+    // -> Next click / space advances to Slide 5
+    // ==========================================================================
+    let slide4Step = 1;
+
+    function updateSlide4Step() {
+      const metricQubits = document.getElementById('metric-qubits');
+      const metricOperations = document.getElementById('metric-operations');
+      const cardQBoltz = document.getElementById('card-qboltz');
+      const qboltzPatent = document.getElementById('qboltz-patent');
+      const cardSolutions = document.getElementById('revenue-card');
+      const item1 = document.getElementById('rev-item-1');
+      const item2 = document.getElementById('rev-item-2');
+      const extra2 = document.getElementById('rev-extra-2');
+      const item3 = document.getElementById('rev-item-3');
+      const extra3 = document.getElementById('rev-extra-3');
+      const indicator = document.getElementById('revenue-step-indicator');
+
+      // Step 2+: Reveal metrics in Cards 1 & 2
+      if (metricQubits) {
+        metricQubits.style.opacity = slide4Step >= 2 ? '1' : '0';
+        metricQubits.style.transform = slide4Step >= 2 ? 'translateY(0)' : 'translateY(10px)';
+      }
+      if (metricOperations) {
+        metricOperations.style.opacity = slide4Step >= 2 ? '1' : '0';
+        metricOperations.style.transform = slide4Step >= 2 ? 'translateY(0)' : 'translateY(10px)';
+      }
+
+      // Step 3+: Reveal Card 3 (Q-Boltz Advantage)
+      if (cardQBoltz) {
+        cardQBoltz.style.opacity = slide4Step >= 3 ? '1' : '0';
+        cardQBoltz.style.transform = slide4Step >= 3 ? 'translateY(0)' : 'translateY(16px)';
+        cardQBoltz.style.pointerEvents = slide4Step >= 3 ? 'auto' : 'none';
+      }
+
+      // Step 4+: Reveal Patent App No in Card 3
+      if (qboltzPatent) {
+        qboltzPatent.style.opacity = slide4Step >= 4 ? '1' : '0';
+        qboltzPatent.style.transform = slide4Step >= 4 ? 'translateY(0)' : 'translateY(10px)';
+      }
+
+      // Step 5+: Reveal Card 4 (Quantum Solutions)
+      if (cardSolutions) {
+        cardSolutions.style.opacity = slide4Step >= 5 ? '1' : '0';
+        cardSolutions.style.transform = slide4Step >= 5 ? 'translateY(0)' : 'translateY(16px)';
+        cardSolutions.style.pointerEvents = slide4Step >= 5 ? 'auto' : 'none';
+      }
+
+      // Inside Card 4 (Quantum Solutions bullets):
+      // Item 1 is visible as soon as Card 4 is revealed (Step 5+)
+      if (item1) {
+        item1.style.opacity = slide4Step >= 5 ? '1' : '0';
+        item1.style.transform = slide4Step >= 5 ? 'translateY(0)' : 'translateY(12px)';
+        item1.style.pointerEvents = slide4Step >= 5 ? 'auto' : 'none';
+      }
+      // Step 6+: Stage 2 · 2027
+      if (item2) {
+        item2.style.opacity = slide4Step >= 6 ? '1' : '0';
+        item2.style.transform = slide4Step >= 6 ? 'translateY(0)' : 'translateY(12px)';
+        item2.style.pointerEvents = slide4Step >= 6 ? 'auto' : 'none';
+      }
+      // Step 7+: Joint Development Agreement
+      if (extra2) {
+        extra2.style.opacity = slide4Step >= 7 ? '1' : '0';
+        extra2.style.transform = slide4Step >= 7 ? 'translateX(0)' : 'translateX(8px)';
+      }
+      // Step 8+: Stage 3 · 2028: $15M+ ARR
+      if (item3) {
+        item3.style.opacity = slide4Step >= 8 ? '1' : '0';
+        item3.style.transform = slide4Step >= 8 ? 'translateY(0)' : 'translateY(12px)';
+        item3.style.pointerEvents = slide4Step >= 8 ? 'auto' : 'none';
+      }
+      // Step 9+: Original Equipment Manufacturer
+      if (extra3) {
+        extra3.style.opacity = slide4Step >= 9 ? '1' : '0';
+        extra3.style.transform = slide4Step >= 9 ? 'translateX(0)' : 'translateX(8px)';
+      }
+
+      // Indicator dots for Quantum Solutions stages
+      if (indicator) {
+        if (slide4Step <= 5) indicator.textContent = '● ○ ○ ○ ○';
+        else if (slide4Step === 6) indicator.textContent = '● ● ○ ○ ○';
+        else if (slide4Step === 7) indicator.textContent = '● ● ● ○ ○';
+        else if (slide4Step === 8) indicator.textContent = '● ● ● ● ○';
+        else if (slide4Step >= 9) indicator.textContent = '● ● ● ● ●';
+      }
+    }
+
+    function advanceSlide4Step() {
+      if (slide4Step < 9) {
+        slide4Step++;
+        updateSlide4Step();
+      } else {
+        goToSlide(5);
+      }
+    }
+
+    function resetSlide4Step() {
+      slide4Step = 1;
+      updateSlide4Step();
+    }
+
+    // Backwards-compatibility aliases
+    window.advanceRevenueStep = advanceSlide4Step;
+    window.resetRevenueStep = resetSlide4Step;
+    window.updateRevenueStep = updateSlide4Step;
+
+    function initSlide4Interaction() {
+      const slide4 = document.getElementById('slide-4');
+      if (slide4) {
+        slide4.addEventListener('click', (e) => {
+          if (e.target.closest('.header') || e.target.closest('.footer') || e.target.closest('#nav-overlay') || e.target.closest('.deck-controls')) {
+            return;
+          }
+          advanceSlide4Step();
+        });
+      }
+      updateSlide4Step();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSlide4Interaction);
+    } else {
+      initSlide4Interaction();
+    }
+
+    // Keyboard Navigation
+    window.addEventListener('keydown', (e) => {
+
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key === ' ' && currentSlide === 4) {
+        e.preventDefault();
+        advanceSlide4Step();
+      } else if (e.key === ' ' && currentSlide === 2) {
+        e.preventDefault();
+        togglePlay();
+      } else if (e.key === ' ' && currentSlide === 3) {
+        e.preventDefault();
+        toggleSlide3Voiceover();
+      } else if (e.key === ' ' && currentSlide === 1) {
+        e.preventDefault();
+        handleSlide1PlayClick();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
+      } else if (e.key === 'm' || e.key === 'M') {
+        toggleMute();
+      }
+    });
+
+    // ==========================================================================
+    // EXACT 3D DYNAMIC FLOATING Q-BOLTZ p-WAVE ORBITAL MANIFOLD (RED & BLUE)
+    // ==========================================================================
+    function initQBoltz3D() {
+      const canvas = document.getElementById('qboltz-3d-canvas');
+      const container = document.getElementById('qboltz-3d-container');
+      if (!canvas || !container || typeof THREE === 'undefined') return;
+
+      const width = (container.clientWidth > 0 ? container.clientWidth : 330);
+      const height = (container.clientHeight > 0 ? container.clientHeight : 330);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
+      camera.position.set(0, 0.1, 8.2);
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, preserveDrawingBuffer: true });
+      renderer.setSize(width, height, false);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Physically-Based Scene Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+      scene.add(ambientLight);
+
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
+      keyLight.position.set(5, 8, 6);
+      scene.add(keyLight);
+
+      const blueFillLight = new THREE.PointLight(0x3b82f6, 1.6, 20);
+      blueFillLight.position.set(-4, 5, 4);
+      scene.add(blueFillLight);
+
+      const redRimLight = new THREE.PointLight(0xef4444, 1.6, 20);
+      redRimLight.position.set(4, -5, 3);
+      scene.add(redRimLight);
+
+      // Main Q-Boltz p-Wave Group
+      const pWaveGroup = new THREE.Group();
+      scene.add(pWaveGroup);
+
+      // Mathematical p-Wave Dual Lobe Geometry: Slender Quantum Teardrop Manifold
+      function createPWaveLobe(sign = 1) {
+        const uSegments = 54;
+        const vSegments = 54;
+        const positions = [];
+        const uvs = [];
+        const indices = [];
+
+        // sign = 1: Top Lobe | sign = -1: Bottom Lobe
+        for (let i = 0; i <= uSegments; i++) {
+          const u = (i / uSegments) * (Math.PI / 2);
+          for (let j = 0; j <= vSegments; j++) {
+            const v = (j / vSegments) * Math.PI * 2;
+            
+            // Slender quantum p-wave teardrop profile
+            const cosU = Math.cos(u);
+            const sinU = Math.sin(u);
+            const y = sign * (2.45 * Math.pow(cosU, 1.35) + 0.04);
+            const rTransverse = 1.32 * sinU * Math.pow(cosU, 0.62);
+            const x = rTransverse * Math.cos(v);
+            const z = rTransverse * Math.sin(v);
+
+            positions.push(x, y, z);
+            uvs.push(i / uSegments, j / vSegments);
+          }
+        }
+
+        for (let i = 0; i < uSegments; i++) {
+          for (let j = 0; j < vSegments; j++) {
+            const a = i * (vSegments + 1) + j;
+            const b = (i + 1) * (vSegments + 1) + j;
+            const c = (i + 1) * (vSegments + 1) + (j + 1);
+            const d = i * (vSegments + 1) + (j + 1);
+
+            indices.push(a, b, d);
+            indices.push(b, c, d);
+          }
+        }
+
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+        geo.setIndex(indices);
+        geo.computeVertexNormals();
+        return geo;
+      }
+
+      // 1. Top Lobe (+ Phase: Luminous Blue Material)
+      const topGeo = createPWaveLobe(1);
+      const topSolidMat = new THREE.MeshStandardMaterial({
+        color: 0x2563eb,
+        emissive: 0x1e40af,
+        emissiveIntensity: 0.35,
+        roughness: 0.18,
+        metalness: 0.15,
+        transparent: true,
+        opacity: 0.88,
+        side: THREE.DoubleSide
+      });
+      const topWireMat = new THREE.MeshBasicMaterial({
+        color: 0x93c5fd,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35
+      });
+      const topMesh = new THREE.Mesh(topGeo, topSolidMat);
+      const topWire = new THREE.Mesh(topGeo, topWireMat);
+      pWaveGroup.add(topMesh);
+      pWaveGroup.add(topWire);
+
+      // 2. Bottom Lobe (- Phase: Luminous Red Material)
+      const bottomGeo = createPWaveLobe(-1);
+      const bottomSolidMat = new THREE.MeshStandardMaterial({
+        color: 0xdc2626,
+        emissive: 0x991b1b,
+        emissiveIntensity: 0.35,
+        roughness: 0.18,
+        metalness: 0.15,
+        transparent: true,
+        opacity: 0.88,
+        side: THREE.DoubleSide
+      });
+      const bottomWireMat = new THREE.MeshBasicMaterial({
+        color: 0xfca5a5,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35
+      });
+      const bottomMesh = new THREE.Mesh(bottomGeo, bottomSolidMat);
+      const bottomWire = new THREE.Mesh(bottomGeo, bottomWireMat);
+      pWaveGroup.add(bottomMesh);
+      pWaveGroup.add(bottomWire);
+
+      // 3. Central Metallic Gold Nodal Plane Ring
+      const nodalGeo = new THREE.TorusGeometry(1.05, 0.028, 16, 80);
+      const nodalMat = new THREE.MeshStandardMaterial({
+        color: 0xf59e0b,
+        emissive: 0xb45309,
+        emissiveIntensity: 0.4,
+        roughness: 0.2,
+        metalness: 0.85
+      });
+      const nodalRing = new THREE.Mesh(nodalGeo, nodalMat);
+      nodalRing.rotation.x = Math.PI / 2;
+      pWaveGroup.add(nodalRing);
+
+      // 4. Phase-Space Coherences & Wigner Ripples
+      const coherenceGroup = new THREE.Group();
+      pWaveGroup.add(coherenceGroup);
+
+      const wignerDiskGeo = new THREE.RingGeometry(0.3, 2.1, 48, 6);
+      const wignerDiskMat = new THREE.MeshBasicMaterial({
+        color: 0x38bdf8,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35,
+        side: THREE.DoubleSide
+      });
+      const wignerDisk = new THREE.Mesh(wignerDiskGeo, wignerDiskMat);
+      wignerDisk.rotation.x = Math.PI / 2;
+      coherenceGroup.add(wignerDisk);
+
+      // Concentric Wigner Coherence Interference Rings
+      const rippleRings = [];
+      for (let r = 0.6; r <= 1.9; r += 0.32) {
+        const rGeo = new THREE.TorusGeometry(r, 0.012, 8, 64);
+        const rMat = new THREE.MeshBasicMaterial({
+          color: (rippleRings.length % 2 === 0 ? 0x35ff82 : 0x64c8ff),
+          transparent: true,
+          opacity: 0.5
+        });
+        const ringMesh = new THREE.Mesh(rGeo, rMat);
+        ringMesh.rotation.x = Math.PI / 2;
+        coherenceGroup.add(ringMesh);
+        rippleRings.push({ mesh: ringMesh, baseRadius: r });
+      }
+
+      // Off-Diagonal Double Helical Bridge
+      const coherenceStrandPts1 = [];
+      const coherenceStrandPts2 = [];
+      const helixSteps = 60;
+      for (let i = 0; i <= helixSteps; i++) {
+        const tStep = (i / helixSteps) * 2 - 1;
+        const yPos = tStep * 2.2;
+        const radius = Math.cos(tStep * Math.PI * 0.45) * 0.95;
+        const angle = tStep * Math.PI * 4;
+
+        coherenceStrandPts1.push(new THREE.Vector3(
+          radius * Math.cos(angle),
+          yPos,
+          radius * Math.sin(angle)
+        ));
+        coherenceStrandPts2.push(new THREE.Vector3(
+          radius * Math.cos(angle + Math.PI),
+          yPos,
+          radius * Math.sin(angle + Math.PI)
+        ));
+      }
+
+      const strand1Geo = new THREE.BufferGeometry().setFromPoints(coherenceStrandPts1);
+      const strand2Geo = new THREE.BufferGeometry().setFromPoints(coherenceStrandPts2);
+      const strandMat = new THREE.LineBasicMaterial({
+        color: 0x35ff82,
+        transparent: true,
+        opacity: 0.48
+      });
+      const strand1 = new THREE.Line(strand1Geo, strandMat);
+      const strand2 = new THREE.Line(strand2Geo, strandMat);
+      coherenceGroup.add(strand1);
+      coherenceGroup.add(strand2);
+
+      // Phase-Space Interference Particle Cloud
+      const wignerCount = 40;
+      const wignerGeo = new THREE.BufferGeometry();
+      const wignerPos = new Float32Array(wignerCount * 3);
+      for (let i = 0; i < wignerCount * 3; i += 3) {
+        const rVal = 0.5 + Math.random() * 1.5;
+        const thVal = Math.random() * Math.PI * 2;
+        wignerPos[i] = rVal * Math.cos(thVal);
+        wignerPos[i + 1] = (Math.random() - 0.5) * 0.25;
+        wignerPos[i + 2] = rVal * Math.sin(thVal);
+      }
+      wignerGeo.setAttribute('position', new THREE.BufferAttribute(wignerPos, 3));
+      const wignerMat = new THREE.PointsMaterial({
+        color: 0x38bdf8,
+        size: 0.08,
+        transparent: true,
+        opacity: 0.85,
+        blending: THREE.AdditiveBlending
+      });
+      const wignerParticles = new THREE.Points(wignerGeo, wignerMat);
+      coherenceGroup.add(wignerParticles);
+
+      // Signature Resting Static Orientation (Crisp Quantum Manifold Pose)
+      const REST_ROT_X = 0.22;
+      const REST_ROT_Y = 0.38;
+      const REST_ROT_Z = 0.22;
+
+      pWaveGroup.rotation.set(REST_ROT_X, REST_ROT_Y, REST_ROT_Z);
+      pWaveGroup.position.set(0, 0, 0);
+
+      // Interactive Hover & p-Wave Wave Dynamics State
+      let isHovered = false;
+      let hoverProgress = 0.0; // 0 = frozen resting state, 1 = fully energized quantum fluid
+      let animTime = 0.0;
+      let currentRotY = REST_ROT_Y;
+      let mouseX = 0;
+      let mouseY = 0;
+      let smoothMouseX = 0;
+      let smoothMouseY = 0;
+
+      // Unified circular area cursor tracking & dynamic interaction
+      function updatePointerCoords(clientX, clientY) {
+        if (!container || heroCircleState !== 0) return;
+        const rect = container.getBoundingClientRect();
+        if (rect.width <= 0 || rect.height <= 0) return;
+        
+        // Normalized coordinates relative to circular center (-1 to +1)
+        const nx = (clientX - (rect.left + rect.width * 0.5)) / (rect.width * 0.5);
+        const ny = (clientY - (rect.top + rect.height * 0.5)) / (rect.height * 0.5);
+        const distSq = nx * nx + ny * ny;
+
+        // Circular boundary hit test (exact circle radius with slight anti-jitter margin)
+        if (distSq <= 1.15) {
+          isHovered = true;
+          mouseX = Math.max(-1.0, Math.min(1.0, nx));
+          mouseY = Math.max(-1.0, Math.min(1.0, ny));
+        } else {
+          isHovered = false;
+          mouseX = 0;
+          mouseY = 0;
+        }
+      }
+
+      if (container) {
+        container.addEventListener('pointerenter', (e) => updatePointerCoords(e.clientX, e.clientY));
+        container.addEventListener('pointermove', (e) => updatePointerCoords(e.clientX, e.clientY));
+        container.addEventListener('mousemove', (e) => updatePointerCoords(e.clientX, e.clientY));
+        container.addEventListener('pointerleave', () => {
+          isHovered = false;
+          mouseX = 0;
+          mouseY = 0;
+        });
+
+        container.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const now = Date.now();
+          if (now - lastHeroClickTime < 280) return;
+          lastHeroClickTime = now;
+          advanceHeroCircleState();
+        });
+
+        container.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            advanceHeroCircleState();
+          }
+        });
+
+        const riverVid = document.getElementById('river-electrons-video');
+        if (riverVid) {
+          riverVid.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const now = Date.now();
+            if (now - lastHeroClickTime < 280) return;
+            lastHeroClickTime = now;
+            advanceHeroCircleState();
+          });
+          riverVid.addEventListener('ended', () => {
+            if (heroCircleState === 2) {
+              advanceHeroCircleState(3);
+            }
+          });
+        }
+      }
+
+      // Also listen on window pointermove to seamlessly catch fast cursor swipes into the circular frame
+      window.addEventListener('pointermove', (e) => {
+        updatePointerCoords(e.clientX, e.clientY);
+      }, { passive: true });
+
+      // Animation Loop with Quantum Fluid Awakening and Freezing
+      let lastTime = performance.now();
+
+      function animate(now) {
+        requestAnimationFrame(animate);
+
+        const delta = Math.min((now - lastTime) / 1000, 0.1);
+        lastTime = now;
+
+        // Smooth acceleration on hover or voiceover seeking
+        const seekingActive = isHovered || Boolean(window.isVoiceoverSeeking);
+        if (seekingActive) {
+          hoverProgress = Math.min(1.0, hoverProgress + delta * 6.5);
+        } else {
+          hoverProgress = Math.max(0.0, hoverProgress - delta * 2.8);
+        }
+
+        // Camera dynamic zoom / seek effect: zooms in as cursor enters the circular frame
+        const targetCamZ = 8.2 - (hoverProgress * 1.45);
+        camera.position.z += (targetCamZ - camera.position.z) * Math.min(1.0, delta * 4.5);
+        camera.position.x += (smoothMouseX * 0.40 * hoverProgress - camera.position.x) * Math.min(1.0, delta * 4.0);
+        camera.position.y += (0.1 - smoothMouseY * 0.30 * hoverProgress - camera.position.y) * Math.min(1.0, delta * 4.0);
+
+        if (hoverProgress > 0.001) {
+          // Advance simulation clock proportional to hover intensity
+          animTime += delta * hoverProgress;
+
+          // Parallax smoothing towards cursor position or synthetic voiceover seek
+          let targetMx = mouseX;
+          let targetMy = mouseY;
+          if (window.isVoiceoverSeeking && !isHovered) {
+            targetMx = Math.sin(animTime * 1.8) * 0.65;
+            targetMy = Math.cos(animTime * 2.2) * 0.45;
+          }
+
+          smoothMouseX += (targetMx - smoothMouseX) * (delta * 6.5);
+          smoothMouseY += (targetMy - smoothMouseY) * (delta * 6.5);
+
+          // 1. Quantum p-Wave Nutation & Precession:
+          const pWaveNutationX = Math.sin(animTime * 2.8) * 0.28 * hoverProgress;
+          const pWaveNutationZ = Math.cos(animTime * 2.1) * 0.24 * hoverProgress;
+
+          // Continuous azimuthal phase rotation while energized
+          currentRotY += (2.2 * hoverProgress) * delta;
+
+          pWaveGroup.rotation.x = REST_ROT_X + pWaveNutationX - smoothMouseY * 0.75 * hoverProgress;
+          pWaveGroup.rotation.y = currentRotY + smoothMouseX * 1.25 * hoverProgress;
+          pWaveGroup.rotation.z = REST_ROT_Z + pWaveNutationZ + smoothMouseX * 0.55 * hoverProgress;
+
+          // 2. Spatial 3D Fluid Drift: the p-orbital visibly and responsively moves around following the cursor
+          const wavePosX = (smoothMouseX * 1.55 + Math.sin(animTime * 2.6) * 0.42) * hoverProgress;
+          const wavePosY = (-smoothMouseY * 1.35 + Math.cos(animTime * 2.9) * 0.36) * hoverProgress;
+          const wavePosZ = (Math.sin(animTime * 1.8) * 0.45 + (1.0 - Math.min(1.0, Math.sqrt(smoothMouseX * smoothMouseX + smoothMouseY * smoothMouseY))) * 0.4) * hoverProgress;
+          pWaveGroup.position.set(wavePosX, wavePosY, wavePosZ);
+
+          // 3. Coherence Sub-Planck Breathing & Ripple Oscillations
+          const pulse = 1.0 + Math.sin(animTime * 4.2) * 0.16 * hoverProgress;
+          wignerDisk.scale.set(pulse, pulse, pulse);
+
+          rippleRings.forEach((ring, idx) => {
+            const rScale = 1.0 + Math.sin(animTime * 4.5 + idx * 0.85) * 0.18 * hoverProgress;
+            ring.mesh.scale.set(rScale, rScale, rScale);
+          });
+
+          // 4. Double Helical Coherence Rotation
+          strand1.rotation.y = -animTime * 2.4;
+          strand2.rotation.y = -animTime * 2.4;
+          wignerParticles.rotation.y = animTime * 1.6;
+        } else {
+          // Smoothly and seamlessly freeze back into the stationary resting pose without abrupt snap
+          smoothMouseX = 0;
+          smoothMouseY = 0;
+
+          // Camera smoothly restores base vantage
+          camera.position.z += (8.2 - camera.position.z) * Math.min(1.0, delta * 4.0);
+          camera.position.x += (0 - camera.position.x) * Math.min(1.0, delta * 4.0);
+          camera.position.y += (0.1 - camera.position.y) * Math.min(1.0, delta * 4.0);
+
+          // Find nearest multiple of 2*PI relative to REST_ROT_Y to gently settle into canonical resting orientation
+          const nearestRestY = Math.round((currentRotY - REST_ROT_Y) / (Math.PI * 2)) * (Math.PI * 2) + REST_ROT_Y;
+          currentRotY += (nearestRestY - currentRotY) * Math.min(1.0, delta * 4.0);
+
+          pWaveGroup.rotation.x += (REST_ROT_X - pWaveGroup.rotation.x) * Math.min(1.0, delta * 4.0);
+          pWaveGroup.rotation.y = currentRotY;
+          pWaveGroup.rotation.z += (REST_ROT_Z - pWaveGroup.rotation.z) * Math.min(1.0, delta * 4.0);
+
+          pWaveGroup.position.x += (0 - pWaveGroup.position.x) * Math.min(1.0, delta * 4.0);
+          pWaveGroup.position.y += (0 - pWaveGroup.position.y) * Math.min(1.0, delta * 4.0);
+          pWaveGroup.position.z += (0 - pWaveGroup.position.z) * Math.min(1.0, delta * 4.0);
+
+          wignerDisk.scale.set(1, 1, 1);
+          rippleRings.forEach((ring) => {
+            ring.mesh.scale.set(1, 1, 1);
+          });
+
+          // Absolute hard-clamp once settled so it is 100% frozen and static at rest
+          if (
+            Math.abs(pWaveGroup.rotation.x - REST_ROT_X) < 0.002 &&
+            Math.abs(currentRotY - nearestRestY) < 0.002 &&
+            Math.abs(pWaveGroup.rotation.z - REST_ROT_Z) < 0.002 &&
+            Math.abs(pWaveGroup.position.x) < 0.002 &&
+            Math.abs(pWaveGroup.position.y) < 0.002 &&
+            Math.abs(pWaveGroup.position.z) < 0.002
+          ) {
+            pWaveGroup.rotation.set(REST_ROT_X, nearestRestY, REST_ROT_Z);
+            pWaveGroup.position.set(0, 0, 0);
+            currentRotY = nearestRestY;
+          }
+        }
+
+        renderer.render(scene, camera);
+      }
+
+      // Responsive Dynamic Resize Handling for Large Screens
+      function updateHero3DSize() {
+        if (!container || !renderer || !camera) return;
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (w > 0 && h > 0) {
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h, false);
+          renderer.render(scene, camera);
+        }
+      }
+
+      window.updateHero3DSize = updateHero3DSize;
+      window.addEventListener('resize', updateHero3DSize);
+      if (window.ResizeObserver) {
+        const ro = new ResizeObserver(() => {
+          requestAnimationFrame(updateHero3DSize);
+        });
+        ro.observe(container);
+      }
+
+      // Render initial static frame immediately & sync size
+      updateHero3DSize();
+      requestAnimationFrame(animate);
+    }
+
+    // ==========================================================================
+    // SLIDE 3: EXACT STATIC 3D Q-BOLTZ p-WAVE ORBITAL MANIFOLD
+    // ==========================================================================
+    let staticOrbitalScene, staticOrbitalCamera, staticOrbitalRenderer, staticOrbitalContainer;
+
+    function initStaticPOrbital3D() {
+      const canvas = document.getElementById('static-porbital-canvas');
+      staticOrbitalContainer = document.getElementById('static-porbital-container');
+      if (!canvas || !staticOrbitalContainer || typeof THREE === 'undefined') return;
+
+      const width = staticOrbitalContainer.clientWidth || 330;
+      const height = staticOrbitalContainer.clientHeight || 330;
+
+      staticOrbitalScene = new THREE.Scene();
+      staticOrbitalCamera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
+      staticOrbitalCamera.position.set(0, 0.1, 8.2);
+
+      staticOrbitalRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      staticOrbitalRenderer.setSize(width, height);
+      staticOrbitalRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Physically-Based Scene Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+      staticOrbitalScene.add(ambientLight);
+
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
+      keyLight.position.set(5, 8, 6);
+      staticOrbitalScene.add(keyLight);
+
+      const blueFillLight = new THREE.PointLight(0x3b82f6, 1.6, 20);
+      blueFillLight.position.set(-4, 5, 4);
+      staticOrbitalScene.add(blueFillLight);
+
+      const redRimLight = new THREE.PointLight(0xef4444, 1.6, 20);
+      redRimLight.position.set(4, -5, 3);
+      staticOrbitalScene.add(redRimLight);
+
+      // Main Static p-Wave Group
+      const pWaveGroup = new THREE.Group();
+      staticOrbitalScene.add(pWaveGroup);
+
+      // Mathematical p-Wave Dual Lobe Geometry: Slender Quantum Teardrop Manifold
+      function createPWaveLobe(sign = 1) {
+        const uSegments = 54;
+        const vSegments = 54;
+        const positions = [];
+        const uvs = [];
+        const indices = [];
+
+        for (let i = 0; i <= uSegments; i++) {
+          const u = (i / uSegments) * (Math.PI / 2);
+          for (let j = 0; j <= vSegments; j++) {
+            const v = (j / vSegments) * Math.PI * 2;
+            const cosU = Math.cos(u);
+            const sinU = Math.sin(u);
+            const y = sign * (2.45 * Math.pow(cosU, 1.35) + 0.04);
+            const rTransverse = 1.32 * sinU * Math.pow(cosU, 0.62);
+            const x = rTransverse * Math.cos(v);
+            const z = rTransverse * Math.sin(v);
+
+            positions.push(x, y, z);
+            uvs.push(i / uSegments, j / vSegments);
+          }
+        }
+
+        for (let i = 0; i < uSegments; i++) {
+          for (let j = 0; j < vSegments; j++) {
+            const a = i * (vSegments + 1) + j;
+            const b = (i + 1) * (vSegments + 1) + j;
+            const c = (i + 1) * (vSegments + 1) + (j + 1);
+            const d = i * (vSegments + 1) + (j + 1);
+
+            indices.push(a, b, d);
+            indices.push(b, c, d);
+          }
+        }
+
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+        geo.setIndex(indices);
+        geo.computeVertexNormals();
+        return geo;
+      }
+
+      // 1. Top Lobe (+ Phase: Luminous Blue Material)
+      const topGeo = createPWaveLobe(1);
+      const topSolidMat = new THREE.MeshStandardMaterial({
+        color: 0x2563eb,
+        emissive: 0x1e40af,
+        emissiveIntensity: 0.35,
+        roughness: 0.18,
+        metalness: 0.15,
+        transparent: true,
+        opacity: 0.88,
+        side: THREE.DoubleSide
+      });
+      const topWireMat = new THREE.MeshBasicMaterial({
+        color: 0x93c5fd,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35
+      });
+      pWaveGroup.add(new THREE.Mesh(topGeo, topSolidMat));
+      pWaveGroup.add(new THREE.Mesh(topGeo, topWireMat));
+
+      // 2. Bottom Lobe (- Phase: Luminous Red Material)
+      const bottomGeo = createPWaveLobe(-1);
+      const bottomSolidMat = new THREE.MeshStandardMaterial({
+        color: 0xdc2626,
+        emissive: 0x991b1b,
+        emissiveIntensity: 0.35,
+        roughness: 0.18,
+        metalness: 0.15,
+        transparent: true,
+        opacity: 0.88,
+        side: THREE.DoubleSide
+      });
+      const bottomWireMat = new THREE.MeshBasicMaterial({
+        color: 0xfca5a5,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35
+      });
+      pWaveGroup.add(new THREE.Mesh(bottomGeo, bottomSolidMat));
+      pWaveGroup.add(new THREE.Mesh(bottomGeo, bottomWireMat));
+
+      // 3. Central Metallic Gold Nodal Plane Ring
+      const nodalGeo = new THREE.TorusGeometry(1.05, 0.028, 16, 80);
+      const nodalMat = new THREE.MeshStandardMaterial({
+        color: 0xf59e0b,
+        emissive: 0xb45309,
+        emissiveIntensity: 0.4,
+        roughness: 0.2,
+        metalness: 0.85
+      });
+      const nodalRing = new THREE.Mesh(nodalGeo, nodalMat);
+      nodalRing.rotation.x = Math.PI / 2;
+      pWaveGroup.add(nodalRing);
+
+      // 4. Phase-Space Coherences & Wigner Ripples
+      const coherenceGroup = new THREE.Group();
+      pWaveGroup.add(coherenceGroup);
+
+      const wignerDiskGeo = new THREE.RingGeometry(0.3, 2.1, 48, 6);
+      const wignerDiskMat = new THREE.MeshBasicMaterial({
+        color: 0x38bdf8,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35,
+        side: THREE.DoubleSide
+      });
+      const wignerDisk = new THREE.Mesh(wignerDiskGeo, wignerDiskMat);
+      wignerDisk.rotation.x = Math.PI / 2;
+      coherenceGroup.add(wignerDisk);
+
+      // Concentric Wigner Coherence Interference Rings
+      for (let r = 0.6; r <= 1.9; r += 0.32) {
+        const rGeo = new THREE.TorusGeometry(r, 0.012, 8, 64);
+        const rMat = new THREE.MeshBasicMaterial({
+          color: (r < 1.2 ? 0x35ff82 : 0x64c8ff),
+          transparent: true,
+          opacity: 0.5
+        });
+        const ringMesh = new THREE.Mesh(rGeo, rMat);
+        ringMesh.rotation.x = Math.PI / 2;
+        coherenceGroup.add(ringMesh);
+      }
+
+      // Off-Diagonal Double Helical Bridge
+      const coherenceStrandPts1 = [];
+      const coherenceStrandPts2 = [];
+      const helixSteps = 60;
+      for (let i = 0; i <= helixSteps; i++) {
+        const tStep = (i / helixSteps) * 2 - 1;
+        const yPos = tStep * 2.2;
+        const radius = Math.cos(tStep * Math.PI * 0.45) * 0.95;
+        const angle = tStep * Math.PI * 4;
+
+        coherenceStrandPts1.push(new THREE.Vector3(
+          radius * Math.cos(angle),
+          yPos,
+          radius * Math.sin(angle)
+        ));
+        coherenceStrandPts2.push(new THREE.Vector3(
+          radius * Math.cos(angle + Math.PI),
+          yPos,
+          radius * Math.sin(angle + Math.PI)
+        ));
+      }
+
+      const strandMat = new THREE.LineBasicMaterial({
+        color: 0x35ff82,
+        transparent: true,
+        opacity: 0.48
+      });
+      coherenceGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(coherenceStrandPts1), strandMat));
+      coherenceGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(coherenceStrandPts2), strandMat));
+
+      // Phase-Space Interference Particle Cloud
+      const wignerCount = 40;
+      const wignerGeo = new THREE.BufferGeometry();
+      const wignerPos = new Float32Array(wignerCount * 3);
+      for (let i = 0; i < wignerCount * 3; i += 3) {
+        const rVal = 0.5 + Math.random() * 1.5;
+        const thVal = Math.random() * Math.PI * 2;
+        wignerPos[i] = rVal * Math.cos(thVal);
+        wignerPos[i + 1] = (Math.random() - 0.5) * 0.25;
+        wignerPos[i + 2] = rVal * Math.sin(thVal);
+      }
+      wignerGeo.setAttribute('position', new THREE.BufferAttribute(wignerPos, 3));
+      const wignerMat = new THREE.PointsMaterial({
+        color: 0x38bdf8,
+        size: 0.08,
+        transparent: true,
+        opacity: 0.85,
+        blending: THREE.AdditiveBlending
+      });
+      coherenceGroup.add(new THREE.Points(wignerGeo, wignerMat));
+
+      // Signature Resting Static Orientation (Locked at center)
+      pWaveGroup.rotation.set(0.22, 0.38, 0.22);
+      pWaveGroup.position.set(0, 0, 0);
+
+      staticOrbitalRenderer.render(staticOrbitalScene, staticOrbitalCamera);
+
+      // Interactive Click / Keyboard Transition to LaTeX O(N^6)
+      staticOrbitalContainer.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleSlide3Latex();
+      });
+
+      staticOrbitalContainer.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleSlide3Latex();
+        }
+      });
+    }
+
+    let isSlide3LatexActive = false;
+
+    function toggleSlide3Latex(forceState) {
+      const container = document.getElementById('static-porbital-container');
+      if (!container) return;
+
+      if (typeof forceState === 'boolean') {
+        isSlide3LatexActive = forceState;
+      } else {
+        isSlide3LatexActive = !isSlide3LatexActive;
+      }
+
+      if (isSlide3LatexActive) {
+        container.classList.add('show-latex');
+        renderLatexFormula();
+      } else {
+        container.classList.remove('show-latex');
+      }
+    }
+
+    function renderLatexFormula() {
+      const target = document.getElementById('latex-math-target');
+      if (target && typeof katex !== 'undefined') {
+        try {
+          katex.render('\\mathcal{O}(N^6)', target, {
+            displayMode: true,
+            throwOnError: false
+          });
+        } catch (e) {
+          console.warn('KaTeX render error:', e);
+        }
+      }
+    }
+
+    function renderStaticPOrbital() {
+      if (!staticOrbitalRenderer || !staticOrbitalContainer || !staticOrbitalCamera || !staticOrbitalScene) {
+        if (!staticOrbitalScene && typeof initStaticPOrbital3D === 'function') {
+          initStaticPOrbital3D();
+        }
+      }
+      if (!staticOrbitalRenderer || !staticOrbitalContainer || !staticOrbitalCamera || !staticOrbitalScene) return;
+      const w = staticOrbitalContainer.clientWidth || 330;
+      const h = staticOrbitalContainer.clientHeight || 330;
+      if (w > 0 && h > 0) {
+        staticOrbitalCamera.aspect = w / h;
+        staticOrbitalCamera.updateProjectionMatrix();
+        staticOrbitalRenderer.setSize(w, h);
+        staticOrbitalRenderer.render(staticOrbitalScene, staticOrbitalCamera);
+      }
+    }
+
+    // ==========================================================================
+    // SLIDE 4: 3D Q-BOLTZ LOGO WITH FLUID QUANTUM WAVE DYNAMICS
+    // ==========================================================================
+    function initQBoltzFlow3D() {
+      const canvas = document.getElementById('qboltz-flow-canvas');
+      const container = document.getElementById('qboltz-flow-container');
+      if (!canvas || !container || typeof THREE === 'undefined') return;
+
+      const width = container.clientWidth || 360;
+      const height = container.clientHeight || 320;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
+      camera.position.set(0, 0.4, 7.5);
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setSize(width, height, false);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+      scene.add(ambientLight);
+
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
+      keyLight.position.set(5, 8, 6);
+      scene.add(keyLight);
+
+      const blueLight = new THREE.PointLight(0x3b82f6, 1.8, 20);
+      blueLight.position.set(-4, 5, 4);
+      scene.add(blueLight);
+
+      const redLight = new THREE.PointLight(0xef4444, 1.8, 20);
+      redLight.position.set(4, -5, 3);
+      scene.add(redLight);
+
+      const coreGroup = new THREE.Group();
+      scene.add(coreGroup);
+
+      // p-Wave Lobes
+      function createPWaveLobe(sign = 1) {
+        const uSegs = 48;
+        const vSegs = 48;
+        const positions = [];
+        const uvs = [];
+        const indices = [];
+
+        for (let i = 0; i <= uSegs; i++) {
+          const u = (i / uSegs) * (Math.PI / 2);
+          for (let j = 0; j <= vSegs; j++) {
+            const v = (j / vSegs) * Math.PI * 2;
+            const cosU = Math.cos(u);
+            const sinU = Math.sin(u);
+            const y = sign * (2.45 * Math.pow(cosU, 1.35) + 0.04);
+            const r = 1.32 * sinU * Math.pow(cosU, 0.62);
+            positions.push(r * Math.cos(v), y, r * Math.sin(v));
+            uvs.push(i / uSegs, j / vSegs);
+          }
+        }
+
+        for (let i = 0; i < uSegs; i++) {
+          for (let j = 0; j < vSegs; j++) {
+            const a = i * (vSegs + 1) + j;
+            const b = (i + 1) * (vSegs + 1) + j;
+            const c = (i + 1) * (vSegs + 1) + (j + 1);
+            const d = i * (vSegs + 1) + (j + 1);
+            indices.push(a, b, d);
+            indices.push(b, c, d);
+          }
+        }
+
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+        geo.setIndex(indices);
+        geo.computeVertexNormals();
+        return geo;
+      }
+
+      // Top & Bottom Lobes
+      const topGeo = createPWaveLobe(1);
+      const topMat = new THREE.MeshStandardMaterial({ color: 0x2563eb, emissive: 0x1e40af, emissiveIntensity: 0.4, roughness: 0.2, metalness: 0.2, transparent: true, opacity: 0.88 });
+      const topWireMat = new THREE.MeshBasicMaterial({ color: 0x93c5fd, wireframe: true, transparent: true, opacity: 0.35 });
+      coreGroup.add(new THREE.Mesh(topGeo, topMat));
+      coreGroup.add(new THREE.Mesh(topGeo, topWireMat));
+
+      const botGeo = createPWaveLobe(-1);
+      const botMat = new THREE.MeshStandardMaterial({ color: 0xdc2626, emissive: 0x991b1b, emissiveIntensity: 0.4, roughness: 0.2, metalness: 0.2, transparent: true, opacity: 0.88 });
+      const botWireMat = new THREE.MeshBasicMaterial({ color: 0xfca5a5, wireframe: true, transparent: true, opacity: 0.35 });
+      coreGroup.add(new THREE.Mesh(botGeo, botMat));
+      coreGroup.add(new THREE.Mesh(botGeo, botWireMat));
+
+      // Nodal Ring
+      const nodalGeo = new THREE.TorusGeometry(1.05, 0.03, 16, 80);
+      const nodalMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, emissive: 0xb45309, emissiveIntensity: 0.45, roughness: 0.2, metalness: 0.85 });
+      const nodalRing = new THREE.Mesh(nodalGeo, nodalMat);
+      nodalRing.rotation.x = Math.PI / 2;
+      coreGroup.add(nodalRing);
+
+      // FLUID QUANTUM WAVE RIPPLES (Concentric Expanding Wavefronts)
+      const waveRipples = [];
+      const numWaves = 6;
+      for (let w = 0; w < numWaves; w++) {
+        const ringGeo = new THREE.RingGeometry(0.2, 0.25, 48);
+        const ringMat = new THREE.MeshBasicMaterial({
+          color: (w % 2 === 0 ? 0x35ff82 : 0x64c8ff),
+          transparent: true,
+          opacity: 0.6,
+          side: THREE.DoubleSide
+        });
+        const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+        ringMesh.rotation.x = Math.PI / 2;
+        coreGroup.add(ringMesh);
+        waveRipples.push({ mesh: ringMesh, offset: w * (Math.PI / 3) });
+      }
+
+      // FLUID QUANTUM STREAMLINE PARTICLES (Flowing from Left to Right through Q-Boltz Core)
+      const streamCount = 120;
+      const streamGeo = new THREE.BufferGeometry();
+      const streamPositions = new Float32Array(streamCount * 3);
+      const streamSpeeds = new Float32Array(streamCount);
+      for (let i = 0; i < streamCount; i++) {
+        streamPositions[i * 3] = (Math.random() - 0.5) * 6.0;      // X: -3 to +3
+        streamPositions[i * 3 + 1] = (Math.random() - 0.5) * 1.8;  // Y: -0.9 to +0.9
+        streamPositions[i * 3 + 2] = (Math.random() - 0.5) * 2.2;  // Z
+        streamSpeeds[i] = 0.02 + Math.random() * 0.03;
+      }
+      streamGeo.setAttribute('position', new THREE.BufferAttribute(streamPositions, 3));
+      const streamMat = new THREE.PointsMaterial({
+        color: 0x35ff82,
+        size: 0.07,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending
+      });
+      const streamParticles = new THREE.Points(streamGeo, streamMat);
+      scene.add(streamParticles);
+
+      coreGroup.rotation.z = 0.25;
+      coreGroup.rotation.x = 0.2;
+
+      let flowClock = new THREE.Clock();
+      function animateFlow() {
+        requestAnimationFrame(animateFlow);
+        const t = flowClock.getElapsedTime();
+
+        // 1. Gyroscopic core rotation
+        coreGroup.rotation.y = t * 0.55;
+        coreGroup.position.y = Math.sin(t * 1.5) * 0.12;
+
+        // 2. Fluid Wave Front Pulsation
+        waveRipples.forEach((ripple, idx) => {
+          const wavePhase = (t * 1.8 + ripple.offset) % (Math.PI * 2);
+          const currentRadius = 0.4 + (wavePhase / (Math.PI * 2)) * 2.2;
+          const currentOpacity = Math.max(0, 1.0 - (currentRadius / 2.6));
+          ripple.mesh.scale.set(currentRadius, currentRadius, currentRadius);
+          ripple.mesh.material.opacity = currentOpacity * 0.65;
+        });
+
+        // 3. Fluid Flow Streamlines Animation (Translating along X axis from Host to GPU)
+        const posAttr = streamGeo.attributes.position;
+        const posArray = posAttr.array;
+        for (let i = 0; i < streamCount; i++) {
+          posArray[i * 3] += streamSpeeds[i];
+          // Fluid harmonic wave oscillation on Y
+          posArray[i * 3 + 1] += Math.sin(posArray[i * 3] * 2.0 + t * 3.0) * 0.008;
+
+          // Wrap around X
+          if (posArray[i * 3] > 3.2) {
+            posArray[i * 3] = -3.2;
+            posArray[i * 3 + 1] = (Math.random() - 0.5) * 1.8;
+          }
+        }
+        posAttr.needsUpdate = true;
+
+        renderer.render(scene, camera);
+      }
+      animateFlow();
+    }
+
+    // Initialize
+    updateSlide();
+
+    function initAll3D() {
+      initQBoltz3D();
+      renderHeroLatex();
+    }
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      initAll3D();
+    } else {
+      document.addEventListener('DOMContentLoaded', initAll3D);
+    }
+    window.addEventListener('load', initAll3D);
+  </script>
+</body>
+</html>

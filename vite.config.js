@@ -25,6 +25,15 @@ export default defineConfig({
           if (req.url === '/quantonation-deck' || req.url === '/quantonation-deck/') {
             req.url = '/quantonation-deck.html';
           }
+          if (req.url === '/a16z' || req.url === '/a16z/') {
+            req.url = '/a16z-deck.html';
+          }
+          if (req.url === '/a16z-deck' || req.url === '/a16z-deck/') {
+            req.url = '/a16z-deck.html';
+          }
+          if (req.url === '/a16z-appendix' || req.url === '/a16z-appendix/') {
+            req.url = '/a16z-appendix.html';
+          }
           next();
         });
       }
@@ -37,6 +46,8 @@ export default defineConfig({
         interactive: resolve(__dirname, 'interactive.html'),
         anfa: resolve(__dirname, 'anfa-deck.html'),
         alchemist: resolve(__dirname, 'alchemist-deck.html'),
+        a16z: resolve(__dirname, 'a16z-deck.html'),
+        a16z_appendix: resolve(__dirname, 'a16z-appendix.html'),
         news_alchemist: resolve(__dirname, 'news/alchemist-chicago-2026/index.html'),
         film: resolve(__dirname, 'film/index.html')
       }
