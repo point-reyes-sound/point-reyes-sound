@@ -353,7 +353,7 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
 }
 
 // ---------------------------------------------------------------------------
-// Main Fullscreen Q-BOLTZ Agent Workstation Component
+// Main Fullscreen Q-BOLTZ Agent Workstation Component (Pure Text Interaction)
 // ---------------------------------------------------------------------------
 export default function QBoltzAgentConsole({ onClose }) {
   const [query, setQuery] = useState("");
@@ -362,15 +362,6 @@ export default function QBoltzAgentConsole({ onClose }) {
   const [streamedText, setStreamedText] = useState("");
   const [fullNarrative, setFullNarrative] = useState("");
   const [simulation, setSimulation] = useState(null);
-
-  // High-Fidelity Audio / Speech state
-  const [isRecording, setIsRecording] = useState(false);
-  const [speechMuted, setSpeechMuted] = useState(false);
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const [voiceModelLabel, setVoiceModelLabel] = useState("ElevenLabs Turbo v2.5");
-  const audioPlayerRef = useRef(null);
-  const mediaRecorderRef = useRef(null);
-  const audioChunksRef = useRef([]);
 
   // Typewriter streaming effect
   useEffect(() => {
@@ -389,160 +380,11 @@ export default function QBoltzAgentConsole({ onClose }) {
     return () => clearInterval(interval);
   }, [fullNarrative]);
 
-  // Voice playback handler (ElevenLabs -> Fallback Neural SpeechSynthesis)
-  const playVoiceAudio = async (text) => {
-    if (speechMuted) return;
-
-    if (audioPlayerRef.current) {
-      audioPlayerRef.current.pause();
-      audioPlayerRef.current = null;
-    }
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-    }
-
-    const cleanText = text.replace(/\*\*/g, "").replace(/`/g, "").replace(/##/g, "");
-
-    try {
-      const res = await fetch("http://127.0.0.1:8088/api/v1/voice/speak", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          text: cleanText,
-          voice_id: "JBFqnCBsd6RMkjVDRZzb", // George: warm, charismatic intellectual European scholar
-          model_id: "eleven_turbo_v2_5"
-        })
-      });
-
-      if (res.ok) {
-        const audioBlob = await res.blob();
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        audioPlayerRef.current = audio;
-        setIsPlayingAudio(true);
-        setVoiceModelLabel("ElevenLabs Turbo v2.5");
-
-        audio.onended = () => {
-          setIsPlayingAudio(false);
-          URL.revokeObjectURL(audioUrl);
-        };
-        audio.onerror = () => {
-          setIsPlayingAudio(false);
-          fallbackSpeechSynthesis(cleanText);
-        };
-        await audio.play();
-        return;
-      } else {
-        fallbackSpeechSynthesis(cleanText);
-      }
-    } catch (err) {
-      console.warn("ElevenLabs audio request failed, falling back to browser voice:", err);
-      fallbackSpeechSynthesis(cleanText);
-    }
-  };
-
-  const fallbackSpeechSynthesis = (cleanText) => {
-    if (!("speechSynthesis" in window) || speechMuted) return;
-    setIsPlayingAudio(true);
-    setVoiceModelLabel("Neural Web Voice");
-
-    const utter = new SpeechSynthesisUtterance(cleanText);
-    const voices = window.speechSynthesis.getVoices();
-    const preferredVoice = voices.find(
-      (v) =>
-        v.name.includes("Daniel") ||
-        v.name.includes("Oliver") ||
-        v.name.includes("George") ||
-        v.name.includes("Google UK English Male") ||
-        (v.lang.startsWith("en-GB") && !v.name.includes("Compact"))
-    );
-    if (preferredVoice) {
-      utter.voice = preferredVoice;
-    }
-    utter.rate = 0.98;
-    utter.pitch = 0.93;
-
-    utter.onend = () => setIsPlayingAudio(false);
-    utter.onerror = () => setIsPlayingAudio(false);
-    window.speechSynthesis.speak(utter);
-  };
-
-  const stopAllAudio = () => {
-    if (audioPlayerRef.current) {
-      audioPlayerRef.current.pause();
-      audioPlayerRef.current = null;
-    }
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-    }
-    setIsPlayingAudio(false);
-  };
-
-  // Voice recording handlers
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      audioChunksRef.current = [];
-      const mr = new MediaRecorder(stream, { mimeType: "audio/webm" });
-      mediaRecorderRef.current = mr;
-
-      mr.ondataavailable = (e) => {
-        if (e.data.size > 0) audioChunksRef.current.push(e.data);
-      };
-
-      mr.onstop = async () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
-        stream.getTracks().forEach((t) => t.stop());
-        await processAudioQuery(audioBlob);
-      };
-
-      mr.start();
-      setIsRecording(true);
-    } catch (err) {
-      console.error("Microphone access denied or error:", err);
-      alert("Microphone permission required for voice queries.");
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-    }
-  };
-
-  const processAudioQuery = async (blob) => {
-    setLoading(true);
-    setHasResult(true);
-    setStreamedText("Transcribing voice audio...");
-    try {
-      const fd = new FormData();
-      fd.append("file", blob, "voice.webm");
-      const res = await fetch("http://127.0.0.1:8088/api/v1/voice/transcribe", {
-        method: "POST",
-        body: fd
-      });
-      const data = await res.json();
-      if (data.transcription) {
-        setQuery(data.transcription);
-        await executeQuery(data.transcription);
-      } else {
-        setStreamedText("Could not understand voice audio. Please try speaking clearly or typing.");
-        setLoading(false);
-      }
-    } catch (err) {
-      console.error("Transcription failed:", err);
-      setStreamedText("Voice transcription service currently unreachable.");
-      setLoading(false);
-    }
-  };
-
   // Agent Query Execution
   const executeQuery = async (customPrompt) => {
     const text = customPrompt || query;
     if (!text.trim()) return;
 
-    stopAllAudio();
     setLoading(true);
     setHasResult(true);
     setFullNarrative("");
@@ -558,9 +400,6 @@ export default function QBoltzAgentConsole({ onClose }) {
       if (data.success) {
         setFullNarrative(data.narrative);
         setSimulation(data.simulation);
-
-        // High-fidelity speech playback
-        playVoiceAudio(data.narrative);
       }
     } catch (err) {
       console.error("Query failed:", err);
@@ -613,16 +452,6 @@ export default function QBoltzAgentConsole({ onClose }) {
                 {simulation.benchmark.title}
               </span>
             )}
-            {isPlayingAudio && (
-              <span className="voice-live-badge" title={voiceModelLabel}>
-                <span className="voice-eq-bars">
-                  <span className="eq-bar bar-1"></span>
-                  <span className="eq-bar bar-2"></span>
-                  <span className="eq-bar bar-3"></span>
-                </span>
-                <span className="voice-eq-text">{voiceModelLabel}</span>
-              </span>
-            )}
           </div>
 
           <div className="header-actions">
@@ -632,30 +461,15 @@ export default function QBoltzAgentConsole({ onClose }) {
                 onClick={() => {
                   setHasResult(false);
                   setQuery("");
-                  stopAllAudio();
                 }}
               >
                 + New Question
               </button>
             )}
-            <button
-              className={`action-pill-btn ${speechMuted ? "muted" : ""}`}
-              onClick={() => {
-                const nextMuted = !speechMuted;
-                setSpeechMuted(nextMuted);
-                if (nextMuted) stopAllAudio();
-              }}
-              title={speechMuted ? "Unmute Voice" : "Mute Voice"}
-            >
-              {speechMuted ? "🔇 Muted" : "🔊 Voice"}
-            </button>
             {onClose && (
               <button
                 className="console-close-btn"
-                onClick={() => {
-                  stopAllAudio();
-                  onClose();
-                }}
+                onClick={onClose}
                 title="Return to Overview"
               >
                 ✕
@@ -667,14 +481,6 @@ export default function QBoltzAgentConsole({ onClose }) {
         {/* Input Bar (Rendered in Compact View) */}
         {!hasResult && (
           <div className="console-input-row">
-            <button
-              className={`mic-button ${isRecording ? "recording" : ""}`}
-              onClick={isRecording ? stopRecording : startRecording}
-              title={isRecording ? "Click to stop recording" : "Click to speak voice prompt"}
-            >
-              {isRecording ? "⏹" : "🎙"}
-            </button>
-
             <input
               type="text"
               className="console-text-input"
@@ -722,17 +528,10 @@ export default function QBoltzAgentConsole({ onClose }) {
             <div className="workstation-left-panel">
               {/* Compact Query Bar in Fullscreen */}
               <div className="fullscreen-input-strip">
-                <button
-                  className={`mic-button-small ${isRecording ? "recording" : ""}`}
-                  onClick={isRecording ? stopRecording : startRecording}
-                  title="Speak voice prompt"
-                >
-                  {isRecording ? "⏹" : "🎙"}
-                </button>
                 <input
                   type="text"
                   className="fullscreen-text-input"
-                  placeholder="Ask follow-up question..."
+                  placeholder="Ask follow-up question (e.g. calculate N2 at 2.2 Å)..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={(e) => {
