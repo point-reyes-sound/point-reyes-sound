@@ -804,6 +804,11 @@
   display: block;
 }
 
+.current-state-marker {
+  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
 .observables-row-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

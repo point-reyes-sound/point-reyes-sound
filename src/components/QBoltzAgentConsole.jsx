@@ -59,7 +59,7 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
     const animate = () => {
       animId = requestAnimationFrame(animate);
       if (group && !isDraggingRef.current) {
-        group.rotation.y += 0.005;
+        group.rotation.y += 0.0035;
       }
       renderer.render(scene, camera);
     };
@@ -499,34 +499,14 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
           filter="url(#pesGlow)"
         />
 
-        {/* Current State Marker Ping & Coordinates Tag */}
+        {/* Current State Marker Ping (Clean, distraction-free green dot) */}
         {currQbePt && (
-          <g transform={`translate(${toSvgX(currQbePt.r)}, ${toSvgY(currQbePt.e_qbescf)})`}>
+          <g
+            className="current-state-marker"
+            transform={`translate(${toSvgX(currQbePt.r)}, ${toSvgY(currQbePt.e_qbescf)})`}
+          >
             <circle r="9" fill="#35ff82" opacity="0.35" className="ping-halo" />
-            <circle r="4" fill="#35ff82" stroke="#ffffff" strokeWidth="2" />
-            <g transform="translate(0, -18)">
-              <rect
-                x="-50"
-                y="-13"
-                width="100"
-                height="17"
-                rx="4"
-                fill="rgba(2, 9, 5, 0.94)"
-                stroke="#35ff82"
-                strokeWidth="1"
-              />
-              <text
-                x="0"
-                y="0"
-                textAnchor="middle"
-                fill="#35ff82"
-                fontSize="9"
-                fontFamily="'JetBrains Mono', monospace"
-                fontWeight="700"
-              >
-                R = {Number(currR).toFixed(2)} Å
-              </text>
-            </g>
+            <circle r="4.5" fill="#35ff82" stroke="#ffffff" strokeWidth="2" />
           </g>
         )}
       </svg>
@@ -598,7 +578,7 @@ export default function QBoltzAgentConsole({ onClose }) {
         }
         return next;
       });
-    }, 130);
+    }, 350); // Slower, graceful 350ms step for clear, easy-on-the-eye geometric transitions
     return () => clearInterval(interval);
   }, [isPlaying, hasTrajectory, loopDir, trajectory.length]);
 
