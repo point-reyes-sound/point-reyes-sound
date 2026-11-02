@@ -3,7 +3,7 @@ import * as THREE from "three";
 import "./QBoltzAgentConsole.css";
 
 // ---------------------------------------------------------------------------
-// Pure Three.js 3D Orbital Canvas (Zero Fiber dependency for max stability)
+// Pure Three.js 3D Orbital Canvas (Blue & Red Lobes, Zero Fiber dependency)
 // ---------------------------------------------------------------------------
 function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
   const mountRef = useRef(null);
@@ -20,8 +20,8 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
-    const width = mount.clientWidth || 420;
-    const height = mount.clientHeight || 300;
+    const width = mount.clientWidth || 360;
+    const height = mount.clientHeight || 280;
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, 0.8, 4.4);
     camera.lookAt(0, 0, 0);
@@ -36,14 +36,15 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
     mount.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+    // Atmospheric lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.3);
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.4);
     dirLight1.position.set(5, 7, 6);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0x64c8ff, 0.6);
+    const dirLight2 = new THREE.DirectionalLight(0x0088ff, 0.5);
     dirLight2.position.set(-5, -4, -4);
     scene.add(dirLight2);
 
@@ -128,7 +129,7 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
       }
     }
 
-    const addLobe = (lobeData, colorHex) => {
+    const addLobe = (lobeData, colorHex, emissiveHex) => {
       if (!lobeData?.vertices?.length || !lobeData?.faces?.length) return;
       const geom = new THREE.BufferGeometry();
       geom.setAttribute(
@@ -142,22 +143,25 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
 
       const mat = new THREE.MeshPhysicalMaterial({
         color: colorHex,
-        emissive: colorHex,
+        emissive: emissiveHex,
         emissiveIntensity: 0.35,
         roughness: 0.12,
         metalness: 0.08,
-        transmission: 0.42,
+        transmission: 0.36,
         ior: 1.38,
         transparent: true,
-        opacity: 0.82,
+        opacity: 0.84,
         side: THREE.DoubleSide,
         depthWrite: false
       });
       group.add(new THREE.Mesh(geom, mat));
     };
 
-    if (orbital?.pos_lobe) addLobe(orbital.pos_lobe, 0x35ff82); // Neon emerald
-    if (orbital?.neg_lobe) addLobe(orbital.neg_lobe, 0xff4466); // Ruby
+    // User Requirement: "the orbital lobes should be coloured blue and red."
+    // Positive lobe: Electric Blue (+ψ)
+    if (orbital?.pos_lobe) addLobe(orbital.pos_lobe, 0x0088ff, 0x003388);
+    // Negative lobe: Vivid Red (-ψ)
+    if (orbital?.neg_lobe) addLobe(orbital.neg_lobe, 0xff334b, 0x880015);
 
     // Render atomic spheres
     atoms.forEach((atom) => {
@@ -210,7 +214,7 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
       style={{
         width: "100%",
         height: "100%",
-        minHeight: "280px",
+        minHeight: "180px",
         cursor: "grab"
       }}
     />
@@ -349,7 +353,7 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
 }
 
 // ---------------------------------------------------------------------------
-// Main Minimal Q-BOLTZ Agent Console Component
+// Main Fullscreen Q-BOLTZ Agent Workstation Component
 // ---------------------------------------------------------------------------
 export default function QBoltzAgentConsole({ onClose }) {
   const [query, setQuery] = useState("");
@@ -358,7 +362,6 @@ export default function QBoltzAgentConsole({ onClose }) {
   const [streamedText, setStreamedText] = useState("");
   const [fullNarrative, setFullNarrative] = useState("");
   const [simulation, setSimulation] = useState(null);
-  const [activeOrbitalIdx, setActiveOrbitalIdx] = useState(0);
 
   // High-Fidelity Audio / Speech state
   const [isRecording, setIsRecording] = useState(false);
@@ -390,7 +393,6 @@ export default function QBoltzAgentConsole({ onClose }) {
   const playVoiceAudio = async (text) => {
     if (speechMuted) return;
 
-    // Stop previous audio
     if (audioPlayerRef.current) {
       audioPlayerRef.current.pause();
       audioPlayerRef.current = null;
@@ -402,7 +404,6 @@ export default function QBoltzAgentConsole({ onClose }) {
     const cleanText = text.replace(/\*\*/g, "").replace(/`/g, "").replace(/##/g, "");
 
     try {
-      // 1. Query ElevenLabs backend endpoint
       const res = await fetch("http://127.0.0.1:8088/api/v1/voice/speak", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -432,11 +433,10 @@ export default function QBoltzAgentConsole({ onClose }) {
         await audio.play();
         return;
       } else {
-        // Backend returned status error (e.g. key missing), gracefully fall back
         fallbackSpeechSynthesis(cleanText);
       }
     } catch (err) {
-      console.warn("ElevenLabs audio request failed, falling back to enhanced browser voice:", err);
+      console.warn("ElevenLabs audio request failed, falling back to browser voice:", err);
       fallbackSpeechSynthesis(cleanText);
     }
   };
@@ -460,7 +460,7 @@ export default function QBoltzAgentConsole({ onClose }) {
       utter.voice = preferredVoice;
     }
     utter.rate = 0.98;
-    utter.pitch = 0.93; // Deep, scholarly tone
+    utter.pitch = 0.93;
 
     utter.onend = () => setIsPlayingAudio(false);
     utter.onerror = () => setIsPlayingAudio(false);
@@ -547,7 +547,6 @@ export default function QBoltzAgentConsole({ onClose }) {
     setHasResult(true);
     setFullNarrative("");
     setStreamedText("Initializing Q-BOLTZ solver and PySCF active-space calculation...");
-    setActiveOrbitalIdx(0);
 
     try {
       const res = await fetch("http://127.0.0.1:8088/api/v1/agent/prompt", {
@@ -592,21 +591,28 @@ export default function QBoltzAgentConsole({ onClose }) {
     }
   ];
 
-  const currentOrbital = simulation?.orbitals?.[activeOrbitalIdx] || null;
+  const activeOrbitals = simulation?.orbitals || [];
 
   return (
-    <div className="qboltz-agent-overlay">
+    <div className={`qboltz-agent-overlay ${hasResult ? "is-activated-fullscreen" : "is-compact"}`}>
       {/* Background Subtle Scrim */}
-      <div className="console-scrim" onClick={() => !hasResult && onClose && onClose()}></div>
+      {!hasResult && (
+        <div className="console-scrim" onClick={() => onClose && onClose()}></div>
+      )}
 
-      {/* Floating Center Console Container */}
-      <div className={`console-floating-card ${hasResult ? "expanded-view" : "compact-view"}`}>
-        {/* Minimal Header */}
+      {/* Floating Center Console Container (Compact) or Fullscreen Simulation Engine (Activated) */}
+      <div className={`console-floating-card ${hasResult ? "fullscreen-active-workstation" : "compact-view"}`}>
+        {/* Workstation Topbar Header */}
         <header className="console-card-header">
           <div className="header-badge-group">
             <span className="agent-indicator-pulse"></span>
-            <span className="agent-badge-title">Q-BOLTZ AGENT // LUDWIG BOLTZMANN</span>
-            <span className="agent-sub-badge">p1_qbescf Solver Suite</span>
+            <span className="agent-badge-title">Q-BOLTZ // LUDWIG BOLTZMANN</span>
+            <span className="agent-sub-badge">p1_qbescf Live</span>
+            {simulation?.benchmark?.title && (
+              <span className="benchmark-title-badge">
+                {simulation.benchmark.title}
+              </span>
+            )}
             {isPlayingAudio && (
               <span className="voice-live-badge" title={voiceModelLabel}>
                 <span className="voice-eq-bars">
@@ -658,35 +664,37 @@ export default function QBoltzAgentConsole({ onClose }) {
           </div>
         </header>
 
-        {/* Minimal Input Bar */}
-        <div className="console-input-row">
-          <button
-            className={`mic-button ${isRecording ? "recording" : ""}`}
-            onClick={isRecording ? stopRecording : startRecording}
-            title={isRecording ? "Click to stop recording" : "Click to speak voice prompt"}
-          >
-            {isRecording ? "⏹" : "🎙"}
-          </button>
+        {/* Input Bar (Rendered in Compact View) */}
+        {!hasResult && (
+          <div className="console-input-row">
+            <button
+              className={`mic-button ${isRecording ? "recording" : ""}`}
+              onClick={isRecording ? stopRecording : startRecording}
+              title={isRecording ? "Click to stop recording" : "Click to speak voice prompt"}
+            >
+              {isRecording ? "⏹" : "🎙"}
+            </button>
 
-          <input
-            type="text"
-            className="console-text-input"
-            placeholder='Ask Q-Boltz (e.g. "Calculate dissociation of H2 at 1.6 Å and show active space orbitals")...'
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") executeQuery();
-            }}
-          />
+            <input
+              type="text"
+              className="console-text-input"
+              placeholder='Ask Q-Boltz (e.g. "Calculate dissociation of H2 at 1.6 Å and show active space orbitals")...'
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") executeQuery();
+              }}
+            />
 
-          <button
-            className="submit-query-btn"
-            onClick={() => executeQuery()}
-            disabled={loading}
-          >
-            {loading ? "Solving..." : "Ask Q-Boltz ↗"}
-          </button>
-        </div>
+            <button
+              className="submit-query-btn"
+              onClick={() => executeQuery()}
+              disabled={loading}
+            >
+              {loading ? "Solving..." : "Ask Q-Boltz ↗"}
+            </button>
+          </div>
+        )}
 
         {/* Preset Chips (Visible in Compact Mode) */}
         {!hasResult && (
@@ -707,11 +715,39 @@ export default function QBoltzAgentConsole({ onClose }) {
           </div>
         )}
 
-        {/* Dynamic Solution Stream Viewport */}
+        {/* Activated Fullscreen Workstation Grid */}
         {hasResult && (
-          <div className="solution-stream-grid">
-            {/* Left Column: Streamed Narrative & Dissociation Curve */}
-            <div className="solution-left-col">
+          <div className="fullscreen-workstation-body">
+            {/* Left Column: Input + Streamed Narrative + Dissociation Curve + Observables */}
+            <div className="workstation-left-panel">
+              {/* Compact Query Bar in Fullscreen */}
+              <div className="fullscreen-input-strip">
+                <button
+                  className={`mic-button-small ${isRecording ? "recording" : ""}`}
+                  onClick={isRecording ? stopRecording : startRecording}
+                  title="Speak voice prompt"
+                >
+                  {isRecording ? "⏹" : "🎙"}
+                </button>
+                <input
+                  type="text"
+                  className="fullscreen-text-input"
+                  placeholder="Ask follow-up question..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") executeQuery();
+                  }}
+                />
+                <button
+                  className="fullscreen-submit-btn"
+                  onClick={() => executeQuery()}
+                  disabled={loading}
+                >
+                  {loading ? "..." : "Ask ↗"}
+                </button>
+              </div>
+
               {/* Streamed Narrative Box */}
               <div className="narrative-box">
                 <div className="narrative-header">
@@ -764,41 +800,50 @@ export default function QBoltzAgentConsole({ onClose }) {
               </div>
             </div>
 
-            {/* Right Column: 3D Molecular Orbital Active-Space Viewport */}
-            <div className="solution-right-col">
-              <div className="orbital-canvas-card">
-                <div className="canvas-header">
-                  <span className="canvas-title">ACTIVE SPACE MOLECULAR ORBITAL</span>
-                  <div className="canvas-legend">
-                    <span className="lobe-chip cyan">+ψ Lobe</span>
-                    <span className="lobe-chip ruby">-ψ Lobe</span>
-                  </div>
+            {/* Right Column: ALL Active Space Molecular Orbitals (Simultaneous View) */}
+            <div className="workstation-right-panel">
+              <div className="gallery-header-bar">
+                <div className="gallery-title-group">
+                  <span className="gallery-title">ACTIVE SPACE ORBITALS GALLERY [CAS]</span>
+                  <span className="gallery-count-badge">
+                    {activeOrbitals.length} Active Natural Orbitals
+                  </span>
                 </div>
+                <div className="gallery-legend">
+                  <span className="orb-legend-chip blue">
+                    <span className="dot blue"></span> +ψ Lobe (Blue)
+                  </span>
+                  <span className="orb-legend-chip red">
+                    <span className="dot red"></span> -ψ Lobe (Red)
+                  </span>
+                </div>
+              </div>
 
-                <div className="canvas-3d-frame">
-                  <PureThreeOrbitalCanvas
-                    orbital={currentOrbital}
-                    atoms={simulation?.atoms || []}
-                    bonds={simulation?.bonds || []}
-                  />
-                </div>
+              {/* Multi-Orbital Gallery Grid */}
+              <div className={`orbitals-multi-grid count-${activeOrbitals.length}`}>
+                {activeOrbitals.map((orb, idx) => (
+                  <div key={`orbital-card-${idx}`} className="orbital-gallery-card">
+                    <div className="orbital-card-meta">
+                      <span className="orbital-sym-name">{orb.label}</span>
+                      <span className="orbital-occ-tag">
+                        n = {orb.occupation !== undefined ? orb.occupation.toFixed(3) : "--"}
+                      </span>
+                    </div>
 
-                {/* Active Space Orbital Pills */}
-                <div className="active-orbitals-bar">
-                  <span className="orbitals-bar-label">ACTIVE ORBITALS:</span>
-                  <div className="orbitals-pills-list">
-                    {simulation?.orbitals?.map((orb, i) => (
-                      <button
-                        key={`orb-pill-${i}`}
-                        className={`orbital-pill-btn ${activeOrbitalIdx === i ? "active" : ""}`}
-                        onClick={() => setActiveOrbitalIdx(i)}
-                      >
-                        <span className="pill-name">{orb.label}</span>
-                        <span className="pill-occ">n = {orb.occupation?.toFixed(3) || "0"}</span>
-                      </button>
-                    ))}
+                    <div className="orbital-canvas-frame">
+                      <PureThreeOrbitalCanvas
+                        orbital={orb}
+                        atoms={simulation?.atoms || []}
+                        bonds={simulation?.bonds || []}
+                      />
+                    </div>
+
+                    <div className="orbital-card-footer">
+                      {orb.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
+                      {orb.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
