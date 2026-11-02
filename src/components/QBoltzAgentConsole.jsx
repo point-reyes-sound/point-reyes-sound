@@ -10,6 +10,7 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
   const mountRef = useRef(null);
   const rendererRef = useRef(null);
   const sceneRef = useRef(null);
+  const cameraRef = useRef(null);
   const groupRef = useRef(null);
   const isDraggingRef = useRef(false);
   const prevMouseRef = useRef({ x: 0, y: 0 });
@@ -23,9 +24,10 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
 
     const width = mount.clientWidth || 360;
     const height = mount.clientHeight || 280;
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.set(0, 0.8, 4.4);
+    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
+    camera.position.set(0, 0.4, 6.2);
     camera.lookAt(0, 0, 0);
+    cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -206,6 +208,20 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
       );
       group.add(cylMesh);
     });
+
+    // Auto-frame camera: ensures the entire 3D volume of the orbital and atoms fits within the rendering area
+    if (cameraRef.current) {
+      const box = new THREE.Box3().setFromObject(group);
+      if (!box.isEmpty()) {
+        const sphere = box.getBoundingSphere(new THREE.Sphere());
+        if (sphere.radius > 0) {
+          const fovRad = THREE.MathUtils.degToRad(cameraRef.current.fov / 2);
+          const fitDistance = (sphere.radius / Math.sin(fovRad)) * 1.32;
+          cameraRef.current.position.set(0, 0.4, Math.max(6.0, fitDistance));
+          cameraRef.current.lookAt(0, 0, 0);
+        }
+      }
+    }
   }, [orbital, atoms, bonds]);
 
   return (
