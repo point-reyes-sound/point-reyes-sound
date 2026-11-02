@@ -360,9 +360,12 @@ export default function QBoltzAgentConsole({ onClose }) {
   const [simulation, setSimulation] = useState(null);
   const [activeOrbitalIdx, setActiveOrbitalIdx] = useState(0);
 
-  // Audio / Speech state
+  // High-Fidelity Audio / Speech state
   const [isRecording, setIsRecording] = useState(false);
   const [speechMuted, setSpeechMuted] = useState(false);
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [voiceModelLabel, setVoiceModelLabel] = useState("ElevenLabs Turbo v2.5");
+  const audioPlayerRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
@@ -382,6 +385,98 @@ export default function QBoltzAgentConsole({ onClose }) {
     }, 12);
     return () => clearInterval(interval);
   }, [fullNarrative]);
+
+  // Voice playback handler (ElevenLabs -> Fallback Neural SpeechSynthesis)
+  const playVoiceAudio = async (text) => {
+    if (speechMuted) return;
+
+    // Stop previous audio
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.pause();
+      audioPlayerRef.current = null;
+    }
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    const cleanText = text.replace(/\*\*/g, "").replace(/`/g, "").replace(/##/g, "");
+
+    try {
+      // 1. Query ElevenLabs backend endpoint
+      const res = await fetch("http://127.0.0.1:8088/api/v1/voice/speak", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: cleanText,
+          voice_id: "JBFqnCBsd6RMkjVDRZzb", // George: warm, charismatic intellectual European scholar
+          model_id: "eleven_turbo_v2_5"
+        })
+      });
+
+      if (res.ok) {
+        const audioBlob = await res.blob();
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audioPlayerRef.current = audio;
+        setIsPlayingAudio(true);
+        setVoiceModelLabel("ElevenLabs Turbo v2.5");
+
+        audio.onended = () => {
+          setIsPlayingAudio(false);
+          URL.revokeObjectURL(audioUrl);
+        };
+        audio.onerror = () => {
+          setIsPlayingAudio(false);
+          fallbackSpeechSynthesis(cleanText);
+        };
+        await audio.play();
+        return;
+      } else {
+        // Backend returned status error (e.g. key missing), gracefully fall back
+        fallbackSpeechSynthesis(cleanText);
+      }
+    } catch (err) {
+      console.warn("ElevenLabs audio request failed, falling back to enhanced browser voice:", err);
+      fallbackSpeechSynthesis(cleanText);
+    }
+  };
+
+  const fallbackSpeechSynthesis = (cleanText) => {
+    if (!("speechSynthesis" in window) || speechMuted) return;
+    setIsPlayingAudio(true);
+    setVoiceModelLabel("Neural Web Voice");
+
+    const utter = new SpeechSynthesisUtterance(cleanText);
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(
+      (v) =>
+        v.name.includes("Daniel") ||
+        v.name.includes("Oliver") ||
+        v.name.includes("George") ||
+        v.name.includes("Google UK English Male") ||
+        (v.lang.startsWith("en-GB") && !v.name.includes("Compact"))
+    );
+    if (preferredVoice) {
+      utter.voice = preferredVoice;
+    }
+    utter.rate = 0.98;
+    utter.pitch = 0.93; // Deep, scholarly tone
+
+    utter.onend = () => setIsPlayingAudio(false);
+    utter.onerror = () => setIsPlayingAudio(false);
+    window.speechSynthesis.speak(utter);
+  };
+
+  const stopAllAudio = () => {
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.pause();
+      audioPlayerRef.current = null;
+    }
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsPlayingAudio(false);
+  };
 
   // Voice recording handlers
   const startRecording = async () => {
@@ -447,6 +542,7 @@ export default function QBoltzAgentConsole({ onClose }) {
     const text = customPrompt || query;
     if (!text.trim()) return;
 
+    stopAllAudio();
     setLoading(true);
     setHasResult(true);
     setFullNarrative("");
@@ -464,14 +560,8 @@ export default function QBoltzAgentConsole({ onClose }) {
         setFullNarrative(data.narrative);
         setSimulation(data.simulation);
 
-        // Optional speech synthesis
-        if (!speechMuted && "speechSynthesis" in window) {
-          window.speechSynthesis.cancel();
-          const cleanText = data.narrative.replace(/\*\*/g, "").replace(/`/g, "");
-          const utter = new SpeechSynthesisUtterance(cleanText);
-          utter.rate = 1.05;
-          window.speechSynthesis.speak(utter);
-        }
+        // High-fidelity speech playback
+        playVoiceAudio(data.narrative);
       }
     } catch (err) {
       console.error("Query failed:", err);
@@ -517,6 +607,16 @@ export default function QBoltzAgentConsole({ onClose }) {
             <span className="agent-indicator-pulse"></span>
             <span className="agent-badge-title">Q-BOLTZ AGENT // LUDWIG BOLTZMANN</span>
             <span className="agent-sub-badge">p1_qbescf Solver Suite</span>
+            {isPlayingAudio && (
+              <span className="voice-live-badge" title={voiceModelLabel}>
+                <span className="voice-eq-bars">
+                  <span className="eq-bar bar-1"></span>
+                  <span className="eq-bar bar-2"></span>
+                  <span className="eq-bar bar-3"></span>
+                </span>
+                <span className="voice-eq-text">{voiceModelLabel}</span>
+              </span>
+            )}
           </div>
 
           <div className="header-actions">
@@ -526,7 +626,7 @@ export default function QBoltzAgentConsole({ onClose }) {
                 onClick={() => {
                   setHasResult(false);
                   setQuery("");
-                  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+                  stopAllAudio();
                 }}
               >
                 + New Question
@@ -535,15 +635,23 @@ export default function QBoltzAgentConsole({ onClose }) {
             <button
               className={`action-pill-btn ${speechMuted ? "muted" : ""}`}
               onClick={() => {
-                setSpeechMuted(!speechMuted);
-                if (!speechMuted && "speechSynthesis" in window) window.speechSynthesis.cancel();
+                const nextMuted = !speechMuted;
+                setSpeechMuted(nextMuted);
+                if (nextMuted) stopAllAudio();
               }}
               title={speechMuted ? "Unmute Voice" : "Mute Voice"}
             >
               {speechMuted ? "🔇 Muted" : "🔊 Voice"}
             </button>
             {onClose && (
-              <button className="console-close-btn" onClick={onClose} title="Return to Overview">
+              <button
+                className="console-close-btn"
+                onClick={() => {
+                  stopAllAudio();
+                  onClose();
+                }}
+                title="Return to Overview"
+              >
                 ✕
               </button>
             )}
