@@ -531,6 +531,7 @@ export default function QBoltzAgentConsole({ onClose }) {
   const [isPlaying, setIsPlaying] = useState(true);
   const [currentFrameIdx, setCurrentFrameIdx] = useState(0);
   const [loopDir, setLoopDir] = useState(1); // 1 = forward (0.5 -> 3.5), -1 = reverse (3.5 -> 0.5)
+  const [playbackSpeed, setPlaybackSpeed] = useState(280); // Slower, gentle 280ms per geometry step for easy-on-the-eye viewing
 
   // Typewriter streaming effect
   useEffect(() => {
@@ -578,9 +579,9 @@ export default function QBoltzAgentConsole({ onClose }) {
         }
         return next;
       });
-    }, 110); // Dense scan playback (61 frames, ΔR = 0.05 Å) for seamless continuous transitions
+    }, playbackSpeed); // Slower, relaxed geometry transitions (default 280ms per frame)
     return () => clearInterval(interval);
-  }, [isPlaying, hasTrajectory, loopDir, trajectory.length]);
+  }, [isPlaying, hasTrajectory, loopDir, trajectory.length, playbackSpeed]);
 
   // Agent Query Execution
   const executeQuery = async (customPrompt) => {
@@ -839,6 +840,19 @@ export default function QBoltzAgentConsole({ onClose }) {
                       <span className="r-label">DISTANCE</span>
                       <span className="r-val">{Number(currentR).toFixed(2)} Å</span>
                     </div>
+                    <button
+                      type="button"
+                      className="playback-speed-btn"
+                      onClick={() => {
+                        setPlaybackSpeed((prev) => (prev === 280 ? 450 : prev === 450 ? 180 : 280));
+                      }}
+                      title="Adjust Geometric Transition Pacing (Click to cycle speeds)"
+                    >
+                      <span className="speed-icon">⏱</span>
+                      <span className="speed-text">
+                        {playbackSpeed === 280 ? "SLOW (280ms)" : playbackSpeed === 450 ? "ULTRA SLOW (450ms)" : "BRISK (180ms)"}
+                      </span>
+                    </button>
                   </div>
 
                   <div className="playback-scrubber-wrapper">

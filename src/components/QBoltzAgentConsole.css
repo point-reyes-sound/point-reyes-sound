@@ -515,6 +515,31 @@
   text-shadow: 0 0 8px rgba(53, 255, 130, 0.35);
 }
 
+.playback-speed-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.32);
+  color: #00e5ff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.26rem 0.52rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.playback-speed-btn:hover {
+  background: rgba(0, 229, 255, 0.2);
+  border-color: #00e5ff;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.35);
+}
+
 /* Scrubber Range Slider */
 .playback-scrubber-wrapper {
   flex: 1;
