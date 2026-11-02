@@ -242,8 +242,34 @@ body {
   color: #ffffff;
 }
 
+.nav-tab-interactive {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(53, 255, 130, 0.08);
+  border: 1px solid rgba(53, 255, 130, 0.3);
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: var(--accent-emerald) !important;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
 .nav-tab-interactive:hover {
-  color: var(--accent-emerald);
+  background: rgba(53, 255, 130, 0.18);
+  border-color: var(--accent-emerald);
+  box-shadow: 0 0 12px rgba(53, 255, 130, 0.25);
+  color: #fff !important;
+}
+
+.live-engine-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+  box-shadow: 0 0 6px var(--accent-emerald);
+  animation: pulseDot 2s infinite;
 }
 
 .nav-investor-link {
@@ -1992,6 +2018,10 @@ body {
   position: relative;
   min-height: 100vh;
   background: #020503;
+}
+
+.interactive-wrapper.console-view {
+  background: transparent !important;
 }
 
 .lab-topbar {

@@ -126,7 +126,19 @@
     },
     {
       "source": "/qboltz",
-      "destination": "/interactive.html"
+      "destination": "/index.html"
+    },
+    {
+      "source": "/q-boltz",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/demo",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/orbitals",
+      "destination": "/index.html"
     },
     {
       "source": "/(.*)",
