@@ -34,6 +34,14 @@ export default defineConfig({
           if (req.url === '/a16z-appendix' || req.url === '/a16z-appendix/') {
             req.url = '/a16z-appendix.html';
           }
+          if (
+            req.url === '/q-boltz' || req.url === '/q-boltz/' ||
+            req.url === '/qboltz' || req.url === '/qboltz/' ||
+            req.url === '/demo' || req.url === '/demo/' ||
+            req.url === '/orbitals' || req.url === '/orbitals/'
+          ) {
+            req.url = '/index.html';
+          }
           next();
         });
       }

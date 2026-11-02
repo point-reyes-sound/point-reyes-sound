@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import "./App.css";
 import LandingPage from "./LandingPage";
+import MolecularOrbitalWorkstation from "./components/MolecularOrbitalWorkstation";
+import QBoltzAgentConsole from "./components/QBoltzAgentConsole";
 import PreprintSpotlight from "./PreprintSpotlight";
 import { QuantumSonificationEngine } from "./physics/QuantumSonificationEngine";
 import PointReyesSound3DBackground from "./PointReyesSound3DBackground";
@@ -148,17 +150,34 @@ export default function App() {
       path === "/simulator" ||
       path === "/simulator.html" ||
       path === "/qboltz" ||
+      path === "/q-boltz" ||
+      path === "/demo" ||
+      path === "/orbitals" ||
       hash === "interactive" ||
       hash === "lab" ||
       hash === "simulator" ||
-      hash === "qboltz"
+      hash === "qboltz" ||
+      hash === "q-boltz" ||
+      hash === "demo" ||
+      hash === "orbitals"
     ) {
       return "interactive";
     }
     return "home";
   };
 
+  const getInitialLabTab = () => {
+    if (typeof window === "undefined") return "orbitals";
+    const path = window.location.pathname.toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+    if (path.includes("gas") || hash.includes("gas") || path.includes("simulator")) {
+      return "gas";
+    }
+    return "orbitals";
+  };
+
   const [currentView, setCurrentView] = useState(getInitialActiveView);
+  const [labTab, setLabTab] = useState(getInitialLabTab);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const videoRef = useRef(null);
@@ -176,25 +195,26 @@ export default function App() {
     }
   };
 
-  const openAppView = (tab = "interactive") => {
-    if (tab !== "interactive") {
+  const openAppView = (tab = "orbitals") => {
+    if (tab !== "gas") {
       stopAudioIfPlaying();
     }
 
+    const selectedTab = tab === "gas" ? "gas" : "orbitals";
+    setLabTab(selectedTab);
     setCurrentView("interactive");
-    const targetPath = "/interactive";
+    const targetPath = selectedTab === "gas" ? "/interactive" : "/q-boltz";
     if (typeof window !== "undefined" && window.location.pathname !== targetPath) {
-      window.history.pushState({ page: "interactive" }, "", targetPath);
+      window.history.pushState({ page: "interactive", tab: selectedTab }, "", targetPath);
     }
     if (typeof document !== "undefined") {
-      document.title = "Quantum Gas // Continuous Phase-Space Kinetics | Point Reyes Sound";
+      document.title = selectedTab === "gas"
+        ? "Quantum Gas // Continuous Phase-Space Kinetics | Point Reyes Sound"
+        : "Q-BOLTZ // Molecular Orbital Active-Space Workstation | Point Reyes Sound";
     }
   };
 
   const switchAppTab = (tab) => {
-    if (tab !== "interactive") {
-      stopAudioIfPlaying();
-    }
     openAppView(tab);
   };
 
@@ -217,6 +237,7 @@ export default function App() {
         stopAudioIfPlaying();
       }
       setCurrentView(view);
+      setLabTab(getInitialLabTab());
       if (view === "interactive") {
         document.title = "Quantum Gas // Continuous Phase-Space Kinetics | Point Reyes Sound";
       } else {
@@ -371,8 +392,17 @@ export default function App() {
     setSalesSubmitted(true);
   };
 
-  // If user opens the application view (Interactive 3D Lab)
+  // If user opens the application view (Interactive Q-BOLTZ Agent Console)
   if (currentView === "interactive") {
+    if (labTab === "orbitals") {
+      return (
+        <div className="interactive-wrapper console-view">
+          <PointReyesSound3DBackground />
+          <QBoltzAgentConsole onClose={closeAppView} />
+        </div>
+      );
+    }
+
     return (
       <div className="interactive-wrapper">
         <div className="lab-topbar">
@@ -388,9 +418,19 @@ export default function App() {
 
           <div className="lab-center-tabs" role="tablist" aria-label="Application View">
             <span 
-              className="lab-tab-pill active"
-              id="tab-interactive"
-              title="Quantum Gas 3D Simulator (Q-BOLTZ)"
+              className={`lab-tab-pill ${labTab === "orbitals" ? "active" : ""}`}
+              onClick={() => openAppView("orbitals")}
+              style={{ cursor: "pointer" }}
+              title="Active Space Molecular Orbitals (p1_qbescf Live)"
+            >
+              <span className="tab-pill-dot dot-interactive"></span>
+              Molecular Orbitals
+            </span>
+            <span 
+              className={`lab-tab-pill ${labTab === "gas" ? "active" : ""}`}
+              onClick={() => openAppView("gas")}
+              style={{ cursor: "pointer" }}
+              title="Quantum Gas 3D Simulator (Phase Space)"
             >
               <span className="tab-pill-dot dot-interactive"></span>
               Quantum Gas
@@ -578,8 +618,16 @@ export default function App() {
             </a>
             <button 
               className="nav-header-tab nav-tab-interactive"
-              onClick={() => openAppView("interactive")}
-              title="Launch Quantum Gas Reaction Simulator (Q-BOLTZ)"
+              onClick={() => openAppView("orbitals")}
+              title="Launch Q-BOLTZ Active-Space Molecular Orbital Workstation (p1_qbescf Live)"
+            >
+              <span className="live-engine-dot"></span>
+              Q-BOLTZ ↗
+            </button>
+            <button 
+              className="nav-header-tab nav-tab-gas"
+              onClick={() => openAppView("gas")}
+              title="Launch Quantum Gas Phase-Space Reaction Simulator"
             >
               Quantum Gas
             </button>

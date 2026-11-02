@@ -1,0 +1,555 @@
+/* src/components/QBoltzAgentConsole.css
+   Minimalist Floating Q-BOLTZ Agent Console over Point Reyes Coastal Background
+*/
+
+.qboltz-agent-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  pointer-events: auto;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #f1f5f9;
+}
+
+/* Subtle Vignette Scrim over Coastal Seascape (Keeps Point Reyes background clearly visible) */
+.console-scrim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(2, 9, 4, 0.12) 0%, rgba(2, 9, 4, 0.45) 100%);
+  pointer-events: auto;
+}
+
+/* Floating Glass Card */
+.console-floating-card {
+  position: relative;
+  z-index: 10;
+  background: rgba(4, 16, 10, 0.82);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(53, 255, 130, 0.28);
+  border-radius: 16px;
+  box-shadow: 0 28px 72px rgba(0, 0, 0, 0.75), 0 0 35px rgba(53, 255, 130, 0.14);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.console-floating-card.compact-view {
+  width: 100%;
+  max-width: 680px;
+  padding: 1.8rem;
+  gap: 1.2rem;
+}
+
+.console-floating-card.expanded-view {
+  width: 100%;
+  max-width: 1220px;
+  max-height: 90vh;
+  padding: 1.4rem 1.6rem;
+  gap: 1rem;
+  overflow-y: auto;
+}
+
+/* Card Header */
+.console-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(53, 255, 130, 0.14);
+  padding-bottom: 0.8rem;
+}
+
+.header-badge-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.agent-indicator-pulse {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #35ff82;
+  box-shadow: 0 0 10px #35ff82;
+  animation: pulseBeacon 2.2s infinite;
+}
+
+@keyframes pulseBeacon {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
+}
+
+.agent-badge-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #f1f5f9;
+}
+
+.agent-sub-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  background: rgba(53, 255, 130, 0.1);
+  border: 1px solid rgba(53, 255, 130, 0.25);
+  color: #35ff82;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.action-pill-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(53, 255, 130, 0.2);
+  color: #cbd5e1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-pill-btn:hover {
+  background: rgba(53, 255, 130, 0.15);
+  border-color: #35ff82;
+  color: #35ff82;
+}
+
+.action-pill-btn.muted {
+  color: #64748b;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.console-close-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  transition: color 0.2s;
+}
+
+.console-close-btn:hover {
+  color: #ef4444;
+}
+
+/* Input Row */
+.console-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(2, 9, 4, 0.65);
+  border: 1px solid rgba(53, 255, 130, 0.3);
+  border-radius: 8px;
+  padding: 0.35rem 0.5rem;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.mic-button {
+  background: rgba(53, 255, 130, 0.1);
+  border: 1px solid rgba(53, 255, 130, 0.4);
+  color: #35ff82;
+  font-size: 1.15rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mic-button:hover {
+  background: #35ff82;
+  color: #020904;
+  box-shadow: 0 0 12px rgba(53, 255, 130, 0.4);
+}
+
+.mic-button.recording {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.6);
+  animation: pulseBeacon 1.2s infinite;
+}
+
+.console-text-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #f8fafc;
+  font-size: 0.95rem;
+  outline: none;
+  padding: 0.4rem 0.6rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.console-text-input::placeholder {
+  color: #64748b;
+}
+
+.submit-query-btn {
+  background: #35ff82;
+  border: none;
+  color: #020904;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.65rem 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.submit-query-btn:hover:not(:disabled) {
+  background: #55ff96;
+  box-shadow: 0 0 14px rgba(53, 255, 130, 0.5);
+}
+
+.submit-query-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+/* Preset Chips */
+.preset-chips-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chips-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: #64748b;
+  letter-spacing: 0.08em;
+}
+
+.chip-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(53, 255, 130, 0.18);
+  color: #cbd5e1;
+  font-size: 0.76rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip-btn:hover {
+  background: rgba(53, 255, 130, 0.12);
+  border-color: #35ff82;
+  color: #35ff82;
+}
+
+/* Solution Grid */
+.solution-stream-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .solution-stream-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.solution-left-col, .solution-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+/* Narrative Box */
+.narrative-box {
+  background: rgba(2, 9, 4, 0.6);
+  border-left: 3px solid #35ff82;
+  padding: 0.85rem 1rem;
+  border-radius: 4px;
+}
+
+.narrative-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.35rem;
+}
+
+.agent-avatar-icon {
+  color: #35ff82;
+  font-size: 1.1rem;
+}
+
+.narrative-author {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.narrative-content {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+}
+
+.narrative-content strong {
+  color: #35ff82;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+}
+
+.narrative-content code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  color: #64c8ff;
+}
+
+/* Dissociation Curve SVG */
+.pes-plot-wrapper {
+  background: rgba(2, 9, 4, 0.7);
+  border: 1px solid rgba(53, 255, 130, 0.16);
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pes-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.08em;
+}
+
+.pes-legend {
+  display: flex;
+  gap: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend-item.qbe { color: #35ff82; }
+.legend-item.std { color: #ff4466; }
+
+.legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.legend-dot.green { background: #35ff82; box-shadow: 0 0 6px #35ff82; }
+.legend-dot.red-dash { background: #ff4466; }
+
+.pes-svg {
+  width: 100%;
+  height: 160px;
+  overflow: visible;
+}
+
+@keyframes ping {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.pulse-ping {
+  transform-origin: center;
+  animation: ping 1.8s infinite;
+}
+
+/* Observables Row */
+.observables-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.obs-card {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 0.55rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.obs-card.highlight {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.obs-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: #64748b;
+}
+
+.obs-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0.15rem 0;
+}
+
+.obs-card.highlight .obs-value {
+  color: #f59e0b;
+}
+
+.obs-sub {
+  font-size: 0.62rem;
+  color: #94a3b8;
+}
+
+/* Right Column: 3D Orbital Canvas Card */
+.orbital-canvas-card {
+  background: rgba(2, 9, 4, 0.7);
+  border: 1px solid rgba(53, 255, 130, 0.2);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+  min-height: 380px;
+}
+
+.canvas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.85rem;
+  background: rgba(3, 14, 7, 0.8);
+  border-bottom: 1px solid rgba(53, 255, 130, 0.12);
+}
+
+.canvas-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #35ff82;
+  letter-spacing: 0.08em;
+}
+
+.canvas-legend {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.lobe-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+.lobe-chip.cyan {
+  background: rgba(53, 255, 130, 0.12);
+  color: #35ff82;
+  border: 1px solid rgba(53, 255, 130, 0.3);
+}
+
+.lobe-chip.ruby {
+  background: rgba(255, 68, 102, 0.12);
+  color: #ff4466;
+  border: 1px solid rgba(255, 68, 102, 0.3);
+}
+
+.canvas-3d-frame {
+  flex: 1;
+  position: relative;
+  min-height: 250px;
+  background: radial-gradient(circle at center, #051a0b 0%, #020803 70%, #000402 100%);
+}
+
+.active-orbitals-bar {
+  padding: 0.6rem 0.85rem;
+  background: rgba(2, 9, 4, 0.9);
+  border-top: 1px solid rgba(53, 255, 130, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.orbitals-bar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: #64748b;
+}
+
+.orbitals-pills-list {
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  padding-bottom: 0.15rem;
+}
+
+.orbital-pill-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(53, 255, 130, 0.16);
+  border-radius: 4px;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.orbital-pill-btn:hover {
+  background: rgba(53, 255, 130, 0.1);
+  border-color: #35ff82;
+}
+
+.orbital-pill-btn.active {
+  background: rgba(53, 255, 130, 0.18);
+  border-color: #35ff82;
+  box-shadow: 0 0 10px rgba(53, 255, 130, 0.25);
+}
+
+.pill-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.pill-occ {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: #35ff82;
+}
