@@ -417,18 +417,210 @@
 }
 
 /* ==========================================================================
-   4-PANEL VISUAL WORKSTATION GRID (2x2)
+   4-PANEL VISUAL WORKSTATION GRID (2x2) WITH DYNAMIC TRAJECTORY CONTROLS
    Panel 1 (Top-Left): Bonding Orbital
    Panel 2 (Top-Right): Antibonding Orbital
    Panel 3 (Bottom-Left): Dissociation Curves + Observables
    Panel 4 (Bottom-Right): WebGL Wigner Phase-Space Distribution
    ========================================================================== */
+.workstation-right-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Dynamic Dissociation Playback Toolbar */
+.dynamic-playback-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  padding: 0.4rem 0.85rem;
+  background: rgba(3, 14, 7, 0.94);
+  border: 1px solid rgba(53, 255, 130, 0.28);
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(53, 255, 130, 0.12);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.playback-left-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.playback-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid #10b981;
+  color: #35ff82;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.32rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.playback-toggle-btn:hover {
+  background: #10b981;
+  color: #020904;
+  box-shadow: 0 0 12px rgba(53, 255, 130, 0.4);
+}
+
+.playback-toggle-btn.paused {
+  background: rgba(255, 170, 51, 0.15);
+  border-color: #ffaa33;
+  color: #ffaa33;
+}
+
+.playback-toggle-btn.paused:hover {
+  background: #ffaa33;
+  color: #020904;
+  box-shadow: 0 0 12px rgba(255, 170, 51, 0.4);
+}
+
+.playback-r-badge {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  background: rgba(2, 9, 5, 0.9);
+  border: 1px solid rgba(53, 255, 130, 0.3);
+  padding: 0.22rem 0.55rem;
+  border-radius: 6px;
+}
+
+.playback-r-badge .r-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: #8da399;
+  letter-spacing: 0.05em;
+}
+
+.playback-r-badge .r-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #35ff82;
+  text-shadow: 0 0 8px rgba(53, 255, 130, 0.35);
+}
+
+/* Scrubber Range Slider */
+.playback-scrubber-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  min-width: 140px;
+}
+
+.playback-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  background: rgba(53, 255, 130, 0.18);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.playback-slider:hover {
+  background: rgba(53, 255, 130, 0.35);
+}
+
+.playback-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #35ff82;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 8px #35ff82;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.playback-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+
+.playback-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #35ff82;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 8px #35ff82;
+  cursor: pointer;
+}
+
+.playback-slider-track-marks {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: #728a7e;
+}
+
+.playback-slider-track-marks .mid-mark {
+  color: #35ff82;
+}
+
+.playback-slider-track-marks .sing-mark {
+  color: #ffaa33;
+}
+
+/* Loop indicator chip */
+.playback-right-indicators {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.playback-loop-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.playback-loop-chip .loop-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00e5ff;
+  box-shadow: 0 0 6px #00e5ff;
+  animation: pulseBeacon 1.4s infinite;
+}
+
 .workstation-right-panel-four-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 0.85rem;
-  height: 100%;
+  gap: 0.75rem;
+  flex: 1;
   min-height: 0;
   box-sizing: border-box;
   overflow: hidden;
