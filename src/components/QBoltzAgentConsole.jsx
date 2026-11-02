@@ -531,7 +531,44 @@ export default function QBoltzAgentConsole({ onClose }) {
   const [isPlaying, setIsPlaying] = useState(true);
   const [currentFrameIdx, setCurrentFrameIdx] = useState(0);
   const [loopDir, setLoopDir] = useState(1); // 1 = forward (0.5 -> 3.5), -1 = reverse (3.5 -> 0.5)
-  const [playbackSpeed, setPlaybackSpeed] = useState(280); // Slower, gentle 280ms per geometry step for easy-on-the-eye viewing
+  const [playbackSpeed, setPlaybackSpeed] = useState(180); // Slightly faster default (180ms per geometry frame)
+
+  // Web Audio Synth for Coulson-Fischer Singularity Crossing Acoustic "Pop"
+  const audioCtxRef = useRef(null);
+
+  const playCoulsonFischerPop = useCallback(() => {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioCtx();
+      }
+      const ctx = audioCtxRef.current;
+      if (ctx.state === "suspended") {
+        ctx.resume();
+      }
+
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      // Tactile acoustic pop: rapid frequency drop + fast percussive decay
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(760, now);
+      osc.frequency.exponentialRampToValueAtTime(120, now + 0.05);
+
+      gain.gain.setValueAtTime(0.48, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.062);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.065);
+    } catch (e) {
+      // Audio autoplay handled
+    }
+  }, []);
 
   // Typewriter streaming effect
   useEffect(() => {
@@ -572,16 +609,29 @@ export default function QBoltzAgentConsole({ onClose }) {
         let next = prev + loopDir;
         if (next >= trajectory.length) {
           setLoopDir(-1);
-          return Math.max(0, trajectory.length - 2);
+          next = Math.max(0, trajectory.length - 2);
         } else if (next < 0) {
           setLoopDir(1);
-          return Math.min(trajectory.length - 1, 1);
+          next = Math.min(trajectory.length - 1, 1);
         }
+
+        // Trigger tactile acoustic pop when transitioning through Coulson-Fischer singularity (R ≈ 1.20 Å)
+        const prevR = trajectory[prev]?.r;
+        const nextR = trajectory[next]?.r;
+        const cfR = 1.20;
+        if (
+          prevR !== undefined &&
+          nextR !== undefined &&
+          ((prevR < cfR && nextR >= cfR) || (prevR > cfR && nextR <= cfR) || Math.abs(nextR - cfR) < 0.01)
+        ) {
+          playCoulsonFischerPop();
+        }
+
         return next;
       });
-    }, playbackSpeed); // Slower, relaxed geometry transitions (default 280ms per frame)
+    }, playbackSpeed); // Responsive, snappy default 180ms per geometry frame
     return () => clearInterval(interval);
-  }, [isPlaying, hasTrajectory, loopDir, trajectory.length, playbackSpeed]);
+  }, [isPlaying, hasTrajectory, loopDir, trajectory.length, playbackSpeed, playCoulsonFischerPop]);
 
   // Agent Query Execution
   const executeQuery = async (customPrompt) => {
@@ -844,36 +894,15 @@ export default function QBoltzAgentConsole({ onClose }) {
                       type="button"
                       className="playback-speed-btn"
                       onClick={() => {
-                        setPlaybackSpeed((prev) => (prev === 280 ? 450 : prev === 450 ? 180 : 280));
+                        setPlaybackSpeed((prev) => (prev === 180 ? 260 : prev === 260 ? 120 : 180));
                       }}
                       title="Adjust Geometric Transition Pacing (Click to cycle speeds)"
                     >
                       <span className="speed-icon">⏱</span>
                       <span className="speed-text">
-                        {playbackSpeed === 280 ? "SLOW (280ms)" : playbackSpeed === 450 ? "ULTRA SLOW (450ms)" : "BRISK (180ms)"}
+                        {playbackSpeed === 180 ? "PACE: 180ms" : playbackSpeed === 260 ? "PACE: SLOW (260ms)" : "PACE: FAST (120ms)"}
                       </span>
                     </button>
-                  </div>
-
-                  <div className="playback-scrubber-wrapper">
-                    <input
-                      type="range"
-                      min="0"
-                      max={trajectory.length - 1}
-                      value={currentFrameIdx}
-                      onChange={(e) => {
-                        setCurrentFrameIdx(Number(e.target.value));
-                        setIsPlaying(false);
-                      }}
-                      className="playback-slider"
-                      aria-label="Dissociation Coordinate Scrubber"
-                    />
-                    <div className="playback-slider-track-marks">
-                      <span>0.50 Å (Repulsive)</span>
-                      <span className="mid-mark">R_e = 0.74 Å</span>
-                      <span className="sing-mark">R_CF ≈ 1.16 Å</span>
-                      <span>3.50 Å (Dissociated 2H)</span>
-                    </div>
                   </div>
 
                   <div className="playback-right-indicators">
