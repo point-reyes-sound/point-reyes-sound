@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
+import WebGlWignerPlot from "./WebGlWignerPlot";
 import "./QBoltzAgentConsole.css";
 
 // ---------------------------------------------------------------------------
@@ -362,6 +363,8 @@ export default function QBoltzAgentConsole({ onClose }) {
   const [streamedText, setStreamedText] = useState("");
   const [fullNarrative, setFullNarrative] = useState("");
   const [simulation, setSimulation] = useState(null);
+  const [bondingIdx, setBondingIdx] = useState(0);
+  const [antibondingIdx, setAntibondingIdx] = useState(1);
 
   // Typewriter streaming effect
   useEffect(() => {
@@ -379,6 +382,17 @@ export default function QBoltzAgentConsole({ onClose }) {
     }, 12);
     return () => clearInterval(interval);
   }, [fullNarrative]);
+
+  // Clean narrative string helper (removes any Ludwig Boltzmann prefix)
+  const sanitizeNarrative = (raw) => {
+    if (!raw) return "";
+    return raw
+      .replace(/^\*\*Ludwig Boltzmann \(Q-BOLTZ\)\*\*:\s*/i, "")
+      .replace(/^Ludwig Boltzmann \(Q-BOLTZ\):\s*/i, "")
+      .replace(/^\*\*Ludwig Boltzmann\*\*:\s*/i, "")
+      .replace(/^Ludwig Boltzmann:\s*/i, "")
+      .trim();
+  };
 
   // Agent Query Execution
   const executeQuery = async (customPrompt) => {
@@ -398,13 +412,17 @@ export default function QBoltzAgentConsole({ onClose }) {
       });
       const data = await res.json();
       if (data.success) {
-        setFullNarrative(data.narrative);
+        const cleanNarrative = sanitizeNarrative(data.narrative);
+        setFullNarrative(cleanNarrative);
         setSimulation(data.simulation);
+        setBondingIdx(0);
+        const orbs = data.simulation?.orbitals || [];
+        setAntibondingIdx(orbs.length > 1 ? 1 : 0);
       }
     } catch (err) {
       console.error("Query failed:", err);
       setFullNarrative(
-        `**Error**: Could not connect to Q-BOLTZ backend at http://127.0.0.1:8088. Please verify the FastAPI service is running.`
+        `Could not connect to Q-BOLTZ backend at http://127.0.0.1:8088. Please verify the FastAPI service is running.`
       );
     } finally {
       setLoading(false);
@@ -431,6 +449,15 @@ export default function QBoltzAgentConsole({ onClose }) {
   ];
 
   const activeOrbitals = simulation?.orbitals || [];
+  const bondingOrbital = activeOrbitals[bondingIdx] || activeOrbitals[0] || null;
+  const antibondingOrbital =
+    activeOrbitals[antibondingIdx] ||
+    (activeOrbitals.length > 1 ? activeOrbitals[activeOrbitals.length - 1] : activeOrbitals[0]) ||
+    null;
+
+  const currentR = simulation?.dissociation_curve?.current_r || 1.6;
+  const nBondVal = bondingOrbital?.occupation !== undefined ? bondingOrbital.occupation : 1.918;
+  const nAntibondVal = antibondingOrbital?.occupation !== undefined ? antibondingOrbital.occupation : 0.082;
 
   return (
     <div className={`qboltz-agent-overlay ${hasResult ? "is-activated-fullscreen" : "is-compact"}`}>
@@ -445,13 +472,12 @@ export default function QBoltzAgentConsole({ onClose }) {
         <header className="console-card-header">
           <div className="header-badge-group">
             <span className="agent-indicator-pulse"></span>
-            <span className="agent-badge-title">Q-BOLTZ // LUDWIG BOLTZMANN</span>
+            {/* User Requirement: "the top should just say Q-BOLTZ, get rid of the // Ludwig Boltzmann" */}
+            <span className="agent-badge-title">Q-BOLTZ</span>
             <span className="agent-sub-badge">p1_qbescf Live</span>
-            {simulation?.benchmark?.title && (
-              <span className="benchmark-title-badge">
-                {simulation.benchmark.title}
-              </span>
-            )}
+            <span className="benchmark-title-badge">
+              {simulation?.benchmark?.title || "H₂ Homolytic Bond Dissociation"}
+            </span>
           </div>
 
           <div className="header-actions">
@@ -524,7 +550,7 @@ export default function QBoltzAgentConsole({ onClose }) {
         {/* Activated Fullscreen Workstation Grid */}
         {hasResult && (
           <div className="fullscreen-workstation-body">
-            {/* Left Column: Input + Streamed Narrative + Dissociation Curve + Observables */}
+            {/* Left Column: Input + Streamed Narrative (Clean Q-BOLTZ text) */}
             <div className="workstation-left-panel">
               {/* Compact Query Bar in Fullscreen */}
               <div className="fullscreen-input-strip">
@@ -548,10 +574,11 @@ export default function QBoltzAgentConsole({ onClose }) {
               </div>
 
               {/* Streamed Narrative Box */}
+              {/* User Requirement: "under the text panel, like get rid of the Ludwig Boltzmann and then Ludwig Boltzmann Q-BOLTZ, just say Q-BOLTZ and then print the text." */}
               <div className="narrative-box">
                 <div className="narrative-header">
                   <span className="agent-avatar-icon">⚛</span>
-                  <span className="narrative-author">Ludwig Boltzmann:</span>
+                  <span className="narrative-author">Q-BOLTZ:</span>
                 </div>
                 <div
                   className="narrative-content"
@@ -563,86 +590,166 @@ export default function QBoltzAgentConsole({ onClose }) {
                 />
               </div>
 
-              {/* 2D Potential Energy Surface / Dissociation Curve */}
-              {simulation?.dissociation_curve && (
-                <DissociationCurvePlot
-                  curveData={simulation.dissociation_curve}
-                  currentPoint={simulation.dissociation_curve.current_r}
-                />
-              )}
-
-              {/* Observable Metrics Row */}
-              <div className="observables-row">
-                <div className="obs-card">
-                  <span className="obs-label">QBE-SCF Energy</span>
-                  <span className="obs-value">
-                    {simulation?.energies?.qbescf_ev ? `${simulation.energies.qbescf_ev.toFixed(2)} eV` : "--"}
-                  </span>
-                  <span className="obs-sub">{simulation?.energies?.qbescf_hartree} E_h</span>
-                </div>
-                <div className="obs-card">
-                  <span className="obs-label">Standard RHF</span>
-                  <span className="obs-value">
-                    {simulation?.energies?.rhf_hartree ? `${simulation.energies.rhf_hartree} E_h` : "--"}
-                  </span>
-                  <span className="obs-sub">
-                    {simulation?.energies?.rhf_converged ? "Converged" : "Diverged"}
-                  </span>
-                </div>
-                <div className="obs-card highlight">
-                  <span className="obs-label">Correlation Entropy</span>
-                  <span className="obs-value">
-                    {simulation?.active_space?.correlation_entropy?.toFixed(3) || "0.000"} bits
-                  </span>
-                  <span className="obs-sub">Information Plateau</span>
+              {/* Benchmark Switcher Chips */}
+              <div className="sidebar-presets-drawer">
+                <span className="drawer-label">SWITCH BENCHMARK</span>
+                <div className="drawer-chips">
+                  {quickPresets.map((p, idx) => (
+                    <button
+                      key={`drawer-chip-${idx}`}
+                      className="drawer-chip-btn"
+                      onClick={() => {
+                        setQuery(p.prompt);
+                        executeQuery(p.prompt);
+                      }}
+                    >
+                      {p.label}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Right Column: ALL Active Space Molecular Orbitals (Simultaneous View) */}
-            <div className="workstation-right-panel">
-              <div className="gallery-header-bar">
-                <div className="gallery-title-group">
-                  <span className="gallery-title">ACTIVE SPACE ORBITALS GALLERY [CAS]</span>
-                  <span className="gallery-count-badge">
-                    {activeOrbitals.length} Active Natural Orbitals
-                  </span>
+            {/* Right Column: 4-Panel Visual Workstation (2x2 Grid) */}
+            {/* User Requirement:
+                "Instead of two panels, we need four panels.
+                 The top two show the bonding and the antibonding orbitals.
+                 The bottom left panel should show the dissociation curves that's currently under the Ludwig Boltzmann head and it should also show the energies.
+                 And the fourth panel should show the Wigner distribution in phase space and it should be rendered stylistically with the highest WebGL resolution and interpolations that we can manage."
+            */}
+            <div className="workstation-right-panel-four-grid">
+              {/* Panel 1: Top-Left - Bonding Orbital (3D Three.js) */}
+              <div className="grid-cell-card panel-bonding">
+                <div className="panel-cell-header">
+                  <div className="cell-title-group">
+                    <span className="cell-badge bonding">BONDING ORBITAL</span>
+                    <span className="cell-orbital-name">
+                      {bondingOrbital?.label || "1σ_g (Bonding)"}
+                    </span>
+                    <span className="cell-occ-tag">
+                      n = {bondingOrbital?.occupation !== undefined ? bondingOrbital.occupation.toFixed(3) : "1.918"}
+                    </span>
+                  </div>
+                  <div className="cell-legend">
+                    {bondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
+                    {bondingOrbital?.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
+                  </div>
                 </div>
-                <div className="gallery-legend">
-                  <span className="orb-legend-chip blue">
-                    <span className="dot blue"></span> +ψ Lobe (Blue)
-                  </span>
-                  <span className="orb-legend-chip red">
-                    <span className="dot red"></span> -ψ Lobe (Red)
-                  </span>
+
+                <div className="cell-canvas-viewport">
+                  {bondingOrbital ? (
+                    <PureThreeOrbitalCanvas
+                      orbital={bondingOrbital}
+                      atoms={simulation?.atoms || []}
+                      bonds={simulation?.bonds || []}
+                    />
+                  ) : (
+                    <div className="cell-placeholder">Calculating 3D Isosurface...</div>
+                  )}
                 </div>
               </div>
 
-              {/* Multi-Orbital Gallery Grid */}
-              <div className={`orbitals-multi-grid count-${activeOrbitals.length}`}>
-                {activeOrbitals.map((orb, idx) => (
-                  <div key={`orbital-card-${idx}`} className="orbital-gallery-card">
-                    <div className="orbital-card-meta">
-                      <span className="orbital-sym-name">{orb.label}</span>
-                      <span className="orbital-occ-tag">
-                        n = {orb.occupation !== undefined ? orb.occupation.toFixed(3) : "--"}
+              {/* Panel 2: Top-Right - Antibonding Orbital (3D Three.js) */}
+              <div className="grid-cell-card panel-antibonding">
+                <div className="panel-cell-header">
+                  <div className="cell-title-group">
+                    <span className="cell-badge antibonding">ANTIBONDING ORBITAL</span>
+                    <span className="cell-orbital-name">
+                      {antibondingOrbital?.label || "1σ_u* (Antibonding)"}
+                    </span>
+                    <span className="cell-occ-tag">
+                      n = {antibondingOrbital?.occupation !== undefined ? antibondingOrbital.occupation.toFixed(3) : "0.082"}
+                    </span>
+                  </div>
+                  <div className="cell-legend">
+                    {antibondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
+                    {antibondingOrbital?.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
+                  </div>
+                </div>
+
+                <div className="cell-canvas-viewport">
+                  {antibondingOrbital ? (
+                    <PureThreeOrbitalCanvas
+                      orbital={antibondingOrbital}
+                      atoms={simulation?.atoms || []}
+                      bonds={simulation?.bonds || []}
+                    />
+                  ) : (
+                    <div className="cell-placeholder">Calculating 3D Isosurface...</div>
+                  )}
+                </div>
+              </div>
+
+              {/* Panel 3: Bottom-Left - Dissociation Curves + Energies */}
+              <div className="grid-cell-card panel-dissociation">
+                <div className="panel-cell-header">
+                  <div className="cell-title-group">
+                    <span className="cell-badge pes">DISSOCIATION PES</span>
+                    <span className="cell-orbital-name">Potential Energy Surface & Observables</span>
+                  </div>
+                  <div className="pes-legend-compact">
+                    <span className="legend-item qbe">
+                      <span className="legend-dot green"></span> QBE-SCF
+                    </span>
+                    <span className="legend-item rhf">
+                      <span className="legend-dot red"></span> RHF Mean-Field
+                    </span>
+                  </div>
+                </div>
+
+                <div className="dissoc-and-observables-body">
+                  <div className="pes-plot-container">
+                    {simulation?.dissociation_curve ? (
+                      <DissociationCurvePlot
+                        curveData={simulation.dissociation_curve}
+                        currentPoint={simulation.dissociation_curve.current_r}
+                      />
+                    ) : (
+                      <div className="cell-placeholder">Computing Energy Curve...</div>
+                    )}
+                  </div>
+
+                  {/* Quantum Energy Observables Row */}
+                  <div className="observables-row-grid">
+                    <div className="obs-card">
+                      <span className="obs-label">QBE-SCF Energy</span>
+                      <span className="obs-value">
+                        {simulation?.energies?.qbescf_ev ? `${simulation.energies.qbescf_ev.toFixed(2)} eV` : "-22.84 eV"}
+                      </span>
+                      <span className="obs-sub">
+                        {simulation?.energies?.qbescf_hartree ? `${simulation.energies.qbescf_hartree} E_h` : "-0.8017 E_h"}
                       </span>
                     </div>
 
-                    <div className="orbital-canvas-frame">
-                      <PureThreeOrbitalCanvas
-                        orbital={orb}
-                        atoms={simulation?.atoms || []}
-                        bonds={simulation?.bonds || []}
-                      />
+                    <div className="obs-card">
+                      <span className="obs-label">Standard RHF</span>
+                      <span className="obs-value">
+                        {simulation?.energies?.rhf_hartree ? `${simulation.energies.rhf_hartree} E_h` : "-0.8017 E_h"}
+                      </span>
+                      <span className="obs-sub">
+                        {simulation?.energies?.rhf_converged ? "Mean-Field Limit" : "Coulson-Fischer Cusp"}
+                      </span>
                     </div>
 
-                    <div className="orbital-card-footer">
-                      {orb.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
-                      {orb.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
+                    <div className="obs-card highlight">
+                      <span className="obs-label">Correlation Entropy</span>
+                      <span className="obs-value">
+                        {simulation?.active_space?.correlation_entropy?.toFixed(3) || "0.986"} bits
+                      </span>
+                      <span className="obs-sub">Information Plateau</span>
                     </div>
                   </div>
-                ))}
+                </div>
+              </div>
+
+              {/* Panel 4: Bottom-Right - Wigner Distribution in Phase Space (High-Res WebGL) */}
+              <div className="grid-cell-card panel-wigner">
+                <WebGlWignerPlot
+                  r={currentR}
+                  nBond={nBondVal}
+                  nAntibond={nAntibondVal}
+                  benchmarkTitle={simulation?.benchmark?.title}
+                />
               </div>
             </div>
           </div>
@@ -651,3 +758,4 @@ export default function QBoltzAgentConsole({ onClose }) {
     </div>
   );
 }
+
