@@ -645,6 +645,21 @@
       color: var(--accent-emerald);
     }
 
+    .action-btn.exclusive-btn {
+      background: rgba(53, 255, 130, 0.08);
+      border: 1px solid rgba(53, 255, 130, 0.4);
+      color: #35ff82;
+      box-shadow: 0 0 16px rgba(53, 255, 130, 0.15);
+    }
+
+    .action-btn.exclusive-btn:hover {
+      background: rgba(53, 255, 130, 0.18);
+      border-color: #35ff82;
+      color: #ffffff;
+      box-shadow: 0 0 26px rgba(53, 255, 130, 0.35);
+      transform: translateY(-1px);
+    }
+
     /* Footer */
     .film-footer {
       border-top: 1px solid var(--border-subtle);
@@ -697,7 +712,7 @@
       <div class="nav-links">
         <a href="/" class="nav-link back-link">&larr; Back to Platform</a>
         <a href="/#research" class="nav-link">Research</a>
-        <a href="/demo" class="nav-link">Interactive Demo</a>
+        <a href="/demo" class="nav-link" title="Exclusive Access: Authorized Evaluator Credentials Required">Exclusive Access 🔒</a>
         <a href="/#contact" class="nav-link">Contact</a>
       </div>
     </div>
@@ -837,8 +852,8 @@
         <a href="https://arxiv.org/abs/2608.14979" target="_blank" rel="noopener noreferrer" class="action-btn primary">
           Read arXiv Preprint &rarr;
         </a>
-        <a href="/demo" class="action-btn secondary">
-          Open Interactive Q-BOLTZ Demo &rarr;
+        <a href="/demo" class="action-btn secondary exclusive-btn" title="Exclusive Access: Authorized Evaluator Credentials Required">
+          <span>🔒 Exclusive Access</span> &rarr;
         </a>
       </div>
     </section>
