@@ -682,6 +682,47 @@ export default function QBoltzAgentConsole({ onClose }) {
     }
   };
 
+  // Voiceover Demonstration State & Automation
+  const [isVoiceoverPlaying, setIsVoiceoverPlaying] = useState(false);
+  const voiceoverAudioRef = useRef(null);
+
+  const startVoiceoverDemo = useCallback(() => {
+    setIsVoiceoverPlaying(true);
+    const demoPrompt = "Conceptualize and envision the dissociation of H2 in phase space.";
+    setQuery(demoPrompt);
+
+    try {
+      if (voiceoverAudioRef.current) {
+        voiceoverAudioRef.current.pause();
+        voiceoverAudioRef.current.currentTime = 0;
+      }
+      const audio = new Audio("/audio/h2_phase_space_voiceover.mp3");
+      voiceoverAudioRef.current = audio;
+      audio.play().catch((err) => console.log("Audio autoplay note:", err));
+      audio.onended = () => setIsVoiceoverPlaying(false);
+    } catch (e) {
+      console.error("Audio error:", e);
+    }
+
+    // After prompt voice finishes speaking (~3.8s), trigger solver query
+    setTimeout(() => {
+      executeQuery(demoPrompt);
+    }, 3800);
+  }, []);
+
+  // URL Auto-trigger for automated recording or deep-linking (?demo=voice or ?voiceover=1)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("demo") === "voice" || params.get("voiceover") === "1") {
+        const timer = setTimeout(() => {
+          startVoiceoverDemo();
+        }, 800);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [startVoiceoverDemo]);
+
   const quickPresets = [
     {
       label: "H₂ Dissociation in Phase Space",
@@ -791,6 +832,17 @@ export default function QBoltzAgentConsole({ onClose }) {
             >
               {loading ? "Solving..." : "Ask Q-Boltz ↗"}
             </button>
+
+            <button
+              type="button"
+              className="voiceover-demo-btn"
+              onClick={startVoiceoverDemo}
+              disabled={loading || isVoiceoverPlaying}
+              title="Play Voiceover & Run Automated 30-Second Simulation"
+            >
+              <span className="voice-pulse-dot"></span>
+              {isVoiceoverPlaying ? "🎙 Playing Voiceover..." : "🎙 Voiceover Demo"}
+            </button>
           </div>
         )}
 
@@ -836,6 +888,16 @@ export default function QBoltzAgentConsole({ onClose }) {
                   disabled={loading}
                 >
                   {loading ? "..." : "Ask ↗"}
+                </button>
+                <button
+                  type="button"
+                  className="fullscreen-voice-btn"
+                  onClick={startVoiceoverDemo}
+                  disabled={loading || isVoiceoverPlaying}
+                  title="Replay Voiceover Demonstration"
+                >
+                  <span className="voice-pulse-dot"></span>
+                  {isVoiceoverPlaying ? "🎙 Playing..." : "🎙 Voiceover"}
                 </button>
               </div>
 
