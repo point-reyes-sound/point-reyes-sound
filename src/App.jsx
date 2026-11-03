@@ -669,6 +669,13 @@ export default function App() {
           </a>
 
           <nav className="header-nav">
+            <button 
+              className="nav-header-tab"
+              onClick={() => openAppView("orbitals")}
+              title="Launch Interactive Molecular Orbital Workstation"
+            >
+              Preview
+            </button>
             <a href="#overview">Overview</a>
             <a href="#about">About</a>
             <a href="#research" className="nav-research-link">
@@ -688,14 +695,6 @@ export default function App() {
               </svg>
               GitHub
             </a>
-            <button 
-              className="nav-header-tab nav-tab-interactive"
-              onClick={() => openAppView("orbitals")}
-              title="Launch Q-BOLTZ Active-Space Molecular Orbital Workstation (p1_qbescf Live)"
-            >
-              <span className="live-engine-dot"></span>
-              Q-BOLTZ ↗
-            </button>
             <a 
               href="/film"
               className="nav-header-tab nav-tab-film"

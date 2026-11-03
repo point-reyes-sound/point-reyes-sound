@@ -239,7 +239,7 @@ body {
 }
 
 .nav-header-tab:hover {
-  color: #ffffff;
+  color: var(--accent-emerald);
 }
 
 .nav-tab-interactive {
