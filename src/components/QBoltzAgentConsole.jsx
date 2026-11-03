@@ -615,14 +615,15 @@ export default function QBoltzAgentConsole({ onClose }) {
           next = Math.min(trajectory.length - 1, 1);
         }
 
-        // Trigger tactile acoustic pop when transitioning through Coulson-Fischer singularity (R ≈ 1.20 Å)
+        // Trigger tactile acoustic pop when transitioning through singularity (H2 CF at R ≈ 1.20 Å or BeH2 crossing at x ≈ 2.54 Bohr)
         const prevR = trajectory[prev]?.r;
         const nextR = trajectory[next]?.r;
-        const cfR = 1.20;
+        const isBeH2 = simulation?.benchmark?.key === "beh2_ci";
+        const cfR = isBeH2 ? 2.54 : 1.20;
         if (
           prevR !== undefined &&
           nextR !== undefined &&
-          ((prevR < cfR && nextR >= cfR) || (prevR > cfR && nextR <= cfR) || Math.abs(nextR - cfR) < 0.01)
+          ((prevR < cfR && nextR >= cfR) || (prevR > cfR && nextR <= cfR) || Math.abs(nextR - cfR) < 0.04)
         ) {
           playCoulsonFischerPop();
         }
@@ -631,7 +632,7 @@ export default function QBoltzAgentConsole({ onClose }) {
       });
     }, playbackSpeed); // Responsive, snappy default 180ms per geometry frame
     return () => clearInterval(interval);
-  }, [isPlaying, hasTrajectory, loopDir, trajectory.length, playbackSpeed, playCoulsonFischerPop]);
+  }, [isPlaying, hasTrajectory, loopDir, trajectory.length, playbackSpeed, playCoulsonFischerPop, simulation?.benchmark?.key]);
 
   // Agent Query Execution
   const executeQuery = async (customPrompt) => {
@@ -660,8 +661,9 @@ export default function QBoltzAgentConsole({ onClose }) {
         setAntibondingIdx(orbs.length > 1 ? 1 : 0);
 
         if (data.simulation?.trajectory?.length) {
-          // Initialize frame near 1.6 Å
-          const initIdx = data.simulation.trajectory.findIndex((f) => f.r >= 1.6);
+          // Initialize frame near 1.6 Å for H2, or 2.54 Bohr for BeH2
+          const targetR = data.simulation.benchmark.key === "beh2_ci" ? 2.54 : 1.6;
+          const initIdx = data.simulation.trajectory.findIndex((f) => f.r >= targetR);
           setCurrentFrameIdx(initIdx >= 0 ? initIdx : 0);
           setIsPlaying(true);
           setLoopDir(1);
@@ -690,8 +692,8 @@ export default function QBoltzAgentConsole({ onClose }) {
       prompt: "Run H3 at the D3h conical intersection of 1.52 Angstroms and show the degenerate e-prime orbitals."
     },
     {
-      label: "BeH₂ Avoided Crossing",
-      prompt: "Compare standard RHF against QBE-SCF for BeH2 insertion at x equals 2.5 Bohr."
+      label: "BeH₂ Avoided Crossing Scan",
+      prompt: "Scan the insertion coordinate for the BeH2 conical intersection and show active space orbitals."
     },
     {
       label: "N₂ Triple Bond",
@@ -890,8 +892,8 @@ export default function QBoltzAgentConsole({ onClose }) {
                       <span className="btn-text">{isPlaying ? "PAUSE LOOP" : "PLAY LOOP"}</span>
                     </button>
                     <div className="playback-r-badge">
-                      <span className="r-label">DISTANCE</span>
-                      <span className="r-val">{Number(currentR).toFixed(2)} Å</span>
+                      <span className="r-label">{simulation?.benchmark?.key === "beh2_ci" ? "COORDINATE" : "DISTANCE"}</span>
+                      <span className="r-val">{Number(currentR).toFixed(2)} {simulation?.benchmark?.key === "beh2_ci" ? "Bohr" : "Å"}</span>
                     </div>
                     <button
                       type="button"
@@ -911,23 +913,24 @@ export default function QBoltzAgentConsole({ onClose }) {
                   <div className="playback-right-indicators">
                     <span className="playback-loop-chip">
                       <span className="loop-pulse"></span>
-                      0.50 Å ⇄ 3.50 Å CONTINUOUS DISSOCIATION (ΔR = 0.05 Å)
+                      {simulation?.benchmark?.key === "beh2_ci"
+                        ? "0.60 Bohr ⇄ 3.60 Bohr INSERTION (x ≈ 2.54 Bohr Seam)"
+                        : "0.50 Å ⇄ 3.50 Å CONTINUOUS DISSOCIATION (ΔR = 0.05 Å)"}
                     </span>
                   </div>
                 </div>
               )}
 
               <div className={`workstation-visual-layout ${isThreeOrbital ? "layout-three-orbitals" : "layout-two-orbitals"}`}>
-                {/* Top Panel: Active Space Orbitals (3 panels for H3 at conical intersection, 2 for H2) */}
+                {/* Top Panel: Active Space Orbitals (3 panels for H3 and BeH2, 2 for H2) */}
                 <div className={`orbitals-top-row ${isThreeOrbital ? "cols-3" : "cols-2"}`}>
                   {isThreeOrbital ? (
                     activeOrbitals.slice(0, 3).map((orb, idx) => {
-                      const badgeLabel = idx === 0 
-                        ? "a₁' (SYMMETRIC)" 
-                        : idx === 1 
-                          ? "e'_x (CROSSING)" 
-                          : "e'_y (CROSSING)";
-                      const badgeClass = idx === 0 ? "bonding" : "antibonding";
+                      const isBeH2 = simulation?.benchmark?.key === "beh2_ci";
+                      const badgeLabel = isBeH2
+                        ? (idx === 0 ? "1a₁ (CORE)" : idx === 1 ? "1b₂ (CROSSING)" : "3a₁ (CROSSING)")
+                        : (idx === 0 ? "a₁' (SYMMETRIC)" : idx === 1 ? "e'_x (CROSSING)" : "e'_y (CROSSING)");
+                      const badgeClass = (idx === 0 || (isBeH2 && idx === 1 && currentR < 2.54) || (isBeH2 && idx === 2 && currentR >= 2.54)) ? "bonding" : "antibonding";
                       const occVal = orb.occupation !== undefined ? orb.occupation : 0;
                       return (
                         <div key={`h3-orb-${idx}`} className={`grid-cell-card panel-orbital panel-orbital-${idx}`}>
