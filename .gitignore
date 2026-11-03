@@ -37,4 +37,8 @@ server/
 *.pyc
 __pycache__/
 public/data/
-
+*.mov
+public/interface_demo.mov
+public/interface_demo.mp4
+public/interface_demo_posh.mp4
+public/deck_video.mp4
