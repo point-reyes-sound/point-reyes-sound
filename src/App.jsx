@@ -6,6 +6,11 @@ import QBoltzAgentConsole from "./components/QBoltzAgentConsole";
 import PreprintSpotlight from "./PreprintSpotlight";
 import { QuantumSonificationEngine } from "./physics/QuantumSonificationEngine";
 import PointReyesSound3DBackground from "./PointReyesSound3DBackground";
+import ExclusiveAccessGate, {
+  checkIsAuthenticated,
+  clearAuthentication,
+  getAuthenticatedUser
+} from "./components/ExclusiveAccessGate";
 
 const researchThemes = [
   {
@@ -208,9 +213,15 @@ export default function App() {
 
   const [currentView, setCurrentView] = useState(getInitialActiveView);
   const [labTab, setLabTab] = useState(getInitialLabTab);
+  const [isAuthenticated, setIsAuthenticated] = useState(checkIsAuthenticated);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const videoRef = useRef(null);
+
+  const handleLogout = () => {
+    clearAuthentication();
+    setIsAuthenticated(false);
+  };
 
   const stopAudioIfPlaying = () => {
     try {
@@ -424,12 +435,28 @@ export default function App() {
 
   // If user opens the application view (Interactive Q-BOLTZ Agent Console)
   if (currentView === "interactive") {
+    // Gate unauthorized access behind username and password
+    if (!isAuthenticated) {
+      return (
+        <div className="interactive-wrapper console-view">
+          <PointReyesSound3DBackground />
+          <ExclusiveAccessGate
+            onAuthenticate={() => setIsAuthenticated(true)}
+            onClose={closeAppView}
+            onRequestAccess={() => {
+              setShowSalesModal(true);
+            }}
+          />
+        </div>
+      );
+    }
+
     if (labTab === "orbitals") {
       return (
         <div className="interactive-wrapper console-view">
           <PointReyesSound3DBackground />
           <ConsoleErrorBoundary>
-            <QBoltzAgentConsole onClose={closeAppView} />
+            <QBoltzAgentConsole onClose={closeAppView} onLogout={handleLogout} />
           </ConsoleErrorBoundary>
         </div>
       );
@@ -469,7 +496,18 @@ export default function App() {
             </span>
           </div>
 
-          <div className="lab-nav-actions">
+          <div className="lab-nav-actions" style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+            <div className="auth-session-pill" title="Exclusive Authenticated Session">
+              <span className="gate-pulse-dot"></span>
+              <span>AUTHENTICATED ACCESS</span>
+              <button
+                className="auth-lock-btn"
+                onClick={handleLogout}
+                title="Lock demo and exit session"
+              >
+                🔒 Lock
+              </button>
+            </div>
             <button 
               className="lab-nav-btn research-nav-btn"
               onClick={closeAppView}
