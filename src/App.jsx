@@ -237,21 +237,23 @@ export default function App() {
   };
 
   const openAppView = (tab = "orbitals") => {
-    if (tab !== "gas") {
+    if (tab === "gas") {
       stopAudioIfPlaying();
+      if (typeof window !== "undefined") {
+        window.location.href = "/film";
+      }
+      return;
     }
 
-    const selectedTab = tab === "gas" ? "gas" : "orbitals";
-    setLabTab(selectedTab);
+    stopAudioIfPlaying();
+    setLabTab("orbitals");
     setCurrentView("interactive");
-    const targetPath = selectedTab === "gas" ? "/interactive" : "/q-boltz";
+    const targetPath = "/q-boltz";
     if (typeof window !== "undefined" && window.location.pathname !== targetPath) {
-      window.history.pushState({ page: "interactive", tab: selectedTab }, "", targetPath);
+      window.history.pushState({ page: "interactive", tab: "orbitals" }, "", targetPath);
     }
     if (typeof document !== "undefined") {
-      document.title = selectedTab === "gas"
-        ? "Quantum Gas // Continuous Phase-Space Kinetics | Point Reyes Sound"
-        : "Q-BOLTZ // Molecular Orbital Active-Space Workstation | Point Reyes Sound";
+      document.title = "Q-BOLTZ // Molecular Orbital Active-Space Workstation | Point Reyes Sound";
     }
   };
 
@@ -485,15 +487,15 @@ export default function App() {
               <span className="tab-pill-dot dot-interactive"></span>
               Molecular Orbitals
             </span>
-            <span 
-              className={`lab-tab-pill ${labTab === "gas" ? "active" : ""}`}
-              onClick={() => openAppView("gas")}
-              style={{ cursor: "pointer" }}
-              title="Quantum Gas 3D Simulator (Phase Space)"
+            <a 
+              href="/film"
+              className="lab-tab-pill"
+              style={{ cursor: "pointer", textDecoration: "none" }}
+              title="Watch Executive Film (pointreyessound.com/film)"
             >
               <span className="tab-pill-dot dot-interactive"></span>
-              Quantum Gas
-            </span>
+              Film ↗
+            </a>
           </div>
 
           <div className="lab-nav-actions" style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
@@ -694,13 +696,13 @@ export default function App() {
               <span className="live-engine-dot"></span>
               Q-BOLTZ ↗
             </button>
-            <button 
-              className="nav-header-tab nav-tab-gas"
-              onClick={() => openAppView("gas")}
-              title="Launch Quantum Gas Phase-Space Reaction Simulator"
+            <a 
+              href="/film"
+              className="nav-header-tab nav-tab-film"
+              title="Watch Executive Film: Continuous Phase-Space Kinetics (pointreyessound.com/film)"
             >
-              Quantum Gas
-            </button>
+              Film
+            </a>
           </nav>
         </div>
       </header>
@@ -1251,8 +1253,8 @@ export default function App() {
             <a href="#roadmap">Roadmap</a>
             <a href="#contact">Contact</a>
             <a href="/film">Cinematic Overview (Film) &rarr;</a>
-            <button className="footer-link-btn" onClick={() => openAppView("interactive")}>
-              Quantum Gas Simulator &rarr;
+            <button className="footer-link-btn" onClick={() => openAppView("orbitals")}>
+              Q-BOLTZ Interactive Demo &rarr;
             </button>
           </div>
 
