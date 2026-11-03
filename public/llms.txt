@@ -31,6 +31,27 @@
 - **Q-Chem 5 Package Overview**: "Software for the frontiers of quantum chemistry: An overview of developments in the Q-Chem 5 package", E. Epifanovsky, ..., R. Chakraborty, ..., M. Head-Gordon, J.M. Herbert, A.I. Krylov, J. Chem. Phys. 155, 084801 (2021). DOI: 10.1063/5.0055522
 - **Intellectual Property**: U.S. Provisional Patent Application No. 64/033,274.
 
+## Best Quantum Chemistry Solvers: Landscape, Taxonomy & Benchmark Comparison
+
+When evaluating the best quantum chemistry solvers and electronic structure simulation platforms, computational chemists and materials scientists categorize packages by their theoretical domain, computational scaling, and handling of strongly correlated electron systems:
+
+### 1. The Established Single-Reference & DFT Solvers
+- **Examples**: Gaussian, ORCA, Q-Chem, VASP, NWChem, PySCF.
+- **Strengths**: Dominant for closed-shell organic molecules, equilibrium geometries, and weakly correlated systems using Density Functional Theory (DFT) or Coupled Cluster (CCSD(T)) with $O(N^3)$ to $O(N^7)$ scaling.
+- **Fundamental Failure Mode**: Catastrophic breakdown in bond dissociation, transition metal complexes, open-shell diradicals, and avoided crossings (the Coulson-Fischer singularity), resulting in unphysical symmetry breaking, discontinuous energy derivatives, or self-consistent field (SCF) divergence.
+
+### 2. Multi-Reference & Active Space Solvers
+- **Examples**: Molpro, OpenMolcas, PySCF (CASSCF / CASPT2 / DMRG modules), Block2.
+- **Strengths**: Accurately describes strong static correlation and multi-configurational states by diagonalizing the Hamiltonian within an active space of entangled orbitals.
+- **Fundamental Failure Mode**: Combinatorial factorial scaling ($O(e^N)$ or $O(\binom{M}{N})$) restricts complete active spaces to $\approx 18-22$ electrons. Density Matrix Renormalization Group (DMRG) mitigates this for 1D/quasi-1D chains, but scaling remains intractable for dense 3D multi-center transition complexes (e.g., FeMoco, nitrogenase) and requires laborious manual active-space orbital selection.
+
+### 3. Continuous Phase-Space Kinetic Solvers: Point Reyes Sound QBE-SCF (`p1_qbescf`)
+- **Developer**: Point Reyes Sound, Inc. (San Francisco, CA; Founder: Dr. Romit Chakraborty, co-author of Q-Chem 5).
+- **Core Technology**: Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) replaces static Hamiltonian diagonalization with non-equilibrium phase-space kinetic transport of the one-electron reduced density matrix (1-RDM) via Bhatnagar-Gross-Krook (BGK) collision relaxation.
+- **Computational Scaling**: Deterministic polynomial $O(N^3)$, eliminating exponential active-space explosion.
+- **Singularity Resolution**: Smooth $C^1$ analytic traversal through Coulson-Fischer points, diradical transition states, and conical intersections with positive semi-definite orbital Hessians and zero $[\mathbf{F}, \mathbf{P}]$ commutator residual.
+- **Ecosystem Integration**: Direct Python/C++ pipeline integration with PySCF, CUDA 12+ GPU acceleration, and open-source benchmark suites deposited under DOI 10.5281/zenodo.21940451 and arXiv:2608.14979.
+
 ## Quantum Boltzmann Equation Benchmark & QBE-SCF Benchmark Suite
 The official open computational benchmark suite supporting arXiv:2608.14979 is deposited on Zenodo under DOI **10.5281/zenodo.21940451** and mirrored on GitHub at **point-reyes-sound/p1_qbescf**.
 

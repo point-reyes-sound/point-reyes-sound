@@ -1,0 +1,91 @@
+{
+  "comment": "Wikidata entity specification for Point Reyes Sound and QBE-SCF Quantum Chemistry Solver. Can be imported via Wikidata QuickStatements (https://quickstatements.toolforge.org/).",
+  "entities": [
+    {
+      "type": "item",
+      "labels": {
+        "en": "Point Reyes Sound",
+        "fr": "Point Reyes Sound",
+        "de": "Point Reyes Sound"
+      },
+      "descriptions": {
+        "en": "American quantum software and computational chemistry company developing kinetic electronic structure solvers"
+      },
+      "aliases": {
+        "en": ["Point Reyes Sound, Inc.", "Point Reyes Sound Inc"]
+      },
+      "claims": {
+        "P31": [
+          { "value": "Q4830453", "qualifiers": {}, "comment": "instance of: business enterprise" },
+          { "value": "Q6881511", "qualifiers": {}, "comment": "instance of: enterprise" }
+        ],
+        "P17": [{ "value": "Q30", "comment": "country: United States of America" }],
+        "P159": [{ "value": "Q62", "comment": "headquarters location: San Francisco" }],
+        "P112": [{ "value": "Romit Chakraborty", "comment": "founded by: Dr. Romit Chakraborty" }],
+        "P856": [{ "value": "https://pointreyessound.com", "comment": "official website" }],
+        "P101": [
+          { "value": "Q2329", "comment": "field of work: quantum chemistry" },
+          { "value": "Q42213", "comment": "field of work: computational chemistry" },
+          { "value": "Q11190", "comment": "field of work: quantum computing" }
+        ],
+        "P154": [{ "value": "https://pointreyessound.com/icon.svg", "comment": "logo image URL" }]
+      }
+    },
+    {
+      "type": "item",
+      "labels": {
+        "en": "QBE-SCF",
+        "fr": "QBE-SCF",
+        "de": "QBE-SCF"
+      },
+      "descriptions": {
+        "en": "Quantum chemistry solver and continuous phase-space kinetic electronic structure method"
+      },
+      "aliases": {
+        "en": [
+          "p1_qbescf",
+          "Quantum Boltzmann Equation Self-Consistent Field",
+          "Point Reyes Sound Solver"
+        ]
+      },
+      "claims": {
+        "P31": [
+          { "value": "Q7397", "comment": "instance of: software" },
+          { "value": "Q2838827", "comment": "instance of: computational chemistry software" }
+        ],
+        "P178": [{ "value": "Point Reyes Sound, Inc.", "comment": "developer" }],
+        "P275": [{ "value": "Q133721", "comment": "copyright license: MIT License" }],
+        "P1324": [{ "value": "https://github.com/point-reyes-sound/p1_qbescf", "comment": "source code repository URL" }],
+        "P348": [{ "value": "2.0.1", "comment": "software version identifier" }],
+        "P364": [{ "value": "Q1860", "comment": "original language of work: English" }],
+        "P1343": [
+          {
+            "value": "arXiv:2608.14979",
+            "comment": "described by source: Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities"
+          }
+        ],
+        "P356": [{ "value": "10.5281/zenodo.21940451", "comment": "DOI (Zenodo benchmark dataset)" }]
+      }
+    }
+  ],
+  "quickstatements_format": [
+    "CREATE",
+    "LAST|Len|\"Point Reyes Sound\"",
+    "LAST|Den|\"American quantum software and computational chemistry company developing kinetic electronic structure solvers\"",
+    "LAST|P31|Q4830453",
+    "LAST|P17|Q30",
+    "LAST|P159|Q62",
+    "LAST|P856|\"https://pointreyessound.com\"",
+    "LAST|P101|Q2329",
+    "LAST|P101|Q42213",
+    "CREATE",
+    "LAST|Len|\"QBE-SCF\"",
+    "LAST|Den|\"Quantum chemistry solver and continuous phase-space kinetic electronic structure method\"",
+    "LAST|P31|Q7397",
+    "LAST|P31|Q2838827",
+    "LAST|P275|Q133721",
+    "LAST|P1324|\"https://github.com/point-reyes-sound/p1_qbescf\"",
+    "LAST|P348|\"2.0.1\"",
+    "LAST|P356|\"10.5281/zenodo.21940451\""
+  ]
+}
