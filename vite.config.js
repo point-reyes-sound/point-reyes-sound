@@ -52,6 +52,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         interactive: resolve(__dirname, 'interactive.html'),
+        demo: resolve(__dirname, 'demo.html'),
         anfa: resolve(__dirname, 'anfa-deck.html'),
         alchemist: resolve(__dirname, 'alchemist-deck.html'),
         a16z: resolve(__dirname, 'a16z-deck.html'),
