@@ -133,6 +133,36 @@ const publicationList = [
   }
 ];
 
+class ConsoleErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("Q-BOLTZ Console error:", error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: "3rem", color: "#f87171", fontFamily: "'JetBrains Mono', monospace", textAlign: "center", background: "#020904", position: "relative", zIndex: 100 }}>
+          <h2 style={{ color: "#35ff82" }}>Q-BOLTZ Console Restoring Session...</h2>
+          <p>{this.state.error?.message || "An unexpected error occurred."}</p>
+          <button
+            onClick={() => this.setState({ hasError: false })}
+            style={{ marginTop: "1rem", padding: "0.5rem 1rem", background: "#10b981", color: "#000", border: "none", borderRadius: "6px", cursor: "pointer", fontWeight: "bold" }}
+          >
+            Reload Workstation
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export default function App() {
   const [activeTheme, setActiveTheme] = useState(0);
   const [copiedBibtexId, setCopiedBibtexId] = useState(null);
@@ -398,7 +428,9 @@ export default function App() {
       return (
         <div className="interactive-wrapper console-view">
           <PointReyesSound3DBackground />
-          <QBoltzAgentConsole onClose={closeAppView} />
+          <ConsoleErrorBoundary>
+            <QBoltzAgentConsole onClose={closeAppView} />
+          </ConsoleErrorBoundary>
         </div>
       );
     }

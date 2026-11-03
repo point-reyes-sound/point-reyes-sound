@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as THREE from "three";
 import WebGlWignerPlot from "./WebGlWignerPlot";
 import "./QBoltzAgentConsole.css";
