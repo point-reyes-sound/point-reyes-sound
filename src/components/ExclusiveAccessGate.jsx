@@ -196,7 +196,6 @@ export default function ExclusiveAccessGate({ onAuthenticate, onClose, onRequest
 
         {/* Notice Box */}
         <div className="gate-notice-box">
-          <div className="gate-notice-icon">🔒</div>
           <div>
             <strong>Authorized Preview Only:</strong> This interactive workstation contains proprietary solver benchmarks. Please enter the credentials provided in your invitation or evaluation package.
           </div>
@@ -217,7 +216,6 @@ export default function ExclusiveAccessGate({ onAuthenticate, onClose, onRequest
               <span>Username</span>
             </label>
             <div className="gate-input-wrapper">
-              <span className="gate-input-icon">👤</span>
               <input
                 id="gate-username"
                 type="text"
@@ -238,7 +236,6 @@ export default function ExclusiveAccessGate({ onAuthenticate, onClose, onRequest
               <span>Access Password</span>
             </label>
             <div className="gate-input-wrapper">
-              <span className="gate-input-icon">🔑</span>
               <input
                 id="gate-password"
                 type={showPassword ? "text" : "password"}
