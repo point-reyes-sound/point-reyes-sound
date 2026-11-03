@@ -640,15 +640,37 @@
   animation: pulseBeacon 1.4s infinite;
 }
 
+.workstation-visual-layout,
 .workstation-right-panel-four-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
   flex: 1;
   min-height: 0;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.orbitals-top-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  flex: 1.05;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.orbitals-top-row.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.analysis-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  flex: 0.95;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 /* Base Grid Cell Card */

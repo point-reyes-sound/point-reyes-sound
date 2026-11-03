@@ -709,6 +709,8 @@ export default function QBoltzAgentConsole({ onClose }) {
     (activeOrbitals.length > 1 ? activeOrbitals[activeOrbitals.length - 1] : activeOrbitals[0]) ||
     null;
 
+  const isThreeOrbital = (simulation?.benchmark?.key === "h3_d3h") || (activeOrbitals.length === 3);
+
   const activeAtoms = activeFrame?.atoms || simulation?.atoms || [];
   const activeBonds = activeFrame?.bonds || simulation?.bonds || [];
 
@@ -915,139 +917,190 @@ export default function QBoltzAgentConsole({ onClose }) {
                 </div>
               )}
 
-              <div className="workstation-right-panel-four-grid">
-                {/* Panel 1: Top-Left - Bonding Orbital (3D Three.js) */}
-                <div className="grid-cell-card panel-bonding">
-                  <div className="panel-cell-header">
-                    <div className="cell-title-group">
-                      <span className="cell-badge bonding">BONDING ORBITAL</span>
-                      <span className="cell-orbital-name">
-                        {bondingOrbital?.label || "1σ_g (Bonding)"}
-                      </span>
-                      <span className="cell-occ-tag">
-                        n = {Number(nBondVal).toFixed(3)}
-                      </span>
-                    </div>
-                    <div className="cell-legend">
-                      {bondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
-                      {bondingOrbital?.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
-                    </div>
-                  </div>
+              <div className={`workstation-visual-layout ${isThreeOrbital ? "layout-three-orbitals" : "layout-two-orbitals"}`}>
+                {/* Top Panel: Active Space Orbitals (3 panels for H3 at conical intersection, 2 for H2) */}
+                <div className={`orbitals-top-row ${isThreeOrbital ? "cols-3" : "cols-2"}`}>
+                  {isThreeOrbital ? (
+                    activeOrbitals.slice(0, 3).map((orb, idx) => {
+                      const badgeLabel = idx === 0 
+                        ? "a₁' (SYMMETRIC)" 
+                        : idx === 1 
+                          ? "e'_x (CROSSING)" 
+                          : "e'_y (CROSSING)";
+                      const badgeClass = idx === 0 ? "bonding" : "antibonding";
+                      const occVal = orb.occupation !== undefined ? orb.occupation : 0;
+                      return (
+                        <div key={`h3-orb-${idx}`} className={`grid-cell-card panel-orbital panel-orbital-${idx}`}>
+                          <div className="panel-cell-header">
+                            <div className="cell-title-group">
+                              <span className={`cell-badge ${badgeClass}`}>{badgeLabel}</span>
+                              <span className="cell-orbital-name" title={orb.label}>
+                                {orb.label}
+                              </span>
+                              <span className="cell-occ-tag">
+                                n = {Number(occVal).toFixed(3)}
+                              </span>
+                            </div>
+                            <div className="cell-legend">
+                              {orb.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
+                              {orb.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
+                            </div>
+                          </div>
 
-                  <div className="cell-canvas-viewport">
-                    {bondingOrbital ? (
-                      <PureThreeOrbitalCanvas
-                        orbital={bondingOrbital}
-                        atoms={activeAtoms}
-                        bonds={activeBonds}
-                      />
-                    ) : (
-                      <div className="cell-placeholder">Calculating 3D Isosurface...</div>
-                    )}
-                  </div>
-                </div>
+                          <div className="cell-canvas-viewport">
+                            {orb ? (
+                              <PureThreeOrbitalCanvas
+                                orbital={orb}
+                                atoms={activeAtoms}
+                                bonds={activeBonds}
+                              />
+                            ) : (
+                              <div className="cell-placeholder">Calculating 3D Isosurface...</div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <>
+                      {/* Panel 1: Top-Left - Bonding Orbital (3D Three.js) */}
+                      <div className="grid-cell-card panel-bonding">
+                        <div className="panel-cell-header">
+                          <div className="cell-title-group">
+                            <span className="cell-badge bonding">BONDING ORBITAL</span>
+                            <span className="cell-orbital-name">
+                              {bondingOrbital?.label || "1σ_g (Bonding)"}
+                            </span>
+                            <span className="cell-occ-tag">
+                              n = {Number(nBondVal).toFixed(3)}
+                            </span>
+                          </div>
+                          <div className="cell-legend">
+                            {bondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
+                            {bondingOrbital?.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
+                          </div>
+                        </div>
 
-                {/* Panel 2: Top-Right - Antibonding Orbital (3D Three.js) */}
-                <div className="grid-cell-card panel-antibonding">
-                  <div className="panel-cell-header">
-                    <div className="cell-title-group">
-                      <span className="cell-badge antibonding">ANTIBONDING ORBITAL</span>
-                      <span className="cell-orbital-name">
-                        {antibondingOrbital?.label || "1σ_u* (Antibonding)"}
-                      </span>
-                      <span className="cell-occ-tag">
-                        n = {Number(nAntibondVal).toFixed(3)}
-                      </span>
-                    </div>
-                    <div className="cell-legend">
-                      {antibondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
-                      {antibondingOrbital?.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
-                    </div>
-                  </div>
-
-                  <div className="cell-canvas-viewport">
-                    {antibondingOrbital ? (
-                      <PureThreeOrbitalCanvas
-                        orbital={antibondingOrbital}
-                        atoms={activeAtoms}
-                        bonds={activeBonds}
-                      />
-                    ) : (
-                      <div className="cell-placeholder">Calculating 3D Isosurface...</div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Panel 3: Bottom-Left - Dissociation Curves + Energies */}
-                <div className="grid-cell-card panel-dissociation">
-                  <div className="panel-cell-header">
-                    <div className="cell-title-group">
-                      <span className="cell-badge pes">DISSOCIATION PES</span>
-                      <span className="cell-orbital-name">Potential Energy Surface & Observables</span>
-                    </div>
-                    <div className="pes-legend-compact">
-                      <span className="legend-item qbe">
-                        <span className="legend-dot green"></span> QBE-SCF
-                      </span>
-                      <span className="legend-item rhf">
-                        <span className="legend-dot red"></span> RHF Mean-Field
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="dissoc-and-observables-body">
-                    <div className="pes-plot-container">
-                      {simulation?.dissociation_curve ? (
-                        <DissociationCurvePlot
-                          curveData={simulation.dissociation_curve}
-                          currentPoint={currentR}
-                        />
-                      ) : (
-                        <div className="cell-placeholder">Computing Energy Curve...</div>
-                      )}
-                    </div>
-
-                    {/* Quantum Energy Observables Row */}
-                    <div className="observables-row-grid">
-                      <div className="obs-card">
-                        <span className="obs-label">QBE-SCF Energy</span>
-                        <span className="obs-value">
-                          {activeEqbeEv !== undefined ? `${Number(activeEqbeEv).toFixed(2)} eV` : "-22.84 eV"}
-                        </span>
-                        <span className="obs-sub">
-                          {activeEqbeHartree !== undefined ? `${typeof activeEqbeHartree === 'number' ? activeEqbeHartree.toFixed(5) : activeEqbeHartree} E_h` : "-0.8017 E_h"}
-                        </span>
+                        <div className="cell-canvas-viewport">
+                          {bondingOrbital ? (
+                            <PureThreeOrbitalCanvas
+                              orbital={bondingOrbital}
+                              atoms={activeAtoms}
+                              bonds={activeBonds}
+                            />
+                          ) : (
+                            <div className="cell-placeholder">Calculating 3D Isosurface...</div>
+                          )}
+                        </div>
                       </div>
 
-                      <div className="obs-card">
-                        <span className="obs-label">Standard RHF</span>
-                        <span className="obs-value">
-                          {activeEstandardHartree !== undefined ? `${typeof activeEstandardHartree === 'number' ? activeEstandardHartree.toFixed(5) : activeEstandardHartree} E_h` : "-0.8017 E_h"}
+                      {/* Panel 2: Top-Right - Antibonding Orbital (3D Three.js) */}
+                      <div className="grid-cell-card panel-antibonding">
+                        <div className="panel-cell-header">
+                          <div className="cell-title-group">
+                            <span className="cell-badge antibonding">ANTIBONDING ORBITAL</span>
+                            <span className="cell-orbital-name">
+                              {antibondingOrbital?.label || "1σ_u* (Antibonding)"}
+                            </span>
+                            <span className="cell-occ-tag">
+                              n = {Number(nAntibondVal).toFixed(3)}
+                            </span>
+                          </div>
+                          <div className="cell-legend">
+                            {antibondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
+                            {antibondingOrbital?.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
+                          </div>
+                        </div>
+
+                        <div className="cell-canvas-viewport">
+                          {antibondingOrbital ? (
+                            <PureThreeOrbitalCanvas
+                              orbital={antibondingOrbital}
+                              atoms={activeAtoms}
+                              bonds={activeBonds}
+                            />
+                          ) : (
+                            <div className="cell-placeholder">Calculating 3D Isosurface...</div>
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* Bottom Row: Analysis & Phase Space */}
+                <div className="analysis-bottom-row">
+                  {/* Panel 3: Bottom-Left - Dissociation Curves + Energies */}
+                  <div className="grid-cell-card panel-dissociation">
+                    <div className="panel-cell-header">
+                      <div className="cell-title-group">
+                        <span className="cell-badge pes">DISSOCIATION PES</span>
+                        <span className="cell-orbital-name">Potential Energy Surface & Observables</span>
+                      </div>
+                      <div className="pes-legend-compact">
+                        <span className="legend-item qbe">
+                          <span className="legend-dot green"></span> QBE-SCF
                         </span>
-                        <span className="obs-sub">
-                          {currentR >= 1.16 ? "Coulson-Fischer Cusp" : "Mean-Field Limit"}
+                        <span className="legend-item rhf">
+                          <span className="legend-dot red"></span> RHF Mean-Field
                         </span>
                       </div>
+                    </div>
 
-                      <div className="obs-card highlight">
-                        <span className="obs-label">Correlation Entropy</span>
-                        <span className="obs-value">
-                          {activeEntropy !== undefined ? `${Number(activeEntropy).toFixed(3)} bits` : "0.986 bits"}
-                        </span>
-                        <span className="obs-sub">{currentR >= 1.6 ? "Entangled Singlet Limit" : "Coulson-Fischer Onset"}</span>
+                    <div className="dissoc-and-observables-body">
+                      <div className="pes-plot-container">
+                        {simulation?.dissociation_curve ? (
+                          <DissociationCurvePlot
+                            curveData={simulation.dissociation_curve}
+                            currentPoint={currentR}
+                          />
+                        ) : (
+                          <div className="cell-placeholder">Computing Energy Curve...</div>
+                        )}
+                      </div>
+
+                      {/* Quantum Energy Observables Row */}
+                      <div className="observables-row-grid">
+                        <div className="obs-card">
+                          <span className="obs-label">QBE-SCF Energy</span>
+                          <span className="obs-value">
+                            {activeEqbeEv !== undefined ? `${Number(activeEqbeEv).toFixed(2)} eV` : "-22.84 eV"}
+                          </span>
+                          <span className="obs-sub">
+                            {activeEqbeHartree !== undefined ? `${typeof activeEqbeHartree === 'number' ? activeEqbeHartree.toFixed(5) : activeEqbeHartree} E_h` : "-0.8017 E_h"}
+                          </span>
+                        </div>
+
+                        <div className="obs-card">
+                          <span className="obs-label">Standard RHF</span>
+                          <span className="obs-value">
+                            {activeEstandardHartree !== undefined ? `${typeof activeEstandardHartree === 'number' ? activeEstandardHartree.toFixed(5) : activeEstandardHartree} E_h` : "-0.8017 E_h"}
+                          </span>
+                          <span className="obs-sub">
+                            {currentR >= 1.16 ? "Coulson-Fischer Cusp" : "Mean-Field Limit"}
+                          </span>
+                        </div>
+
+                        <div className="obs-card highlight">
+                          <span className="obs-label">Correlation Entropy</span>
+                          <span className="obs-value">
+                            {activeEntropy !== undefined ? `${Number(activeEntropy).toFixed(3)} bits` : "0.986 bits"}
+                          </span>
+                          <span className="obs-sub">{currentR >= 1.6 ? "Entangled Singlet Limit" : "Coulson-Fischer Onset"}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Panel 4: Bottom-Right - Wigner Distribution in Phase Space (High-Res WebGL) */}
-                <div className="grid-cell-card panel-wigner">
-                  <WebGlWignerPlot
-                    r={currentR}
-                    nBond={nBondVal}
-                    nAntibond={nAntibondVal}
-                    benchmarkTitle={simulation?.benchmark?.title}
-                  />
+                  {/* Panel 4: Bottom-Right - Wigner Distribution in Phase Space (High-Res WebGL) */}
+                  <div className="grid-cell-card panel-wigner">
+                    <WebGlWignerPlot
+                      r={currentR}
+                      nBond={nBondVal}
+                      nAntibond={nAntibondVal}
+                      benchmarkTitle={simulation?.benchmark?.title}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
