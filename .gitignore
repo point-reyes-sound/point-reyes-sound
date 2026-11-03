@@ -34,6 +34,7 @@ deck/
 *.log
 server/
 *.py
+!scripts/*.py
 *.pyc
 __pycache__/
 public/data/
