@@ -518,7 +518,7 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
 // Main Fullscreen Q-BOLTZ Agent Workstation Component (Pure Text Interaction)
 // ---------------------------------------------------------------------------
 export default function QBoltzAgentConsole({ onClose }) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("Conceptualize and envision the dissociation of H2 in phase space.");
   const [loading, setLoading] = useState(false);
   const [hasResult, setHasResult] = useState(false);
   const [streamedText, setStreamedText] = useState("");
@@ -637,6 +637,7 @@ export default function QBoltzAgentConsole({ onClose }) {
   const executeQuery = async (customPrompt) => {
     const text = customPrompt || query;
     if (!text.trim()) return;
+    setQuery(text);
 
     setLoading(true);
     setHasResult(true);
@@ -681,8 +682,8 @@ export default function QBoltzAgentConsole({ onClose }) {
 
   const quickPresets = [
     {
-      label: "H₂ Dissociation (R = 1.6 Å)",
-      prompt: "Calculate the dissociation of H2 at 1.6 Angstroms and show the active space natural orbitals."
+      label: "H₂ Dissociation in Phase Space",
+      prompt: "Conceptualize and envision the dissociation of H2 in phase space."
     },
     {
       label: "H₃ D₃ₕ Conical Intersection",
@@ -771,7 +772,7 @@ export default function QBoltzAgentConsole({ onClose }) {
             <input
               type="text"
               className="console-text-input"
-              placeholder='Ask Q-Boltz (e.g. "Calculate dissociation of H2 at 1.6 Å and show active space orbitals")...'
+              placeholder='Ask Q-Boltz (e.g. "Conceptualize and envision the dissociation of H2 in phase space")...'
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => {
