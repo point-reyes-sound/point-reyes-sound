@@ -134,7 +134,7 @@
     },
     {
       "source": "/demo",
-      "destination": "/index.html"
+      "destination": "/demo.html"
     },
     {
       "source": "/orbitals",
