@@ -517,7 +517,7 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
 // ---------------------------------------------------------------------------
 // Main Fullscreen Q-BOLTZ Agent Workstation Component (Pure Text Interaction)
 // ---------------------------------------------------------------------------
-export default function QBoltzAgentConsole({ onClose }) {
+export default function QBoltzAgentConsole({ onClose, onLogout }) {
   const [query, setQuery] = useState("Conceptualize and envision the dissociation of H2 in phase space.");
   const [loading, setLoading] = useState(false);
   const [hasResult, setHasResult] = useState(false);
@@ -748,6 +748,19 @@ export default function QBoltzAgentConsole({ onClose }) {
           </div>
 
           <div className="header-actions">
+            <div className="auth-session-pill" title="Exclusive Authenticated Session">
+              <span className="gate-pulse-dot"></span>
+              <span>AUTHENTICATED ACCESS</span>
+              {onLogout && (
+                <button
+                  className="auth-lock-btn"
+                  onClick={onLogout}
+                  title="Lock demo and exit session"
+                >
+                  🔒 Lock
+                </button>
+              )}
+            </div>
             {hasResult && (
               <button
                 className="action-pill-btn"
