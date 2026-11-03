@@ -327,13 +327,15 @@ export default function MolecularOrbitalWorkstation({ onClose, activeTab = "orbi
               <span className="tab-dot dot-orbitals"></span>
               Molecular Orbitals (Active Space)
             </button>
-            <button
-              className={`topbar-tab-btn ${activeTab === "gas" ? "active" : ""}`}
-              onClick={() => onSwitchTab("gas")}
+            <a
+              href="/film"
+              className="topbar-tab-btn"
+              style={{ textDecoration: "none" }}
+              title="Watch Executive Film (pointreyessound.com/film)"
             >
               <span className="tab-dot dot-gas"></span>
-              Quantum Gas (Phase Space)
-            </button>
+              Executive Film ↗
+            </a>
           </div>
         )}
 
