@@ -772,7 +772,7 @@ export default function App() {
             Quantum Boltzmann Solver
           </h1>
           <p className="hero-lead">
-            Point Reyes Sound. We are engineering the molecular architecture of the next century.
+            We are engineering the molecular architecture of the next century.
           </p>
           <div className="hero-institutional-footnote-wrap">
             <a 
