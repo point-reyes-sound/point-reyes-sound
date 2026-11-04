@@ -772,7 +772,7 @@ export default function App() {
             Quantum Boltzmann Solver
           </h1>
           <p className="hero-lead">
-            Point Reyes Sound. Discovery without deference.
+            Point Reyes Sound. We are engineering the molecular architecture of the next century.
           </p>
           <div className="hero-institutional-footnote-wrap">
             <a 
@@ -806,7 +806,7 @@ export default function App() {
       <section id="about" className="section-block about-section">
         <div className="section-head">
           <div className="section-kicker">ABOUT POINT REYES SOUND</div>
-          <h2 className="section-title">Discovery Without Deference</h2>
+          <h2 className="section-title">We are engineering the molecular architecture of the next century.</h2>
           <p className="section-sub">
             Continuous phase-space kinetics for strongly correlated electrons.
           </p>
