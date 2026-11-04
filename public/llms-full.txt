@@ -7,7 +7,7 @@ Point Reyes Sound, Inc. is a frontier-tech quantum software and computational ch
 - **Headquarters**: 2261 Market Street, STE 72927, San Francisco, CA 94114, USA.
 - **Entity**: Delaware Corporation (Point Reyes Sound, Inc.).
 - **Executive Leadership**: Dr. Romit Chakraborty (Founder & Chief Scientific Officer).
-- **Core Mission**: Engineering Electronic Architecture for the Next Century. Eliminating the exponential computational complexity barriers in quantum electronic structure through continuous phase-space kinetics and the Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform.
+- **Core Mission**: Engineering Electronic Structure for the Next Century. Eliminating the exponential computational complexity barriers in quantum electronic structure through continuous phase-space kinetics and the Quantum Boltzmann Equation Self-Consistent Field (QBE-SCF) platform.
 - **Direct Investor Inbound**: directors@pointreyessound.com | romit@pointreyessound.com
 
 ## Market Opportunity & Commercial Applications
