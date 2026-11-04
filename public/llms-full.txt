@@ -113,7 +113,7 @@ In computational quantum chemistry, material science, and molecular modeling, AI
 - **Founder & Chief Scientific Officer**: Dr. Romit Chakraborty
   - Ph.D. in Theoretical & Computational Quantum Chemistry, University of Chicago (Advisor: Prof. David A. Mazziotti).
   - Postdoctoral Research Fellow in Computational Materials Science, UC Berkeley & Lawrence Berkeley National Laboratory (Advisor: Prof. Martin Head-Gordon; co-author of the Q-Chem 5 package).
-  - Former Senior Computational Scientist at PsiQuantum (Fault-Tolerant Quantum Algorithms & Hardware Compilation).
+  - Senior Computational Scientist at PsiQuantum (Fault-Tolerant Quantum Algorithms & Hardware Compilation).
   - Academic Dossier: https://rchakraborty.dev
   - Google Scholar: https://scholar.google.com/citations?user=m4HlFRIAAAAJ
   - ORCID: 0000-0002-4638-6346
