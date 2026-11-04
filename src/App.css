@@ -913,14 +913,25 @@ body {
 
 .section-title {
   font-family: var(--font-serif);
-  font-size: clamp(2.1rem, 3.4vw, 2.9rem);
+  font-size: clamp(2.1rem, 3.4vw, 3.15rem);
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.2;
   color: #ffffff;
-  max-width: 1080px;
+  max-width: 100%;
   margin-bottom: 16px;
-  text-wrap: balance;
+}
+
+.about-section .section-title {
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+@media (max-width: 1180px) {
+  .about-section .section-title {
+    white-space: normal;
+    text-wrap: balance;
+  }
 }
 
 .section-sub {
