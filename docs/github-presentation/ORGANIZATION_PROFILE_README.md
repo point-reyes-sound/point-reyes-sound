@@ -6,7 +6,8 @@
 
 # POINT REYES SOUND
 
-### Continuous Phase-Space Kinetics for Strongly Correlated Electrons
+### Engineering Electronic Structure for the Next Century
+**Continuous Phase-Space Kinetics for Strongly Correlated Electrons**
 
 [![Preprint: arXiv:2608.14979](https://img.shields.io/badge/Preprint-arXiv%3A2608.14979-B31B1B.svg?style=flat-square)](https://arxiv.org/abs/2608.14979)
 [![Platform: pointreyessound.com](https://img.shields.io/badge/Platform-pointreyessound.com-0284c7.svg?style=flat-square)](https://pointreyessound.com)

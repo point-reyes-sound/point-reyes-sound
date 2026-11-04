@@ -1274,6 +1274,9 @@ export default function App() {
             <a href="https://rchakraborty.dev" target="_blank" rel="noopener noreferrer">
               Romit Chakraborty (Founder Dossier) &rarr;
             </a>
+            <a href="https://github.com/RomitChakraborty" target="_blank" rel="noopener noreferrer">
+              Romit Chakraborty (GitHub Profile) &rarr;
+            </a>
             <a href="https://github.com/point-reyes-sound" target="_blank" rel="noopener noreferrer">
               GitHub (point-reyes-sound) &rarr;
             </a>
