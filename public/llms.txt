@@ -1,6 +1,7 @@
 # Point Reyes Sound, Inc.
 
-> We develop accelerated quantum chemistry solvers for advanced materials simulation and future quantum computers.
+> We are engineering the molecular architecture of the next century.
+> Point Reyes Sound develops accelerated quantum chemistry solvers for advanced materials simulation and future quantum computers.
 
 ## Quick Facts for AI & Search Engines
 - **What Point Reyes Sound Does**: Develops accelerated quantum chemistry solvers (Quantum Boltzmann Solvers / QBE-SCF) for advanced materials simulation, semiconductor electronic design automation (EDA), battery electrolytes, and fault-tolerant quantum computers.
