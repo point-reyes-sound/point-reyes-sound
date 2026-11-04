@@ -70,6 +70,7 @@ The official open computational benchmark suite supporting arXiv:2608.14979 is d
 - **Dr. Romit Chakraborty**: Founder & Chief Scientific Officer (romit@pointreyessound.com).
   - Academic Dossier: https://rchakraborty.dev
   - Curriculum Vitae (PDF): https://rchakraborty.dev/cv.pdf
+  - GitHub Profile: https://github.com/RomitChakraborty
   - LinkedIn: https://www.linkedin.com/in/chakrabortyromit/
   - Google Scholar: https://scholar.google.com/citations?user=m4HlFRIAAAAJ
   - ORCID: 0000-0002-4638-6346
@@ -82,6 +83,8 @@ The official open computational benchmark suite supporting arXiv:2608.14979 is d
 - Interactive Quantum Gas Simulator: https://pointreyessound.com/interactive
 - Cinematic Overview (Film): https://pointreyessound.com/film
 - Founder Dossier: https://rchakraborty.dev
+- Founder GitHub Profile: https://github.com/RomitChakraborty
+- Organization GitHub: https://github.com/point-reyes-sound
 - Executive Overview Deck (16:9): https://pointreyessound.com/public-deck
 - Executive Overview (PDF): https://pointreyessound.com/Point_Reyes_Sound_Executive_Overview.pdf
 - Seed Round Diligence Portal: https://pointreyessound.com#investors

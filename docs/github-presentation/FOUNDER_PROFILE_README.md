@@ -7,6 +7,7 @@
 # Romit Chakraborty
 
 ### Quantum Chemist & Theoretical Physicist • Founder & CEO, Point Reyes Sound, Inc.
+> *“Engineering Electronic Structure for the Next Century.”*
 
 [![ORCID](https://img.shields.io/badge/ORCID-0000--0002--4638--6346-A6CE39.svg?style=flat-square&logo=orcid&logoColor=white)](https://orcid.org/0000-0002-4638-6346)
 [![Google Scholar](https://img.shields.io/badge/Google%20Scholar-Citations-4285F4.svg?style=flat-square&logo=google-scholar&logoColor=white)](https://scholar.google.com/citations?user=m4HlFRIAAAAJ&hl=en)
