@@ -772,7 +772,7 @@ export default function App() {
             Quantum Boltzmann Solver
           </h1>
           <p className="hero-lead">
-            We are engineering the molecular architecture of the next century.
+            Engineering the Electronic Architecture for the Next Century
           </p>
           <div className="hero-institutional-footnote-wrap">
             <a 
@@ -806,7 +806,7 @@ export default function App() {
       <section id="about" className="section-block about-section">
         <div className="section-head">
           <div className="section-kicker">ABOUT POINT REYES SOUND</div>
-          <h2 className="section-title">We are engineering the molecular architecture of the next century.</h2>
+          <h2 className="section-title">Engineering the Electronic Architecture for the Next Century</h2>
           <p className="section-sub">
             Continuous phase-space kinetics for strongly correlated electrons.
           </p>
