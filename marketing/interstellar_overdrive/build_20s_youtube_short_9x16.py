@@ -475,24 +475,15 @@ def build_static_header_overlay():
     draw.text((x_t1, y_t1), t1, font=font_title, fill=(255, 255, 255, 255))
     draw.text((x_t2, y_t2), t2, font=font_title, fill=(255, 255, 255, 255))
 
-    # 4. Scientific Subtitle with Typographic Subscript ₂
-    p1 = "Quantum Fluctuations in a Lattice of H"
-    ps = "2"
-    p2 = " Molecules"
-    w1 = font_sub.getbbox(p1)[2] - font_sub.getbbox(p1)[0]
-    ws = font_sub_2.getbbox(ps)[2] - font_sub_2.getbbox(ps)[0]
-    w2 = font_sub.getbbox(p2)[2] - font_sub.getbbox(p2)[0]
-    total_w = w1 + ws + w2
+    # 4. Scientific Subtitle: 'Quantum Fluctuations in a Lattice'
+    sub_txt = "Quantum Fluctuations in a Lattice"
+    total_w = font_sub.getbbox(sub_txt)[2] - font_sub.getbbox(sub_txt)[0]
     xs = (OW - total_w) // 2
     ys = 416
     for ox, oy in [(-1, 0), (1, 0), (0, -1), (0, 1), (0, 2)]:
-        draw.text((xs + ox, ys + oy), p1, font=font_sub, fill=(0, 0, 0, 210))
-        draw.text((xs + w1 + 1 + ox, ys + 10 + oy), ps, font=font_sub_2, fill=(0, 0, 0, 210))
-        draw.text((xs + w1 + ws + 1 + ox, ys + oy), p2, font=font_sub, fill=(0, 0, 0, 210))
+        draw.text((xs + ox, ys + oy), sub_txt, font=font_sub, fill=(0, 0, 0, 210))
     sub_col = (185, 230, 255, 242)
-    draw.text((xs, ys), p1, font=font_sub, fill=sub_col)
-    draw.text((xs + w1 + 1, ys + 10), ps, font=font_sub_2, fill=sub_col)
-    draw.text((xs + w1 + ws + 1, ys), p2, font=font_sub, fill=sub_col)
+    draw.text((xs, ys), sub_txt, font=font_sub, fill=sub_col)
 
     return overlay
 

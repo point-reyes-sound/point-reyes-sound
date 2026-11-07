@@ -57,16 +57,9 @@ def build_subtitle_replacement_patch():
 
     font_dir = "/Users/romitchakraborty/Library/Fonts/static"
     font_sub = ImageFont.truetype(f"{font_dir}/EBGaramond-Regular.ttf", 24)
-    font_sub_2 = ImageFont.truetype(f"{font_dir}/EBGaramond-Regular.ttf", 17)
 
-    part1 = "Quantum Fluctuations in a Lattice of H"
-    part_sub = "2"
-    part2 = " Molecules"
-
-    w1 = font_sub.getbbox(part1)[2] - font_sub.getbbox(part1)[0]
-    w_s = font_sub_2.getbbox(part_sub)[2] - font_sub_2.getbbox(part_sub)[0]
-    w2 = font_sub.getbbox(part2)[2] - font_sub.getbbox(part2)[0]
-    total_w = w1 + w_s + w2
+    sub_txt = "Quantum Fluctuations in a Lattice"
+    total_w = font_sub.getbbox(sub_txt)[2] - font_sub.getbbox(sub_txt)[0]
 
     x_start = (WIDTH - total_w) // 2 - x0
     y_text = 98 - y0
@@ -76,14 +69,10 @@ def build_subtitle_replacement_patch():
     draw = ImageDraw.Draw(overlay)
 
     for ox, oy in [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (1, 1), (0, 2)]:
-        draw.text((x_start + ox, y_text + oy), part1, font=font_sub, fill=(0, 0, 0, 200))
-        draw.text((x_start + w1 + 1 + ox, y_text + 9 + oy), part_sub, font=font_sub_2, fill=(0, 0, 0, 200))
-        draw.text((x_start + w1 + w_s + 1 + ox, y_text + oy), part2, font=font_sub, fill=(0, 0, 0, 200))
+        draw.text((x_start + ox, y_text + oy), sub_txt, font=font_sub, fill=(0, 0, 0, 200))
 
     fill_col = (185, 230, 255, 240)
-    draw.text((x_start, y_text), part1, font=font_sub, fill=fill_col)
-    draw.text((x_start + w1 + 1, y_text + 9), part_sub, font=font_sub_2, fill=fill_col)
-    draw.text((x_start + w1 + w_s + 1, y_text), part2, font=font_sub, fill=fill_col)
+    draw.text((x_start, y_text), sub_txt, font=font_sub, fill=fill_col)
 
     comp = np.array(Image.alpha_composite(pil_patch, overlay).convert("RGB"))
     return y0, y1, x0, x1, comp
