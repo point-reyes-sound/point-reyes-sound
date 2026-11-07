@@ -1,0 +1,182 @@
+"""
+build_20s_quantum_lattice_clip.py
+Produces the 20-second 1080p cut (`electronic_quantum_fluid_20s.mp4`) from the
+original 60-second `electronic_quantum_fluid_1080p.mp4` master, paired with the
+Syd Barrett-inspired 112 BPM EDM backing track (`syd_barrett_techno_disco_20s.wav`),
+and updates the header subtitle to:
+"Quantum Fluctuations in a Lattice of H₂ Molecules"
+"""
+
+import os
+import sys
+import math
+import subprocess
+import cv2
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+
+BASE_DIR = "/Users/romitchakraborty/QAI/point-reyes-sound"
+OUT_DIR = os.path.join(BASE_DIR, "marketing", "interstellar_overdrive")
+INPUT_MP4 = os.path.join(OUT_DIR, "electronic_quantum_fluid_1080p.mp4")
+AUDIO_WAV = os.path.join(OUT_DIR, "syd_barrett_techno_disco_20s.wav")
+OUTPUT_MP4 = os.path.join(OUT_DIR, "electronic_quantum_fluid_20s.mp4")
+
+WIDTH = 1920
+HEIGHT = 1080
+FPS = 30
+DURATION = 20.0
+TOTAL_OUT_FRAMES = int(FPS * DURATION)  # 600 frames
+
+
+def build_subtitle_replacement_patch():
+    """
+    Reconstructs the exact cosmic background for the subtitle band
+    (y = 99..135, x = 640..1280) and renders:
+    'Quantum Fluctuations in a Lattice of H₂ Molecules'
+    in EB Garamond Regular (matching render_apple_liquid_video.py).
+    """
+    y0, y1 = 99, 135
+    x0, x1 = 640, 1280
+    h_p = y1 - y0
+    w_p = x1 - x0
+
+    bg_patch = np.zeros((h_p, w_p, 3), dtype=np.uint8)
+    for py in range(y0, y1):
+        v_norm = float(py - HEIGHT // 2) / float(HEIGHT // 2)
+        for px in range(x0, x1):
+            u_norm = float(px - WIDTH // 2) / float(WIDTH // 2)
+            dist_center = math.sqrt(u_norm ** 2 + v_norm ** 2)
+            bg_b = max(3, int(15.0 - dist_center * 10.0))
+            bg_g = max(2, int(8.0 - dist_center * 5.0))
+            bg_r = max(1, int(2.0 - dist_center * 1.5))
+            bg_patch[py - y0, px - x0, 0] = bg_r
+            bg_patch[py - y0, px - x0, 1] = bg_g
+            bg_patch[py - y0, px - x0, 2] = bg_b
+
+    font_dir = "/Users/romitchakraborty/Library/Fonts/static"
+    font_sub = ImageFont.truetype(f"{font_dir}/EBGaramond-Regular.ttf", 24)
+    font_sub_2 = ImageFont.truetype(f"{font_dir}/EBGaramond-Regular.ttf", 17)
+
+    part1 = "Quantum Fluctuations in a Lattice of H"
+    part_sub = "2"
+    part2 = " Molecules"
+
+    w1 = font_sub.getbbox(part1)[2] - font_sub.getbbox(part1)[0]
+    w_s = font_sub_2.getbbox(part_sub)[2] - font_sub_2.getbbox(part_sub)[0]
+    w2 = font_sub.getbbox(part2)[2] - font_sub.getbbox(part2)[0]
+    total_w = w1 + w_s + w2
+
+    x_start = (WIDTH - total_w) // 2 - x0
+    y_text = 98 - y0
+
+    pil_patch = Image.fromarray(bg_patch, mode="RGB").convert("RGBA")
+    overlay = Image.new("RGBA", (w_p, h_p), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
+
+    # Dropshadow matching render_apple_liquid_video.py
+    for ox, oy in [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (1, 1), (0, 2)]:
+        draw.text((x_start + ox, y_text + oy), part1, font=font_sub, fill=(0, 0, 0, 200))
+        draw.text((x_start + w1 + 1 + ox, y_text + 9 + oy), part_sub, font=font_sub_2, fill=(0, 0, 0, 200))
+        draw.text((x_start + w1 + w_s + 1 + ox, y_text + oy), part2, font=font_sub, fill=(0, 0, 0, 200))
+
+    fill_col = (185, 230, 255, 240)
+    draw.text((x_start, y_text), part1, font=font_sub, fill=fill_col)
+    draw.text((x_start + w1 + 1, y_text + 9), part_sub, font=font_sub_2, fill=fill_col)
+    draw.text((x_start + w1 + w_s + 1, y_text), part2, font=font_sub, fill=fill_col)
+
+    comp = np.array(Image.alpha_composite(pil_patch, overlay).convert("RGB"))
+    return y0, y1, x0, x1, comp
+
+
+def build_smooth_time_map(n_frames=TOTAL_OUT_FRAMES, fps=FPS):
+    tau = np.arange(n_frames) / float(fps)
+    v = np.ones_like(tau)
+    for i, t in enumerate(tau):
+        if t < 6.0:
+            v[i] = 1.0
+        elif t < 8.0:
+            u = (t - 6.0) / 2.0
+            s = 3.0 * u**2 - 2.0 * u**3
+            v[i] = 1.0 + 0.96 * s
+        elif t < 15.0:
+            v[i] = 1.96
+        elif t < 17.0:
+            u = (t - 15.0) / 2.0
+            s = 3.0 * u**2 - 2.0 * u**3
+            v[i] = 1.96 - 0.56 * s
+        else:
+            v[i] = 1.40
+
+    dt = 1.0 / float(fps)
+    t_orig = 29.2 + np.cumsum(v) * dt - v[0] * dt
+    t_orig = 29.2 + (t_orig - 29.2) * ((59.5 - 29.2) / (t_orig[-1] - 29.2))
+    return t_orig
+
+
+def main():
+    print(f"[1/3] Loading all frames from {INPUT_MP4}...")
+    cap = cv2.VideoCapture(INPUT_MP4)
+    orig_frames = []
+    while True:
+        ret, frame_bgr = cap.read()
+        if not ret:
+            break
+        orig_frames.append(cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB))
+    cap.release()
+    n_orig = len(orig_frames)
+    print(f"      Loaded {n_orig} original 1080p frames.")
+
+    y0, y1, x0, x1, sub_patch = build_subtitle_replacement_patch()
+    t_orig_map = build_smooth_time_map(TOTAL_OUT_FRAMES, FPS)
+    f_orig_map = t_orig_map * FPS
+
+    print(f"[2/3] Encoding 20s 1080p clip with 'Lattice of H₂ Molecules' subtitle -> {OUTPUT_MP4}")
+    ffmpeg_cmd = [
+        "ffmpeg", "-y",
+        "-f", "rawvideo",
+        "-vcodec", "rawvideo",
+        "-s", f"{WIDTH}x{HEIGHT}",
+        "-pix_fmt", "rgb24",
+        "-r", str(FPS),
+        "-i", "-",
+        "-i", AUDIO_WAV,
+        "-c:v", "libx264",
+        "-preset", "fast",
+        "-crf", "17",
+        "-pix_fmt", "yuv420p",
+        "-c:a", "aac",
+        "-b:a", "320k",
+        "-movflags", "+faststart",
+        "-shortest",
+        OUTPUT_MP4,
+    ]
+
+    proc = subprocess.Popen(ffmpeg_cmd, stdin=subprocess.PIPE)
+
+    for out_idx in range(TOTAL_OUT_FRAMES):
+        f_exact = f_orig_map[out_idx]
+        i0 = min(n_orig - 1, max(0, int(np.floor(f_exact))))
+        i1 = min(n_orig - 1, i0 + 1)
+        alpha = f_exact - i0
+
+        if alpha < 1e-4 or i0 == i1:
+            out_rgb = orig_frames[i0].copy()
+        else:
+            out_rgb = cv2.addWeighted(orig_frames[i0], 1.0 - alpha, orig_frames[i1], alpha, 0.0)
+
+        # Replace 'Lattice of H atoms' with 'Lattice of H₂ Molecules'
+        out_rgb[y0:y1, x0:x1] = sub_patch
+
+        proc.stdin.write(out_rgb.tobytes())
+
+    proc.stdin.close()
+    proc.wait()
+    if proc.returncode != 0:
+        print(f"[ERROR] FFmpeg exited with {proc.returncode}")
+        sys.exit(1)
+
+    print(f"[3/3] Successfully created 20-second clip: {OUTPUT_MP4}")
+
+
+if __name__ == "__main__":
+    main()
