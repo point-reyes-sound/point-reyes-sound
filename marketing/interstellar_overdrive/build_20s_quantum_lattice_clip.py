@@ -1,10 +1,11 @@
 """
 build_20s_quantum_lattice_clip.py
-Produces the 20-second 1080p cut (`electronic_quantum_fluid_20s.mp4`) from the
-original 60-second `electronic_quantum_fluid_1080p.mp4` master, paired with the
-Syd Barrett-inspired 112 BPM EDM backing track (`syd_barrett_techno_disco_20s.wav`),
-and updates the header subtitle to:
-"Quantum Fluctuations in a Lattice of H₂ Molecules"
+Produces the 20-second 1080p YouTube master (`electronic_quantum_fluid_20s.mp4`)
+from the 60-second `electronic_quantum_fluid_1080p.mp4` master, paired with the
+100% original 112 BPM EDM backing track (`syd_barrett_techno_disco_20s.wav`),
+updates the header subtitle to:
+"Quantum Fluctuations in a Lattice of H₂ Molecules",
+and brands the video with the official Point Reyes Sound Phi (Φ) company insignia.
 """
 
 import os
@@ -19,6 +20,7 @@ BASE_DIR = "/Users/romitchakraborty/QAI/point-reyes-sound"
 OUT_DIR = os.path.join(BASE_DIR, "marketing", "interstellar_overdrive")
 INPUT_MP4 = os.path.join(OUT_DIR, "electronic_quantum_fluid_1080p.mp4")
 AUDIO_WAV = os.path.join(OUT_DIR, "syd_barrett_techno_disco_20s.wav")
+LOGO_PATH = os.path.join(OUT_DIR, "prs_phi_insignia.jpg")
 OUTPUT_MP4 = os.path.join(OUT_DIR, "electronic_quantum_fluid_20s.mp4")
 
 WIDTH = 1920
@@ -33,7 +35,7 @@ def build_subtitle_replacement_patch():
     Reconstructs the exact cosmic background for the subtitle band
     (y = 99..135, x = 640..1280) and renders:
     'Quantum Fluctuations in a Lattice of H₂ Molecules'
-    in EB Garamond Regular (matching render_apple_liquid_video.py).
+    in EB Garamond Regular.
     """
     y0, y1 = 99, 135
     x0, x1 = 640, 1280
@@ -73,7 +75,6 @@ def build_subtitle_replacement_patch():
     overlay = Image.new("RGBA", (w_p, h_p), (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
 
-    # Dropshadow matching render_apple_liquid_video.py
     for ox, oy in [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (1, 1), (0, 2)]:
         draw.text((x_start + ox, y_text + oy), part1, font=font_sub, fill=(0, 0, 0, 200))
         draw.text((x_start + w1 + 1 + ox, y_text + 9 + oy), part_sub, font=font_sub_2, fill=(0, 0, 0, 200))
@@ -86,6 +87,62 @@ def build_subtitle_replacement_patch():
 
     comp = np.array(Image.alpha_composite(pil_patch, overlay).convert("RGB"))
     return y0, y1, x0, x1, comp
+
+
+def build_prs_insignia_patch():
+    """
+    Builds the Point Reyes Sound Phi (Φ) company insignia + editorial lockup
+    in the top-left header area (y = 32..126, x = 54..430).
+    """
+    y0, y1 = 32, 126
+    x0, x1 = 54, 430
+    h_p = y1 - y0
+    w_p = x1 - x0
+
+    overlay = Image.new("RGBA", (w_p, h_p), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
+
+    # Load and resize the official Point Reyes Sound Phi (Φ) logo
+    logo_size = 76
+    logo_img = Image.open(LOGO_PATH).convert("RGBA").resize((logo_size, logo_size), Image.Resampling.LANCZOS)
+
+    # Subtle rounded-corner mask (radius = 6px) for crisp presentation
+    mask = Image.new("L", (logo_size, logo_size), 0)
+    mask_draw = ImageDraw.Draw(mask)
+    mask_draw.rounded_rectangle([0, 0, logo_size - 1, logo_size - 1], radius=6, fill=255)
+
+    lx, ly = 10, 10
+    # Soft dark drop-shadow behind the insignia
+    draw.rounded_rectangle(
+        [lx - 2, ly - 2, lx + logo_size + 2, ly + logo_size + 2],
+        radius=8,
+        fill=(0, 0, 0, 190),
+    )
+    overlay.paste(logo_img, (lx, ly), mask)
+
+    # Luxury EB Garamond Brand Lockup beside the Phi Insignia
+    font_dir = "/Users/romitchakraborty/Library/Fonts/static"
+    font_brand = ImageFont.truetype(f"{font_dir}/EBGaramond-Bold.ttf", 26)
+    font_url = ImageFont.truetype(f"{font_dir}/EBGaramond-Regular.ttf", 19)
+
+    tx = lx + logo_size + 16
+    ty_brand = ly + 10
+    ty_url = ly + 44
+
+    txt_brand = "Point Reyes Sound"
+    txt_url = "pointreyessound.com"
+
+    for ox, oy in [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (1, 1), (0, 2)]:
+        draw.text((tx + ox, ty_brand + oy), txt_brand, font=font_brand, fill=(0, 0, 0, 210))
+        draw.text((tx + ox, ty_url + oy), txt_url, font=font_url, fill=(0, 0, 0, 200))
+
+    draw.text((tx, ty_brand), txt_brand, font=font_brand, fill=(255, 255, 255, 250))
+    draw.text((tx, ty_url), txt_url, font=font_url, fill=(185, 230, 255, 235))
+
+    arr = np.array(overlay)
+    rgb = arr[:, :, :3].astype(np.float32)
+    alpha = (arr[:, :, 3:4].astype(np.float32)) / 255.0
+    return y0, y1, x0, x1, rgb, alpha
 
 
 def build_smooth_time_map(n_frames=TOTAL_OUT_FRAMES, fps=FPS):
@@ -126,11 +183,13 @@ def main():
     n_orig = len(orig_frames)
     print(f"      Loaded {n_orig} original 1080p frames.")
 
-    y0, y1, x0, x1, sub_patch = build_subtitle_replacement_patch()
+    sy0, sy1, sx0, sx1, sub_patch = build_subtitle_replacement_patch()
+    ly0, ly1, lx0, lx1, logo_rgb, logo_alpha = build_prs_insignia_patch()
+
     t_orig_map = build_smooth_time_map(TOTAL_OUT_FRAMES, FPS)
     f_orig_map = t_orig_map * FPS
 
-    print(f"[2/3] Encoding 20s 1080p clip with 'Lattice of H₂ Molecules' subtitle -> {OUTPUT_MP4}")
+    print(f"[2/3] Encoding branded 20s 1080p YouTube master -> {OUTPUT_MP4}")
     ffmpeg_cmd = [
         "ffmpeg", "-y",
         "-f", "rawvideo",
@@ -164,8 +223,12 @@ def main():
         else:
             out_rgb = cv2.addWeighted(orig_frames[i0], 1.0 - alpha, orig_frames[i1], alpha, 0.0)
 
-        # Replace 'Lattice of H atoms' with 'Lattice of H₂ Molecules'
-        out_rgb[y0:y1, x0:x1] = sub_patch
+        # 1. Replace subtitle with 'Quantum Fluctuations in a Lattice of H₂ Molecules'
+        out_rgb[sy0:sy1, sx0:sx1] = sub_patch
+
+        # 2. Alpha-composite the Point Reyes Sound Phi (Φ) insignia & brand lockup
+        roi = out_rgb[ly0:ly1, lx0:lx1].astype(np.float32)
+        out_rgb[ly0:ly1, lx0:lx1] = (logo_rgb * logo_alpha + roi * (1.0 - logo_alpha)).astype(np.uint8)
 
         proc.stdin.write(out_rgb.tobytes())
 
@@ -175,7 +238,7 @@ def main():
         print(f"[ERROR] FFmpeg exited with {proc.returncode}")
         sys.exit(1)
 
-    print(f"[3/3] Successfully created 20-second clip: {OUTPUT_MP4}")
+    print(f"[3/3] Successfully created branded 20-second YouTube master: {OUTPUT_MP4}")
 
 
 if __name__ == "__main__":
