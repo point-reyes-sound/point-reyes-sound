@@ -127,27 +127,40 @@ def build_prs_insignia_patch():
 
 
 def build_smooth_time_map(n_frames=TOTAL_OUT_FRAMES, fps=FPS):
+    """
+    Engagement-optimized C1-smooth mapping tau in [0, 20s] -> t_orig in [31.71s, 59.95s]:
+    - 0.00s -> 4.29s  (t_orig: 31.71s -> 36.00s): 1.0x natural close-up H2 quantum fluctuations
+    - 4.29s -> 11.50s (t_orig: 36.00s -> 54.00s): Camera pull-back synced to the 4.29s EDM Drop,
+      revealing the full 5x5 vibrating H2 lattice by t = 11.50s (well inside the 16s watch window!)
+    - 11.50s -> 20.00s (t_orig: 54.00s -> 59.95s): Full 8.5 seconds of the entire 5x5 vibrating
+      H2 molecular lattice dancing in phase space.
+    """
     tau = np.arange(n_frames) / float(fps)
-    v = np.ones_like(tau)
-    for i, t in enumerate(tau):
-        if t < 6.0:
-            v[i] = 1.0
-        elif t < 8.0:
-            u = (t - 6.0) / 2.0
-            s = 3.0 * u**2 - 2.0 * u**3
-            v[i] = 1.0 + 0.96 * s
-        elif t < 15.0:
-            v[i] = 1.96
-        elif t < 17.0:
-            u = (t - 15.0) / 2.0
-            s = 3.0 * u**2 - 2.0 * u**3
-            v[i] = 1.96 - 0.56 * s
-        else:
-            v[i] = 1.40
+    t_orig = np.zeros_like(tau)
 
-    dt = 1.0 / float(fps)
-    t_orig = 29.2 + np.cumsum(v) * dt - v[0] * dt
-    t_orig = 29.2 + (t_orig - 29.2) * ((59.5 - 29.2) / (t_orig[-1] - 29.2))
+    t_drop = 4.285714
+    t_full = 11.50
+
+    for i, t in enumerate(tau):
+        if t <= t_drop:
+            # 1.0x natural speed: 31.714s -> 36.000s
+            t_orig[i] = (36.0 - t_drop) + 1.0 * t
+        elif t <= t_full:
+            # Smooth C1 transition across the lattice reveal (36.0s -> 54.0s over 7.214s)
+            u = (t - t_drop) / (t_full - t_drop)
+            # Hermite spline with continuous derivative at endpoints (v0=1.0, v1=0.70, delta_T=18.0)
+            # Standard cubic Hermite on [0, 1] with m0 = 1.0 * (7.214/18.0) = 0.40, m1 = 0.70 * (7.214/18.0) = 0.28
+            h00 = 2.0 * (u ** 3) - 3.0 * (u ** 2) + 1.0
+            h10 = (u ** 3) - 2.0 * (u ** 2) + u
+            h01 = -2.0 * (u ** 3) + 3.0 * (u ** 2)
+            h11 = (u ** 3) - (u ** 2)
+            s = h01 + 0.40 * h10 + 0.28 * h11
+            t_orig[i] = 36.0 + 18.0 * s
+        else:
+            # Full 5x5 vibrating H2 lattice vista (54.0s -> 59.95s over 8.50s)
+            u = (t - t_full) / (20.0 - t_full)
+            t_orig[i] = 54.0 + 5.95 * u
+
     return t_orig
 
 
@@ -183,9 +196,15 @@ def main():
         "-c:v", "libx264",
         "-preset", "fast",
         "-crf", "17",
+        "-g", "30",
+        "-keyint_min", "30",
+        "-bf", "2",
+        "-profile:v", "high",
+        "-level:v", "4.1",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-b:a", "320k",
+        "-ar", "48000",
         "-movflags", "+faststart",
         "-shortest",
         OUTPUT_MP4,
