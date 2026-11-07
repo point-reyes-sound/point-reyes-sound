@@ -146,6 +146,34 @@
       gap: 16px;
     }
 
+    .short-showcase {
+      width: 100%;
+      max-width: 1380px;
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .short-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+
+    .short-viewport-wrapper {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 9 / 16;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #010409;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.9), 0 0 1px 1px rgba(0, 229, 255, 0.28);
+    }
+
     .action-btn {
       display: inline-flex;
       align-items: center;
@@ -207,14 +235,28 @@
       <div class="brand-subtitle">Quantum Fluctuations in a Lattice of H₂ Molecules (20s Cut)</div>
     </div>
     <div class="action-links">
-      <a href="/media/interstellar/electronic_quantum_fluid_20s.mp4" download="Electronic_Quantum_Fluid_20s_1080p.mp4" class="action-btn primary">
-        <span>Download 20s Clip (1080p)</span>
+      <a href="/media/interstellar/point_reyes_sound_h2_lattice_short_9x16.mp4" download="Point_Reyes_Sound_H2_Lattice_Short_9x16.mp4" class="action-btn primary">
+        <span>Download YouTube Short (9:16)</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      </a>
+      <a href="/media/interstellar/electronic_quantum_fluid_20s.mp4" download="Electronic_Quantum_Fluid_20s_1080p.mp4" class="action-btn">
+        <span>Download 16:9 Widescreen (1080p)</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
       </a>
       <a href="/media/interstellar/electronic_quantum_fluid_1080p.mp4" download="Electronic_Quantum_Fluid_60s_1080p.mp4" class="action-btn">
         <span>Download 60s Master</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
       </a>
+    </div>
+  </div>
+
+  <div class="short-showcase">
+    <div class="short-label">YouTube Short Edition · 9:16 Vertical Monograph (1080 × 1920)</div>
+    <div class="short-viewport-wrapper">
+      <video id="interstellarShortVideo" controls muted loop playsinline preload="auto">
+        <source src="/media/interstellar/point_reyes_sound_h2_lattice_short_9x16.mp4?v=1" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     </div>
   </div>
 
