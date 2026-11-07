@@ -212,7 +212,17 @@ def main():
         else:
             out_rgb = cv2.addWeighted(orig_frames[i0], 1.0 - alpha, orig_frames[i1], alpha, 0.0)
 
-        # 1. Replace subtitle with 'Quantum Fluctuations in a Lattice of H₂ Molecules'
+        # 1. Heal any raymarch step-through micro-notches at the tips of the royal-blue peaks
+        roi = out_rgb[190:650, 200:1720]
+        b_chan = roi[:, :, 2]
+        mask_peak = (b_chan > 140).astype(np.uint8) * 255
+        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (23, 9))
+        closed = cv2.morphologyEx(mask_peak, cv2.MORPH_CLOSE, kernel)
+        notch_mask = ((closed > 0) & (b_chan < 120)).astype(np.uint8) * 255
+        if notch_mask.any():
+            out_rgb[190:650, 200:1720] = cv2.inpaint(roi, notch_mask, 5, cv2.INPAINT_TELEA)
+
+        # 2. Replace subtitle with 'Quantum Fluctuations in a Lattice'
         out_rgb[sy0:sy1, sx0:sx1] = sub_patch
 
         # 2. Alpha-composite the Point Reyes Sound Phi (Φ) insignia & brand lockup

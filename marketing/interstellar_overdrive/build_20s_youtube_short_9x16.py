@@ -309,7 +309,7 @@ def render_vertical_frame(img_buf, H, W_w, t, R, base_val, fluct_val, z_shift, p
             dy /= d_len
             dz /= d_len
 
-            t_enter, t_exit = intersect_bounding_box(cam_x, cam_y, cam_z, dx, dy, dz, x_bound, z_bound, -0.52, 1.32)
+            t_enter, t_exit = intersect_bounding_box(cam_x, cam_y, cam_z, dx, dy, dz, x_bound, z_bound, -0.55, 2.25)
             hit_liquid = False
             hit_rx = 0.0
             hit_ry = 0.0
@@ -323,40 +323,49 @@ def render_vertical_frame(img_buf, H, W_w, t, R, base_val, fluct_val, z_shift, p
                 rz0 = cam_z + dist * dz
                 prev_diff = ry0 - get_wigner(rx0, rz0, R, t, base_val, fluct_val, z_shift, p_shift, phase_val, vibe, lattice_blend)
                 prev_dist = dist
-                step_sz = 0.14 * (1.0 + (cam_scale - 1.0) * 0.45)
-                steps = min(42, int((t_exit - t_enter) / step_sz) + 1)
-                for s in range(steps):
-                    dist += step_sz
-                    if dist > t_exit:
-                        dist = t_exit
-                    rx = cam_x + dist * dx
-                    ry = cam_y + dist * dy
-                    rz = cam_z + dist * dz
-                    curr_diff = ry - get_wigner(rx, rz, R, t, base_val, fluct_val, z_shift, p_shift, phase_val, vibe, lattice_blend)
-                    if prev_diff > 0.0 and curr_diff <= 0.0:
-                        da = prev_dist
-                        db = dist
-                        for bi in range(4):
-                            dmid = 0.5 * (da + db)
-                            by = cam_y + dmid * dy
-                            bw = get_wigner(
-                                cam_x + dmid * dx, cam_z + dmid * dz, R, t, base_val, fluct_val, z_shift, p_shift, phase_val, vibe, lattice_blend
-                            )
-                            if by - bw > 0.0:
-                                da = dmid
-                            else:
-                                db = dmid
-                        hit_d = 0.5 * (da + db)
-                        hit_rx = cam_x + hit_d * dx
-                        hit_ry = cam_y + hit_d * dy
-                        hit_rz = cam_z + hit_d * dz
-                        hit_w = get_wigner(hit_rx, hit_rz, R, t, base_val, fluct_val, z_shift, p_shift, phase_val, vibe, lattice_blend)
-                        hit_liquid = True
-                        break
-                    prev_diff = curr_diff
-                    prev_dist = dist
-                    if dist >= t_exit:
-                        break
+                base_step = 0.12 * (1.0 + (cam_scale - 1.0) * 0.40)
+
+                if prev_diff <= 0.0:
+                    hit_rx = rx0
+                    hit_ry = ry0
+                    hit_rz = rz0
+                    hit_w = get_wigner(hit_rx, hit_rz, R, t, base_val, fluct_val, z_shift, p_shift, phase_val, vibe, lattice_blend)
+                    hit_liquid = True
+                else:
+                    while dist < t_exit:
+                        if prev_diff < 0.25 and (cam_y + dist * dy) > 0.25:
+                            step_sz = base_step * 0.28
+                        else:
+                            step_sz = base_step
+                        dist += step_sz
+                        if dist > t_exit:
+                            dist = t_exit
+                        rx = cam_x + dist * dx
+                        ry = cam_y + dist * dy
+                        rz = cam_z + dist * dz
+                        curr_diff = ry - get_wigner(rx, rz, R, t, base_val, fluct_val, z_shift, p_shift, phase_val, vibe, lattice_blend)
+                        if curr_diff <= 0.0:
+                            da = prev_dist
+                            db = dist
+                            for _bi in range(5):
+                                dmid = 0.5 * (da + db)
+                                by = cam_y + dmid * dy
+                                bw = get_wigner(
+                                    cam_x + dmid * dx, cam_z + dmid * dz, R, t, base_val, fluct_val, z_shift, p_shift, phase_val, vibe, lattice_blend
+                                )
+                                if by - bw > 0.0:
+                                    da = dmid
+                                else:
+                                    db = dmid
+                            hit_d = 0.5 * (da + db)
+                            hit_rx = cam_x + hit_d * dx
+                            hit_ry = cam_y + hit_d * dy
+                            hit_rz = cam_z + hit_d * dz
+                            hit_w = get_wigner(hit_rx, hit_rz, R, t, base_val, fluct_val, z_shift, p_shift, phase_val, vibe, lattice_blend)
+                            hit_liquid = True
+                            break
+                        prev_diff = curr_diff
+                        prev_dist = dist
 
             if hit_liquid:
                 nx, ny, nz = get_normal(hit_rx, hit_rz, R, t, base_val, fluct_val, z_shift, p_shift, phase_val, vibe, lattice_blend)
@@ -617,6 +626,8 @@ def main():
         sys.exit(1)
 
     os.makedirs(PUBLIC_MEDIA_DIR, exist_ok=True)
+    shutil.copyfile(OUTPUT_SHORT_MP4, os.path.join(OUT_DIR, "point_reyes_sound_h2_lattice_short_9x16_v2.mp4"))
+    shutil.copyfile(OUTPUT_SHORT_MP4, os.path.join(OUT_DIR, "point_reyes_sound_h2_lattice_short_9x16_v3.mp4"))
     shutil.copyfile(OUTPUT_SHORT_MP4, os.path.join(PUBLIC_MEDIA_DIR, "point_reyes_sound_h2_lattice_short_9x16.mp4"))
     shutil.copyfile(OUTPUT_SHORT_THUMB, os.path.join(PUBLIC_MEDIA_DIR, "youtube_short_thumbnail_9x16.png"))
     print(f"[4/4] Successfully created 9:16 YouTube Short: {OUTPUT_SHORT_MP4}")
