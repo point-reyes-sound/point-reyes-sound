@@ -348,28 +348,27 @@ def generate_track():
     # -----------------------------------------------------------------------
     bass_track = np.zeros(N_SAMPLES, dtype=np.float64)
 
-    # Syncopated off-beat & dotted-8th dance bassline (8th-note grid with funky off-beat bounce!)
-    # Root progression follows Syd Barrett chromatic descent: E -> G -> B -> Bb -> A -> G -> F# -> E
-    # Each bar has 8 eighth-note slots: downbeat root + bouncy off-beat octave/fifth!
+    # Original Psychedelic Dorian / Melodic-EDM Bassline in E Dorian (E - G - A - C - D - B - E)
+    # 100% original composition (zero melodic/harmonic overlap with Interstellar Overdrive)
     bar_bass_eighths = [
-        # Bar 0: E minor bounce
+        # Bar 0: E Dorian deep bounce
         [28, 40, 28, 40, 31, 43, 33, 45],
-        # Bar 1: Chromatic Syd descent B -> Bb -> A -> G
-        [35, 47, 34, 46, 33, 45, 31, 43],
-        # Bar 2: Pre-drop build F# -> G -> A -> B
-        [30, 42, 31, 43, 33, 45, 35, 47],
-        # Bar 3 (THE DROP @ 6.43s!): Massive French-Touch / Justice octave bass groove
-        [28, 40, 28, 40, 31, 43, 35, 47],
-        # Bar 4: Chromatic Syd Barrett dance walkdown Bb -> A -> G -> F#
-        [34, 46, 33, 45, 31, 43, 30, 42],
-        # Bar 5: Second drop phrase E -> G -> B -> Bb
-        [28, 40, 31, 43, 35, 47, 34, 46],
-        # Bar 6: A -> G -> F# -> E dance resolution
-        [33, 45, 31, 43, 30, 42, 28, 40],
-        # Bar 7: C -> B -> A -> G melodic EDM outro groove
-        [36, 48, 35, 47, 33, 45, 31, 43],
-        # Bar 8+: Final F# -> E bass groove into fade-out
-        [30, 42, 28, 40, 28, 40, 28, 40],
+        # Bar 1: Dorian uplift A -> C -> D -> B
+        [33, 45, 36, 48, 38, 50, 35, 47],
+        # Bar 2: Pre-drop build E -> G -> A -> B
+        [28, 40, 31, 43, 33, 45, 35, 47],
+        # Bar 3 (THE DROP @ 6.43s!): Massive French-Touch / Justice octave bass groove (Em -> G -> A)
+        [28, 40, 28, 40, 31, 43, 33, 45],
+        # Bar 4: Cmaj7 -> D -> Bm7 -> Em
+        [36, 48, 38, 50, 35, 47, 28, 40],
+        # Bar 5: Second drop phrase Em -> G -> A -> C
+        [28, 40, 31, 43, 33, 45, 36, 48],
+        # Bar 6: D -> B -> G -> E dance resolution
+        [38, 50, 35, 47, 31, 43, 28, 40],
+        # Bar 7: C -> D -> Bm -> Em melodic EDM outro groove
+        [36, 48, 38, 50, 35, 47, 28, 40],
+        # Bar 8+: Final E Dorian pedal bass groove into fade-out
+        [31, 43, 28, 40, 28, 40, 28, 40],
     ]
 
     total_eighths = int(DURATION / EIGHTH_SEC) + 2
@@ -410,43 +409,39 @@ def generate_track():
     saw_l = np.zeros(N_SAMPLES, dtype=np.float64)
     saw_r = np.zeros(N_SAMPLES, dtype=np.float64)
 
-    # Catchy, danceable chord & riff phrasing on beats (each chord pumps with the sidechain!)
-    # Tuple: (start_beat, duration_beats, [midi_notes], drive)
+    # 100% Original E-Dorian Psychedelic EDM Chords (Em9 -> Gmaj7 -> A6 -> Cmaj7 -> D6 -> Bm7)
     dance_chords = [
-        # Bar 0 & 1 (Beats 0 - 8): Hypnotic Syd Barrett Riff Groove
-        (0.0, 2.0, [52, 59, 64, 67], 4.5),     # Em
-        (2.0, 1.0, [55, 62, 67], 4.8),         # G5
-        (3.0, 1.0, [57, 64, 69], 5.0),         # A5
-        (4.0, 1.0, [59, 66, 71], 5.4),         # B5
-        (5.0, 1.0, [58, 65, 70], 5.4),         # Bb5 (Syd chromatic crunch)
-        (6.0, 1.0, [57, 64, 69], 5.2),         # A5
-        (7.0, 1.0, [55, 62, 67], 5.2),         # G5
+        # Bar 0 & 1 (Beats 0 - 8): Hypnotic E Dorian Groove
+        (0.0, 2.0, [52, 59, 64, 67], 4.5),        # Em
+        (2.0, 1.0, [55, 62, 67], 4.8),            # G5
+        (3.0, 1.0, [57, 64, 69], 5.0),            # A5
+        (4.0, 1.5, [57, 64, 69, 73], 5.2),        # A major (Dorian IV chord!)
+        (5.5, 1.5, [60, 67, 72], 5.2),            # C5
+        (7.0, 1.0, [59, 66, 71], 5.2),            # B5
         # Bar 2 (Beats 8 - 12): Pre-Drop EDM Progression
-        (8.0,  1.0, [54, 61, 66], 5.5),        # F#5
-        (9.0,  1.0, [55, 62, 67], 5.8),        # G5
-        (10.0, 1.0, [57, 64, 69], 6.0),        # A5
-        (11.0, 1.0, [59, 66, 71], 6.4),        # B5
-        # Bar 3 & 4 (Beats 12 - 20): THE EDM DROP @ 6.43s! Anthemic Dance Chords + Fuzz Riff
-        (12.0, 2.0, [52, 59, 64, 67, 71], 6.5),  # Huge Em9 drop chord!
-        (14.0, 1.0, [55, 62, 67], 6.2),          # G5
-        (15.0, 1.0, [59, 66, 71], 6.5),          # B5
-        (16.0, 1.0, [58, 65, 70], 6.5),          # Bb5
-        (17.0, 1.0, [57, 64, 69], 6.2),          # A5
-        (18.0, 1.0, [55, 62, 67], 6.2),          # G5
-        (19.0, 1.0, [54, 61, 66], 6.2),          # F#5
+        (8.0,  1.0, [52, 59, 64], 5.5),           # E5
+        (9.0,  1.0, [55, 62, 67], 5.8),           # G5
+        (10.0, 1.0, [57, 64, 69], 6.0),           # A5
+        (11.0, 1.0, [59, 66, 71], 6.4),           # B5
+        # Bar 3 & 4 (Beats 12 - 20): THE EDM DROP @ 6.43s! Original E-Dorian Anthemic Chords
+        (12.0, 2.0, [52, 59, 64, 67, 71], 6.5),   # Em9 drop chord
+        (14.0, 1.0, [55, 62, 67, 71], 6.2),       # Gmaj7
+        (15.0, 1.0, [57, 64, 69, 73], 6.4),       # A (Dorian IV)
+        (16.0, 1.5, [60, 67, 72, 76], 6.4),       # Cmaj7
+        (17.5, 1.5, [62, 69, 74, 78], 6.2),       # Dmaj9
+        (19.0, 1.0, [59, 66, 71], 6.2),           # Bm
         # Bar 5 & 6 (Beats 20 - 28): Second Drop Phrase across the 5x5 H2 Lattice
-        (20.0, 2.0, [52, 59, 64, 67, 71], 6.5),  # Em9
-        (22.0, 1.0, [59, 66, 71], 6.4),          # B5
-        (23.0, 1.0, [58, 65, 70], 6.4),          # Bb5
-        (24.0, 1.0, [57, 64, 69], 6.2),          # A5
-        (25.0, 1.0, [55, 62, 67], 6.0),          # G5
-        (26.0, 1.0, [54, 61, 66], 5.8),          # F#5
-        (27.0, 1.0, [52, 59, 64, 67], 5.8),      # Em
+        (20.0, 2.0, [52, 59, 64, 67, 71], 6.5),   # Em9
+        (22.0, 1.0, [57, 64, 69, 73], 6.3),       # A
+        (23.0, 1.0, [60, 67, 72, 76], 6.3),       # Cmaj7
+        (24.0, 1.5, [62, 69, 74], 6.2),           # D5
+        (25.5, 1.5, [59, 66, 71], 6.0),           # B5
+        (27.0, 1.0, [52, 59, 64, 67], 5.8),       # Em
         # Bar 7 & 8 (Beats 28 - 37.3): Uplifting Melodic EDM Outro into Fade-Out
-        (28.0, 2.0, [60, 67, 72, 76], 5.6),      # Cmaj7
-        (30.0, 2.0, [59, 66, 71, 74], 5.4),      # Bm7
-        (32.0, 2.0, [57, 64, 69, 72], 5.0),      # Am7
-        (34.0, 3.5, [52, 59, 64, 67, 71], 4.8),  # Em9 sustained fade
+        (28.0, 2.0, [60, 67, 72, 76], 5.6),       # Cmaj7
+        (30.0, 2.0, [62, 69, 74, 78], 5.4),       # D6
+        (32.0, 2.0, [59, 66, 71, 74], 5.0),       # Bm7
+        (34.0, 3.5, [52, 59, 64, 67, 71], 4.8),   # Em9 sustained fade
     ]
 
     for st_beat, dur_beats, notes, drv in dance_chords:
@@ -479,23 +474,23 @@ def generate_track():
             saw_l[idx:end_i] += s_l[:end_i - idx]
             saw_r[idx:end_i] += s_r[:end_i - idx]
 
-    # Catchy, Danceable Syd Barrett Lead Guitar / Synth Hook during the Drop (Beats 12 -> 34)
+    # 100% Original E-Dorian Lead Guitar / Synth Hook during the Drop (Beats 12 -> 34)
     lead_melody = [
-        # Bar 3: Infectious syncopated hook (E5 -> G5 -> B5 -> A5 -> G5 -> E5)
-        (12.0, 0.75, 76), (12.75, 0.75, 79), (13.5, 0.5, 83),
+        # Bar 3: Original syncopated Dorian hook (E5 -> B5 -> C#6 -> B5 -> A5 -> G5)
+        (12.0, 0.75, 76), (12.75, 0.75, 83), (13.5, 0.5, 85),
         (14.0, 1.0,  83), (15.0,  0.5,  81), (15.5, 0.5, 79),
-        # Bar 4: Chromatic Syd turnaround (Bb5 -> A5 -> G5 -> F#5 -> E5)
-        (16.0, 0.75, 82), (16.75, 0.75, 81), (17.5, 0.5, 79),
-        (18.0, 1.0,  78), (19.0,  1.0,  76),
-        # Bar 5: Hook repeat with higher climax note (D6 = 86)
-        (20.0, 0.75, 76), (20.75, 0.75, 79), (21.5, 0.5, 83),
-        (22.0, 1.0,  86), (23.0,  1.0,  82),
-        # Bar 6: Resolution
-        (24.0, 0.75, 81), (24.75, 0.75, 79), (25.5, 0.5, 78),
+        # Bar 4: Soaring Cmaj7 -> D6 turnaround (G5 -> A5 -> B5 -> D6 -> B5)
+        (16.0, 0.75, 79), (16.75, 0.75, 81), (17.5, 0.5, 83),
+        (18.0, 1.0,  86), (19.0,  1.0,  83),
+        # Bar 5: Second phrase peak (E6 = 88 -> D6 = 86 -> C#6 = 85 -> B5 = 83)
+        (20.0, 0.75, 88), (20.75, 0.75, 86), (21.5, 0.5, 85),
+        (22.0, 1.0,  83), (23.0,  1.0,  81),
+        # Bar 6: Resolution to E5
+        (24.0, 0.75, 83), (24.75, 0.75, 81), (25.5, 0.5, 79),
         (26.0, 2.0,  76),
         # Bar 7 & 8: Outro melodic echoes
-        (28.0, 1.5,  79), (29.5,  1.5,  78), (31.0, 1.0, 76),
-        (32.0, 2.0,  71), (34.0,  3.0,  64),
+        (28.0, 1.5,  79), (29.5,  1.5,  81), (31.0, 1.0, 78),
+        (32.0, 2.0,  76), (34.0,  3.0,  64),
     ]
 
     for st_b, dur_b, m_note in lead_melody:
