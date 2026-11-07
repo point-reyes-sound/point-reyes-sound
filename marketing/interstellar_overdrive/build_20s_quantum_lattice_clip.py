@@ -91,11 +91,11 @@ def build_subtitle_replacement_patch():
 
 def build_prs_insignia_patch():
     """
-    Builds the Point Reyes Sound Phi (Φ) company insignia + editorial lockup
-    in the top-left header area (y = 32..126, x = 54..430).
+    Builds the standalone Point Reyes Sound Phi (Φ) company insignia
+    in the top-left header area (y = 32..126, x = 54..150), with zero text.
     """
     y0, y1 = 32, 126
-    x0, x1 = 54, 430
+    x0, x1 = 54, 150
     h_p = y1 - y0
     w_p = x1 - x0
 
@@ -119,25 +119,6 @@ def build_prs_insignia_patch():
         fill=(0, 0, 0, 190),
     )
     overlay.paste(logo_img, (lx, ly), mask)
-
-    # Luxury EB Garamond Brand Lockup beside the Phi Insignia
-    font_dir = "/Users/romitchakraborty/Library/Fonts/static"
-    font_brand = ImageFont.truetype(f"{font_dir}/EBGaramond-Bold.ttf", 26)
-    font_url = ImageFont.truetype(f"{font_dir}/EBGaramond-Regular.ttf", 19)
-
-    tx = lx + logo_size + 16
-    ty_brand = ly + 10
-    ty_url = ly + 44
-
-    txt_brand = "Point Reyes Sound"
-    txt_url = "pointreyessound.com"
-
-    for ox, oy in [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (1, 1), (0, 2)]:
-        draw.text((tx + ox, ty_brand + oy), txt_brand, font=font_brand, fill=(0, 0, 0, 210))
-        draw.text((tx + ox, ty_url + oy), txt_url, font=font_url, fill=(0, 0, 0, 200))
-
-    draw.text((tx, ty_brand), txt_brand, font=font_brand, fill=(255, 255, 255, 250))
-    draw.text((tx, ty_url), txt_url, font=font_url, fill=(185, 230, 255, 235))
 
     arr = np.array(overlay)
     rgb = arr[:, :, :3].astype(np.float32)
