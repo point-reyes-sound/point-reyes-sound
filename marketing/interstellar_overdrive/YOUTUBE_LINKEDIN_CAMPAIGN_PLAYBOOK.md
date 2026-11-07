@@ -7,8 +7,8 @@
 
 | Platform Surface | Aspect Ratio | Resolution | Master Video File | Custom Thumbnail |
 | :--- | :--- | :--- | :--- | :--- |
-| **YouTube Shorts** & **LinkedIn Mobile Native** | `9:16` Vertical | `1080 × 1920` (`30 fps`, `20.0s`) | `marketing/interstellar_overdrive/point_reyes_sound_h2_lattice_short_9x16_v3.mp4` | `marketing/interstellar_overdrive/youtube_short_thumbnail_9x16.png` |
-| **YouTube Main Channel** & **Desktop / Web** | `16:9` Widescreen | `1920 × 1080` (`30 fps`, `20.0s`) | `marketing/interstellar_overdrive/point_reyes_sound_h2_lattice_20s_v3.mp4` | `marketing/interstellar_overdrive/youtube_thumbnail_lattice_reveal_1080p.png` |
+| **YouTube Shorts** & **LinkedIn Mobile Native** | `9:16` Vertical | `1080 × 1920` (`30 fps`, `20.0s`) | `marketing/interstellar_overdrive/YOUTUBE_SHORT_VERTICAL_9x16.mp4` *(also saved as `point_reyes_sound_h2_lattice_short_9x16_v3.mp4`)* | `marketing/interstellar_overdrive/youtube_short_thumbnail_9x16.png` |
+| **YouTube Main Channel** & **Desktop / Web** | `16:9` Widescreen | `1920 × 1080` (`30 fps`, `20.0s`) | `marketing/interstellar_overdrive/YOUTUBE_WIDESCREEN_16x9.mp4` *(also saved as `point_reyes_sound_h2_lattice_20s_v3.mp4`)* | `marketing/interstellar_overdrive/youtube_thumbnail_lattice_reveal_1080p.png` |
 | **Master Audio (100% Original PRS Synthesis)** | Stereo WAV | `48 kHz / 16-bit` (`20.0s`) | `marketing/interstellar_overdrive/syd_barrett_techno_disco_20s.wav` | — |
 
 ---
