@@ -566,8 +566,64 @@ def build_standalone_native_videos(card_frames: list[list[Image.Image]]):
         print(f"    ✓ Saved {out_mp4.name}")
 
 
+def build_reel_thumbnails():
+    """Generate high-resolution 1080x1350 cover thumbnails for the 36-second LinkedIn Carousel Reel and website poster."""
+    print("Generating 1080x1350 cover thumbnails for the 36s Carousel Reel...")
+    card0 = CARDS[0]
+    thumb_clean = crop_clean_manifold(Image.open(card0["thumb_16x9"]).convert("RGB"))
+
+    def render_thumb_variant(title_text: str, sentence_text: str, out_path: Path):
+        canvas = Image.new("RGBA", (W, H), (1, 3, 6, 255))
+        acc = card0["accent"]
+        glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        ImageDraw.Draw(glow).ellipse((140, 180, 940, 1080), fill=(*acc, 22))
+        canvas = Image.alpha_composite(canvas, glow.filter(ImageFilter.GaussianBlur(radius=95)))
+
+        draw_top_brand_lockup(canvas)
+
+        custom_card = {
+            **card0,
+            "phenomenon": title_text,
+            "sentence": sentence_text,
+        }
+        card_surf = render_science_card(custom_card, thumb_clean, card_w=920, card_h=860, text_opacity=1.0)
+        canvas.alpha_composite(card_surf, dest=(80, 160))
+
+        # 6-dot progress indicator at bottom matching the video
+        draw = ImageDraw.Draw(canvas)
+        n = len(CARDS)
+        dot_y = 1135
+        dot_spacing = 28
+        start_x = (W - (n - 1) * dot_spacing) // 2
+        for i in range(n):
+            dx = start_x + i * dot_spacing
+            if i == 0:
+                r_w = 18
+                draw.rounded_rectangle((dx - r_w, dot_y - 5, dx + r_w, dot_y + 5), radius=5, fill=(*acc, 255))
+            else:
+                draw.ellipse((dx - 5, dot_y - 5, dx + 5, dot_y + 5), fill=(95, 112, 138, 175))
+
+        canvas.convert("RGB").save(out_path, format="PNG", optimize=True)
+        print(f"    ✓ Saved {out_path}")
+
+    # Variant 1: Overarching Cover Thumbnail for the 6-Phenomenon Reel
+    render_thumb_variant(
+        title_text="Quantum Mechanics in Phase Space",
+        sentence_text="Real-time 3D phase-space manifolds revealing electron correlation, aromatic ring currents, Dirac cones, and quantum tunneling.",
+        out_path=OUT_DIR / "LINKEDIN_CAROUSEL_REEL_THUMBNAIL_1080x1350.png",
+    )
+
+    # Variant 2: Seamless Slide-1 Thumbnail (Full 5-ridge Crystal Lattice)
+    render_thumb_variant(
+        title_text=card0["phenomenon"],
+        sentence_text=card0["sentence"],
+        out_path=OUT_DIR / "LINKEDIN_CAROUSEL_REEL_THUMBNAIL_LATTICE_1080x1350.png",
+    )
+
+
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    build_reel_thumbnails()
     build_swipeable_pdf_carousel()
     print("Pre-loading slow-motion 30fps fluid frames for all 6 signature palettes...")
     card_frames = [extract_video_frames(c["video_demo"], max_frames=360) for c in CARDS]
