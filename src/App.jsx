@@ -784,15 +784,15 @@ export default function App() {
         </div>
       </header>
 
-      {/* 2. ABOUT LANDING SECTION: WIDESCREEN HERO VIDEO & MISSION CAROUSEL */}
+      {/* 2. ABOUT LANDING SECTION: ANIMATED QUANTUM CAROUSEL VIDEO & MISSION STATEMENT */}
       <section id="about" className="hero-section">
         <span id="overview" style={{ position: "relative", top: "-80px", display: "block" }}></span>
         <div className="hero-cinematic-banner">
           <div className="hero-video-frame">
             <video 
               ref={videoRef}
-              src="/prs_video_promo_v2.mp4" 
-              poster="/hero_video_poster.jpg"
+              src="/prs_carousel_reel_36s.mp4" 
+              poster="/prs_carousel_reel_poster.png"
               autoPlay 
               muted={isVideoMuted}
               playsInline 
@@ -829,154 +829,14 @@ export default function App() {
           </div>
         </div>
 
-        {/* MISSION STATEMENT & DYNAMIC YOUTUBE THUMBNAIL CAROUSEL */}
-        <div
-          className="qva-mission-carousel-block"
-          onMouseEnter={() => setIsCarouselPaused(true)}
-          onMouseLeave={() => setIsCarouselPaused(false)}
-        >
-          <div className="qva-mission-header">
+        {/* MISSION STATEMENT */}
+        <div className="qva-mission-carousel-block">
+          <div className="qva-mission-header" style={{ marginBottom: 0 }}>
             <h2 className="qva-mission-statement">
               Building Electronic Structure for the Next Century.
             </h2>
           </div>
-
-          <div className="qva-carousel-viewport">
-            <button
-              type="button"
-              className="qva-carousel-nav-btn prev"
-              onClick={() =>
-                setActiveCarouselIdx(
-                  (prev) => (prev - 1 + quantumVideoSlides.length) % quantumVideoSlides.length
-                )
-              }
-              aria-label="Previous quantum video"
-            >
-              &#8592;
-            </button>
-
-            <div className="qva-carousel-track">
-              {quantumVideoSlides.map((slide, idx) => {
-                const total = quantumVideoSlides.length;
-                let offset = idx - activeCarouselIdx;
-                if (offset > total / 2) offset -= total;
-                if (offset < -total / 2) offset += total;
-                const isCenter = offset === 0;
-                const isNeighbor = Math.abs(offset) === 1;
-                const isFar = Math.abs(offset) >= 2;
-
-                return (
-                  <div
-                    key={slide.id}
-                    className={`qva-carousel-card ${isCenter ? "is-center" : ""} ${
-                      isNeighbor ? "is-neighbor" : ""
-                    } ${isFar ? "is-far" : ""}`}
-                    style={{
-                      "--card-offset": offset,
-                      "--abs-offset": Math.abs(offset),
-                    }}
-                    onClick={() => {
-                      if (isCenter) {
-                        setActiveCarouselVideo(slide);
-                      } else {
-                        setActiveCarouselIdx(idx);
-                      }
-                    }}
-                  >
-                    <div className="qva-card-thumb-wrap">
-                      <img
-                        src={slide.thumb16x9}
-                        alt={slide.title}
-                        className="qva-card-thumb-img"
-                        loading="lazy"
-                      />
-                      <div className="qva-card-play-badge">
-                        <span className="qva-play-triangle">&#9654;</span>
-                      </div>
-                      <div className="qva-card-style-pill">
-                        <code>{slide.styleFlag}</code>
-                      </div>
-                    </div>
-                    <div className="qva-card-meta">
-                      <div className="qva-card-swatches">
-                        {slide.swatches.map((hex) => (
-                          <span
-                            key={hex}
-                            className="qva-swatch-dot"
-                            style={{ backgroundColor: hex }}
-                            title={hex}
-                          />
-                        ))}
-                        <span className="qva-palette-name">{slide.paletteLabel}</span>
-                      </div>
-                      <h3 className="qva-card-title">{slide.title}</h3>
-                      <p className="qva-card-sub">{slide.subtitle}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            <button
-              type="button"
-              className="qva-carousel-nav-btn next"
-              onClick={() =>
-                setActiveCarouselIdx((prev) => (prev + 1) % quantumVideoSlides.length)
-              }
-              aria-label="Next quantum video"
-            >
-              &#8594;
-            </button>
-          </div>
-
-          <div className="qva-carousel-dots">
-            {quantumVideoSlides.map((slide, idx) => (
-              <button
-                key={slide.id}
-                type="button"
-                className={`qva-dot-btn ${idx === activeCarouselIdx ? "active" : ""}`}
-                onClick={() => setActiveCarouselIdx(idx)}
-                aria-label={`Select ${slide.title}`}
-              />
-            ))}
-          </div>
         </div>
-
-        {activeCarouselVideo && (
-          <div
-            className="qva-video-modal-backdrop"
-            onClick={() => setActiveCarouselVideo(null)}
-          >
-            <div
-              className="qva-video-modal-box"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                type="button"
-                className="qva-modal-close-btn"
-                onClick={() => setActiveCarouselVideo(null)}
-                aria-label="Close video preview"
-              >
-                &times;
-              </button>
-              <video
-                src={activeCarouselVideo.videoMp4}
-                poster={activeCarouselVideo.thumb9x16}
-                controls
-                autoPlay
-                playsInline
-                className="qva-modal-video-player"
-              />
-              <div className="qva-modal-caption">
-                <h3>{activeCarouselVideo.title}</h3>
-                <p>
-                  {activeCarouselVideo.subtitle} &bull;{" "}
-                  <code>{activeCarouselVideo.styleFlag}</code>
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
       </section>
 
       {/* 3. RESEARCH SECTION: QUANTUM BOLTZMANN SOLVER, PUBLICATIONS & PATENTS, HARDWARE ACCELERATION */}
