@@ -828,15 +828,6 @@ export default function App() {
             )}
           </div>
         </div>
-
-        {/* MISSION STATEMENT */}
-        <div className="qva-mission-carousel-block">
-          <div className="qva-mission-header" style={{ marginBottom: 0 }}>
-            <h2 className="qva-mission-statement">
-              Building Electronic Structure for the Next Century.
-            </h2>
-          </div>
-        </div>
       </section>
 
       {/* 3. RESEARCH SECTION: QUANTUM BOLTZMANN SOLVER, PUBLICATIONS & PATENTS, HARDWARE ACCELERATION */}
