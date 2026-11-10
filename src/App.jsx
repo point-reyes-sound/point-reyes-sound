@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import LandingPage from "./LandingPage";
 import MolecularOrbitalWorkstation from "./components/MolecularOrbitalWorkstation";
@@ -216,7 +216,87 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(checkIsAuthenticated);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
+  const [activeCarouselIdx, setActiveCarouselIdx] = useState(0);
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
+  const [activeCarouselVideo, setActiveCarouselVideo] = useState(null);
   const videoRef = useRef(null);
+
+  const quantumVideoSlides = [
+    {
+      id: "azure-lattice",
+      title: "Quantum Fluctuations in a Lattice",
+      subtitle: "5×5 Coherent H₂ Phase-Space Crystal",
+      styleFlag: "--azure",
+      paletteLabel: "Azure & Crimson",
+      thumb16x9: "/media/qva/youtube_thumbnail_lattice_reveal_1080p.png",
+      thumb9x16: "/media/qva/THUMB_9x16_6_AZURE_LATTICE.png",
+      videoMp4: "/media/qva/SHORT_10S_6_LATTICE_CHERENKOV_CYAN.mp4",
+      swatches: ["#2868FF", "#22ECFF", "#FF1458"],
+    },
+    {
+      id: "sovereign-benzene",
+      title: "Delocalized Ring Current in Benzene",
+      subtitle: "Hexagonal π-Electron Aromatic Vortex",
+      styleFlag: "--sovereign",
+      paletteLabel: "Sovereign Gold & Ruby",
+      thumb16x9: "/media/qva/THUMB_16x9_1_SOVEREIGN.png",
+      thumb9x16: "/media/qva/THUMB_9x16_1_SOVEREIGN_BENZENE.png",
+      videoMp4: "/media/qva/SHORT_10S_1_BENZENE_SOVEREIGN_GOLD.mp4",
+      swatches: ["#E5C158", "#8A6D3B", "#7A1C24"],
+    },
+    {
+      id: "kyoto-graphene",
+      title: "Dirac Electrons in a Graphene Lattice",
+      subtitle: "Honeycomb Sublattice Phase Resonance",
+      styleFlag: "--kyoto",
+      paletteLabel: "Kyoto Emerald & Vermilion",
+      thumb16x9: "/media/qva/THUMB_16x9_3_KYOTO.png",
+      thumb9x16: "/media/qva/THUMB_9x16_2_KYOTO_GRAPHENE.png",
+      videoMp4: "/media/qva/SHORT_10S_2_GRAPHENE_KYOTO_EMERALD.mp4",
+      swatches: ["#D8E2DC", "#52796F", "#C83E2B"],
+    },
+    {
+      id: "corona-tunneling",
+      title: "Quantum Tunneling in a Hydrogen Bond",
+      subtitle: "Sub-Barrier Double-Well Wavepacket",
+      styleFlag: "--corona",
+      paletteLabel: "Solar Corona & Violet",
+      thumb16x9: "/media/qva/THUMB_16x9_4_CORONA.png",
+      thumb9x16: "/media/qva/THUMB_9x16_3_CORONA_TUNNELING.png",
+      videoMp4: "/media/qva/SHORT_10S_3_TUNNELING_SOLAR_CORONA.mp4",
+      swatches: ["#FFF3B0", "#E07A2E", "#541675"],
+    },
+    {
+      id: "arctic-covalent",
+      title: "Covalent Bond Resonance",
+      subtitle: "Zero-Point Bipartite Interference Bridge",
+      styleFlag: "--arctic",
+      paletteLabel: "Arctic Platinum & Cobalt",
+      thumb16x9: "/media/qva/THUMB_16x9_5_ARCTIC.png",
+      thumb9x16: "/media/qva/THUMB_9x16_4_ARCTIC_COVALENT.png",
+      videoMp4: "/media/qva/SHORT_10S_4_COVALENT_ARCTIC_PLATINUM.mp4",
+      swatches: ["#F8FAFC", "#94A3B8", "#1D4ED8"],
+    },
+    {
+      id: "noir-vortex",
+      title: "Driven Quantum Dipole Vortex",
+      subtitle: "Nonlinear Phase-Space Angular Momentum",
+      styleFlag: "--noir",
+      paletteLabel: "Monochrome Silver Noir",
+      thumb16x9: "/media/qva/THUMB_16x9_6_NOIR.png",
+      thumb9x16: "/media/qva/THUMB_9x16_5_NOIR_VORTEX.png",
+      videoMp4: "/media/qva/SHORT_10S_5_VORTEX_SILVER_NOIR.mp4",
+      swatches: ["#FFFFFF", "#737373", "#1F1F1F"],
+    },
+  ];
+
+  useEffect(() => {
+    if (isCarouselPaused || activeCarouselVideo) return;
+    const timer = setInterval(() => {
+      setActiveCarouselIdx((prev) => (prev + 1) % quantumVideoSlides.length);
+    }, 4200);
+    return () => clearInterval(timer);
+  }, [isCarouselPaused, activeCarouselVideo, quantumVideoSlides.length]);
 
   const handleLogout = () => {
     clearAuthentication();
@@ -660,7 +740,7 @@ export default function App() {
       {/* 1. TOP GLOBAL NAVIGATION */}
       <header className="pod-header">
         <div className="header-inner">
-          <a href="#overview" className="brand-lockup" aria-label="Point Reyes Sound Home" title="Point Reyes Sound">
+          <a href="#about" className="brand-lockup" aria-label="Point Reyes Sound Home" title="Point Reyes Sound">
             <img 
               src="/PRS_logo_v2.jpeg?v=5" 
               alt="Point Reyes Sound" 
@@ -676,12 +756,10 @@ export default function App() {
             >
               Preview
             </button>
-            <a href="#overview">Overview</a>
             <a href="#about">About</a>
             <a href="#research" className="nav-research-link">
               <span className="pulse-dot"></span> Research
             </a>
-            <a href="#roadmap">Roadmap</a>
             <a href="#contact">Contact</a>
             <a 
               href="https://github.com/point-reyes-sound" 
@@ -706,8 +784,9 @@ export default function App() {
         </div>
       </header>
 
-      {/* 2. HERO SECTION WITH CINEMATIC VIDEO & PREPRINT SPOTLIGHT */}
-      <section id="overview" className="hero-section">
+      {/* 2. ABOUT LANDING SECTION: WIDESCREEN HERO VIDEO & MISSION CAROUSEL */}
+      <section id="about" className="hero-section">
+        <span id="overview" style={{ position: "relative", top: "-80px", display: "block" }}></span>
         <div className="hero-cinematic-banner">
           <div className="hero-video-frame">
             <video 
@@ -750,7 +829,159 @@ export default function App() {
           </div>
         </div>
 
-        {/* HERO TITLE & MISSION BOX */}
+        {/* MISSION STATEMENT & DYNAMIC YOUTUBE THUMBNAIL CAROUSEL */}
+        <div
+          className="qva-mission-carousel-block"
+          onMouseEnter={() => setIsCarouselPaused(true)}
+          onMouseLeave={() => setIsCarouselPaused(false)}
+        >
+          <div className="qva-mission-header">
+            <h2 className="qva-mission-statement">
+              Building Electronic Structure for the Next Century.
+            </h2>
+          </div>
+
+          <div className="qva-carousel-viewport">
+            <button
+              type="button"
+              className="qva-carousel-nav-btn prev"
+              onClick={() =>
+                setActiveCarouselIdx(
+                  (prev) => (prev - 1 + quantumVideoSlides.length) % quantumVideoSlides.length
+                )
+              }
+              aria-label="Previous quantum video"
+            >
+              &#8592;
+            </button>
+
+            <div className="qva-carousel-track">
+              {quantumVideoSlides.map((slide, idx) => {
+                const total = quantumVideoSlides.length;
+                let offset = idx - activeCarouselIdx;
+                if (offset > total / 2) offset -= total;
+                if (offset < -total / 2) offset += total;
+                const isCenter = offset === 0;
+                const isNeighbor = Math.abs(offset) === 1;
+                const isFar = Math.abs(offset) >= 2;
+
+                return (
+                  <div
+                    key={slide.id}
+                    className={`qva-carousel-card ${isCenter ? "is-center" : ""} ${
+                      isNeighbor ? "is-neighbor" : ""
+                    } ${isFar ? "is-far" : ""}`}
+                    style={{
+                      "--card-offset": offset,
+                      "--abs-offset": Math.abs(offset),
+                    }}
+                    onClick={() => {
+                      if (isCenter) {
+                        setActiveCarouselVideo(slide);
+                      } else {
+                        setActiveCarouselIdx(idx);
+                      }
+                    }}
+                  >
+                    <div className="qva-card-thumb-wrap">
+                      <img
+                        src={slide.thumb16x9}
+                        alt={slide.title}
+                        className="qva-card-thumb-img"
+                        loading="lazy"
+                      />
+                      <div className="qva-card-play-badge">
+                        <span className="qva-play-triangle">&#9654;</span>
+                      </div>
+                      <div className="qva-card-style-pill">
+                        <code>{slide.styleFlag}</code>
+                      </div>
+                    </div>
+                    <div className="qva-card-meta">
+                      <div className="qva-card-swatches">
+                        {slide.swatches.map((hex) => (
+                          <span
+                            key={hex}
+                            className="qva-swatch-dot"
+                            style={{ backgroundColor: hex }}
+                            title={hex}
+                          />
+                        ))}
+                        <span className="qva-palette-name">{slide.paletteLabel}</span>
+                      </div>
+                      <h3 className="qva-card-title">{slide.title}</h3>
+                      <p className="qva-card-sub">{slide.subtitle}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              className="qva-carousel-nav-btn next"
+              onClick={() =>
+                setActiveCarouselIdx((prev) => (prev + 1) % quantumVideoSlides.length)
+              }
+              aria-label="Next quantum video"
+            >
+              &#8594;
+            </button>
+          </div>
+
+          <div className="qva-carousel-dots">
+            {quantumVideoSlides.map((slide, idx) => (
+              <button
+                key={slide.id}
+                type="button"
+                className={`qva-dot-btn ${idx === activeCarouselIdx ? "active" : ""}`}
+                onClick={() => setActiveCarouselIdx(idx)}
+                aria-label={`Select ${slide.title}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {activeCarouselVideo && (
+          <div
+            className="qva-video-modal-backdrop"
+            onClick={() => setActiveCarouselVideo(null)}
+          >
+            <div
+              className="qva-video-modal-box"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="qva-modal-close-btn"
+                onClick={() => setActiveCarouselVideo(null)}
+                aria-label="Close video preview"
+              >
+                &times;
+              </button>
+              <video
+                src={activeCarouselVideo.videoMp4}
+                poster={activeCarouselVideo.thumb9x16}
+                controls
+                autoPlay
+                playsInline
+                className="qva-modal-video-player"
+              />
+              <div className="qva-modal-caption">
+                <h3>{activeCarouselVideo.title}</h3>
+                <p>
+                  {activeCarouselVideo.subtitle} &bull;{" "}
+                  <code>{activeCarouselVideo.styleFlag}</code>
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* 3. RESEARCH SECTION: QUANTUM BOLTZMANN SOLVER, PUBLICATIONS & PATENTS, HARDWARE ACCELERATION */}
+      <section id="research" className="section-block">
+        {/* QUANTUM BOLTZMANN SOLVER HERO BOX */}
         <div className="hero-title-box">
           <div className="hero-github-badge-row">
             <a 
@@ -772,7 +1003,7 @@ export default function App() {
             Quantum Boltzmann Solver
           </h1>
           <p className="hero-lead">
-            Engineering Electronic Structure for the Next Century
+            Building Electronic Structure for the Next Century
           </p>
           <div className="hero-institutional-footnote-wrap">
             <a 
@@ -800,94 +1031,6 @@ export default function App() {
           onCopyBibtex={() => handleCopyBibtex(publicationList[0])}
           copiedBibtexId={copiedBibtexId}
         />
-      </section>
-
-      {/* 2.5 ABOUT SECTION */}
-      <section id="about" className="section-block about-section">
-        <div className="section-head">
-          <div className="section-kicker">ABOUT POINT REYES SOUND</div>
-          <h2 className="section-title">Engineering Electronic Structure for the Next Century</h2>
-          <p className="section-sub">
-            Continuous phase-space kinetics for strongly correlated electrons.
-          </p>
-        </div>
-
-        <div className="about-grid">
-          <div className="about-card about-mission-card">
-            <h3 className="about-card-title">Quantum Boltzmann Solvers</h3>
-            <p className="about-card-text">
-              We develop accelerated quantum chemistry solvers for advanced materials simulation and future quantum computers.
-            </p>
-            <div className="about-actions">
-              <a 
-                href="https://github.com/point-reyes-sound" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="action-btn primary github-org-btn"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ verticalAlign: "-2px", marginRight: "8px" }}>
-                  <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                </svg>
-                Explore GitHub Organization &rarr;
-              </a>
-              <a href="#research" className="action-btn outline">
-                View Scientific Portfolio &darr;
-              </a>
-            </div>
-          </div>
-
-          <div className="about-pillars-card">
-            <div className="about-pillar-item">
-              <span className="pillar-num">01</span>
-              <div>
-                <strong>Non-Equilibrium Kinetic Theory</strong>
-                <p>Propagating reduced density matrices with BGK collision operators, replacing combinatorial CI scaling with polynomial $O(N^3)$ computational scaling.</p>
-              </div>
-            </div>
-            <div className="about-pillar-item">
-              <span className="pillar-num">02</span>
-              <div>
-                <strong>Open Scientific Benchmarking</strong>
-                <p>Open reproducibility across reference transition-metal dimers, radical singlet-triplet gaps, and multi-reference bond dissociations.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. RESEARCH THEMES (GAGLIARDI GROUP TEMPLATE ARCHITECTURE) */}
-      <section id="research" className="section-block">
-        <div className="section-head">
-          <div className="section-kicker">RESEARCH PORTFOLIO</div>
-          <h2 className="section-title">Scientific Themes</h2>
-          <p className="section-sub">
-            Our theoretical methodology integrates quantum statistical mechanics, kinetic transport, and algebraic spectral graph theory into molecular modeling.
-          </p>
-        </div>
-
-        {/* THEME SELECTOR TABS */}
-        <div className="theme-nav-bar">
-          {researchThemes.map((theme, idx) => (
-            <button
-              key={theme.id}
-              className={`theme-tab-btn ${idx === activeTheme ? "active" : ""}`}
-              onClick={() => setActiveTheme(idx)}
-            >
-              <span className="tab-num">{theme.num}</span>
-              <span className="tab-label">{theme.label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* ACTIVE THEME SHOWCASE */}
-        <div className="theme-display-panel">
-          <div className="theme-meta-col">
-            <span className="theme-badge">{currentTheme.badge}</span>
-            <h3 className="theme-title">{currentTheme.title}</h3>
-            <p className="theme-summary">{currentTheme.summary}</p>
-            <p className="theme-body">{currentTheme.content}</p>
-          </div>
-        </div>
 
         {/* PUBLICATIONS & INTELLECTUAL PROPERTY SUB-BLOCK */}
         <div className="research-pub-block">
@@ -1029,39 +1172,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. ROADMAP */}
-      <section id="roadmap" className="section-block">
-        <div className="section-head">
-          <div className="section-kicker">TECHNOLOGY TRAJECTORY</div>
-          <h2 className="section-title">Roadmap</h2>
-        </div>
-
-        <div className="roadmap-timeline">
-          <div className="timeline-node active">
-            <div className="timeline-marker">Phase I</div>
-            <div className="timeline-content">
-              <div className="timeline-tag">CURRENT</div>
-              <h4>Theoretical Foundations & Validation</h4>
-              <p>
-                Derivation of the Quantum Boltzmann Equation Self-Consistent Field.
-              </p>
-            </div>
-          </div>
-
-          <div className="timeline-node current">
-            <div className="timeline-marker">Phase II</div>
-            <div className="timeline-content">
-              <div className="timeline-tag">CURRENT &bull; GRANT INITIATIVE</div>
-              <h4>GPU Kernels</h4>
-              <p>
-                NVIDIA Inception and Google Cloud accelerated implementations.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. CONTACT */}
+      {/* 4. CONTACT */}
       <section id="contact" className="section-block dark-tint">
         <span id="investors" style={{ position: "relative", top: "-80px", display: "block" }}></span>
         <span id="team" style={{ position: "relative", top: "-80px", display: "block" }}></span>
@@ -1249,7 +1360,6 @@ export default function App() {
             <h4>Platform</h4>
             <a href="#about">About</a>
             <a href="#research">Research</a>
-            <a href="#roadmap">Roadmap</a>
             <a href="#contact">Contact</a>
             <a href="/film">Cinematic Overview (Film) &rarr;</a>
             <button className="footer-link-btn" onClick={() => openAppView("orbitals")}>
