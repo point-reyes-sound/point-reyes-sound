@@ -139,10 +139,17 @@ def ease_in_out_sine(t: float) -> float:
 
 
 def draw_top_brand_lockup(canvas: Image.Image):
-    """Draw the crimson Phi logo and 'Point Reyes Sound' in EB Garamond right next to it at the top of the frame."""
-    canvas.paste(LOGO_BADGE, (80, 64), LOGO_BADGE)
+    """Draw the crimson Phi logo and 'Point Reyes Sound' in EB Garamond centrally aligned at the top of the frame."""
     draw = ImageDraw.Draw(canvas)
-    draw.text((134, 63), "Point Reyes Sound", font=FONTS["brand_top"], fill=(242, 246, 252, 255))
+    text = "Point Reyes Sound"
+    tb = draw.textbbox((0, 0), text, font=FONTS["brand_top"])
+    tw = tb[2] - tb[0]
+    logo_w, _ = LOGO_BADGE.size
+    gap = 14
+    total_w = logo_w + gap + tw
+    start_x = (W - total_w) // 2
+    canvas.paste(LOGO_BADGE, (start_x, 64), LOGO_BADGE)
+    draw.text((start_x + logo_w + gap, 63), text, font=FONTS["brand_top"], fill=(242, 246, 252, 255))
 
 
 def wrap_text_lines(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont, max_w: int) -> list[str]:
