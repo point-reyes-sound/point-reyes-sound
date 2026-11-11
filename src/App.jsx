@@ -6,11 +6,6 @@ import QBoltzAgentConsole from "./components/QBoltzAgentConsole";
 import PreprintSpotlight from "./PreprintSpotlight";
 import { QuantumSonificationEngine } from "./physics/QuantumSonificationEngine";
 import PointReyesSound3DBackground from "./PointReyesSound3DBackground";
-import ExclusiveAccessGate, {
-  checkIsAuthenticated,
-  clearAuthentication,
-  getAuthenticatedUser
-} from "./components/ExclusiveAccessGate";
 
 const researchThemes = [
   {
@@ -213,7 +208,6 @@ export default function App() {
 
   const [currentView, setCurrentView] = useState(getInitialActiveView);
   const [labTab, setLabTab] = useState(getInitialLabTab);
-  const [isAuthenticated, setIsAuthenticated] = useState(checkIsAuthenticated);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const [activeCarouselIdx, setActiveCarouselIdx] = useState(0);
@@ -297,11 +291,6 @@ export default function App() {
     }, 4200);
     return () => clearInterval(timer);
   }, [isCarouselPaused, activeCarouselVideo, quantumVideoSlides.length]);
-
-  const handleLogout = () => {
-    clearAuthentication();
-    setIsAuthenticated(false);
-  };
 
   const stopAudioIfPlaying = () => {
     try {
@@ -517,28 +506,12 @@ export default function App() {
 
   // If user opens the application view (Interactive Q-BOLTZ Agent Console)
   if (currentView === "interactive") {
-    // Gate unauthorized access behind username and password
-    if (!isAuthenticated) {
-      return (
-        <div className="interactive-wrapper console-view">
-          <PointReyesSound3DBackground />
-          <ExclusiveAccessGate
-            onAuthenticate={() => setIsAuthenticated(true)}
-            onClose={closeAppView}
-            onRequestAccess={() => {
-              setShowSalesModal(true);
-            }}
-          />
-        </div>
-      );
-    }
-
     if (labTab === "orbitals") {
       return (
         <div className="interactive-wrapper console-view">
           <PointReyesSound3DBackground />
           <ConsoleErrorBoundary>
-            <QBoltzAgentConsole onClose={closeAppView} onLogout={handleLogout} />
+            <QBoltzAgentConsole onClose={closeAppView} />
           </ConsoleErrorBoundary>
         </div>
       );
@@ -579,17 +552,6 @@ export default function App() {
           </div>
 
           <div className="lab-nav-actions" style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-            <div className="auth-session-pill" title="Exclusive Authenticated Session">
-              <span className="gate-pulse-dot"></span>
-              <span>AUTHENTICATED ACCESS</span>
-              <button
-                className="auth-lock-btn"
-                onClick={handleLogout}
-                title="Lock demo and exit session"
-              >
-                🔒 Lock
-              </button>
-            </div>
             <button 
               className="lab-nav-btn research-nav-btn"
               onClick={closeAppView}
@@ -826,15 +788,6 @@ export default function App() {
                 {isVideoMuted ? "Unmute" : "Mute"}
               </button>
             )}
-          </div>
-        </div>
-
-        {/* MISSION STATEMENT */}
-        <div className="qva-mission-carousel-block">
-          <div className="qva-mission-header" style={{ marginBottom: 0 }}>
-            <h2 className="qva-mission-statement">
-              Building Electronic Structure for the Next Century.
-            </h2>
           </div>
         </div>
       </section>
