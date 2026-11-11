@@ -634,43 +634,113 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
     return () => clearInterval(interval);
   }, [isPlaying, hasTrajectory, loopDir, trajectory.length, playbackSpeed, playCoulsonFischerPop, simulation?.benchmark?.key]);
 
-  // Agent Query Execution
-  const executeQuery = async (customPrompt) => {
-    const text = customPrompt || query;
+  // Resolve cloud FastAPI endpoint (or local 127.0.0.1:8088 strictly during localhost dev)
+  const getApiBaseUrl = () => {
+    const envUrl = (import.meta.env.VITE_QBOLTZ_API_URL || "").trim().replace(/\/$/, "");
+    if (envUrl) return envUrl;
+    if (
+      typeof window !== "undefined" &&
+      (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ) {
+      return "http://127.0.0.1:8088";
+    }
+    return "";
+  };
+
+  const parsePromptIntent = (rawPrompt) => {
+    const p = (rawPrompt || "").toLowerCase();
+    let benchmark = "h2";
+    if (p.includes("h3") || p.includes("trimer") || p.includes("triangle")) {
+      benchmark = "h3_d3h";
+    } else if (p.includes("h4") || p.includes("square") || p.includes("automerization")) {
+      benchmark = "h4_square";
+    } else if (p.includes("beh2") || p.includes("beryllium") || p.includes("conical") || p.includes("insertion")) {
+      benchmark = "beh2_ci";
+    } else if (p.includes("nitrogen") || p.includes("n2") || p.includes("triple")) {
+      benchmark = "n2_triple";
+    }
+
+    let requestedCoord = null;
+    const tokens = p.replace(/angstroms?|bohrs?|å/g, " ").split(/\s+/);
+    for (const tok of tokens) {
+      const val = parseFloat(tok);
+      if (!Number.isNaN(val) && val >= 0.3 && val <= 4.0) {
+        requestedCoord = val;
+        break;
+      }
+    }
+    return { benchmark, requestedCoord };
+  };
+
+  const applySimulationPayload = useCallback((data, requestedCoord = null) => {
+    if (!data?.success) return false;
+    const cleanNarrative = sanitizeNarrative(data.narrative);
+    setFullNarrative(cleanNarrative);
+    setSimulation(data.simulation);
+    setBondingIdx(0);
+    const orbs = data.simulation?.orbitals || [];
+    setAntibondingIdx(orbs.length > 1 ? 1 : 0);
+
+    if (data.simulation?.trajectory?.length) {
+      const defaultTarget = data.simulation.benchmark?.key === "beh2_ci" ? 2.54 : 1.6;
+      const targetR = requestedCoord !== null ? requestedCoord : defaultTarget;
+      const initIdx = data.simulation.trajectory.findIndex((f) => f.r >= targetR);
+      setCurrentFrameIdx(initIdx >= 0 ? initIdx : 0);
+      setIsPlaying(requestedCoord === null);
+      setLoopDir(1);
+    } else {
+      setCurrentFrameIdx(0);
+      setIsPlaying(false);
+    }
+    return true;
+  }, []);
+
+  // Agent Query Execution (Live FastAPI server-side solver + precomputed QBE-SCF static cache shield)
+  const executeQuery = useCallback(async (customPrompt) => {
+    const text = customPrompt !== undefined ? customPrompt : query;
     if (!text.trim()) return;
     setQuery(text);
 
     setLoading(true);
     setHasResult(true);
     setFullNarrative("");
-    setStreamedText("Initializing Q-BOLTZ solver and PySCF active-space calculation...");
+    setStreamedText("Initializing Q-BOLTZ solver and active-space calculation...");
+
+    const { benchmark, requestedCoord } = parsePromptIntent(text);
+    const apiBase = getApiBaseUrl();
 
     try {
-      const res = await fetch("http://127.0.0.1:8088/api/v1/agent/prompt", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: text })
-      });
-      const data = await res.json();
-      if (data.success) {
-        const cleanNarrative = sanitizeNarrative(data.narrative);
-        setFullNarrative(cleanNarrative);
-        setSimulation(data.simulation);
-        setBondingIdx(0);
-        const orbs = data.simulation?.orbitals || [];
-        setAntibondingIdx(orbs.length > 1 ? 1 : 0);
-
-        if (data.simulation?.trajectory?.length) {
-          // Initialize frame near 1.6 Å for H2, or 2.54 Bohr for BeH2
-          const targetR = data.simulation.benchmark.key === "beh2_ci" ? 2.54 : 1.6;
-          const initIdx = data.simulation.trajectory.findIndex((f) => f.r >= targetR);
-          setCurrentFrameIdx(initIdx >= 0 ? initIdx : 0);
-          setIsPlaying(true);
-          setLoopDir(1);
-        } else {
-          setCurrentFrameIdx(0);
-          setIsPlaying(false);
+      let resolved = false;
+      if (apiBase) {
+        try {
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 12000);
+          const res = await fetch(`${apiBase}/api/v1/agent/prompt`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: text }),
+            signal: controller.signal
+          });
+          clearTimeout(timer);
+          if (res.ok) {
+            const data = await res.json();
+            resolved = applySimulationPayload(data, requestedCoord);
+          }
+        } catch {
+          // Fall through seamlessly to precomputed QBE-SCF snapshot under offline/high-traffic conditions
         }
+      }
+
+      if (!resolved) {
+        const staticRes = await fetch(`/qboltz_presets/${benchmark}.json`);
+        if (staticRes.ok) {
+          const staticData = await staticRes.json();
+          resolved = applySimulationPayload(staticData, requestedCoord);
+        }
+      }
+
+      if (!resolved) {
+        throw new Error("Unable to load simulation state.");
       }
     } catch (err) {
       console.error("Query failed:", err);
@@ -680,7 +750,16 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [query, applySimulationPayload]);
+
+  // Auto-launch the default H2 Phase-Space Dissociation simulation immediately on mount
+  const didAutoRunRef = useRef(false);
+  useEffect(() => {
+    if (!didAutoRunRef.current) {
+      didAutoRunRef.current = true;
+      executeQuery("Conceptualize and envision the dissociation of H2 in phase space.");
+    }
+  }, [executeQuery]);
 
 
   const quickPresets = [
@@ -748,19 +827,6 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
           </div>
 
           <div className="header-actions">
-            <div className="auth-session-pill" title="Exclusive Authenticated Session">
-              <span className="gate-pulse-dot"></span>
-              <span>AUTHENTICATED ACCESS</span>
-              {onLogout && (
-                <button
-                  className="auth-lock-btn"
-                  onClick={onLogout}
-                  title="Lock demo and exit session"
-                >
-                  🔒 Lock
-                </button>
-              )}
-            </div>
             {hasResult && (
               <button
                 className="action-pill-btn"
