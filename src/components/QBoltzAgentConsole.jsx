@@ -4,63 +4,53 @@ import WebGlWignerPlot from "./WebGlWignerPlot";
 import "./QBoltzAgentConsole.css";
 
 // ---------------------------------------------------------------------------
-// Guided Molecular Discovery Systems (Preserves & surfaces all precomputed benchmarks)
+// Guided Molecular Discovery Systems (N2 removed; concise high-signal labels)
 // ---------------------------------------------------------------------------
 const DISCOVERY_SYSTEMS = [
   {
     key: "h2",
     formula: "H₂",
     title: "Bond Dissociation",
-    fullLabel: "H₂ Dissociation in Phase Space",
-    tag: "Coulson–Fischer Cusp • Loop",
-    prompt: "Conceptualize and envision the dissociation of H2 in phase space."
+    prompt: "Conceptualize and envision the dissociation of H2 in phase space.",
+    summary:
+      "As **H₂** stretches past the **Coulson–Fischer point (R ≈ 1.20 Å)**, the kinetic collision operator regularizes the mean-field singularity, smoothly bifurcating the Wigner fluid into two entangled droplets."
   },
   {
     key: "h3_d3h",
     formula: "H₃",
     title: "Conical Intersection",
-    fullLabel: "H₃ D₃ₕ Conical Intersection",
-    tag: "Degenerate e′ Manifold",
-    prompt: "Run H3 at the D3h conical intersection of 1.52 Angstroms and show the degenerate e-prime orbitals."
+    prompt: "Run H3 at the D3h conical intersection of 1.52 Angstroms and show the degenerate e-prime orbitals.",
+    summary:
+      "At **R = 1.52 Å**, Q-BOLTZ preserves exact **D₃ₕ** spatial symmetry across the symmetric `a₁′` and degenerate `(e′_x, e′_y)` orbitals without unphysical Jahn–Teller symmetry breaking."
   },
   {
     key: "beh2_ci",
     formula: "BeH₂",
     title: "Avoided Crossing",
-    fullLabel: "BeH₂ Avoided Crossing Scan",
-    tag: "Insertion Seam • Loop",
-    prompt: "Scan the insertion coordinate for the BeH2 conical intersection and show active space orbitals."
-  },
-  {
-    key: "n2_triple",
-    formula: "N₂",
-    title: "Triple-Bond Cleavage",
-    fullLabel: "N₂ Triple Bond",
-    tag: "6-Orbital CAS • 10.8 Bits",
-    prompt: "Dissociate the N2 triple bond to 2.2 Angstroms and show the active space pi bonding and antibonding orbitals."
+    prompt: "Scan the insertion coordinate for the BeH2 conical intersection and show active space orbitals.",
+    summary:
+      "Along the **C₂ᵥ → D_∞h** insertion coordinate, phase-space transport tracks the **1b₂ / 3a₁** avoided crossing seam smoothly through **x ≈ 2.54 Bohr**."
   },
   {
     key: "h4_square",
     formula: "H₄",
     title: "Square Automerization",
-    fullLabel: "H₄ Square Automerization",
-    tag: "D₄ₕ Berry Phase Loop",
-    prompt: "Analyze the H4 square automerization at 1.23 Angstroms and show the 4 active-space orbitals."
+    prompt: "Analyze the H4 square automerization at 1.23 Angstroms and show the 4 active-space orbitals.",
+    summary:
+      "At the **D₄ₕ** square transition state (**R = 1.23 Å**), Q-BOLTZ captures the strongly correlated 4-orbital Berry phase manifold with exact fractional occupations."
   }
 ];
 
 const REGIME_MILESTONES = {
   h2: [
     { label: "Equilibrium", r: 0.75, unit: "Å" },
-    { label: "Coulson–Fischer", r: 1.20, unit: "Å", isSingularity: true },
-    { label: "Bifurcation", r: 1.80, unit: "Å" },
-    { label: "Entangled Limit", r: 3.00, unit: "Å" }
+    { label: "C–F Cusp", r: 1.20, unit: "Å", isSingularity: true },
+    { label: "Entangled", r: 3.00, unit: "Å" }
   ],
   beh2_ci: [
-    { label: "C₂ᵥ Complex", r: 1.00, unit: "Bohr" },
-    { label: "Approach", r: 2.00, unit: "Bohr" },
-    { label: "Crossing Seam", r: 2.54, unit: "Bohr", isSingularity: true },
-    { label: "Linear BeH₂", r: 3.40, unit: "Bohr" }
+    { label: "C₂ᵥ", r: 1.00, unit: "Bohr" },
+    { label: "Seam", r: 2.54, unit: "Bohr", isSingularity: true },
+    { label: "Linear", r: 3.40, unit: "Bohr" }
   ]
 };
 
@@ -517,18 +507,14 @@ function DissociationCurvePlot({ curveData, currentPoint, coordUnit = "Å", canS
         {/* Axis Titles */}
         <text
           x={(padL + width - padR) / 2}
-          y={height - 7}
+          y={height - 8}
           textAnchor="middle"
           fill="#7dd3fc"
-          fontSize="12.5"
+          fontSize="12"
           fontFamily="'JetBrains Mono', monospace"
           fontWeight="600"
-          letterSpacing="0.04em"
         >
-          {coordUnit === "Bohr"
-            ? "Insertion Coordinate x (Bohr)"
-            : `Interatomic Distance R (${curveData.r_unit || coordUnit})`}
-          {canScrub ? " • Click curve to jump" : ""}
+          {coordUnit === "Bohr" ? "x (Bohr)" : `R (${curveData.r_unit || coordUnit})`}
         </text>
 
         <text
@@ -538,9 +524,8 @@ function DissociationCurvePlot({ curveData, currentPoint, coordUnit = "Å", canS
           fontSize="12"
           fontFamily="'JetBrains Mono', monospace"
           fontWeight="600"
-          letterSpacing="0.03em"
         >
-          Energy E (E_h)
+          E (E_h)
         </text>
 
         {/* Singularity / Crossing Marker */}
@@ -752,8 +737,6 @@ export default function QBoltzAgentConsole({ onClose }) {
       benchmark = "h4_square";
     } else if (p.includes("beh2") || p.includes("beryllium") || p.includes("conical") || p.includes("insertion")) {
       benchmark = "beh2_ci";
-    } else if (p.includes("nitrogen") || p.includes("n2") || p.includes("triple")) {
-      benchmark = "n2_triple";
     }
 
     let requestedCoord = null;
@@ -770,8 +753,10 @@ export default function QBoltzAgentConsole({ onClose }) {
 
   const applySimulationPayload = useCallback((data, requestedCoord = null) => {
     if (!data?.success) return false;
-    const cleanNarrative = sanitizeNarrative(data.narrative);
-    setFullNarrative(cleanNarrative);
+    const key = data.simulation?.benchmark?.key || "h2";
+    const sysMatch = DISCOVERY_SYSTEMS.find((s) => s.key === key);
+    const conciseNarrative = sysMatch?.summary || sanitizeNarrative(data.narrative);
+    setFullNarrative(conciseNarrative);
     setSimulation(data.simulation);
     setBondingIdx(0);
     const orbs = data.simulation?.orbitals || [];
@@ -1022,18 +1007,14 @@ export default function QBoltzAgentConsole({ onClose }) {
         {!hasResult && (
           <div className="compact-launcher-body">
             <div className="compact-hero-head">
-              <span className="compact-kicker">INTERACTIVE QUANTUM BOLTZMANN SOLVER</span>
-              <h1 className="compact-display-title">Explore Electronic Structure in Phase Space</h1>
-              <p className="compact-subtitle">
-                Select a guided molecular benchmark below or ask Q-BOLTZ to compute active-space natural orbitals, correlation entropy, and live Wigner phase-space distributions.
-              </p>
+              <h1 className="compact-display-title">Electronic Structure in Phase Space</h1>
             </div>
 
             <div className="console-input-row">
               <input
                 type="text"
                 className="console-text-input"
-                placeholder='Ask Q-BOLTZ (e.g. "Dissociate the N2 triple bond to 2.2 Angstroms")...'
+                placeholder='Ask Q-BOLTZ (e.g. "H2 dissociation" or "BeH2 insertion")...'
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => {
@@ -1046,7 +1027,7 @@ export default function QBoltzAgentConsole({ onClose }) {
                 onClick={() => executeQuery()}
                 disabled={loading}
               >
-                {loading ? "Solving..." : "Launch Engine ↗"}
+                {loading ? "Solving..." : "Launch ↗"}
               </button>
             </div>
 
@@ -1066,7 +1047,6 @@ export default function QBoltzAgentConsole({ onClose }) {
                     <span className="sys-arrow">↗</span>
                   </div>
                   <span className="sys-title">{sys.title}</span>
-                  <span className="sys-tag">{sys.tag}</span>
                 </button>
               ))}
             </div>
@@ -1078,12 +1058,8 @@ export default function QBoltzAgentConsole({ onClose }) {
           <div className="fullscreen-workstation-body">
             {/* Wide Left Discovery & Editorial Column */}
             <aside className="workstation-left-panel">
-              {/* 1. Interactive Click-to-Discover Molecular System Cards */}
-              <section className="discovery-deck-section" aria-label="Guided Molecular Benchmarks">
-                <div className="discovery-deck-header">
-                  <span className="deck-kicker">CLICK TO EXPLORE MOLECULAR SYSTEMS</span>
-                  <span className="deck-count">5 Live Benchmarks</span>
-                </div>
+              {/* 1. Interactive Click-to-Discover Molecular System Cards (2x2) */}
+              <section className="discovery-deck-section" aria-label="Molecular Systems">
                 <div className="discovery-cards-grid">
                   {DISCOVERY_SYSTEMS.map((sys) => {
                     const isActive = activeBenchmarkKey === sys.key;
@@ -1102,21 +1078,19 @@ export default function QBoltzAgentConsole({ onClose }) {
                           <span className="sys-state-dot" />
                         </div>
                         <span className="sys-title">{sys.title}</span>
-                        <span className="sys-tag">{sys.tag}</span>
                       </button>
                     );
                   })}
                 </div>
               </section>
 
-              {/* 2. Active Benchmark Editorial Card + Full Preserved Q-BOLTZ Narrative */}
+              {/* 2. Concise Active Benchmark Card */}
               <article className="narrative-box">
                 <div className="narrative-meta-row">
                   <span className="narrative-author-pill">
-                    <span className="agent-avatar-icon">⚛</span> Q-BOLTZ ANALYSIS
+                    <span className="agent-avatar-icon">⚛</span> Q-BOLTZ
                   </span>
                   <span className="narrative-basis-pill">
-                    {(simulation?.benchmark?.basis || "sto-3g").toUpperCase()} •{" "}
                     {simulation?.active_space
                       ? `CAS(${simulation.active_space.electrons}e, ${simulation.active_space.dimension}o)`
                       : "Active Space"}
@@ -1127,33 +1101,24 @@ export default function QBoltzAgentConsole({ onClose }) {
                   {simulation?.benchmark?.title || "H₂ Homolytic Bond Dissociation"}
                 </h2>
 
-                {simulation?.benchmark?.description && (
-                  <p className="benchmark-editorial-subtitle">
-                    {simulation.benchmark.description}
-                  </p>
-                )}
-
                 <div
                   className="narrative-content"
                   dangerouslySetInnerHTML={{
-                    __html: (streamedText || "Solving quantum transport equation on PySCF...")
+                    __html: (streamedText || "Solving...")
                       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
                       .replace(/`(.*?)`/g, "<code>$1</code>")
                   }}
                 />
               </article>
 
-              {/* 3. Spacious Natural-Language Prompt Strip */}
+              {/* 3. Minimal Prompt Strip */}
               <div className="left-prompt-block">
-                <label className="prompt-block-label" htmlFor="qboltz-followup-input">
-                  ASK A CUSTOM QUANTUM CHEMISTRY QUESTION
-                </label>
                 <div className="fullscreen-input-strip">
                   <input
                     id="qboltz-followup-input"
                     type="text"
                     className="fullscreen-text-input"
-                    placeholder="Ask Q-BOLTZ (e.g. calculate N2 at 2.2 Å or scan BeH2)..."
+                    placeholder="Ask Q-BOLTZ (e.g. H2 at 1.8 Å, BeH2 scan)..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={(e) => {
@@ -1166,7 +1131,7 @@ export default function QBoltzAgentConsole({ onClose }) {
                     onClick={() => executeQuery()}
                     disabled={loading}
                   >
-                    {loading ? "Solving..." : "Ask ↗"}
+                    {loading ? "..." : "Ask ↗"}
                   </button>
                 </div>
               </div>
@@ -1222,9 +1187,8 @@ export default function QBoltzAgentConsole({ onClose }) {
                       }}
                     />
                     <div className="playback-slider-track-marks">
-                      <span>{trajMinR.toFixed(2)} {coordUnit}</span>
-                      <span className="scrub-hint">Drag slider or click regimes →</span>
-                      <span>{trajMaxR.toFixed(2)} {coordUnit}</span>
+                      <span>{trajMinR.toFixed(1)} {coordUnit}</span>
+                      <span>{trajMaxR.toFixed(1)} {coordUnit}</span>
                     </div>
                   </div>
 
@@ -1242,7 +1206,6 @@ export default function QBoltzAgentConsole({ onClose }) {
                             title={`Jump to ${m.label} (${m.r.toFixed(2)} ${m.unit})`}
                           >
                             <span className="regime-name">{m.label}</span>
-                            <span className="regime-r">{m.r.toFixed(2)}</span>
                           </button>
                         );
                       })}
@@ -1253,21 +1216,20 @@ export default function QBoltzAgentConsole({ onClose }) {
                 <div className="dynamic-playback-toolbar snapshot-toolbar">
                   <div className="playback-left-controls">
                     <div className="playback-r-badge">
-                      <span className="r-label">CRITICAL GEOMETRY</span>
                       <span className="r-val">
                         R = {Number(currentR).toFixed(2)} {coordUnit}
                       </span>
                     </div>
                     {simulation?.dissociation_curve?.singularity?.label && (
                       <span className="snapshot-singularity-chip">
-                        {simulation.dissociation_curve.singularity.label}
+                        {simulation.dissociation_curve.singularity.label.replace(/\s*\(.*?\)\s*$/, "")}
                       </span>
                     )}
                   </div>
 
-                  {hasMultiOrbitalPicker ? (
+                  {hasMultiOrbitalPicker && (
                     <div className="orbital-switcher-strip">
-                      <span className="switcher-label">CLICK ORBITALS TO INSPECT IN 3D:</span>
+                      <span className="switcher-label">ORBITALS:</span>
                       <div className="switcher-pills">
                         {activeOrbitals.map((orb, idx) => {
                           const selectedLeft = idx === safeBondingIdx;
@@ -1294,11 +1256,6 @@ export default function QBoltzAgentConsole({ onClose }) {
                         })}
                       </div>
                     </div>
-                  ) : (
-                    <span className="playback-loop-chip">
-                      <span className="loop-pulse" />
-                      3-Orbital Degenerate Active-Space Manifold • Drag 3D Lobes to Rotate
-                    </span>
                   )}
                 </div>
               )}
@@ -1308,24 +1265,14 @@ export default function QBoltzAgentConsole({ onClose }) {
                 <div className={`orbitals-top-row ${isThreeOrbital ? "cols-3" : "cols-2"}`}>
                   {isThreeOrbital ? (
                     activeOrbitals.slice(0, 3).map((orb, idx) => {
-                      const isBeH2 = activeBenchmarkKey === "beh2_ci";
-                      const badgeLabel = isBeH2
-                        ? (idx === 0 ? "1a₁ CORE" : idx === 1 ? "1b₂ CROSSING" : "3a₁ CROSSING")
-                        : (idx === 0 ? "a₁′ SYMMETRIC" : idx === 1 ? "e′_x DEGENERATE" : "e′_y DEGENERATE");
-                      const badgeClass =
-                        idx === 0 ||
-                        (isBeH2 && idx === 1 && currentR < 2.54) ||
-                        (isBeH2 && idx === 2 && currentR >= 2.54)
-                          ? "bonding"
-                          : "antibonding";
                       const occVal = orb.occupation !== undefined ? orb.occupation : 0;
+                      const shortOrbLabel = (orb.label || "").split(" ")[0];
                       return (
                         <div key={`orb-3col-${idx}`} className={`grid-cell-card panel-orbital panel-orbital-${idx}`}>
                           <div className="panel-cell-header">
                             <div className="cell-title-group">
-                              <span className={`cell-badge ${badgeClass}`}>{badgeLabel}</span>
                               <span className="cell-orbital-name" title={orb.label}>
-                                {orb.label}
+                                {shortOrbLabel}
                               </span>
                               <span className="cell-occ-tag">n = {Number(occVal).toFixed(3)}</span>
                             </div>
@@ -1337,16 +1284,13 @@ export default function QBoltzAgentConsole({ onClose }) {
 
                           <div className="cell-canvas-viewport">
                             {orb ? (
-                              <>
-                                <PureThreeOrbitalCanvas
-                                  orbital={orb}
-                                  atoms={activeAtoms}
-                                  bonds={activeBonds}
-                                />
-                                <span className="canvas-interact-hint">↻ Drag to rotate • Scroll to zoom</span>
-                              </>
+                              <PureThreeOrbitalCanvas
+                                orbital={orb}
+                                atoms={activeAtoms}
+                                bonds={activeBonds}
+                              />
                             ) : (
-                              <div className="cell-placeholder">Calculating 3D Isosurface...</div>
+                              <div className="cell-placeholder">Calculating...</div>
                             )}
                           </div>
                         </div>
@@ -1358,7 +1302,6 @@ export default function QBoltzAgentConsole({ onClose }) {
                       <div className="grid-cell-card panel-bonding">
                         <div className="panel-cell-header">
                           <div className="cell-title-group">
-                            <span className="cell-badge bonding">BONDING ORBITAL</span>
                             <span className="cell-orbital-name">
                               {bondingOrbital?.label || "1σ_g (Bonding)"}
                             </span>
@@ -1367,23 +1310,20 @@ export default function QBoltzAgentConsole({ onClose }) {
                             </span>
                           </div>
                           <div className="cell-legend">
-                            {bondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
-                            {bondingOrbital?.neg_lobe && <span className="orb-phase-badge red">−ψ Red</span>}
+                            {bondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ</span>}
+                            {bondingOrbital?.neg_lobe && <span className="orb-phase-badge red">−ψ</span>}
                           </div>
                         </div>
 
                         <div className="cell-canvas-viewport">
                           {bondingOrbital ? (
-                            <>
-                              <PureThreeOrbitalCanvas
-                                orbital={bondingOrbital}
-                                atoms={activeAtoms}
-                                bonds={activeBonds}
-                              />
-                              <span className="canvas-interact-hint">↻ Drag 3D orbital • Scroll to zoom</span>
-                            </>
+                            <PureThreeOrbitalCanvas
+                              orbital={bondingOrbital}
+                              atoms={activeAtoms}
+                              bonds={activeBonds}
+                            />
                           ) : (
-                            <div className="cell-placeholder">Calculating 3D Isosurface...</div>
+                            <div className="cell-placeholder">Calculating...</div>
                           )}
                         </div>
                       </div>
@@ -1392,7 +1332,6 @@ export default function QBoltzAgentConsole({ onClose }) {
                       <div className="grid-cell-card panel-antibonding">
                         <div className="panel-cell-header">
                           <div className="cell-title-group">
-                            <span className="cell-badge antibonding">ANTIBONDING ORBITAL</span>
                             <span className="cell-orbital-name">
                               {antibondingOrbital?.label || "1σ_u* (Antibonding)"}
                             </span>
@@ -1401,23 +1340,20 @@ export default function QBoltzAgentConsole({ onClose }) {
                             </span>
                           </div>
                           <div className="cell-legend">
-                            {antibondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
-                            {antibondingOrbital?.neg_lobe && <span className="orb-phase-badge red">−ψ Red</span>}
+                            {antibondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ</span>}
+                            {antibondingOrbital?.neg_lobe && <span className="orb-phase-badge red">−ψ</span>}
                           </div>
                         </div>
 
                         <div className="cell-canvas-viewport">
                           {antibondingOrbital ? (
-                            <>
-                              <PureThreeOrbitalCanvas
-                                orbital={antibondingOrbital}
-                                atoms={activeAtoms}
-                                bonds={activeBonds}
-                              />
-                              <span className="canvas-interact-hint">↻ Drag 3D orbital • Scroll to zoom</span>
-                            </>
+                            <PureThreeOrbitalCanvas
+                              orbital={antibondingOrbital}
+                              atoms={activeAtoms}
+                              bonds={activeBonds}
+                            />
                           ) : (
-                            <div className="cell-placeholder">Calculating 3D Isosurface...</div>
+                            <div className="cell-placeholder">Calculating...</div>
                           )}
                         </div>
                       </div>
@@ -1431,15 +1367,14 @@ export default function QBoltzAgentConsole({ onClose }) {
                   <div className="grid-cell-card panel-dissociation">
                     <div className="panel-cell-header">
                       <div className="cell-title-group">
-                        <span className="cell-badge pes">POTENTIAL SURFACE</span>
-                        <span className="cell-orbital-name">Energy Curve &amp; Quantum Observables</span>
+                        <span className="cell-orbital-name">Potential Energy Surface</span>
                       </div>
                       <div className="pes-legend-compact">
                         <span className="legend-item qbe">
                           <span className="legend-dot cyan" /> QBE-SCF
                         </span>
                         <span className="legend-item rhf">
-                          <span className="legend-dot red" /> RHF Mean-Field
+                          <span className="legend-dot red" /> RHF
                         </span>
                       </div>
                     </div>
@@ -1455,21 +1390,16 @@ export default function QBoltzAgentConsole({ onClose }) {
                             onSelectR={jumpToCoordinate}
                           />
                         ) : (
-                          <div className="cell-placeholder">Computing Potential Energy Surface...</div>
+                          <div className="cell-placeholder">Computing...</div>
                         )}
                       </div>
 
                       {/* Quantum Energy Observables Row */}
                       <div className="observables-row-grid">
                         <div className="obs-card">
-                          <span className="obs-label">QBE-SCF ENERGY</span>
+                          <span className="obs-label">QBE-SCF</span>
                           <span className="obs-value">
                             {activeEqbeEv !== undefined ? `${Number(activeEqbeEv).toFixed(2)} eV` : "-22.84 eV"}
-                          </span>
-                          <span className="obs-sub">
-                            {activeEqbeHartree !== undefined
-                              ? `${typeof activeEqbeHartree === "number" ? activeEqbeHartree.toFixed(5) : activeEqbeHartree} E_h`
-                              : "-0.80170 E_h"}
                           </span>
                         </div>
 
@@ -1480,18 +1410,12 @@ export default function QBoltzAgentConsole({ onClose }) {
                               ? `${typeof activeEstandardHartree === "number" ? activeEstandardHartree.toFixed(5) : activeEstandardHartree} E_h`
                               : "-0.80170 E_h"}
                           </span>
-                          <span className="obs-sub">
-                            {currentR >= 1.16 ? "Coulson–Fischer Cusp" : "Mean-Field Regime"}
-                          </span>
                         </div>
 
                         <div className="obs-card highlight">
-                          <span className="obs-label">CORRELATION ENTROPY</span>
+                          <span className="obs-label">ENTROPY</span>
                           <span className="obs-value">
                             {activeEntropy !== undefined ? `${Number(activeEntropy).toFixed(3)} bits` : "0.986 bits"}
-                          </span>
-                          <span className="obs-sub">
-                            {currentR >= 1.6 ? "Entangled Singlet Limit" : "Kinetic Relaxation"}
                           </span>
                         </div>
                       </div>

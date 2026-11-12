@@ -287,18 +287,17 @@ export default function WebGlWignerPlot({
       {/* Header Bar */}
       <div className="wigner-panel-header">
         <div className="wigner-title-left">
-          <span className="wigner-badge">PHASE SPACE</span>
-          <span className="wigner-panel-title">Wigner Distribution W(z, p_z)</span>
+          <span className="wigner-panel-title">Wigner W(z, p_z)</span>
           <span className="wigner-param-pill">
             {coordUnit === "Bohr" ? "x" : "R"} = {Number(r || 1.6).toFixed(2)} {coordUnit}
           </span>
         </div>
         <div className="wigner-legend-chips">
           <span className="wigner-chip blue">
-            <span className="chip-dot blue"></span> +W Density
+            <span className="chip-dot blue"></span> +W
           </span>
           <span className="wigner-chip red">
-            <span className="chip-dot red"></span> −W Negativity
+            <span className="chip-dot red"></span> −W
           </span>
         </div>
       </div>
@@ -310,13 +309,9 @@ export default function WebGlWignerPlot({
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Phase Space Axis Labels */}
-        <div className="wigner-axis-label axis-z-left">−3.6 Å</div>
-        <div className="wigner-axis-label axis-z-center">Position z (Å) • Hover to inspect W(z, p_z)</div>
-        <div className="wigner-axis-label axis-z-right">+3.6 Å</div>
-        <div className="wigner-axis-label axis-p-top">+3.6 ℏ/a₀</div>
-        <div className="wigner-axis-label axis-p-center">Momentum p_z (ℏ/a₀)</div>
-        <div className="wigner-axis-label axis-p-bottom">−3.6 ℏ/a₀</div>
+        {/* Minimal Phase Space Axis Labels */}
+        <div className="wigner-axis-label axis-z-center">z ({coordUnit})</div>
+        <div className="wigner-axis-label axis-p-center">p_z (ℏ/a₀)</div>
 
         {/* Real-Time Interactive Coordinate Hover Readout */}
         {hoverData && (
@@ -328,30 +323,17 @@ export default function WebGlWignerPlot({
             }}
           >
             <div className="tooltip-line">
-              <span className="coord-tag">z:</span> <strong>{hoverData.z} Å</strong>
-              <span className="coord-tag" style={{ marginLeft: "0.55rem" }}>p_z:</span> <strong>{hoverData.p} ℏ/a₀</strong>
+              <span className="coord-tag">z:</span> <strong>{hoverData.z}</strong>
+              <span className="coord-tag" style={{ marginLeft: "0.55rem" }}>p_z:</span> <strong>{hoverData.p}</strong>
             </div>
             <div className="tooltip-line">
-              <span className="coord-tag">W(z, p_z):</span>{" "}
+              <span className="coord-tag">W:</span>{" "}
               <strong className={hoverData.isNegative ? "val-neg" : "val-pos"}>
                 {hoverData.W}
-              </strong>{" "}
-              <span className="status-sub">
-                {hoverData.isNegative ? "Quantum Interference" : "Coherent Density"}
-              </span>
+              </strong>
             </div>
           </div>
         )}
-      </div>
-
-      {/* Footer Info Strip */}
-      <div className="wigner-footer-strip">
-        <span className="wigner-footer-meta">
-          Real-Time WebGL Weyl Transform
-        </span>
-        <span className="wigner-coherence-tag">
-          Interference Fringe: 2·cos(2zR/ℏ)
-        </span>
       </div>
     </div>
   );

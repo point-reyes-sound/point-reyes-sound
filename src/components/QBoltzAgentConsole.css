@@ -364,7 +364,7 @@
 
 .compact-discovery-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
 }
 
@@ -1425,7 +1425,6 @@
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
 }
 
-.axis-z-left { bottom: 8px; left: 12px; }
 .axis-z-center {
   bottom: 8px;
   left: 50%;
@@ -1433,17 +1432,14 @@
   color: #7dd3fc;
   font-weight: 600;
 }
-.axis-z-right { bottom: 8px; right: 12px; }
-.axis-p-top { top: 8px; left: 12px; }
 .axis-p-center {
   top: 50%;
-  left: 10px;
+  left: 12px;
   transform: translateY(-50%) rotate(-90deg);
   transform-origin: left center;
   color: #bae6fd;
   font-weight: 600;
 }
-.axis-p-bottom { bottom: 28px; left: 12px; }
 
 .wigner-hover-tooltip {
   position: absolute;
