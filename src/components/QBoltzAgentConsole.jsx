@@ -1204,7 +1204,7 @@ export default function QBoltzAgentConsole({ onClose }) {
                   onClick={() => executeQuery()}
                   disabled={loading}
                 >
-                  <span>{loading ? "Solving Phase-Space Transport..." : "Simulate in Phase Space"}</span>
+                  <span>{loading ? "Solving..." : "QBolt"}</span>
                   <span className="cta-arrow">↗</span>
                 </button>
               </section>
@@ -1314,7 +1314,7 @@ export default function QBoltzAgentConsole({ onClose }) {
                   onClick={() => executeQuery()}
                   disabled={loading}
                 >
-                  <span>{loading ? "Solving Phase-Space Transport..." : "Simulate in Phase Space"}</span>
+                  <span>{loading ? "Solving..." : "QBolt"}</span>
                   <span className="cta-arrow">↗</span>
                 </button>
               </section>
