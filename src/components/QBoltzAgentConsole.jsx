@@ -839,14 +839,15 @@ export default function QBoltzAgentConsole({ onClose }) {
     }
   }, [query, applySimulationPayload]);
 
-  // Auto-launch default H2 Phase-Space Dissociation simulation immediately on mount
-  const didAutoRunRef = useRef(false);
-  useEffect(() => {
-    if (!didAutoRunRef.current) {
-      didAutoRunRef.current = true;
-      executeQuery("Conceptualize and envision the dissociation of H2 in phase space.");
-    }
-  }, [executeQuery]);
+  // Clear/Reset back to celestial dark standby frames
+  const resetWorkstation = useCallback(() => {
+    setHasResult(false);
+    setSimulation(null);
+    setFullNarrative("");
+    setStreamedText("");
+    setIsPlaying(false);
+    setCurrentFrameIdx(0);
+  }, []);
 
   // Jump directly to a nuclear coordinate R along the trajectory
   const jumpToCoordinate = useCallback(
@@ -929,12 +930,8 @@ export default function QBoltzAgentConsole({ onClose }) {
   const trajMaxR = hasTrajectory ? trajectory[trajectory.length - 1].r : 3.5;
 
   return (
-    <div className={`qboltz-agent-overlay ${hasResult ? "is-activated-fullscreen" : "is-compact"}`}>
-      {!hasResult && (
-        <div className="console-scrim" onClick={() => handleReturnHome()}></div>
-      )}
-
-      <div className={`console-floating-card ${hasResult ? "fullscreen-active-workstation" : "compact-view"}`}>
+    <div className="qboltz-agent-overlay is-activated-fullscreen">
+      <div className="console-floating-card fullscreen-active-workstation">
         {/* Global Top Header — Matches Point Reyes Sound Landing Page Aesthetic */}
         <header className="console-card-header">
           <div className="header-brand-cluster">
@@ -959,44 +956,40 @@ export default function QBoltzAgentConsole({ onClose }) {
             </div>
           </div>
 
-          {hasResult && (
-            <nav className="demo-header-nav" aria-label="Site Navigation">
-              <span className="demo-nav-active">
-                <span className="demo-nav-dot" /> Preview
-              </span>
-              <button type="button" className="demo-nav-link" onClick={() => handleReturnHome("about")}>
-                About
-              </button>
-              <button type="button" className="demo-nav-link" onClick={() => handleReturnHome("research")}>
-                Research
-              </button>
-              <button type="button" className="demo-nav-link" onClick={() => handleReturnHome("contact")}>
-                Contact
-              </button>
-              <a
-                href="https://github.com/point-reyes-sound"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="demo-nav-link"
-              >
-                GitHub
-              </a>
-              <a href="/film" className="demo-nav-link">
-                Film
-              </a>
-            </nav>
-          )}
+          <nav className="demo-header-nav" aria-label="Site Navigation">
+            <span className="demo-nav-active">
+              <span className="demo-nav-dot" /> Preview
+            </span>
+            <button type="button" className="demo-nav-link" onClick={() => handleReturnHome("about")}>
+              About
+            </button>
+            <button type="button" className="demo-nav-link" onClick={() => handleReturnHome("research")}>
+              Research
+            </button>
+            <button type="button" className="demo-nav-link" onClick={() => handleReturnHome("contact")}>
+              Contact
+            </button>
+            <a
+              href="https://github.com/point-reyes-sound"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="demo-nav-link"
+            >
+              GitHub
+            </a>
+            <a href="/film" className="demo-nav-link">
+              Film
+            </a>
+          </nav>
 
           <div className="header-actions">
             {hasResult && (
               <button
                 type="button"
                 className="action-pill-btn"
-                onClick={() => {
-                  setHasResult(false);
-                }}
+                onClick={resetWorkstation}
               >
-                + Prompt Launcher
+                Reset
               </button>
             )}
             <button
@@ -1010,88 +1003,38 @@ export default function QBoltzAgentConsole({ onClose }) {
           </div>
         </header>
 
-        {/* Compact Centered Prompt Launcher View */}
-        {!hasResult && (
-          <div className="compact-launcher-body">
-            <div className="compact-hero-head">
-              <h1 className="compact-display-title">Electronic Structure in Phase Space</h1>
-            </div>
+        {/* Fullscreen 2-Column Workstation (Always Visible; Right Panels Ignite on User Action) */}
+        <div className="fullscreen-workstation-body">
+          {/* Wide Left Discovery & Query Column */}
+          <aside className="workstation-left-panel">
+            {/* 1. Interactive Click-to-Discover Molecular System Cards (2x2) */}
+            <section className="discovery-deck-section" aria-label="Molecular Systems">
+              <div className="discovery-cards-grid">
+                {DISCOVERY_SYSTEMS.map((sys) => {
+                  const isActive = hasResult && activeBenchmarkKey === sys.key;
+                  return (
+                    <button
+                      key={`deck-${sys.key}`}
+                      type="button"
+                      className={`discovery-system-card ${isActive ? "is-active" : ""}`}
+                      onClick={() => {
+                        setQuery(sys.prompt);
+                        executeQuery(sys.prompt);
+                      }}
+                    >
+                      <div className="sys-card-top">
+                        <span className="sys-formula">{sys.formula}</span>
+                        <span className="sys-state-dot" />
+                      </div>
+                      <span className="sys-title">{sys.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
 
-            <div className="console-input-row">
-              <input
-                type="text"
-                className="console-text-input"
-                placeholder='Ask Q-BOLTZ (e.g. "H2 dissociation" or "BeH2 insertion")...'
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") executeQuery();
-                }}
-              />
-              <button
-                type="button"
-                className="submit-query-btn"
-                onClick={() => executeQuery()}
-                disabled={loading}
-              >
-                {loading ? "Solving..." : "Launch ↗"}
-              </button>
-            </div>
-
-            <div className="compact-discovery-grid">
-              {DISCOVERY_SYSTEMS.map((sys) => (
-                <button
-                  key={`compact-${sys.key}`}
-                  type="button"
-                  className={`discovery-system-card ${activeBenchmarkKey === sys.key ? "is-active" : ""}`}
-                  onClick={() => {
-                    setQuery(sys.prompt);
-                    executeQuery(sys.prompt);
-                  }}
-                >
-                  <div className="sys-card-top">
-                    <span className="sys-formula">{sys.formula}</span>
-                    <span className="sys-arrow">↗</span>
-                  </div>
-                  <span className="sys-title">{sys.title}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Activated Fullscreen Workstation Grid */}
-        {hasResult && (
-          <div className="fullscreen-workstation-body">
-            {/* Wide Left Discovery & Editorial Column */}
-            <aside className="workstation-left-panel">
-              {/* 1. Interactive Click-to-Discover Molecular System Cards (2x2) */}
-              <section className="discovery-deck-section" aria-label="Molecular Systems">
-                <div className="discovery-cards-grid">
-                  {DISCOVERY_SYSTEMS.map((sys) => {
-                    const isActive = activeBenchmarkKey === sys.key;
-                    return (
-                      <button
-                        key={`deck-${sys.key}`}
-                        type="button"
-                        className={`discovery-system-card ${isActive ? "is-active" : ""}`}
-                        onClick={() => {
-                          setQuery(sys.prompt);
-                          executeQuery(sys.prompt);
-                        }}
-                      >
-                        <div className="sys-card-top">
-                          <span className="sys-formula">{sys.formula}</span>
-                          <span className="sys-state-dot" />
-                        </div>
-                        <span className="sys-title">{sys.title}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </section>
-
-              {/* 2. Concise Active Benchmark Card */}
+            {/* 2. Concise Active Benchmark Card (Revealed after user triggers a simulation) */}
+            {hasResult && (
               <article className="narrative-box">
                 <div className="narrative-meta-row">
                   <span className="narrative-author-pill">
@@ -1117,61 +1060,75 @@ export default function QBoltzAgentConsole({ onClose }) {
                   }}
                 />
               </article>
+            )}
 
-              {/* 3. Prominent Interactive Query Window (Fills Left Whitespace) */}
-              <section className="left-query-window" aria-label="Q-BOLTZ Query Composer">
-                <div className="query-window-header">
-                  <span className="query-window-title">
-                    <span className="query-window-dot" /> Ask Q-BOLTZ
-                  </span>
-                  <span className="query-window-kbd">↵ Enter</span>
+            {/* 3. Prominent Interactive Query Window (Fills Left Whitespace) */}
+            <section className="left-query-window" aria-label="Q-BOLTZ Query Composer">
+              <div className="query-window-header">
+                <span className="query-window-title">
+                  <span className="query-window-dot" /> Ask Q-BOLTZ
+                </span>
+                <span className="query-window-kbd">↵ Enter</span>
+              </div>
+
+              <textarea
+                id="qboltz-followup-input"
+                className="query-window-textarea"
+                rows={3}
+                placeholder="Type a molecule or bond distance (e.g. Stretch H2 to 1.80 Å or scan BeH2 at 2.54 Bohr)..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    executeQuery();
+                  }
+                }}
+              />
+
+              <div className="query-suggestions-row">
+                {QUICK_QUERY_PROMPTS.map((item) => (
+                  <button
+                    key={item.label}
+                    type="button"
+                    className="query-suggestion-pill"
+                    onClick={() => {
+                      setQuery(item.prompt);
+                      executeQuery(item.prompt);
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="query-window-cta-btn"
+                onClick={() => executeQuery()}
+                disabled={loading}
+              >
+                <span>{loading ? "Solving Phase-Space Transport..." : "Simulate in Phase Space"}</span>
+                <span className="cta-arrow">↗</span>
+              </button>
+            </section>
+          </aside>
+
+          {/* Right Column: Celestial Dark Standby Frames OR Live 4-Panel Simulation */}
+          <main className="workstation-right-content-wrapper">
+            {!hasResult ? (
+              <div className="workstation-visual-layout celestial-standby-grid" aria-label="Standby Simulation Frames">
+                <div className="orbitals-top-row cols-2">
+                  <div className="grid-cell-card celestial-dark-frame" />
+                  <div className="grid-cell-card celestial-dark-frame" />
                 </div>
-
-                <textarea
-                  id="qboltz-followup-input"
-                  className="query-window-textarea"
-                  rows={3}
-                  placeholder="Type a molecule or bond distance (e.g. Stretch H2 to 1.80 Å or scan BeH2 at 2.54 Bohr)..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      executeQuery();
-                    }
-                  }}
-                />
-
-                <div className="query-suggestions-row">
-                  {QUICK_QUERY_PROMPTS.map((item) => (
-                    <button
-                      key={item.label}
-                      type="button"
-                      className="query-suggestion-pill"
-                      onClick={() => {
-                        setQuery(item.prompt);
-                        executeQuery(item.prompt);
-                      }}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
+                <div className="analysis-bottom-row">
+                  <div className="grid-cell-card celestial-dark-frame" />
+                  <div className="grid-cell-card celestial-dark-frame" />
                 </div>
-
-                <button
-                  type="button"
-                  className="query-window-cta-btn"
-                  onClick={() => executeQuery()}
-                  disabled={loading}
-                >
-                  <span>{loading ? "Solving Phase-Space Transport..." : "Simulate in Phase Space"}</span>
-                  <span className="cta-arrow">↗</span>
-                </button>
-              </section>
-            </aside>
-
-            {/* Right Column: Interactive Trajectory Scrubber + 4-Panel Engine */}
-            <main className="workstation-right-content-wrapper">
+              </div>
+            ) : (
+              <>
               {/* Interactive Trajectory & Regime Discovery Toolbar */}
               {hasTrajectory ? (
                 <div className="dynamic-playback-toolbar">
@@ -1466,9 +1423,10 @@ export default function QBoltzAgentConsole({ onClose }) {
                   </div>
                 </div>
               </div>
-            </main>
-          </div>
-        )}
+              </>
+            )}
+          </main>
+        </div>
       </div>
     </div>
   );
