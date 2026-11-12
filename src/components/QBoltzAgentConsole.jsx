@@ -41,6 +41,13 @@ const DISCOVERY_SYSTEMS = [
   }
 ];
 
+const QUICK_QUERY_PROMPTS = [
+  { label: "H₂ at 1.80 Å", prompt: "Stretch H2 to 1.80 Angstroms in phase space." },
+  { label: "BeH₂ at 2.54 Bohr", prompt: "Scan BeH2 at 2.54 Bohr crossing seam." },
+  { label: "H₃ Conical", prompt: "Run H3 at 1.52 Angstroms conical intersection." },
+  { label: "H₄ Square", prompt: "Analyze H4 square automerization at 1.23 Angstroms." }
+];
+
 const REGIME_MILESTONES = {
   h2: [
     { label: "Equilibrium", r: 0.75, unit: "Å" },
@@ -1111,30 +1118,56 @@ export default function QBoltzAgentConsole({ onClose }) {
                 />
               </article>
 
-              {/* 3. Minimal Prompt Strip */}
-              <div className="left-prompt-block">
-                <div className="fullscreen-input-strip">
-                  <input
-                    id="qboltz-followup-input"
-                    type="text"
-                    className="fullscreen-text-input"
-                    placeholder="Ask Q-BOLTZ (e.g. H2 at 1.8 Å, BeH2 scan)..."
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") executeQuery();
-                    }}
-                  />
-                  <button
-                    type="button"
-                    className="fullscreen-submit-btn"
-                    onClick={() => executeQuery()}
-                    disabled={loading}
-                  >
-                    {loading ? "..." : "Ask ↗"}
-                  </button>
+              {/* 3. Prominent Interactive Query Window (Fills Left Whitespace) */}
+              <section className="left-query-window" aria-label="Q-BOLTZ Query Composer">
+                <div className="query-window-header">
+                  <span className="query-window-title">
+                    <span className="query-window-dot" /> Ask Q-BOLTZ
+                  </span>
+                  <span className="query-window-kbd">↵ Enter</span>
                 </div>
-              </div>
+
+                <textarea
+                  id="qboltz-followup-input"
+                  className="query-window-textarea"
+                  rows={3}
+                  placeholder="Type a molecule or bond distance (e.g. Stretch H2 to 1.80 Å or scan BeH2 at 2.54 Bohr)..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      executeQuery();
+                    }
+                  }}
+                />
+
+                <div className="query-suggestions-row">
+                  {QUICK_QUERY_PROMPTS.map((item) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      className="query-suggestion-pill"
+                      onClick={() => {
+                        setQuery(item.prompt);
+                        executeQuery(item.prompt);
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  className="query-window-cta-btn"
+                  onClick={() => executeQuery()}
+                  disabled={loading}
+                >
+                  <span>{loading ? "Solving Phase-Space Transport..." : "Simulate in Phase Space"}</span>
+                  <span className="cta-arrow">↗</span>
+                </button>
+              </section>
             </aside>
 
             {/* Right Column: Interactive Trajectory Scrubber + 4-Panel Engine */}
