@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as THREE from "three";
 import WebGlWignerPlot from "./WebGlWignerPlot";
+import { EdmQuantumFluxSonifier } from "../physics/EdmQuantumFluxSonifier";
 import "./QBoltzAgentConsole.css";
 
 // ---------------------------------------------------------------------------
@@ -59,6 +60,29 @@ const REGIME_MILESTONES = {
     { label: "Seam", r: 2.54, unit: "Bohr", isSingularity: true },
     { label: "Linear", r: 3.40, unit: "Bohr" }
   ]
+};
+
+const PREPRINT_FINDINGS_BY_KEY = {
+  h2: {
+    badge: "PREPRINT · C^∞ ATTRACTOR",
+    metric: "85.7% ± 1.7% MR-MGN-BE17 Error Healed",
+    note: "Zero double-counting across all 11 benchmark molecules; 2,140× memory reduction at N_AO = 300.",
+  },
+  h3_d3h: {
+    badge: "FIG. 1 · cc-pVDZ",
+    metric: "10.22 kcal/mol FCI / Q-BESC Barrier",
+    note: "Q-BECK 12.76 vs ROHF 23.46 kcal/mol; pinned to Borland–Dennis pure facet (‖n − p‖₂ = 0).",
+  },
+  beh2_ci: {
+    badge: "FIG. 3 · 6-31G",
+    metric: "7.11×10⁻¹⁴ Eₕ vs CASCI(12,4)",
+    note: "Q-BECK heals 74.4% of the 0.2733 Eₕ QBE-SCF cusp into a smooth C^∞ barrier (0.1973 Eₕ).",
+  },
+  h4_square: {
+    badge: "FIG. 2 · D₄h MOTT LIMIT",
+    metric: "4.04×10⁻¹⁰ Eₕ vs FCI · 4.000 bits",
+    note: "Smooth transition from 2.396 bits (1.20 Å) to exact 1.000 half-filling; D_e = 64.95 kcal/mol.",
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -629,6 +653,29 @@ export default function QBoltzAgentConsole({ onClose }) {
   const ambientNodesRef = useRef(null);
   const [isAmbientMuted, setIsAmbientMuted] = useState(false);
   const isAmbientMutedRef = useRef(false);
+  const [isEdmFluxActive, setIsEdmFluxActive] = useState(false);
+  const edmSonifierRef = useRef(null);
+
+  useEffect(() => {
+    edmSonifierRef.current = new EdmQuantumFluxSonifier();
+    return () => {
+      if (edmSonifierRef.current) {
+        edmSonifierRef.current.stop();
+      }
+    };
+  }, []);
+
+  const toggleEdmFlux = useCallback(() => {
+    const sonifier = edmSonifierRef.current;
+    if (!sonifier) return;
+    if (isEdmFluxActive) {
+      sonifier.stop();
+      setIsEdmFluxActive(false);
+    } else {
+      sonifier.start();
+      setIsEdmFluxActive(true);
+    }
+  }, [isEdmFluxActive]);
 
   const startEtherealSound = useCallback(() => {
     try {
@@ -1052,6 +1099,17 @@ export default function QBoltzAgentConsole({ onClose }) {
   const trajMinR = hasTrajectory ? trajectory[0].r : 0.5;
   const trajMaxR = hasTrajectory ? trajectory[trajectory.length - 1].r : 3.5;
 
+  useEffect(() => {
+    if (!edmSonifierRef.current) return;
+    const stretchNorm = (currentR - trajMinR) / (trajMaxR - trajMinR || 1);
+    const entropyNorm = Math.min(1, Math.max(0, (Number(activeEntropy) || 0) / 2.0));
+    edmSonifierRef.current.updateTelemetry({
+      stretchNorm,
+      entropyNorm,
+      couplingNorm: 0.65,
+    });
+  }, [currentR, trajMinR, trajMaxR, activeEntropy]);
+
   return (
     <div className="qboltz-agent-overlay is-activated-fullscreen">
       <div className="console-floating-card fullscreen-active-workstation">
@@ -1105,6 +1163,15 @@ export default function QBoltzAgentConsole({ onClose }) {
           </nav>
 
           <div className="header-actions">
+            <button
+              type="button"
+              className={`sound-toggle-btn ${isEdmFluxActive ? "is-live" : "is-muted"}`}
+              onClick={toggleEdmFlux}
+              title="Toggle 126 BPM Rhythmic EDM Quantum Flux Sonification"
+            >
+              <span className="sound-wave-dot" />
+              {isEdmFluxActive ? "EDM Flux: LIVE" : "EDM Flux"}
+            </button>
             <button
               type="button"
               className={`sound-toggle-btn ${isAmbientMuted ? "is-muted" : "is-live"}`}
@@ -1264,6 +1331,23 @@ export default function QBoltzAgentConsole({ onClose }) {
                       .replace(/`(.*?)`/g, "<code>$1</code>")
                   }}
                 />
+
+                {(() => {
+                  const finding =
+                    PREPRINT_FINDINGS_BY_KEY[activeBenchmarkKey] || PREPRINT_FINDINGS_BY_KEY.h2;
+                  return (
+                    <div className="preprint-inline-finding">
+                      <div className="preprint-inline-top">
+                        <span className="preprint-inline-badge">{finding.badge}</span>
+                        <a href="/qbeck" className="preprint-inline-link">
+                          Observatory &rarr;
+                        </a>
+                      </div>
+                      <strong className="preprint-inline-metric">{finding.metric}</strong>
+                      <p className="preprint-inline-note">{finding.note}</p>
+                    </div>
+                  );
+                })()}
               </article>
 
               {/* 3. Prominent Interactive Query Window */}

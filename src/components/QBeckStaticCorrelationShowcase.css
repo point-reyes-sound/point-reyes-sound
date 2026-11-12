@@ -133,6 +133,107 @@
   box-shadow: 0 6px 24px rgba(56, 189, 248, 0.35);
 }
 
+.qbeck-edm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.85);
+  color: #7dd3fc;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.qbeck-edm-btn.is-playing {
+  background: rgba(16, 185, 129, 0.16);
+  border-color: rgba(52, 211, 153, 0.65);
+  color: #6ee7b7;
+  box-shadow: 0 0 18px rgba(52, 211, 153, 0.25);
+}
+
+.qbeck-edm-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.qbeck-edm-btn.is-playing .qbeck-edm-dot {
+  animation: qbeckPulse 0.476s infinite alternate;
+}
+
+@keyframes qbeckPulse {
+  from {
+    transform: scale(0.85);
+    opacity: 0.65;
+  }
+  to {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+}
+
+.qbeck-canvas-stage {
+  position: relative;
+}
+
+.qbeck-webgl-canvas {
+  cursor: crosshair;
+}
+
+.qbeck-canvas-overlay-hint {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.65rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  font-size: 0.76rem;
+  color: #cbd5e1;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+}
+
+.qbeck-canvas-overlay-hint code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  color: #7dd3fc;
+  background: rgba(2, 6, 14, 0.72);
+  padding: 0.18rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.22);
+}
+
+.qbeck-regime-badge {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+}
+
+.qbeck-regime-badge.tone-eq {
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.qbeck-regime-badge.tone-liquid {
+  color: #6ee7b7;
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.qbeck-regime-badge.tone-mott {
+  color: #fcd34d;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.32);
+}
+
 .qbeck-main {
   max-width: 1320px;
   margin: 0 auto;

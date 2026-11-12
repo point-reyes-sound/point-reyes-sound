@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+import { EdmQuantumFluxSonifier } from "../physics/EdmQuantumFluxSonifier";
 import "./QBeckStaticCorrelationShowcase.css";
 
 const CLOSURE_STAGES = [
@@ -430,13 +431,19 @@ function formatChartPath(points, xMin, xMax, yMin, yMax, width, height, pad) {
     .join(" ");
 }
 
-function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale }) {
+function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale, onPluck }) {
   const mountRef = useRef(null);
   const paramsRef = useRef({ bondStretch, couplingScale });
+  const rippleRef = useRef({ x: 0, z: 0, amp: 0, age: 10 });
+  const onPluckRef = useRef(onPluck);
 
   useEffect(() => {
     paramsRef.current = { bondStretch, couplingScale };
   }, [bondStretch, couplingScale]);
+
+  useEffect(() => {
+    onPluckRef.current = onPluck;
+  }, [onPluck]);
 
   useEffect(() => {
     const container = mountRef.current;
@@ -447,7 +454,7 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale }) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-    camera.position.set(0, 3.3, 6.2);
+    camera.position.set(0, 3.2, 6.0);
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -455,9 +462,9 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     container.appendChild(renderer.domElement);
 
-    // Phase-space Wigner-cumulant wavefield grid
-    const segX = 56;
-    const segZ = 56;
+    // Dual-layer luminous quantum fluid: glossy translucent surface + crisp wireframe
+    const segX = 64;
+    const segZ = 64;
     const planeGeo = new THREE.PlaneGeometry(7.2, 5.2, segX, segZ);
     planeGeo.rotateX(-Math.PI / 2);
 
@@ -465,14 +472,51 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale }) {
     const colors = new Float32Array(posAttr.count * 3);
     planeGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
-    const planeMat = new THREE.MeshBasicMaterial({
+    const surfaceMat = new THREE.MeshBasicMaterial({
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.34,
+      side: THREE.DoubleSide,
+    });
+    const surfaceMesh = new THREE.Mesh(planeGeo, surfaceMat);
+    scene.add(surfaceMesh);
+
+    const wireMat = new THREE.MeshBasicMaterial({
       vertexColors: true,
       wireframe: true,
       transparent: true,
-      opacity: 0.72,
+      opacity: 0.78,
     });
-    const waveMesh = new THREE.Mesh(planeGeo, planeMat);
+    const waveMesh = new THREE.Mesh(planeGeo, wireMat);
     scene.add(waveMesh);
+
+    // 420-particle additive quantum flux halo
+    const particleCount = 420;
+    const pPositions = new Float32Array(particleCount * 3);
+    const pColors = new Float32Array(particleCount * 3);
+    const pSeeds = new Float32Array(particleCount);
+    for (let i = 0; i < particleCount; i++) {
+      pPositions[i * 3] = (Math.random() - 0.5) * 6.4;
+      pPositions[i * 3 + 1] = Math.random() * 1.6;
+      pPositions[i * 3 + 2] = (Math.random() - 0.5) * 4.4;
+      pSeeds[i] = Math.random() * Math.PI * 2;
+      pColors[i * 3] = 0.22;
+      pColors[i * 3 + 1] = 0.78;
+      pColors[i * 3 + 2] = 0.98;
+    }
+    const particleGeo = new THREE.BufferGeometry();
+    particleGeo.setAttribute("position", new THREE.BufferAttribute(pPositions, 3));
+    particleGeo.setAttribute("color", new THREE.BufferAttribute(pColors, 3));
+    const particleMat = new THREE.PointsMaterial({
+      size: 0.065,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const particlePoints = new THREE.Points(particleGeo, particleMat);
+    scene.add(particlePoints);
 
     // Floating orbital attractor nodes (4 Mott orbitals)
     const nodeGroup = new THREE.Group();
@@ -487,16 +531,35 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale }) {
     });
     scene.add(nodeGroup);
 
+    const handlePointerDown = (ev) => {
+      const rect = renderer.domElement.getBoundingClientRect();
+      const nx = ((ev.clientX - rect.left) / rect.width) * 2 - 1;
+      const ny = -((ev.clientY - rect.top) / rect.height) * 2 + 1;
+      rippleRef.current = {
+        x: nx * 2.8,
+        z: -ny * 1.8,
+        amp: 0.85,
+        age: 0,
+      };
+      if (onPluckRef.current) {
+        onPluckRef.current((nx + 1) * 0.5, 0.9);
+      }
+    };
+    renderer.domElement.addEventListener("pointerdown", handlePointerDown);
+
     let frameId = 0;
     let time = 0;
 
     const animate = () => {
       frameId = requestAnimationFrame(animate);
       time += 0.018;
+      rippleRef.current.age += 0.045;
 
       const { bondStretch: R, couplingScale: cScale } = paramsRef.current;
       const stretchNorm = (R - 0.8) / (3.2 - 0.8); // 0 -> 1
       const coupling = Math.max(0.15, cScale);
+      const rip = rippleRef.current;
+      const ripEnv = Math.exp(-rip.age * 1.35) * rip.amp;
 
       const positions = planeGeo.attributes.position;
       const colorAttr = planeGeo.attributes.color;
@@ -516,7 +579,13 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale }) {
           (0.35 + 0.65 * stretchNorm) *
           coupling;
 
-        const y = (g1 + g2) * 0.85 + interference * 0.72;
+        const dRip = Math.hypot(x - rip.x, z - rip.z);
+        const rippleWave =
+          ripEnv > 0.01
+            ? Math.sin(dRip * 4.5 - rip.age * 7.5) * Math.exp(-dRip * 0.7) * ripEnv
+            : 0;
+
+        const y = (g1 + g2) * 0.85 + interference * 0.72 + rippleWave;
         positions.setY(i, y - 0.35);
 
         // Luminous cerulean -> emerald -> gold phase-space interference palette
@@ -524,13 +593,22 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale }) {
         const neg = interference < 0 ? Math.min(1, -interference * 1.4) : 0;
         colorAttr.setXYZ(
           i,
-          0.12 + 0.82 * neg + 0.15 * t,
-          0.42 + 0.48 * t - 0.22 * neg,
+          0.12 + 0.82 * neg + 0.15 * t + Math.abs(rippleWave) * 0.45,
+          0.42 + 0.48 * t - 0.22 * neg + Math.abs(rippleWave) * 0.3,
           0.75 + 0.25 * (1 - neg)
         );
       }
       positions.needsUpdate = true;
       colorAttr.needsUpdate = true;
+
+      const pPos = particleGeo.attributes.position;
+      for (let i = 0; i < particleCount; i++) {
+        const seed = pSeeds[i];
+        const px = pPos.getX(i);
+        const py = 0.45 + Math.sin(time * 1.7 + seed + px * 0.6) * (0.35 + 0.4 * stretchNorm);
+        pPos.setY(i, py);
+      }
+      pPos.needsUpdate = true;
 
       nodes.forEach((node, idx) => {
         const phase = time * 1.3 + idx * 1.25;
@@ -539,8 +617,11 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale }) {
         node.scale.setScalar(scale);
       });
 
-      waveMesh.rotation.y = Math.sin(time * 0.25) * 0.16;
-      nodeGroup.rotation.y = waveMesh.rotation.y;
+      const rotY = Math.sin(time * 0.25) * 0.16;
+      surfaceMesh.rotation.y = rotY;
+      waveMesh.rotation.y = rotY;
+      particlePoints.rotation.y = rotY;
+      nodeGroup.rotation.y = rotY;
       renderer.render(scene, camera);
     };
 
@@ -558,9 +639,13 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale }) {
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      renderer.domElement.removeEventListener("pointerdown", handlePointerDown);
       cancelAnimationFrame(frameId);
       planeGeo.dispose();
-      planeMat.dispose();
+      surfaceMat.dispose();
+      wireMat.dispose();
+      particleGeo.dispose();
+      particleMat.dispose();
       nodes.forEach((n) => {
         n.geometry.dispose();
         n.material.dispose();
@@ -572,7 +657,14 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale }) {
     };
   }, []);
 
-  return <div ref={mountRef} className="qbeck-webgl-canvas" aria-label="Interactive Wigner-Cumulant Phase-Space Manifold" />;
+  return (
+    <div
+      ref={mountRef}
+      className="qbeck-webgl-canvas"
+      title="Click anywhere on the phase-space manifold to excite a quantum wavepacket"
+      aria-label="Interactive Wigner-Cumulant Phase-Space Manifold"
+    />
+  );
 }
 
 export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConsole }) {
@@ -581,6 +673,35 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
   const [activeStageId, setActiveStageId] = useState("qbeck");
   const [activeBenchId, setActiveBenchId] = useState("h4");
   const [hiddenSeries, setHiddenSeries] = useState({});
+  const [isEdmPlaying, setIsEdmPlaying] = useState(false);
+  const sonifierRef = useRef(null);
+
+  useEffect(() => {
+    sonifierRef.current = new EdmQuantumFluxSonifier();
+    return () => {
+      if (sonifierRef.current) {
+        sonifierRef.current.stop();
+      }
+    };
+  }, []);
+
+  const toggleEdmSound = () => {
+    const s = sonifierRef.current;
+    if (!s) return;
+    if (isEdmPlaying) {
+      s.stop();
+      setIsEdmPlaying(false);
+    } else {
+      s.start();
+      setIsEdmPlaying(true);
+    }
+  };
+
+  const handlePluck = (pitchNorm, intensity) => {
+    if (sonifierRef.current) {
+      sonifierRef.current.triggerQuantumPluck(pitchNorm, intensity);
+    }
+  };
 
   const activeStage = useMemo(
     () => CLOSURE_STAGES.find((s) => s.id === activeStageId) || CLOSURE_STAGES[3],
@@ -624,10 +745,30 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
     return {
       occs,
       entropy: Math.min(4, entropy).toFixed(3),
+      entropyNum: Math.min(4, entropy),
       cumulantTrace: cumulantTrace.toFixed(3),
       omega: omega.toFixed(3),
     };
   }, [bondStretch, couplingScale]);
+
+  const regimeMeta = useMemo(() => {
+    if (bondStretch < 1.15) {
+      return { label: "Covalent Equilibrium", desc: "Paired electrons · single-determinant regime", tone: "eq" };
+    }
+    if (bondStretch < 2.15) {
+      return { label: "Correlated Quantum Liquid", desc: "Smooth cumulant crossover · cusp-free", tone: "liquid" };
+    }
+    return { label: "Mott Insulator Limit", desc: "Half-filled 1.000 orbitals · 4.000-bit entanglement", tone: "mott" };
+  }, [bondStretch]);
+
+  useEffect(() => {
+    if (!sonifierRef.current) return;
+    sonifierRef.current.updateTelemetry({
+      stretchNorm: (bondStretch - 0.8) / (3.2 - 0.8),
+      entropyNorm: mottTelemetry.entropyNum / 4,
+      couplingNorm: (couplingScale - 0.3) / (2.0 - 0.3),
+    });
+  }, [bondStretch, couplingScale, mottTelemetry.entropyNum]);
 
   const chartBounds = useMemo(() => {
     const allPts = activeBench.series.flatMap((s) => s.points);
@@ -676,6 +817,14 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
         </nav>
 
         <div className="qbeck-topbar-actions">
+          <button
+            className={`qbeck-edm-btn ${isEdmPlaying ? "is-playing" : ""}`}
+            onClick={toggleEdmSound}
+            title="Toggle 126 BPM EDM Quantum Flux Sonification"
+          >
+            <span className="qbeck-edm-dot" />
+            {isEdmPlaying ? "EDM Flux: LIVE" : "Sonify EDM Flux"}
+          </button>
           <button className="qbeck-btn-ghost" onClick={onBackHome}>
             &larr; Home
           </button>
@@ -743,11 +892,21 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
 
           <div className="qbeck-observatory-panel">
             <div className="qbeck-panel-header">
-              <span>LIVE WIGNER–CUMULANT ATTRACTOR · D₄h H₄ MANIFOLD</span>
-              <span className="qbeck-mono-badge">T_elec = 0 K</span>
+              <span>LIVE WIGNER–CUMULANT ATTRACTOR · D₄h H₄</span>
+              <span className={`qbeck-regime-badge tone-${regimeMeta.tone}`}>{regimeMeta.label}</span>
             </div>
 
-            <PhaseSpaceAttractorCanvas bondStretch={bondStretch} couplingScale={couplingScale} />
+            <div className="qbeck-canvas-stage">
+              <PhaseSpaceAttractorCanvas
+                bondStretch={bondStretch}
+                couplingScale={couplingScale}
+                onPluck={handlePluck}
+              />
+              <div className="qbeck-canvas-overlay-hint">
+                <span>{regimeMeta.desc}</span>
+                <code>Click manifold to excite wavepacket</code>
+              </div>
+            </div>
 
             <div className="qbeck-controls-row">
               <label className="qbeck-slider-control">
