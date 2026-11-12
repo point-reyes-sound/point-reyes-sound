@@ -39,11 +39,11 @@ const CLOSURE_STAGES = [
   {
     id: "qbeck",
     step: "04",
-    label: "Susceptibility Closure · Q-BECK",
+    label: "Cumulant Kernel Closure · Q-BECK",
     scaling: "𝒪(N³) time · 𝒪(N²) memory",
-    equation: "nᵢᵉᑫ = ½ [1 − tanh((εᵢ − μ) / 2ωᵢ)],  wⱼ = sech²((εⱼ − μ₀) / Δ₀)",
+    equation: "nᵢᵉᑫ = ½ [1 − tanh((εᵢ − μ) / 2ωᵢ)]  (T_elec = 0 K)",
     summary:
-      "Q-BECK closes the collision kernel at O(N³) cost without storing ²D. A susceptibility window (Δ₀ = 0.45 Eₕ) weights orbital-resolved scattering scales ωᵢ = wᵢ(cᵢᵀG[P_w]cᵢ − wᵢgᵢᵢ) / Σ_{j≠i} wⱼ, driving occupations to a C^∞ hyperbolic-tangent attractor at T_elec = 0.",
+      "Q-BECK closes the kinetic collision kernel at O(N³) cost without storing or contracting ²D. Orbital-resolved scattering scales drive the one-body density matrix smoothly to a C^∞ hyperbolic-tangent attractor at zero electronic temperature.",
     insight:
       "Heals 85.7% ± 1.7% of MR-MGN-BE17 static correlation error with zero double-counting (ΔE > 0 for all 11 molecules).",
   },
@@ -430,13 +430,13 @@ function formatChartPath(points, xMin, xMax, yMin, yMax, width, height, pad) {
     .join(" ");
 }
 
-function PhaseSpaceAttractorCanvas({ bondStretch, deltaZero }) {
+function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale }) {
   const mountRef = useRef(null);
-  const paramsRef = useRef({ bondStretch, deltaZero });
+  const paramsRef = useRef({ bondStretch, couplingScale });
 
   useEffect(() => {
-    paramsRef.current = { bondStretch, deltaZero };
-  }, [bondStretch, deltaZero]);
+    paramsRef.current = { bondStretch, couplingScale };
+  }, [bondStretch, couplingScale]);
 
   useEffect(() => {
     const container = mountRef.current;
@@ -494,9 +494,9 @@ function PhaseSpaceAttractorCanvas({ bondStretch, deltaZero }) {
       frameId = requestAnimationFrame(animate);
       time += 0.018;
 
-      const { bondStretch: R, deltaZero: d0 } = paramsRef.current;
+      const { bondStretch: R, couplingScale: cScale } = paramsRef.current;
       const stretchNorm = (R - 0.8) / (3.2 - 0.8); // 0 -> 1
-      const coupling = Math.max(0.15, d0 / 0.45);
+      const coupling = Math.max(0.15, cScale);
 
       const positions = planeGeo.attributes.position;
       const colorAttr = planeGeo.attributes.color;
@@ -577,7 +577,7 @@ function PhaseSpaceAttractorCanvas({ bondStretch, deltaZero }) {
 
 export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConsole }) {
   const [bondStretch, setBondStretch] = useState(1.85);
-  const [deltaZero, setDeltaZero] = useState(0.45);
+  const [couplingScale, setCouplingScale] = useState(1.0);
   const [activeStageId, setActiveStageId] = useState("qbeck");
   const [activeBenchId, setActiveBenchId] = useState("h4");
   const [hiddenSeries, setHiddenSeries] = useState({});
@@ -595,9 +595,9 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
   // Live Mott H4 occupation spectrum and Shannon configurational entropy
   const mottTelemetry = useMemo(() => {
     const stretchNorm = (bondStretch - 0.8) / (3.2 - 0.8); // 0 -> 1
-    // Effective gap narrows exponentially as R -> 3.20 A, while deltaZero scales susceptibility width
+    // Effective gap narrows as R -> 3.20 A, while couplingScale modulates correlation width
     const gap = Math.max(0.015, 0.92 * Math.exp(-2.35 * stretchNorm));
-    const omega = 0.08 + 0.55 * stretchNorm * (deltaZero / 0.45);
+    const omega = 0.08 + 0.55 * stretchNorm * couplingScale;
     const eps = [-gap * 1.15, -gap * 0.12, gap * 0.12, gap * 1.15];
     const labels = ["1a₁g", "1e_u(x)", "1e_u(y)", "1b₁g"];
 
@@ -627,7 +627,7 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
       cumulantTrace: cumulantTrace.toFixed(3),
       omega: omega.toFixed(3),
     };
-  }, [bondStretch, deltaZero]);
+  }, [bondStretch, couplingScale]);
 
   const chartBounds = useMemo(() => {
     const allPts = activeBench.series.flatMap((s) => s.points);
@@ -736,7 +736,7 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
                 GitHub · qbeck-static-correlation-data
               </a>
               <span className="qbeck-link-chip qbeck-chip-muted">
-                API · POST /v1/q-beck &amp; /v1/q-besc
+                Proprietary Solver · Managed Cloud Execution
               </span>
             </div>
           </div>
@@ -747,7 +747,7 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
               <span className="qbeck-mono-badge">T_elec = 0 K</span>
             </div>
 
-            <PhaseSpaceAttractorCanvas bondStretch={bondStretch} deltaZero={deltaZero} />
+            <PhaseSpaceAttractorCanvas bondStretch={bondStretch} couplingScale={couplingScale} />
 
             <div className="qbeck-controls-row">
               <label className="qbeck-slider-control">
@@ -767,16 +767,16 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
 
               <label className="qbeck-slider-control">
                 <div className="qbeck-slider-head">
-                  <span>Susceptibility Window Δ₀</span>
-                  <code>{deltaZero.toFixed(2)} Eₕ</code>
+                  <span>Correlation Coupling</span>
+                  <code>{couplingScale.toFixed(2)}×</code>
                 </div>
                 <input
                   type="range"
-                  min="0.15"
-                  max="0.90"
-                  step="0.01"
-                  value={deltaZero}
-                  onChange={(e) => setDeltaZero(parseFloat(e.target.value))}
+                  min="0.30"
+                  max="2.00"
+                  step="0.02"
+                  value={couplingScale}
+                  onChange={(e) => setCouplingScale(parseFloat(e.target.value))}
                 />
               </label>
             </div>
