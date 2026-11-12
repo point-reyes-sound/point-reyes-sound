@@ -624,8 +624,131 @@ export default function QBoltzAgentConsole({ onClose }) {
   const [loopDir, setLoopDir] = useState(1);
   const [playbackSpeed, setPlaybackSpeed] = useState(180);
 
-  // Web Audio Synth for Singularity Crossing Acoustic Cue
+  // Web Audio Synth for Singularity Crossing Acoustic Cue & Ethereal Ambient Soundscape
   const audioCtxRef = useRef(null);
+  const ambientNodesRef = useRef(null);
+  const [isAmbientMuted, setIsAmbientMuted] = useState(false);
+  const isAmbientMutedRef = useRef(false);
+
+  const startEtherealSound = useCallback(() => {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx || isAmbientMutedRef.current) return;
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioCtx();
+      }
+      const ctx = audioCtxRef.current;
+      if (ctx.state === "suspended") {
+        ctx.resume().catch(() => {});
+      }
+      if (ambientNodesRef.current) {
+        const { masterGain } = ambientNodesRef.current;
+        masterGain.gain.cancelScheduledValues(ctx.currentTime);
+        masterGain.gain.linearRampToValueAtTime(0.085, ctx.currentTime + 1.2);
+        return;
+      }
+
+      const masterGain = ctx.createGain();
+      masterGain.gain.setValueAtTime(0.0001, ctx.currentTime);
+      masterGain.gain.linearRampToValueAtTime(0.085, ctx.currentTime + 1.8);
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(620, ctx.currentTime);
+      filter.Q.setValueAtTime(0.9, ctx.currentTime);
+
+      // Slow celestial LFO breathing on filter cutoff
+      const lfo = ctx.createOscillator();
+      const lfoGain = ctx.createGain();
+      lfo.type = "sine";
+      lfo.frequency.setValueAtTime(0.055, ctx.currentTime);
+      lfoGain.gain.setValueAtTime(240, ctx.currentTime);
+      lfo.connect(lfoGain);
+      lfoGain.connect(filter.frequency);
+      lfo.start();
+
+      filter.connect(masterGain);
+      masterGain.connect(ctx.destination);
+
+      // Ethereal harmonic chord voices (A2, E3, A3, B3, E4) with gentle detune shimmer
+      const voices = [
+        { freq: 110.0, type: "sine", gain: 0.42 },
+        { freq: 110.35, type: "triangle", gain: 0.14 },
+        { freq: 164.81, type: "sine", gain: 0.24 },
+        { freq: 220.0, type: "sine", gain: 0.18 },
+        { freq: 246.94, type: "sine", gain: 0.09 },
+        { freq: 329.63, type: "sine", gain: 0.08 }
+      ];
+
+      const oscs = voices.map((v) => {
+        const osc = ctx.createOscillator();
+        const vGain = ctx.createGain();
+        osc.type = v.type;
+        osc.frequency.setValueAtTime(v.freq, ctx.currentTime);
+        vGain.gain.setValueAtTime(v.gain, ctx.currentTime);
+        osc.connect(vGain);
+        vGain.connect(filter);
+        osc.start();
+        return osc;
+      });
+
+      ambientNodesRef.current = { masterGain, filter, lfo, oscs };
+    } catch {
+      // Autoplay handled on user gesture
+    }
+  }, []);
+
+  const stopEtherealSound = useCallback((dispose = false) => {
+    const ctx = audioCtxRef.current;
+    const nodes = ambientNodesRef.current;
+    if (!ctx || !nodes) return;
+    try {
+      const now = ctx.currentTime;
+      nodes.masterGain.gain.cancelScheduledValues(now);
+      nodes.masterGain.gain.linearRampToValueAtTime(0.0001, now + 0.45);
+      if (dispose) {
+        setTimeout(() => {
+          try {
+            nodes.oscs.forEach((o) => o.stop());
+            nodes.lfo.stop();
+          } catch {
+            // already stopped
+          }
+          ambientNodesRef.current = null;
+        }, 500);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const toggleAmbientSound = useCallback(() => {
+    const nextMuted = !isAmbientMutedRef.current;
+    isAmbientMutedRef.current = nextMuted;
+    setIsAmbientMuted(nextMuted);
+    if (nextMuted) {
+      stopEtherealSound(false);
+    } else {
+      startEtherealSound();
+    }
+  }, [startEtherealSound, stopEtherealSound]);
+
+  // Start ethereal background sound on mount & unlock seamlessly on first gesture if suspended
+  useEffect(() => {
+    startEtherealSound();
+    const unlock = () => {
+      if (!isAmbientMutedRef.current) {
+        startEtherealSound();
+      }
+    };
+    window.addEventListener("pointerdown", unlock, { once: true });
+    window.addEventListener("keydown", unlock, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("keydown", unlock);
+      stopEtherealSound(true);
+    };
+  }, [startEtherealSound, stopEtherealSound]);
 
   const playCoulsonFischerPop = useCallback(() => {
     try {
@@ -983,6 +1106,15 @@ export default function QBoltzAgentConsole({ onClose }) {
           </nav>
 
           <div className="header-actions">
+            <button
+              type="button"
+              className={`sound-toggle-btn ${isAmbientMuted ? "is-muted" : "is-live"}`}
+              onClick={toggleAmbientSound}
+              title={isAmbientMuted ? "Enable Ethereal Ambient Sound" : "Mute Ethereal Ambient Sound"}
+            >
+              <span className="sound-wave-dot" />
+              {isAmbientMuted ? "Sound Off" : "Ethereal Sound"}
+            </button>
             {hasResult && (
               <button
                 type="button"
@@ -1003,38 +1135,113 @@ export default function QBoltzAgentConsole({ onClose }) {
           </div>
         </header>
 
-        {/* Fullscreen 2-Column Workstation (Always Visible; Right Panels Ignite on User Action) */}
-        <div className="fullscreen-workstation-body">
-          {/* Wide Left Discovery & Query Column */}
-          <aside className="workstation-left-panel">
-            {/* 1. Interactive Click-to-Discover Molecular System Cards (2x2) */}
-            <section className="discovery-deck-section" aria-label="Molecular Systems">
+        {/* Standby State: One Centrally Aligned Panel in Celestial Empty Space */}
+        {!hasResult ? (
+          <div className="celestial-center-stage">
+            <div className="celestial-center-panel">
               <div className="discovery-cards-grid">
-                {DISCOVERY_SYSTEMS.map((sys) => {
-                  const isActive = hasResult && activeBenchmarkKey === sys.key;
-                  return (
+                {DISCOVERY_SYSTEMS.map((sys) => (
+                  <button
+                    key={`center-${sys.key}`}
+                    type="button"
+                    className="discovery-system-card"
+                    onClick={() => {
+                      setQuery(sys.prompt);
+                      executeQuery(sys.prompt);
+                    }}
+                  >
+                    <div className="sys-card-top">
+                      <span className="sys-formula">{sys.formula}</span>
+                      <span className="sys-state-dot" />
+                    </div>
+                    <span className="sys-title">{sys.title}</span>
+                  </button>
+                ))}
+              </div>
+
+              <section className="left-query-window center-stage-query" aria-label="Q-BOLTZ Query Composer">
+                <div className="query-window-header">
+                  <span className="query-window-title">
+                    <span className="query-window-dot" /> Ask Q-BOLTZ
+                  </span>
+                  <span className="query-window-kbd">↵ Enter</span>
+                </div>
+
+                <textarea
+                  id="qboltz-followup-input"
+                  className="query-window-textarea"
+                  rows={3}
+                  placeholder="Type a molecule or bond distance (e.g. Stretch H2 to 1.80 Å or scan BeH2 at 2.54 Bohr)..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      executeQuery();
+                    }
+                  }}
+                />
+
+                <div className="query-suggestions-row">
+                  {QUICK_QUERY_PROMPTS.map((item) => (
                     <button
-                      key={`deck-${sys.key}`}
+                      key={item.label}
                       type="button"
-                      className={`discovery-system-card ${isActive ? "is-active" : ""}`}
+                      className="query-suggestion-pill"
                       onClick={() => {
-                        setQuery(sys.prompt);
-                        executeQuery(sys.prompt);
+                        setQuery(item.prompt);
+                        executeQuery(item.prompt);
                       }}
                     >
-                      <div className="sys-card-top">
-                        <span className="sys-formula">{sys.formula}</span>
-                        <span className="sys-state-dot" />
-                      </div>
-                      <span className="sys-title">{sys.title}</span>
+                      {item.label}
                     </button>
-                  );
-                })}
-              </div>
-            </section>
+                  ))}
+                </div>
 
-            {/* 2. Concise Active Benchmark Card (Revealed after user triggers a simulation) */}
-            {hasResult && (
+                <button
+                  type="button"
+                  className="query-window-cta-btn"
+                  onClick={() => executeQuery()}
+                  disabled={loading}
+                >
+                  <span>{loading ? "Solving Phase-Space Transport..." : "Simulate in Phase Space"}</span>
+                  <span className="cta-arrow">↗</span>
+                </button>
+              </section>
+            </div>
+          </div>
+        ) : (
+          /* Activated Fullscreen 2-Column Workstation */
+          <div className="fullscreen-workstation-body">
+            {/* Wide Left Discovery & Query Column */}
+            <aside className="workstation-left-panel">
+              {/* 1. Interactive Click-to-Discover Molecular System Cards (2x2) */}
+              <section className="discovery-deck-section" aria-label="Molecular Systems">
+                <div className="discovery-cards-grid">
+                  {DISCOVERY_SYSTEMS.map((sys) => {
+                    const isActive = activeBenchmarkKey === sys.key;
+                    return (
+                      <button
+                        key={`deck-${sys.key}`}
+                        type="button"
+                        className={`discovery-system-card ${isActive ? "is-active" : ""}`}
+                        onClick={() => {
+                          setQuery(sys.prompt);
+                          executeQuery(sys.prompt);
+                        }}
+                      >
+                        <div className="sys-card-top">
+                          <span className="sys-formula">{sys.formula}</span>
+                          <span className="sys-state-dot" />
+                        </div>
+                        <span className="sys-title">{sys.title}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+
+              {/* 2. Concise Active Benchmark Card */}
               <article className="narrative-box">
                 <div className="narrative-meta-row">
                   <span className="narrative-author-pill">
@@ -1060,75 +1267,61 @@ export default function QBoltzAgentConsole({ onClose }) {
                   }}
                 />
               </article>
-            )}
 
-            {/* 3. Prominent Interactive Query Window (Fills Left Whitespace) */}
-            <section className="left-query-window" aria-label="Q-BOLTZ Query Composer">
-              <div className="query-window-header">
-                <span className="query-window-title">
-                  <span className="query-window-dot" /> Ask Q-BOLTZ
-                </span>
-                <span className="query-window-kbd">↵ Enter</span>
-              </div>
-
-              <textarea
-                id="qboltz-followup-input"
-                className="query-window-textarea"
-                rows={3}
-                placeholder="Type a molecule or bond distance (e.g. Stretch H2 to 1.80 Å or scan BeH2 at 2.54 Bohr)..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    executeQuery();
-                  }
-                }}
-              />
-
-              <div className="query-suggestions-row">
-                {QUICK_QUERY_PROMPTS.map((item) => (
-                  <button
-                    key={item.label}
-                    type="button"
-                    className="query-suggestion-pill"
-                    onClick={() => {
-                      setQuery(item.prompt);
-                      executeQuery(item.prompt);
-                    }}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-
-              <button
-                type="button"
-                className="query-window-cta-btn"
-                onClick={() => executeQuery()}
-                disabled={loading}
-              >
-                <span>{loading ? "Solving Phase-Space Transport..." : "Simulate in Phase Space"}</span>
-                <span className="cta-arrow">↗</span>
-              </button>
-            </section>
-          </aside>
-
-          {/* Right Column: Celestial Dark Standby Frames OR Live 4-Panel Simulation */}
-          <main className="workstation-right-content-wrapper">
-            {!hasResult ? (
-              <div className="workstation-visual-layout celestial-standby-grid" aria-label="Standby Simulation Frames">
-                <div className="orbitals-top-row cols-2">
-                  <div className="grid-cell-card celestial-dark-frame" />
-                  <div className="grid-cell-card celestial-dark-frame" />
+              {/* 3. Prominent Interactive Query Window */}
+              <section className="left-query-window" aria-label="Q-BOLTZ Query Composer">
+                <div className="query-window-header">
+                  <span className="query-window-title">
+                    <span className="query-window-dot" /> Ask Q-BOLTZ
+                  </span>
+                  <span className="query-window-kbd">↵ Enter</span>
                 </div>
-                <div className="analysis-bottom-row">
-                  <div className="grid-cell-card celestial-dark-frame" />
-                  <div className="grid-cell-card celestial-dark-frame" />
+
+                <textarea
+                  id="qboltz-followup-input"
+                  className="query-window-textarea"
+                  rows={3}
+                  placeholder="Type a molecule or bond distance (e.g. Stretch H2 to 1.80 Å or scan BeH2 at 2.54 Bohr)..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      executeQuery();
+                    }
+                  }}
+                />
+
+                <div className="query-suggestions-row">
+                  {QUICK_QUERY_PROMPTS.map((item) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      className="query-suggestion-pill"
+                      onClick={() => {
+                        setQuery(item.prompt);
+                        executeQuery(item.prompt);
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
                 </div>
-              </div>
-            ) : (
-              <>
+
+                <button
+                  type="button"
+                  className="query-window-cta-btn"
+                  onClick={() => executeQuery()}
+                  disabled={loading}
+                >
+                  <span>{loading ? "Solving Phase-Space Transport..." : "Simulate in Phase Space"}</span>
+                  <span className="cta-arrow">↗</span>
+                </button>
+              </section>
+            </aside>
+
+            {/* Right Column: Live 4-Panel Simulation */}
+            <main className="workstation-right-content-wrapper">
               {/* Interactive Trajectory & Regime Discovery Toolbar */}
               {hasTrajectory ? (
                 <div className="dynamic-playback-toolbar">
@@ -1423,10 +1616,9 @@ export default function QBoltzAgentConsole({ onClose }) {
                   </div>
                 </div>
               </div>
-              </>
-            )}
-          </main>
-        </div>
+            </main>
+          </div>
+        )}
       </div>
     </div>
   );
