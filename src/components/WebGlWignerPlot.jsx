@@ -3,7 +3,7 @@ import * as THREE from "three";
 
 // ---------------------------------------------------------------------------
 // High-Resolution WebGL Wigner Phase-Space Shader via Three.js
-// 100% crash-proof, portable across WebGL 1.0, 2.0, Metal, and mobile GPUs
+// Celestial Obsidian Palette aligned with Point Reyes Sound Landing Aesthetic
 // ---------------------------------------------------------------------------
 
 const WIGNER_VERTEX_SHADER = `
@@ -29,7 +29,7 @@ const WIGNER_FRAGMENT_SHADER = `
     float zSpan = 3.6;
     float pSpan = 3.6;
     float z = (vUv.x - 0.5) * 2.0 * zSpan;
-    float p = (vUv.y - 0.5) * 2.0 * pSpan; // p_z
+    float p = (vUv.y - 0.5) * 2.0 * pSpan;
 
     float R = max(0.4, u_R);
     float zA = -R * 0.5;
@@ -44,7 +44,8 @@ const WIGNER_FRAGMENT_SHADER = `
 
     // Quantum Covalent Overlap & Non-Classical Cross Interference Term
     float S = exp(-(R * R) / (4.0 * sigma * sigma));
-    float crossInterference = 2.0 * exp(-(z * z + p * p) / (sigma * sigma)) * cos(2.0 * z * R * 0.85 + u_time * 0.35);
+    float envCenter = exp(-(z * z + p * p) / (sigma * sigma));
+    float crossInterference = 2.0 * envCenter * cos(2.0 * z * R * 0.85 + u_time * 0.35);
 
     // Bonding and Antibonding Wigner functions
     float w_sigma_g = (wA + wB + crossInterference) / (2.0 + 2.0 * S);
@@ -53,59 +54,62 @@ const WIGNER_FRAGMENT_SHADER = `
     // Correlated Wigner distribution W(z, p_z)
     float W = (u_nBond * w_sigma_g - u_nAntibond * w_sigma_u) / 2.0;
 
-    // Deep Obsidian / Quantum Void Base
-    vec3 col = vec3(0.012, 0.035, 0.055);
+    // Active quantum support envelope (prevents zero-contour tinting in vacuum)
+    float supportEnv = smoothstep(0.015, 0.09, max(max(wA, wB), envCenter));
+
+    // Deep Celestial Obsidian Void (matches Landing Page quantum canvas)
+    vec3 voidBase = vec3(0.008, 0.018, 0.036);
+    vec3 col = voidBase;
 
     // Colormap Interpolation:
-    // Positive quasi-probability: Deep Cyan -> Electric Sapphire Blue -> Brilliant White-Cyan Core
+    // Positive quasi-probability (+W): Deep Cobalt -> Luminous Sky Cyan -> Ice-White Core
     if (W > 0.0) {
-      float t = clamp(W / 0.85, 0.0, 1.0);
-      vec3 c0 = vec3(0.015, 0.05, 0.1);
-      vec3 c1 = vec3(0.0, 0.45, 0.85); // Electric Sapphire Blue
-      vec3 c2 = vec3(0.0, 0.85, 1.0);  // Cyan
-      vec3 c3 = vec3(0.8, 0.98, 1.0);  // High Coherence White-Cyan peak
+      float t = clamp(W / 0.82, 0.0, 1.0);
+      vec3 c1 = vec3(0.05, 0.38, 0.86); // Royal Sapphire
+      vec3 c2 = vec3(0.14, 0.82, 0.98); // Luminous Oceanic Cyan
+      vec3 c3 = vec3(0.88, 0.98, 1.00); // Coherent Crest White
 
       if (t < 0.38) {
-        col = mix(col, c1, t / 0.38);
-      } else if (t < 0.78) {
-        col = mix(c1, c2, (t - 0.38) / 0.4);
+        col = mix(voidBase, c1, t / 0.38);
+      } else if (t < 0.76) {
+        col = mix(c1, c2, (t - 0.38) / 0.38);
       } else {
-        col = mix(c2, c3, (t - 0.78) / 0.22);
+        col = mix(c2, c3, (t - 0.76) / 0.24);
       }
     } else {
-      // Quantum Negativity (W < 0): Hallmark Signature of Non-Classical Coherence
+      // Quantum Negativity (-W): Point Reyes Beacon Crimson -> Coral Rose -> Soft Ivory Peak
       float t = clamp(-W / 0.42, 0.0, 1.0);
-      vec3 r1 = vec3(0.85, 0.1, 0.22);  // Carmine Red
-      vec3 r2 = vec3(1.0, 0.25, 0.35);  // Vivid Scarlet
-      vec3 r3 = vec3(1.0, 0.7, 0.82);   // Pink-White peak
+      vec3 r1 = vec3(0.76, 0.10, 0.24); // Deep Beacon Crimson
+      vec3 r2 = vec3(0.98, 0.30, 0.42); // Luminous Scarlet-Rose
+      vec3 r3 = vec3(1.00, 0.78, 0.86); // High-Contrast Interference Crest
 
       if (t < 0.38) {
-        col = mix(col, r1, t / 0.38);
-      } else if (t < 0.78) {
-        col = mix(r1, r2, (t - 0.38) / 0.4);
+        col = mix(voidBase, r1, t / 0.38);
+      } else if (t < 0.76) {
+        col = mix(r1, r2, (t - 0.38) / 0.38);
       } else {
-        col = mix(r2, r3, (t - 0.78) / 0.22);
+        col = mix(r2, r3, (t - 0.76) / 0.24);
       }
     }
 
-    // Smooth Anti-Aliased Periodic Isocontour Rings (Portable across all hardware)
+    // Smooth Anti-Aliased Periodic Isocontour Rings strictly within wavepacket support
     float contour = sin(abs(W) * 44.0);
-    float contourLine = smoothstep(0.82, 0.97, contour);
-    col += vec3(0.0, 0.95, 0.65) * contourLine * 0.28;
+    float contourLine = smoothstep(0.84, 0.98, contour) * supportEnv;
+    col += vec3(0.32, 0.86, 1.0) * contourLine * 0.20;
 
-    // Nodal Separation Line (W = 0 Boundary)
-    float zeroBoundary = 1.0 - smoothstep(0.0, 0.016, abs(W));
-    col = mix(col, vec3(0.2, 1.0, 0.7), zeroBoundary * 0.55);
+    // Nodal Separation Line (W = 0 Boundary ONLY inside active interference region)
+    float zeroBoundary = (1.0 - smoothstep(0.0, 0.014, abs(W))) * supportEnv;
+    col = mix(col, vec3(0.45, 0.88, 0.98), zeroBoundary * 0.32);
 
-    // Phase-space grid lines (periodic)
-    float gridX = smoothstep(0.96, 0.99, sin(vUv.x * 6.28318 * 6.0));
-    float gridY = smoothstep(0.96, 0.99, sin(vUv.y * 6.28318 * 6.0));
-    col += vec3(0.05, 0.15, 0.2) * (gridX + gridY) * 0.2;
+    // Subtle phase-space coordinate grid lines
+    float gridX = smoothstep(0.975, 0.996, sin(vUv.x * 6.28318 * 6.0));
+    float gridY = smoothstep(0.975, 0.996, sin(vUv.y * 6.28318 * 6.0));
+    col += vec3(0.14, 0.32, 0.52) * (gridX + gridY) * 0.16;
 
-    // Coordinate crosshairs (z = 0 and p_z = 0)
-    float axisX = 1.0 - smoothstep(0.0, 0.005, abs(vUv.y - 0.5));
-    float axisY = 1.0 - smoothstep(0.0, 0.005, abs(vUv.x - 0.5));
-    col += vec3(0.0, 0.85, 1.0) * (axisX + axisY) * 0.38;
+    // Origin crosshairs (z = 0 and p_z = 0)
+    float axisX = 1.0 - smoothstep(0.0, 0.0035, abs(vUv.y - 0.5));
+    float axisY = 1.0 - smoothstep(0.0, 0.0035, abs(vUv.x - 0.5));
+    col += vec3(0.22, 0.74, 0.97) * (axisX + axisY) * 0.26;
 
     // Nuclear Coordinate Indicators in Phase Space (zA, 0) and (zB, 0)
     vec2 uvA = vec2(0.5 + (zA / (2.0 * zSpan)), 0.5);
@@ -115,17 +119,17 @@ const WIGNER_FRAGMENT_SHADER = `
     float distA = length(dUV_A);
     float distB = length(dUV_B);
 
-    float coreA = 1.0 - smoothstep(0.0, 0.018, distA);
-    float haloA = 1.0 - smoothstep(0.0, 0.038, distA);
-    float coreB = 1.0 - smoothstep(0.0, 0.018, distB);
-    float haloB = 1.0 - smoothstep(0.0, 0.038, distB);
+    float coreA = 1.0 - smoothstep(0.0, 0.017, distA);
+    float haloA = 1.0 - smoothstep(0.0, 0.042, distA);
+    float coreB = 1.0 - smoothstep(0.0, 0.017, distB);
+    float haloB = 1.0 - smoothstep(0.0, 0.042, distB);
 
-    col += vec3(1.0, 1.0, 1.0) * (coreA + coreB) * 0.9;
-    col += vec3(0.2, 1.0, 0.5) * (haloA + haloB) * 0.5;
+    col += vec3(1.0, 1.0, 1.0) * (coreA + coreB) * 0.95;
+    col += vec3(0.22, 0.78, 0.98) * (haloA + haloB) * 0.45;
 
-    // Subtle Radial Vignette
-    float vig = 1.0 - length(vUv - 0.5) * 0.52;
-    col *= clamp(vig, 0.25, 1.0);
+    // Subtle Vignette
+    float vig = 1.0 - length(vUv - 0.5) * 0.36;
+    col *= clamp(vig, 0.45, 1.0);
 
     gl_FragColor = vec4(col, 1.0);
   }
@@ -135,7 +139,7 @@ export default function WebGlWignerPlot({
   r = 1.6,
   nBond = 1.918,
   nAntibond = 0.082,
-  benchmarkTitle = "H₂ Homolytic Bond Dissociation"
+  coordUnit = "Å"
 }) {
   const mountRef = useRef(null);
   const rendererRef = useRef(null);
@@ -184,7 +188,7 @@ export default function WebGlWignerPlot({
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 
-    let startTime = performance.now();
+    const startTime = performance.now();
 
     const animate = () => {
       animFrameRef.current = requestAnimationFrame(animate);
@@ -266,6 +270,7 @@ export default function WebGlWignerPlot({
       setHoverData({
         xPx: x,
         yPx: y,
+        maxX: Math.max(40, rect.width - 250),
         z: z.toFixed(2),
         p: p.toFixed(2),
         W: W.toFixed(4),
@@ -283,15 +288,17 @@ export default function WebGlWignerPlot({
       <div className="wigner-panel-header">
         <div className="wigner-title-left">
           <span className="wigner-badge">PHASE SPACE</span>
-          <span className="wigner-panel-title">WIGNER DISTRIBUTION W(z, p_z)</span>
-          <span className="wigner-param-pill">R = {Number(r || 1.6).toFixed(2)} Å</span>
+          <span className="wigner-panel-title">Wigner Distribution W(z, p_z)</span>
+          <span className="wigner-param-pill">
+            {coordUnit === "Bohr" ? "x" : "R"} = {Number(r || 1.6).toFixed(2)} {coordUnit}
+          </span>
         </div>
         <div className="wigner-legend-chips">
           <span className="wigner-chip blue">
-            <span className="chip-dot blue"></span> +W Quasi-Probability
+            <span className="chip-dot blue"></span> +W Density
           </span>
           <span className="wigner-chip red">
-            <span className="chip-dot red"></span> -W Quantum Negativity
+            <span className="chip-dot red"></span> −W Negativity
           </span>
         </div>
       </div>
@@ -304,25 +311,25 @@ export default function WebGlWignerPlot({
         onMouseLeave={handleMouseLeave}
       >
         {/* Phase Space Axis Labels */}
-        <div className="wigner-axis-label axis-z-left">-3.6 Å</div>
-        <div className="wigner-axis-label axis-z-center">z Coordinate (Å)</div>
+        <div className="wigner-axis-label axis-z-left">−3.6 Å</div>
+        <div className="wigner-axis-label axis-z-center">Position z (Å) • Hover to inspect W(z, p_z)</div>
         <div className="wigner-axis-label axis-z-right">+3.6 Å</div>
         <div className="wigner-axis-label axis-p-top">+3.6 ℏ/a₀</div>
-        <div className="wigner-axis-label axis-p-center">p_z Momentum (ℏ/a₀)</div>
-        <div className="wigner-axis-label axis-p-bottom">-3.6 ℏ/a₀</div>
+        <div className="wigner-axis-label axis-p-center">Momentum p_z (ℏ/a₀)</div>
+        <div className="wigner-axis-label axis-p-bottom">−3.6 ℏ/a₀</div>
 
         {/* Real-Time Interactive Coordinate Hover Readout */}
         {hoverData && (
           <div
             className={`wigner-hover-tooltip ${hoverData.isNegative ? "is-negative" : "is-positive"}`}
             style={{
-              left: `${Math.min(hoverData.xPx + 14, 280)}px`,
-              top: `${Math.max(hoverData.yPx - 42, 10)}px`
+              left: `${Math.min(hoverData.xPx + 14, hoverData.maxX)}px`,
+              top: `${Math.max(hoverData.yPx - 52, 10)}px`
             }}
           >
             <div className="tooltip-line">
               <span className="coord-tag">z:</span> <strong>{hoverData.z} Å</strong>
-              <span className="coord-tag" style={{ marginLeft: "0.5rem" }}>p_z:</span> <strong>{hoverData.p} ℏ/a₀</strong>
+              <span className="coord-tag" style={{ marginLeft: "0.55rem" }}>p_z:</span> <strong>{hoverData.p} ℏ/a₀</strong>
             </div>
             <div className="tooltip-line">
               <span className="coord-tag">W(z, p_z):</span>{" "}
@@ -330,7 +337,7 @@ export default function WebGlWignerPlot({
                 {hoverData.W}
               </strong>{" "}
               <span className="status-sub">
-                {hoverData.isNegative ? "[Interference Negativity]" : "[Coherent Density]"}
+                {hoverData.isNegative ? "Quantum Interference" : "Coherent Density"}
               </span>
             </div>
           </div>
@@ -340,7 +347,7 @@ export default function WebGlWignerPlot({
       {/* Footer Info Strip */}
       <div className="wigner-footer-strip">
         <span className="wigner-footer-meta">
-          Continuous GPU Shader • Three.js WebGL • Weyl Invariant
+          Real-Time WebGL Weyl Transform
         </span>
         <span className="wigner-coherence-tag">
           Interference Fringe: 2·cos(2zR/ℏ)
