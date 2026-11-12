@@ -1069,7 +1069,6 @@ export default function QBoltzAgentConsole({ onClose }) {
                 alt="Point Reyes Sound"
                 className="demo-prs-logo"
               />
-              <span className="demo-brand-name">Point Reyes Sound</span>
             </button>
             <span className="header-divider" aria-hidden="true" />
             <div className="header-engine-status">
@@ -1205,7 +1204,6 @@ export default function QBoltzAgentConsole({ onClose }) {
                   disabled={loading}
                 >
                   <span>{loading ? "Solving..." : "QBolt"}</span>
-                  <span className="cta-arrow">↗</span>
                 </button>
               </section>
             </div>
@@ -1315,7 +1313,6 @@ export default function QBoltzAgentConsole({ onClose }) {
                   disabled={loading}
                 >
                   <span>{loading ? "Solving..." : "QBolt"}</span>
-                  <span className="cta-arrow">↗</span>
                 </button>
               </section>
             </aside>
