@@ -4,6 +4,57 @@ import WebGlWignerPlot from "./WebGlWignerPlot";
 import "./QBoltzAgentConsole.css";
 
 // ---------------------------------------------------------------------------
+// Guided Molecular Discovery Systems (N2 removed; concise high-signal labels)
+// ---------------------------------------------------------------------------
+const DISCOVERY_SYSTEMS = [
+  {
+    key: "h2",
+    formula: "H₂",
+    title: "Bond Dissociation",
+    prompt: "Conceptualize and envision the dissociation of H2 in phase space.",
+    summary:
+      "As **H₂** stretches past the **Coulson–Fischer point (R ≈ 1.20 Å)**, the kinetic collision operator regularizes the mean-field singularity, smoothly bifurcating the Wigner fluid into two entangled droplets."
+  },
+  {
+    key: "h3_d3h",
+    formula: "H₃",
+    title: "Conical Intersection",
+    prompt: "Run H3 at the D3h conical intersection of 1.52 Angstroms and show the degenerate e-prime orbitals.",
+    summary:
+      "At **R = 1.52 Å**, Q-BOLTZ preserves exact **D₃ₕ** spatial symmetry across the symmetric `a₁′` and degenerate `(e′_x, e′_y)` orbitals without unphysical Jahn–Teller symmetry breaking."
+  },
+  {
+    key: "beh2_ci",
+    formula: "BeH₂",
+    title: "Avoided Crossing",
+    prompt: "Scan the insertion coordinate for the BeH2 conical intersection and show active space orbitals.",
+    summary:
+      "Along the **C₂ᵥ → D_∞h** insertion coordinate, phase-space transport tracks the **1b₂ / 3a₁** avoided crossing seam smoothly through **x ≈ 2.54 Bohr**."
+  },
+  {
+    key: "h4_square",
+    formula: "H₄",
+    title: "Square Automerization",
+    prompt: "Analyze the H4 square automerization at 1.23 Angstroms and show the 4 active-space orbitals.",
+    summary:
+      "At the **D₄ₕ** square transition state (**R = 1.23 Å**), Q-BOLTZ captures the strongly correlated 4-orbital Berry phase manifold with exact fractional occupations."
+  }
+];
+
+const REGIME_MILESTONES = {
+  h2: [
+    { label: "Equilibrium", r: 0.75, unit: "Å" },
+    { label: "C–F Cusp", r: 1.20, unit: "Å", isSingularity: true },
+    { label: "Entangled", r: 3.00, unit: "Å" }
+  ],
+  beh2_ci: [
+    { label: "C₂ᵥ", r: 1.00, unit: "Bohr" },
+    { label: "Seam", r: 2.54, unit: "Bohr", isSingularity: true },
+    { label: "Linear", r: 3.40, unit: "Bohr" }
+  ]
+};
+
+// ---------------------------------------------------------------------------
 // Pure Three.js 3D Orbital Canvas (Blue & Red Lobes, Zero Fiber dependency)
 // ---------------------------------------------------------------------------
 function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
@@ -39,15 +90,15 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
     mount.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    // Atmospheric lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+    // Studio & Celestial Rim Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.4);
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.45);
     dirLight1.position.set(5, 7, 6);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0x0088ff, 0.5);
+    const dirLight2 = new THREE.DirectionalLight(0x38bdf8, 0.65);
     dirLight2.position.set(-5, -4, -4);
     scene.add(dirLight2);
 
@@ -148,24 +199,23 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
       const mat = new THREE.MeshPhysicalMaterial({
         color: colorHex,
         emissive: emissiveHex,
-        emissiveIntensity: 0.35,
+        emissiveIntensity: 0.36,
         roughness: 0.12,
         metalness: 0.08,
         transmission: 0.36,
         ior: 1.38,
         transparent: true,
-        opacity: 0.84,
+        opacity: 0.86,
         side: THREE.DoubleSide,
         depthWrite: false
       });
       group.add(new THREE.Mesh(geom, mat));
     };
 
-    // User Requirement: "the orbital lobes should be coloured blue and red."
-    // Positive lobe: Electric Blue (+ψ)
-    if (orbital?.pos_lobe) addLobe(orbital.pos_lobe, 0x0088ff, 0x003388);
-    // Negative lobe: Vivid Red (-ψ)
-    if (orbital?.neg_lobe) addLobe(orbital.neg_lobe, 0xff334b, 0x880015);
+    // Positive lobe: Luminous Sapphire Blue (+ψ)
+    if (orbital?.pos_lobe) addLobe(orbital.pos_lobe, 0x1a8cff, 0x06388a);
+    // Negative lobe: Point Reyes Crimson Red (-ψ)
+    if (orbital?.neg_lobe) addLobe(orbital.neg_lobe, 0xf43f5e, 0x820c22);
 
     // Render atomic spheres
     atoms.forEach((atom) => {
@@ -197,9 +247,9 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
 
       const cylGeom = new THREE.CylinderGeometry(0.045, 0.045, length, 16);
       const cylMat = new THREE.MeshStandardMaterial({
-        color: 0x6b7f74,
-        metalness: 0.8,
-        roughness: 0.3
+        color: 0x7c93ad,
+        metalness: 0.75,
+        roughness: 0.28
       });
       const cylMesh = new THREE.Mesh(cylGeom, cylMat);
       cylMesh.position.copy(mid);
@@ -210,7 +260,7 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
       group.add(cylMesh);
     });
 
-    // Local-space camera auto-framing: invariant under group rotation
+    // Local-space camera auto-framing
     if (cameraRef.current) {
       let maxDist = 0;
       atoms.forEach((a) => {
@@ -219,7 +269,6 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
           if (d > maxDist) maxDist = d;
         }
       });
-      // Orbitals box size is ~5.8 Å, so span is comfortable
       const effectiveRadius = Math.max(2.2, maxDist + 0.9);
       const fovRad = THREE.MathUtils.degToRad(cameraRef.current.fov / 2);
       const targetDist = Math.max(6.2, (effectiveRadius / Math.sin(fovRad)) * 1.08);
@@ -237,7 +286,7 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
       style={{
         width: "100%",
         height: "100%",
-        minHeight: "180px",
+        minHeight: "170px",
         cursor: "grab"
       }}
     />
@@ -245,10 +294,13 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
 }
 
 // ---------------------------------------------------------------------------
-// 2D Potential Energy Surface (Dissociation Curve) SVG Component
-// Calibrated & High-Resolution Tile Filling
+// 2D Potential Energy Surface (Dissociation Curve) Interactive SVG Component
+// Click or drag directly along the PES curve to scrub nuclear geometry!
 // ---------------------------------------------------------------------------
-function DissociationCurvePlot({ curveData, currentPoint }) {
+function DissociationCurvePlot({ curveData, currentPoint, coordUnit = "Å", canScrub = false, onSelectR }) {
+  const svgRef = useRef(null);
+  const isScrubbingRef = useRef(false);
+
   if (!curveData || !curveData.points || curveData.points.length === 0) return null;
 
   const points = curveData.points;
@@ -258,19 +310,28 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
   const allE = points.flatMap((p) => [p.e_qbescf, p.e_standard]);
   const eMin = Math.min(...allE);
   const eMax = Math.max(...allE);
-  const ePadding = (eMax - eMin) * 0.14 || 0.08;
+  const ePadding = (eMax - eMin) * 0.15 || 0.08;
   const yLow = eMin - ePadding;
   const yHigh = eMax + ePadding;
 
-  const width = 640;
-  const height = 310;
-  const padL = 62;
-  const padR = 25;
-  const padT = 24;
-  const padB = 46;
+  const width = 660;
+  const height = 290;
+  const padL = 72;
+  const padR = 26;
+  const padT = 22;
+  const padB = 48;
 
   const toSvgX = (r) => padL + ((r - rMin) / (rMax - rMin)) * (width - padL - padR);
   const toSvgY = (e) => height - padB - ((e - yLow) / (yHigh - yLow)) * (height - padT - padB);
+
+  const handlePointerToR = (clientX) => {
+    if (!canScrub || !onSelectR || !svgRef.current) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    const fracSvgX = ((clientX - rect.left) / rect.width) * width;
+    const clampedX = Math.max(padL, Math.min(width - padR, fracSvgX));
+    const targetR = rMin + ((clampedX - padL) / (width - padL - padR)) * (rMax - rMin);
+    onSelectR(targetR);
+  };
 
   // Smooth Cubic Catmull-Rom Spline Interpolator
   const getSmoothSpline = (pts, key) => {
@@ -300,14 +361,15 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
   const standardPath = getSmoothSpline(points, "e_standard");
 
   const currR = currentPoint !== undefined ? currentPoint : curveData.current_r;
-  const currQbePt = points.reduce((prev, curr) =>
-    Math.abs(curr.r - currR) < Math.abs(prev.r - currR) ? curr : prev
-  , points[0]);
+  const currQbePt = points.reduce(
+    (prev, curr) => (Math.abs(curr.r - currR) < Math.abs(prev.r - currR) ? curr : prev),
+    points[0]
+  );
 
   const singR = curveData.singularity?.r;
   const singX = singR && singR >= rMin && singR <= rMax ? toSvgX(singR) : null;
+  const singLabel = (curveData.singularity?.label || "Coulson–Fischer Singularity").replace(/\s*\(.*?\)\s*$/, "");
 
-  // Calibrated Grid Ticks
   const numXTicks = 6;
   const xTicks = [];
   const xStep = (rMax - rMin) / numXTicks;
@@ -315,7 +377,7 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
     xTicks.push(rMin + i * xStep);
   }
 
-  const numYTicks = 5;
+  const numYTicks = 4;
   const yTicks = [];
   const yStep = (yHigh - yLow) / numYTicks;
   for (let i = 0; i <= numYTicks; i++) {
@@ -323,15 +385,37 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
   }
 
   return (
-    <div className="pes-plot-wrapper">
-      <svg viewBox={`0 0 ${width} ${height}`} className="pes-svg" preserveAspectRatio="none">
+    <div className={`pes-plot-wrapper ${canScrub ? "is-interactive-pes" : ""}`}>
+      <svg
+        ref={svgRef}
+        viewBox={`0 0 ${width} ${height}`}
+        className="pes-svg"
+        preserveAspectRatio="none"
+        onMouseDown={(e) => {
+          if (!canScrub) return;
+          isScrubbingRef.current = true;
+          handlePointerToR(e.clientX);
+        }}
+        onMouseMove={(e) => {
+          if (isScrubbingRef.current) {
+            handlePointerToR(e.clientX);
+          }
+        }}
+        onMouseUp={() => {
+          isScrubbingRef.current = false;
+        }}
+        onMouseLeave={() => {
+          isScrubbingRef.current = false;
+        }}
+      >
         <defs>
           <linearGradient id="qbeCurveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#35ff82" />
-            <stop offset="100%" stopColor="#00e5ff" />
+            <stop offset="0%" stopColor="#38bdf8" />
+            <stop offset="55%" stopColor="#22d3ee" />
+            <stop offset="100%" stopColor="#34d399" />
           </linearGradient>
           <filter id="pesGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <feGaussianBlur stdDeviation="2.6" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
         </defs>
@@ -342,12 +426,13 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
           y={padT}
           width={width - padL - padR}
           height={height - padT - padB}
-          fill="rgba(2, 8, 4, 0.65)"
-          stroke="rgba(53, 255, 130, 0.16)"
+          fill="rgba(2, 8, 18, 0.85)"
+          stroke="rgba(56, 189, 248, 0.24)"
           strokeWidth="1"
+          rx="4"
         />
 
-        {/* Calibrated Y Gridlines and Ticks */}
+        {/* Y Gridlines and Ticks */}
         {yTicks.map((val, idx) => {
           const y = toSvgY(val);
           return (
@@ -357,8 +442,8 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
                 y1={y}
                 x2={width - padR}
                 y2={y}
-                stroke="rgba(255,255,255,0.06)"
-                strokeDasharray="3 3"
+                stroke="rgba(148, 163, 184, 0.10)"
+                strokeDasharray="3 4"
                 strokeWidth="1"
               />
               <line
@@ -366,24 +451,24 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
                 y1={y}
                 x2={padL}
                 y2={y}
-                stroke="rgba(53, 255, 130, 0.4)"
+                stroke="rgba(56, 189, 248, 0.45)"
                 strokeWidth="1.2"
               />
               <text
-                x={padL - 8}
-                y={y + 3.5}
+                x={padL - 9}
+                y={y + 4}
                 textAnchor="end"
-                fill="#8da399"
-                fontSize="10"
+                fill="#cbd5e1"
+                fontSize="11.5"
                 fontFamily="'JetBrains Mono', monospace"
               >
-                {val.toFixed(2)}
+                {val.toFixed(Math.abs(val) >= 10 ? 1 : 2)}
               </text>
             </g>
           );
         })}
 
-        {/* Calibrated X Gridlines and Ticks */}
+        {/* X Gridlines and Ticks */}
         {xTicks.map((val, idx) => {
           const x = toSvgX(val);
           return (
@@ -393,8 +478,8 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
                 y1={padT}
                 x2={x}
                 y2={height - padB}
-                stroke="rgba(255,255,255,0.06)"
-                strokeDasharray="3 3"
+                stroke="rgba(148, 163, 184, 0.10)"
+                strokeDasharray="3 4"
                 strokeWidth="1"
               />
               <line
@@ -402,15 +487,15 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
                 y1={height - padB}
                 x2={x}
                 y2={height - padB + 5}
-                stroke="rgba(53, 255, 130, 0.4)"
+                stroke="rgba(56, 189, 248, 0.45)"
                 strokeWidth="1.2"
               />
               <text
                 x={x}
-                y={height - padB + 16}
+                y={height - padB + 18}
                 textAnchor="middle"
-                fill="#8da399"
-                fontSize="10"
+                fill="#cbd5e1"
+                fontSize="11.5"
                 fontFamily="'JetBrains Mono', monospace"
               >
                 {val.toFixed(1)}
@@ -424,28 +509,26 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
           x={(padL + width - padR) / 2}
           y={height - 8}
           textAnchor="middle"
-          fill="#35ff82"
-          fontSize="11"
+          fill="#7dd3fc"
+          fontSize="12"
           fontFamily="'JetBrains Mono', monospace"
           fontWeight="600"
-          letterSpacing="0.05em"
         >
-          Interatomic Distance R ({curveData.r_unit || "Å"})
+          {coordUnit === "Bohr" ? "x (Bohr)" : `R (${curveData.r_unit || coordUnit})`}
         </text>
 
         <text
-          transform={`rotate(-90) translate(-${(padT + height - padB) / 2}, 18)`}
+          transform={`rotate(-90) translate(-${(padT + height - padB) / 2}, 17)`}
           textAnchor="middle"
-          fill="#00e5ff"
-          fontSize="11"
+          fill="#94a3b8"
+          fontSize="12"
           fontFamily="'JetBrains Mono', monospace"
           fontWeight="600"
-          letterSpacing="0.05em"
         >
-          Potential Energy E (Hartree / E_h)
+          E (E_h)
         </text>
 
-        {/* Coulson-Fischer Singularity Marker */}
+        {/* Singularity / Crossing Marker */}
         {singX && (
           <g className="singularity-marker">
             <line
@@ -453,41 +536,41 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
               y1={padT}
               x2={singX}
               y2={height - padB}
-              stroke="#ffaa33"
-              strokeDasharray="4 3"
-              strokeWidth="1.6"
+              stroke="#fbbf24"
+              strokeDasharray="5 4"
+              strokeWidth="1.7"
             />
             <rect
-              x={Math.min(singX + 6, width - padR - 170)}
-              y={padT + 6}
-              width="164"
-              height="18"
-              rx="3"
-              fill="rgba(255, 170, 51, 0.16)"
-              stroke="#ffaa33"
-              strokeWidth="0.8"
+              x={Math.min(singX + 7, width - padR - 216)}
+              y={padT + 7}
+              width="210"
+              height="22"
+              rx="4"
+              fill="rgba(251, 191, 36, 0.15)"
+              stroke="rgba(251, 191, 36, 0.65)"
+              strokeWidth="1"
             />
             <text
-              x={Math.min(singX + 12, width - padR - 164)}
-              y={padT + 19}
-              fill="#ffaa33"
-              fontSize="9"
+              x={Math.min(singX + 15, width - padR - 208)}
+              y={padT + 22}
+              fill="#fde68a"
+              fontSize="11"
               fontFamily="'JetBrains Mono', monospace"
               fontWeight="700"
             >
-              Coulson-Fischer Singularity
+              {singLabel}
             </text>
           </g>
         )}
 
-        {/* Standard RHF Line (Dashed Red) */}
+        {/* Standard RHF Line (Dashed Crimson) */}
         <path
           d={standardPath}
           fill="none"
-          stroke="#ff4466"
-          strokeWidth="2.2"
-          strokeDasharray="5 4"
-          opacity="0.85"
+          stroke="#f87171"
+          strokeWidth="2.3"
+          strokeDasharray="6 4"
+          opacity="0.9"
         />
 
         {/* QBE-SCF Line (Continuous Smooth C¹ Transport Glowing Gradient) */}
@@ -495,18 +578,18 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
           d={qbePath}
           fill="none"
           stroke="url(#qbeCurveGrad)"
-          strokeWidth="3.2"
+          strokeWidth="3.4"
           filter="url(#pesGlow)"
         />
 
-        {/* Current State Marker Ping (Clean, distraction-free green dot) */}
+        {/* Current State Marker Ping */}
         {currQbePt && (
           <g
             className="current-state-marker"
             transform={`translate(${toSvgX(currQbePt.r)}, ${toSvgY(currQbePt.e_qbescf)})`}
           >
-            <circle r="9" fill="#35ff82" opacity="0.35" className="ping-halo" />
-            <circle r="4.5" fill="#35ff82" stroke="#ffffff" strokeWidth="2" />
+            <circle r="11" fill="#38bdf8" opacity="0.28" className="ping-halo" />
+            <circle r="5.2" fill="#34d399" stroke="#ffffff" strokeWidth="2.2" />
           </g>
         )}
       </svg>
@@ -515,9 +598,10 @@ function DissociationCurvePlot({ curveData, currentPoint }) {
 }
 
 // ---------------------------------------------------------------------------
-// Main Fullscreen Q-BOLTZ Agent Workstation Component (Pure Text Interaction)
+// Main Fullscreen Q-BOLTZ Interactive Discovery Workstation
+// Aligned with Point Reyes Sound Landing Page Aesthetic
 // ---------------------------------------------------------------------------
-export default function QBoltzAgentConsole({ onClose, onLogout }) {
+export default function QBoltzAgentConsole({ onClose }) {
   const [query, setQuery] = useState("Conceptualize and envision the dissociation of H2 in phase space.");
   const [loading, setLoading] = useState(false);
   const [hasResult, setHasResult] = useState(false);
@@ -527,13 +611,13 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
   const [bondingIdx, setBondingIdx] = useState(0);
   const [antibondingIdx, setAntibondingIdx] = useState(1);
 
-  // Dynamic Dissociation Trajectory State (H2 continuous geometry sweep: 0.50 Å -> 3.50 Å -> 0.50 Å)
+  // Dynamic Dissociation Trajectory State
   const [isPlaying, setIsPlaying] = useState(true);
   const [currentFrameIdx, setCurrentFrameIdx] = useState(0);
-  const [loopDir, setLoopDir] = useState(1); // 1 = forward (0.5 -> 3.5), -1 = reverse (3.5 -> 0.5)
-  const [playbackSpeed, setPlaybackSpeed] = useState(180); // Slightly faster default (180ms per geometry frame)
+  const [loopDir, setLoopDir] = useState(1);
+  const [playbackSpeed, setPlaybackSpeed] = useState(180);
 
-  // Web Audio Synth for Coulson-Fischer Singularity Crossing Acoustic "Pop"
+  // Web Audio Synth for Singularity Crossing Acoustic Cue
   const audioCtxRef = useRef(null);
 
   const playCoulsonFischerPop = useCallback(() => {
@@ -552,12 +636,11 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
-      // Tactile acoustic pop: rapid frequency drop + fast percussive decay
       osc.type = "sine";
       osc.frequency.setValueAtTime(760, now);
       osc.frequency.exponentialRampToValueAtTime(120, now + 0.05);
 
-      gain.gain.setValueAtTime(0.48, now);
+      gain.gain.setValueAtTime(0.42, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.062);
 
       osc.connect(gain);
@@ -565,8 +648,8 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
 
       osc.start(now);
       osc.stop(now + 0.065);
-    } catch (e) {
-      // Audio autoplay handled
+    } catch {
+      // Audio autoplay handled gracefully
     }
   }, []);
 
@@ -576,18 +659,18 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
     let i = 0;
     setStreamedText("");
     const interval = setInterval(() => {
-      i += 3;
+      i += 4;
       if (i >= fullNarrative.length) {
         setStreamedText(fullNarrative);
         clearInterval(interval);
       } else {
         setStreamedText(fullNarrative.slice(0, i));
       }
-    }, 12);
+    }, 10);
     return () => clearInterval(interval);
   }, [fullNarrative]);
 
-  // Clean narrative string helper (removes any Ludwig Boltzmann prefix)
+  // Clean narrative string helper
   const sanitizeNarrative = (raw) => {
     if (!raw) return "";
     return raw
@@ -598,9 +681,10 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
       .trim();
   };
 
-  // Trajectory ping-pong animation timer
   const trajectory = simulation?.trajectory || [];
   const hasTrajectory = trajectory.length > 0;
+  const activeBenchmarkKey = simulation?.benchmark?.key || "h2";
+  const coordUnit = activeBenchmarkKey === "beh2_ci" ? "Bohr" : "Å";
 
   useEffect(() => {
     if (!isPlaying || !hasTrajectory) return;
@@ -615,26 +699,23 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
           next = Math.min(trajectory.length - 1, 1);
         }
 
-        // Trigger tactile acoustic pop when transitioning through singularity (H2 CF at R ≈ 1.20 Å or BeH2 crossing at x ≈ 2.54 Bohr)
         const prevR = trajectory[prev]?.r;
         const nextR = trajectory[next]?.r;
-        const isBeH2 = simulation?.benchmark?.key === "beh2_ci";
-        const cfR = isBeH2 ? 2.54 : 1.20;
+        const cfR = activeBenchmarkKey === "beh2_ci" ? 2.54 : 1.20;
         if (
           prevR !== undefined &&
           nextR !== undefined &&
-          ((prevR < cfR && nextR >= cfR) || (prevR > cfR && nextR <= cfR) || Math.abs(nextR - cfR) < 0.04)
+          ((prevR < cfR && nextR >= cfR) || (prevR > cfR && nextR <= cfR) || Math.abs(nextR - cfR) < 0.035)
         ) {
           playCoulsonFischerPop();
         }
 
         return next;
       });
-    }, playbackSpeed); // Responsive, snappy default 180ms per geometry frame
+    }, playbackSpeed);
     return () => clearInterval(interval);
-  }, [isPlaying, hasTrajectory, loopDir, trajectory.length, playbackSpeed, playCoulsonFischerPop, simulation?.benchmark?.key]);
+  }, [isPlaying, hasTrajectory, loopDir, trajectory, playbackSpeed, playCoulsonFischerPop, activeBenchmarkKey]);
 
-  // Resolve cloud FastAPI endpoint (or local 127.0.0.1:8088 strictly during localhost dev)
   const getApiBaseUrl = () => {
     const envUrl = (import.meta.env.VITE_QBOLTZ_API_URL || "").trim().replace(/\/$/, "");
     if (envUrl) return envUrl;
@@ -656,8 +737,6 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
       benchmark = "h4_square";
     } else if (p.includes("beh2") || p.includes("beryllium") || p.includes("conical") || p.includes("insertion")) {
       benchmark = "beh2_ci";
-    } else if (p.includes("nitrogen") || p.includes("n2") || p.includes("triple")) {
-      benchmark = "n2_triple";
     }
 
     let requestedCoord = null;
@@ -674,12 +753,14 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
 
   const applySimulationPayload = useCallback((data, requestedCoord = null) => {
     if (!data?.success) return false;
-    const cleanNarrative = sanitizeNarrative(data.narrative);
-    setFullNarrative(cleanNarrative);
+    const key = data.simulation?.benchmark?.key || "h2";
+    const sysMatch = DISCOVERY_SYSTEMS.find((s) => s.key === key);
+    const conciseNarrative = sysMatch?.summary || sanitizeNarrative(data.narrative);
+    setFullNarrative(conciseNarrative);
     setSimulation(data.simulation);
     setBondingIdx(0);
     const orbs = data.simulation?.orbitals || [];
-    setAntibondingIdx(orbs.length > 1 ? 1 : 0);
+    setAntibondingIdx(orbs.length > 1 ? orbs.length - 1 : 0);
 
     if (data.simulation?.trajectory?.length) {
       const defaultTarget = data.simulation.benchmark?.key === "beh2_ci" ? 2.54 : 1.6;
@@ -695,7 +776,6 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
     return true;
   }, []);
 
-  // Agent Query Execution (Live FastAPI server-side solver + precomputed QBE-SCF static cache shield)
   const executeQuery = useCallback(async (customPrompt) => {
     const text = customPrompt !== undefined ? customPrompt : query;
     if (!text.trim()) return;
@@ -727,7 +807,7 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
             resolved = applySimulationPayload(data, requestedCoord);
           }
         } catch {
-          // Fall through seamlessly to precomputed QBE-SCF snapshot under offline/high-traffic conditions
+          // Seamless fallback to precomputed QBE-SCF static preset
         }
       }
 
@@ -752,7 +832,7 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
     }
   }, [query, applySimulationPayload]);
 
-  // Auto-launch the default H2 Phase-Space Dissociation simulation immediately on mount
+  // Auto-launch default H2 Phase-Space Dissociation simulation immediately on mount
   const didAutoRunRef = useRef(false);
   useEffect(() => {
     if (!didAutoRunRef.current) {
@@ -761,273 +841,444 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
     }
   }, [executeQuery]);
 
+  // Jump directly to a nuclear coordinate R along the trajectory
+  const jumpToCoordinate = useCallback(
+    (targetR) => {
+      if (!hasTrajectory) return;
+      let bestIdx = 0;
+      let bestDiff = Infinity;
+      trajectory.forEach((frame, idx) => {
+        const diff = Math.abs(frame.r - targetR);
+        if (diff < bestDiff) {
+          bestDiff = diff;
+          bestIdx = idx;
+        }
+      });
+      setIsPlaying(false);
+      setCurrentFrameIdx(bestIdx);
+      const cfR = activeBenchmarkKey === "beh2_ci" ? 2.54 : 1.20;
+      if (Math.abs(targetR - cfR) < 0.08) {
+        playCoulsonFischerPop();
+      }
+    },
+    [hasTrajectory, trajectory, activeBenchmarkKey, playCoulsonFischerPop]
+  );
 
-  const quickPresets = [
-    {
-      label: "H₂ Dissociation in Phase Space",
-      prompt: "Conceptualize and envision the dissociation of H2 in phase space."
-    },
-    {
-      label: "H₃ D₃ₕ Conical Intersection",
-      prompt: "Run H3 at the D3h conical intersection of 1.52 Angstroms and show the degenerate e-prime orbitals."
-    },
-    {
-      label: "BeH₂ Avoided Crossing Scan",
-      prompt: "Scan the insertion coordinate for the BeH2 conical intersection and show active space orbitals."
-    },
-    {
-      label: "N₂ Triple Bond",
-      prompt: "Dissociate the N2 triple bond to 2.2 Angstroms and show the active space pi bonding and antibonding orbitals."
+  const handleReturnHome = (anchor = "") => {
+    if (onClose) {
+      onClose();
+      if (anchor) {
+        setTimeout(() => {
+          const el = document.getElementById(anchor);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        }, 80);
+      }
+    } else if (typeof window !== "undefined") {
+      window.location.href = anchor ? `/#${anchor}` : "/";
     }
-  ];
+  };
 
-  // Derive active geometry, orbitals, atoms, observables from trajectory frame if available
+  // Derive active geometry, orbitals, atoms, observables
   const activeFrame = hasTrajectory && trajectory[currentFrameIdx] ? trajectory[currentFrameIdx] : null;
-
   const activeOrbitals = activeFrame?.orbitals || simulation?.orbitals || [];
-  const bondingOrbital = activeOrbitals[bondingIdx] || activeOrbitals[0] || null;
+  const safeBondingIdx = activeOrbitals[bondingIdx] ? bondingIdx : 0;
+  const safeAntibondingIdx = activeOrbitals[antibondingIdx]
+    ? antibondingIdx
+    : Math.max(0, activeOrbitals.length - 1);
+
+  const bondingOrbital = activeOrbitals[safeBondingIdx] || activeOrbitals[0] || null;
   const antibondingOrbital =
-    activeOrbitals[antibondingIdx] ||
+    activeOrbitals[safeAntibondingIdx] ||
     (activeOrbitals.length > 1 ? activeOrbitals[activeOrbitals.length - 1] : activeOrbitals[0]) ||
     null;
 
-  const isThreeOrbital = (simulation?.benchmark?.key === "h3_d3h") || (activeOrbitals.length === 3);
+  const isThreeOrbital = activeBenchmarkKey === "h3_d3h" || activeOrbitals.length === 3;
+  const hasMultiOrbitalPicker = !isThreeOrbital && activeOrbitals.length > 2;
 
   const activeAtoms = activeFrame?.atoms || simulation?.atoms || [];
   const activeBonds = activeFrame?.bonds || simulation?.bonds || [];
 
   const currentR = activeFrame ? activeFrame.r : (simulation?.dissociation_curve?.current_r || 1.6);
-  const nBondVal = activeFrame?.bonding_occ !== undefined ? activeFrame.bonding_occ : (bondingOrbital?.occupation !== undefined ? bondingOrbital.occupation : 1.918);
-  const nAntibondVal = activeFrame?.antibonding_occ !== undefined ? activeFrame.antibonding_occ : (antibondingOrbital?.occupation !== undefined ? antibondingOrbital.occupation : 0.082);
+  const nBondVal =
+    activeFrame?.bonding_occ !== undefined
+      ? activeFrame.bonding_occ
+      : bondingOrbital?.occupation !== undefined
+        ? bondingOrbital.occupation
+        : 1.918;
+  const nAntibondVal =
+    activeFrame?.antibonding_occ !== undefined
+      ? activeFrame.antibonding_occ
+      : antibondingOrbital?.occupation !== undefined
+        ? antibondingOrbital.occupation
+        : 0.082;
 
   const activeEqbeEv = activeFrame?.e_qbescf_ev !== undefined ? activeFrame.e_qbescf_ev : simulation?.energies?.qbescf_ev;
   const activeEqbeHartree = activeFrame?.e_qbescf_hartree !== undefined ? activeFrame.e_qbescf_hartree : simulation?.energies?.qbescf_hartree;
   const activeEstandardHartree = activeFrame?.e_standard_hartree !== undefined ? activeFrame.e_standard_hartree : simulation?.energies?.rhf_hartree;
   const activeEntropy = activeFrame?.entropy !== undefined ? activeFrame.entropy : simulation?.active_space?.correlation_entropy;
 
+  const activeMilestones = REGIME_MILESTONES[activeBenchmarkKey] || [];
+  const trajMinR = hasTrajectory ? trajectory[0].r : 0.5;
+  const trajMaxR = hasTrajectory ? trajectory[trajectory.length - 1].r : 3.5;
+
   return (
     <div className={`qboltz-agent-overlay ${hasResult ? "is-activated-fullscreen" : "is-compact"}`}>
-      {/* Background Subtle Scrim */}
       {!hasResult && (
-        <div className="console-scrim" onClick={() => onClose && onClose()}></div>
+        <div className="console-scrim" onClick={() => handleReturnHome()}></div>
       )}
 
-      {/* Floating Center Console Container (Compact) or Fullscreen Simulation Engine (Activated) */}
       <div className={`console-floating-card ${hasResult ? "fullscreen-active-workstation" : "compact-view"}`}>
-        {/* Workstation Topbar Header */}
+        {/* Global Top Header — Matches Point Reyes Sound Landing Page Aesthetic */}
         <header className="console-card-header">
-          <div className="header-badge-group">
-            <span className="agent-indicator-pulse"></span>
-            {/* User Requirement: "the top should just say Q-BOLTZ, get rid of the // Ludwig Boltzmann" */}
-            <span className="agent-badge-title">Q-BOLTZ</span>
-            <span className="agent-sub-badge">p1_qbescf Live</span>
-            <span className="benchmark-title-badge">
-              {simulation?.benchmark?.title || "H₂ Homolytic Bond Dissociation"}
-            </span>
+          <div className="header-brand-cluster">
+            <button
+              type="button"
+              className="demo-brand-lockup"
+              onClick={() => handleReturnHome()}
+              title="Return to Point Reyes Sound Homepage"
+            >
+              <img
+                src="/PRS_logo_v2.jpeg?v=5"
+                alt="Point Reyes Sound"
+                className="demo-prs-logo"
+              />
+              <span className="demo-brand-name">Point Reyes Sound</span>
+            </button>
+            <span className="header-divider" aria-hidden="true" />
+            <div className="header-engine-status">
+              <span className="agent-indicator-pulse" />
+              <span className="agent-badge-title">Q-BOLTZ</span>
+              <span className="agent-sub-badge">Phase-Space Engine</span>
+            </div>
           </div>
+
+          {hasResult && (
+            <nav className="demo-header-nav" aria-label="Site Navigation">
+              <span className="demo-nav-active">
+                <span className="demo-nav-dot" /> Preview
+              </span>
+              <button type="button" className="demo-nav-link" onClick={() => handleReturnHome("about")}>
+                About
+              </button>
+              <button type="button" className="demo-nav-link" onClick={() => handleReturnHome("research")}>
+                Research
+              </button>
+              <button type="button" className="demo-nav-link" onClick={() => handleReturnHome("contact")}>
+                Contact
+              </button>
+              <a
+                href="https://github.com/point-reyes-sound"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="demo-nav-link"
+              >
+                GitHub
+              </a>
+              <a href="/film" className="demo-nav-link">
+                Film
+              </a>
+            </nav>
+          )}
 
           <div className="header-actions">
             {hasResult && (
               <button
+                type="button"
                 className="action-pill-btn"
                 onClick={() => {
                   setHasResult(false);
-                  setQuery("");
                 }}
               >
-                + New Question
+                + Prompt Launcher
               </button>
             )}
-            {onClose && (
-              <button
-                className="console-close-btn"
-                onClick={onClose}
-                title="Return to Overview"
-              >
-                ✕
-              </button>
-            )}
+            <button
+              type="button"
+              className="console-home-btn"
+              onClick={() => handleReturnHome()}
+              title="Return to Point Reyes Sound Overview"
+            >
+              ← Home
+            </button>
           </div>
         </header>
 
-        {/* Input Bar (Rendered in Compact View) */}
+        {/* Compact Centered Prompt Launcher View */}
         {!hasResult && (
-          <div className="console-input-row">
-            <input
-              type="text"
-              className="console-text-input"
-              placeholder='Ask Q-Boltz (e.g. "Conceptualize and envision the dissociation of H2 in phase space")...'
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") executeQuery();
-              }}
-            />
+          <div className="compact-launcher-body">
+            <div className="compact-hero-head">
+              <h1 className="compact-display-title">Electronic Structure in Phase Space</h1>
+            </div>
 
-            <button
-              className="submit-query-btn"
-              onClick={() => executeQuery()}
-              disabled={loading}
-            >
-              {loading ? "Solving..." : "Ask Q-Boltz ↗"}
-            </button>
-
-          </div>
-        )}
-
-        {/* Preset Chips (Visible in Compact Mode) */}
-        {!hasResult && (
-          <div className="preset-chips-row">
-            <span className="chips-label">BENCHMARK PRESETS:</span>
-            {quickPresets.map((p, idx) => (
-              <button
-                key={`chip-${idx}`}
-                className="chip-btn"
-                onClick={() => {
-                  setQuery(p.prompt);
-                  executeQuery(p.prompt);
+            <div className="console-input-row">
+              <input
+                type="text"
+                className="console-text-input"
+                placeholder='Ask Q-BOLTZ (e.g. "H2 dissociation" or "BeH2 insertion")...'
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") executeQuery();
                 }}
+              />
+              <button
+                type="button"
+                className="submit-query-btn"
+                onClick={() => executeQuery()}
+                disabled={loading}
               >
-                {p.label}
+                {loading ? "Solving..." : "Launch ↗"}
               </button>
-            ))}
+            </div>
+
+            <div className="compact-discovery-grid">
+              {DISCOVERY_SYSTEMS.map((sys) => (
+                <button
+                  key={`compact-${sys.key}`}
+                  type="button"
+                  className={`discovery-system-card ${activeBenchmarkKey === sys.key ? "is-active" : ""}`}
+                  onClick={() => {
+                    setQuery(sys.prompt);
+                    executeQuery(sys.prompt);
+                  }}
+                >
+                  <div className="sys-card-top">
+                    <span className="sys-formula">{sys.formula}</span>
+                    <span className="sys-arrow">↗</span>
+                  </div>
+                  <span className="sys-title">{sys.title}</span>
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
         {/* Activated Fullscreen Workstation Grid */}
         {hasResult && (
           <div className="fullscreen-workstation-body">
-            {/* Left Column: Input + Streamed Narrative (Clean Q-BOLTZ text) */}
-            <div className="workstation-left-panel">
-              {/* Compact Query Bar in Fullscreen */}
-              <div className="fullscreen-input-strip">
-                <input
-                  type="text"
-                  className="fullscreen-text-input"
-                  placeholder="Ask follow-up question (e.g. calculate N2 at 2.2 Å)..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") executeQuery();
-                  }}
-                />
-                <button
-                  className="fullscreen-submit-btn"
-                  onClick={() => executeQuery()}
-                  disabled={loading}
-                >
-                  {loading ? "..." : "Ask ↗"}
-                </button>
-              </div>
-
-              {/* Streamed Narrative Box */}
-              {/* User Requirement: "under the text panel, like get rid of the Ludwig Boltzmann and then Ludwig Boltzmann Q-BOLTZ, just say Q-BOLTZ and then print the text." */}
-              <div className="narrative-box">
-                <div className="narrative-header">
-                  <span className="agent-avatar-icon">⚛</span>
-                  <span className="narrative-author">Q-BOLTZ:</span>
+            {/* Wide Left Discovery & Editorial Column */}
+            <aside className="workstation-left-panel">
+              {/* 1. Interactive Click-to-Discover Molecular System Cards (2x2) */}
+              <section className="discovery-deck-section" aria-label="Molecular Systems">
+                <div className="discovery-cards-grid">
+                  {DISCOVERY_SYSTEMS.map((sys) => {
+                    const isActive = activeBenchmarkKey === sys.key;
+                    return (
+                      <button
+                        key={`deck-${sys.key}`}
+                        type="button"
+                        className={`discovery-system-card ${isActive ? "is-active" : ""}`}
+                        onClick={() => {
+                          setQuery(sys.prompt);
+                          executeQuery(sys.prompt);
+                        }}
+                      >
+                        <div className="sys-card-top">
+                          <span className="sys-formula">{sys.formula}</span>
+                          <span className="sys-state-dot" />
+                        </div>
+                        <span className="sys-title">{sys.title}</span>
+                      </button>
+                    );
+                  })}
                 </div>
+              </section>
+
+              {/* 2. Concise Active Benchmark Card */}
+              <article className="narrative-box">
+                <div className="narrative-meta-row">
+                  <span className="narrative-author-pill">
+                    <span className="agent-avatar-icon">⚛</span> Q-BOLTZ
+                  </span>
+                  <span className="narrative-basis-pill">
+                    {simulation?.active_space
+                      ? `CAS(${simulation.active_space.electrons}e, ${simulation.active_space.dimension}o)`
+                      : "Active Space"}
+                  </span>
+                </div>
+
+                <h2 className="benchmark-editorial-title">
+                  {simulation?.benchmark?.title || "H₂ Homolytic Bond Dissociation"}
+                </h2>
+
                 <div
                   className="narrative-content"
                   dangerouslySetInnerHTML={{
-                    __html: (streamedText || "Solving quantum transport equation on PySCF...")
+                    __html: (streamedText || "Solving...")
                       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
                       .replace(/`(.*?)`/g, "<code>$1</code>")
                   }}
                 />
-              </div>
+              </article>
 
-              {/* Benchmark Switcher Chips */}
-              <div className="sidebar-presets-drawer">
-                <span className="drawer-label">SWITCH BENCHMARK</span>
-                <div className="drawer-chips">
-                  {quickPresets.map((p, idx) => (
-                    <button
-                      key={`drawer-chip-${idx}`}
-                      className="drawer-chip-btn"
-                      onClick={() => {
-                        setQuery(p.prompt);
-                        executeQuery(p.prompt);
-                      }}
-                    >
-                      {p.label}
-                    </button>
-                  ))}
+              {/* 3. Minimal Prompt Strip */}
+              <div className="left-prompt-block">
+                <div className="fullscreen-input-strip">
+                  <input
+                    id="qboltz-followup-input"
+                    type="text"
+                    className="fullscreen-text-input"
+                    placeholder="Ask Q-BOLTZ (e.g. H2 at 1.8 Å, BeH2 scan)..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") executeQuery();
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="fullscreen-submit-btn"
+                    onClick={() => executeQuery()}
+                    disabled={loading}
+                  >
+                    {loading ? "..." : "Ask ↗"}
+                  </button>
                 </div>
               </div>
-            </div>
+            </aside>
 
-            {/* Right Column: 4-Panel Visual Workstation with Dynamic Trajectory Controls */}
-            <div className="workstation-right-content-wrapper">
-              {/* Dynamic Dissociation Playback Controls (Active for H2 continuous sweep) */}
-              {hasTrajectory && (
+            {/* Right Column: Interactive Trajectory Scrubber + 4-Panel Engine */}
+            <main className="workstation-right-content-wrapper">
+              {/* Interactive Trajectory & Regime Discovery Toolbar */}
+              {hasTrajectory ? (
                 <div className="dynamic-playback-toolbar">
                   <div className="playback-left-controls">
                     <button
                       type="button"
                       className={`playback-toggle-btn ${isPlaying ? "playing" : "paused"}`}
                       onClick={() => setIsPlaying(!isPlaying)}
-                      title={isPlaying ? "Pause Homolytic Dissociation Loop" : "Play Homolytic Dissociation Loop"}
+                      title={isPlaying ? "Pause Continuous Trajectory" : "Resume Continuous Trajectory"}
                     >
                       <span className="btn-icon">{isPlaying ? "⏸" : "▶"}</span>
-                      <span className="btn-text">{isPlaying ? "PAUSE LOOP" : "PLAY LOOP"}</span>
+                      <span className="btn-text">{isPlaying ? "Pause" : "Play Loop"}</span>
                     </button>
+
                     <div className="playback-r-badge">
-                      <span className="r-label">{simulation?.benchmark?.key === "beh2_ci" ? "COORDINATE" : "DISTANCE"}</span>
-                      <span className="r-val">{Number(currentR).toFixed(2)} {simulation?.benchmark?.key === "beh2_ci" ? "Bohr" : "Å"}</span>
+                      <span className="r-label">{coordUnit === "Bohr" ? "INSERTION x" : "DISTANCE R"}</span>
+                      <span className="r-val">
+                        {Number(currentR).toFixed(2)} {coordUnit}
+                      </span>
                     </div>
+
                     <button
                       type="button"
                       className="playback-speed-btn"
                       onClick={() => {
-                        setPlaybackSpeed((prev) => (prev === 180 ? 260 : prev === 260 ? 120 : 180));
+                        setPlaybackSpeed((prev) => (prev === 180 ? 260 : prev === 260 ? 110 : 180));
                       }}
-                      title="Adjust Geometric Transition Pacing (Click to cycle speeds)"
+                      title="Cycle animation speed"
                     >
-                      <span className="speed-icon">⏱</span>
-                      <span className="speed-text">
-                        {playbackSpeed === 180 ? "PACE: 180ms" : playbackSpeed === 260 ? "PACE: SLOW (260ms)" : "PACE: FAST (120ms)"}
-                      </span>
+                      {playbackSpeed === 180 ? "1.0× Pace" : playbackSpeed === 260 ? "0.7× Slow" : "1.6× Fast"}
                     </button>
                   </div>
 
-                  <div className="playback-right-indicators">
-                    <span className="playback-loop-chip">
-                      <span className="loop-pulse"></span>
-                      {simulation?.benchmark?.key === "beh2_ci"
-                        ? "0.60 Bohr ⇄ 3.60 Bohr INSERTION (x ≈ 2.54 Bohr Seam)"
-                        : "0.50 Å ⇄ 3.50 Å CONTINUOUS DISSOCIATION (ΔR = 0.05 Å)"}
-                    </span>
+                  {/* Draggable Geometry Scrubber */}
+                  <div className="playback-scrubber-wrapper">
+                    <input
+                      type="range"
+                      min={0}
+                      max={Math.max(0, trajectory.length - 1)}
+                      value={currentFrameIdx}
+                      aria-label="Scrub nuclear coordinate"
+                      className="playback-slider"
+                      onChange={(e) => {
+                        setIsPlaying(false);
+                        setCurrentFrameIdx(Number(e.target.value));
+                      }}
+                    />
+                    <div className="playback-slider-track-marks">
+                      <span>{trajMinR.toFixed(1)} {coordUnit}</span>
+                      <span>{trajMaxR.toFixed(1)} {coordUnit}</span>
+                    </div>
                   </div>
+
+                  {/* 1-Click Quantum Regime Jump Pills */}
+                  {activeMilestones.length > 0 && (
+                    <div className="regime-milestones-row" role="group" aria-label="Jump to Quantum Regime">
+                      {activeMilestones.map((m) => {
+                        const isNear = Math.abs(currentR - m.r) < 0.09;
+                        return (
+                          <button
+                            key={m.label}
+                            type="button"
+                            className={`regime-pill-btn ${isNear ? "is-current" : ""} ${m.isSingularity ? "is-singularity" : ""}`}
+                            onClick={() => jumpToCoordinate(m.r)}
+                            title={`Jump to ${m.label} (${m.r.toFixed(2)} ${m.unit})`}
+                          >
+                            <span className="regime-name">{m.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="dynamic-playback-toolbar snapshot-toolbar">
+                  <div className="playback-left-controls">
+                    <div className="playback-r-badge">
+                      <span className="r-val">
+                        R = {Number(currentR).toFixed(2)} {coordUnit}
+                      </span>
+                    </div>
+                    {simulation?.dissociation_curve?.singularity?.label && (
+                      <span className="snapshot-singularity-chip">
+                        {simulation.dissociation_curve.singularity.label.replace(/\s*\(.*?\)\s*$/, "")}
+                      </span>
+                    )}
+                  </div>
+
+                  {hasMultiOrbitalPicker && (
+                    <div className="orbital-switcher-strip">
+                      <span className="switcher-label">ORBITALS:</span>
+                      <div className="switcher-pills">
+                        {activeOrbitals.map((orb, idx) => {
+                          const selectedLeft = idx === safeBondingIdx;
+                          const selectedRight = idx === safeAntibondingIdx;
+                          const shortName = (orb.label || `MO ${idx + 1}`).split(" ")[0];
+                          return (
+                            <button
+                              key={`orb-pick-${idx}`}
+                              type="button"
+                              className={`orb-pick-btn ${selectedLeft ? "is-left" : ""} ${selectedRight ? "is-right" : ""}`}
+                              onClick={() => {
+                                const isAntibondLike = (orb.label || "").includes("*") || idx >= Math.ceil(activeOrbitals.length / 2);
+                                if (isAntibondLike) {
+                                  setAntibondingIdx(idx);
+                                } else {
+                                  setBondingIdx(idx);
+                                }
+                              }}
+                              title={`Display ${orb.label} (n = ${Number(orb.occupation ?? 0).toFixed(3)})`}
+                            >
+                              {shortName}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
               <div className={`workstation-visual-layout ${isThreeOrbital ? "layout-three-orbitals" : "layout-two-orbitals"}`}>
-                {/* Top Panel: Active Space Orbitals (3 panels for H3 and BeH2, 2 for H2) */}
+                {/* Top Row: Active-Space 3D Molecular Orbitals */}
                 <div className={`orbitals-top-row ${isThreeOrbital ? "cols-3" : "cols-2"}`}>
                   {isThreeOrbital ? (
                     activeOrbitals.slice(0, 3).map((orb, idx) => {
-                      const isBeH2 = simulation?.benchmark?.key === "beh2_ci";
-                      const badgeLabel = isBeH2
-                        ? (idx === 0 ? "1a₁ (CORE)" : idx === 1 ? "1b₂ (CROSSING)" : "3a₁ (CROSSING)")
-                        : (idx === 0 ? "a₁' (SYMMETRIC)" : idx === 1 ? "e'_x (CROSSING)" : "e'_y (CROSSING)");
-                      const badgeClass = (idx === 0 || (isBeH2 && idx === 1 && currentR < 2.54) || (isBeH2 && idx === 2 && currentR >= 2.54)) ? "bonding" : "antibonding";
                       const occVal = orb.occupation !== undefined ? orb.occupation : 0;
+                      const shortOrbLabel = (orb.label || "").split(" ")[0];
                       return (
-                        <div key={`h3-orb-${idx}`} className={`grid-cell-card panel-orbital panel-orbital-${idx}`}>
+                        <div key={`orb-3col-${idx}`} className={`grid-cell-card panel-orbital panel-orbital-${idx}`}>
                           <div className="panel-cell-header">
                             <div className="cell-title-group">
-                              <span className={`cell-badge ${badgeClass}`}>{badgeLabel}</span>
                               <span className="cell-orbital-name" title={orb.label}>
-                                {orb.label}
+                                {shortOrbLabel}
                               </span>
-                              <span className="cell-occ-tag">
-                                n = {Number(occVal).toFixed(3)}
-                              </span>
+                              <span className="cell-occ-tag">n = {Number(occVal).toFixed(3)}</span>
                             </div>
                             <div className="cell-legend">
-                              {orb.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
-                              {orb.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
+                              {orb.pos_lobe && <span className="orb-phase-badge blue">+ψ</span>}
+                              {orb.neg_lobe && <span className="orb-phase-badge red">−ψ</span>}
                             </div>
                           </div>
 
@@ -1039,7 +1290,7 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
                                 bonds={activeBonds}
                               />
                             ) : (
-                              <div className="cell-placeholder">Calculating 3D Isosurface...</div>
+                              <div className="cell-placeholder">Calculating...</div>
                             )}
                           </div>
                         </div>
@@ -1047,11 +1298,10 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
                     })
                   ) : (
                     <>
-                      {/* Panel 1: Top-Left - Bonding Orbital (3D Three.js) */}
+                      {/* Panel 1: Top-Left - Bonding / Occupied Active Orbital */}
                       <div className="grid-cell-card panel-bonding">
                         <div className="panel-cell-header">
                           <div className="cell-title-group">
-                            <span className="cell-badge bonding">BONDING ORBITAL</span>
                             <span className="cell-orbital-name">
                               {bondingOrbital?.label || "1σ_g (Bonding)"}
                             </span>
@@ -1060,8 +1310,8 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
                             </span>
                           </div>
                           <div className="cell-legend">
-                            {bondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
-                            {bondingOrbital?.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
+                            {bondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ</span>}
+                            {bondingOrbital?.neg_lobe && <span className="orb-phase-badge red">−ψ</span>}
                           </div>
                         </div>
 
@@ -1073,16 +1323,15 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
                               bonds={activeBonds}
                             />
                           ) : (
-                            <div className="cell-placeholder">Calculating 3D Isosurface...</div>
+                            <div className="cell-placeholder">Calculating...</div>
                           )}
                         </div>
                       </div>
 
-                      {/* Panel 2: Top-Right - Antibonding Orbital (3D Three.js) */}
+                      {/* Panel 2: Top-Right - Antibonding / Correlated Active Orbital */}
                       <div className="grid-cell-card panel-antibonding">
                         <div className="panel-cell-header">
                           <div className="cell-title-group">
-                            <span className="cell-badge antibonding">ANTIBONDING ORBITAL</span>
                             <span className="cell-orbital-name">
                               {antibondingOrbital?.label || "1σ_u* (Antibonding)"}
                             </span>
@@ -1091,8 +1340,8 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
                             </span>
                           </div>
                           <div className="cell-legend">
-                            {antibondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ Blue</span>}
-                            {antibondingOrbital?.neg_lobe && <span className="orb-phase-badge red">-ψ Red</span>}
+                            {antibondingOrbital?.pos_lobe && <span className="orb-phase-badge blue">+ψ</span>}
+                            {antibondingOrbital?.neg_lobe && <span className="orb-phase-badge red">−ψ</span>}
                           </div>
                         </div>
 
@@ -1104,7 +1353,7 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
                               bonds={activeBonds}
                             />
                           ) : (
-                            <div className="cell-placeholder">Calculating 3D Isosurface...</div>
+                            <div className="cell-placeholder">Calculating...</div>
                           )}
                         </div>
                       </div>
@@ -1112,21 +1361,20 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
                   )}
                 </div>
 
-                {/* Bottom Row: Analysis & Phase Space */}
+                {/* Bottom Row: Potential Energy Surface & Wigner Phase-Space Distribution */}
                 <div className="analysis-bottom-row">
                   {/* Panel 3: Bottom-Left - Dissociation Curves + Energies */}
                   <div className="grid-cell-card panel-dissociation">
                     <div className="panel-cell-header">
                       <div className="cell-title-group">
-                        <span className="cell-badge pes">DISSOCIATION PES</span>
-                        <span className="cell-orbital-name">Potential Energy Surface & Observables</span>
+                        <span className="cell-orbital-name">Potential Energy Surface</span>
                       </div>
                       <div className="pes-legend-compact">
                         <span className="legend-item qbe">
-                          <span className="legend-dot green"></span> QBE-SCF
+                          <span className="legend-dot cyan" /> QBE-SCF
                         </span>
                         <span className="legend-item rhf">
-                          <span className="legend-dot red"></span> RHF Mean-Field
+                          <span className="legend-dot red" /> RHF
                         </span>
                       </div>
                     </div>
@@ -1137,61 +1385,58 @@ export default function QBoltzAgentConsole({ onClose, onLogout }) {
                           <DissociationCurvePlot
                             curveData={simulation.dissociation_curve}
                             currentPoint={currentR}
+                            coordUnit={coordUnit}
+                            canScrub={hasTrajectory}
+                            onSelectR={jumpToCoordinate}
                           />
                         ) : (
-                          <div className="cell-placeholder">Computing Energy Curve...</div>
+                          <div className="cell-placeholder">Computing...</div>
                         )}
                       </div>
 
                       {/* Quantum Energy Observables Row */}
                       <div className="observables-row-grid">
                         <div className="obs-card">
-                          <span className="obs-label">QBE-SCF Energy</span>
+                          <span className="obs-label">QBE-SCF</span>
                           <span className="obs-value">
                             {activeEqbeEv !== undefined ? `${Number(activeEqbeEv).toFixed(2)} eV` : "-22.84 eV"}
-                          </span>
-                          <span className="obs-sub">
-                            {activeEqbeHartree !== undefined ? `${typeof activeEqbeHartree === 'number' ? activeEqbeHartree.toFixed(5) : activeEqbeHartree} E_h` : "-0.8017 E_h"}
                           </span>
                         </div>
 
                         <div className="obs-card">
-                          <span className="obs-label">Standard RHF</span>
+                          <span className="obs-label">STANDARD RHF</span>
                           <span className="obs-value">
-                            {activeEstandardHartree !== undefined ? `${typeof activeEstandardHartree === 'number' ? activeEstandardHartree.toFixed(5) : activeEstandardHartree} E_h` : "-0.8017 E_h"}
-                          </span>
-                          <span className="obs-sub">
-                            {currentR >= 1.16 ? "Coulson-Fischer Cusp" : "Mean-Field Limit"}
+                            {activeEstandardHartree !== undefined
+                              ? `${typeof activeEstandardHartree === "number" ? activeEstandardHartree.toFixed(5) : activeEstandardHartree} E_h`
+                              : "-0.80170 E_h"}
                           </span>
                         </div>
 
                         <div className="obs-card highlight">
-                          <span className="obs-label">Correlation Entropy</span>
+                          <span className="obs-label">ENTROPY</span>
                           <span className="obs-value">
                             {activeEntropy !== undefined ? `${Number(activeEntropy).toFixed(3)} bits` : "0.986 bits"}
                           </span>
-                          <span className="obs-sub">{currentR >= 1.6 ? "Entangled Singlet Limit" : "Coulson-Fischer Onset"}</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Panel 4: Bottom-Right - Wigner Distribution in Phase Space (High-Res WebGL) */}
+                  {/* Panel 4: Bottom-Right - Wigner Distribution in Phase Space */}
                   <div className="grid-cell-card panel-wigner">
                     <WebGlWignerPlot
                       r={currentR}
                       nBond={nBondVal}
                       nAntibond={nAntibondVal}
-                      benchmarkTitle={simulation?.benchmark?.title}
+                      coordUnit={coordUnit}
                     />
                   </div>
                 </div>
               </div>
-            </div>
+            </main>
           </div>
         )}
       </div>
     </div>
   );
 }
-
