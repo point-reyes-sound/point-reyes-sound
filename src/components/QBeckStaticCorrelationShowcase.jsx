@@ -449,12 +449,12 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale, onPluck }) {
     const container = mountRef.current;
     if (!container) return;
 
-    const width = container.clientWidth || 560;
-    const height = container.clientHeight || 360;
+    const width = container.clientWidth || window.innerWidth || 1280;
+    const height = container.clientHeight || window.innerHeight || 800;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-    camera.position.set(0, 3.2, 6.0);
+    const camera = new THREE.PerspectiveCamera(44, width / height, 0.1, 100);
+    camera.position.set(0, 3.6, 7.2);
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -462,10 +462,10 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale, onPluck }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     container.appendChild(renderer.domElement);
 
-    // Dual-layer luminous quantum fluid: glossy translucent surface + crisp wireframe
-    const segX = 64;
-    const segZ = 64;
-    const planeGeo = new THREE.PlaneGeometry(7.2, 5.2, segX, segZ);
+    // Dual-layer luminous quantum fluid spanning full viewport
+    const segX = 72;
+    const segZ = 72;
+    const planeGeo = new THREE.PlaneGeometry(12.0, 8.0, segX, segZ);
     planeGeo.rotateX(-Math.PI / 2);
 
     const posAttr = planeGeo.attributes.position;
@@ -531,21 +531,25 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale, onPluck }) {
     });
     scene.add(nodeGroup);
 
-    const handlePointerDown = (ev) => {
-      const rect = renderer.domElement.getBoundingClientRect();
-      const nx = ((ev.clientX - rect.left) / rect.width) * 2 - 1;
-      const ny = -((ev.clientY - rect.top) / rect.height) * 2 + 1;
+    const handleGlobalPointerDown = (ev) => {
+      if (ev.target && ev.target.closest && ev.target.closest("input[type='range']")) {
+        return;
+      }
+      const w = window.innerWidth || 1280;
+      const h = window.innerHeight || 800;
+      const nx = (ev.clientX / w) * 2 - 1;
+      const ny = -(ev.clientY / h) * 2 + 1;
       rippleRef.current = {
-        x: nx * 2.8,
-        z: -ny * 1.8,
-        amp: 0.85,
+        x: nx * 4.2,
+        z: -ny * 2.8,
+        amp: 1.05,
         age: 0,
       };
       if (onPluckRef.current) {
-        onPluckRef.current((nx + 1) * 0.5, 0.9);
+        onPluckRef.current((nx + 1) * 0.5);
       }
     };
-    renderer.domElement.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("pointerdown", handleGlobalPointerDown);
 
     let frameId = 0;
     let time = 0;
@@ -639,7 +643,7 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale, onPluck }) {
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      renderer.domElement.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("pointerdown", handleGlobalPointerDown);
       cancelAnimationFrame(frameId);
       planeGeo.dispose();
       surfaceMat.dispose();
@@ -660,9 +664,8 @@ function PhaseSpaceAttractorCanvas({ bondStretch, couplingScale, onPluck }) {
   return (
     <div
       ref={mountRef}
-      className="qbeck-webgl-canvas"
-      title="Click anywhere on the phase-space manifold to excite a quantum wavepacket"
-      aria-label="Interactive Wigner-Cumulant Phase-Space Manifold"
+      className="qbeck-fullscreen-figure"
+      aria-label="Fullscreen Interactive Wigner-Cumulant Phase-Space Manifold"
     />
   );
 }
@@ -697,10 +700,18 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
     }
   };
 
-  const handlePluck = (pitchNorm, intensity) => {
-    if (sonifierRef.current) {
-      sonifierRef.current.triggerQuantumPluck(pitchNorm, intensity);
-    }
+  const handlePluck = (pitchNorm = 0.5) => {
+    if (!sonifierRef.current) return;
+    const stretchNorm = (bondStretch - 0.8) / (3.2 - 0.8);
+    const regime =
+      bondStretch < 1.15 ? "eq" : bondStretch < 2.15 ? "liquid" : "mott";
+    sonifierRef.current.triggerSimulationClickSfx({
+      regime,
+      systemId: activeBenchId,
+      pitchNorm,
+      stretchNorm,
+      entropyNorm: mottTelemetry.entropyNum / 4,
+    });
   };
 
   const activeStage = useMemo(
@@ -797,6 +808,11 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
 
   return (
     <div className="qbeck-page">
+      <PhaseSpaceAttractorCanvas
+        bondStretch={bondStretch}
+        couplingScale={couplingScale}
+        onPluck={handlePluck}
+      />
       <header className="qbeck-topbar">
         <div className="qbeck-topbar-left">
           <button className="qbeck-brand-btn" onClick={onBackHome} title="Return to Point Reyes Sound">
@@ -896,15 +912,10 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
               <span className={`qbeck-regime-badge tone-${regimeMeta.tone}`}>{regimeMeta.label}</span>
             </div>
 
-            <div className="qbeck-canvas-stage">
-              <PhaseSpaceAttractorCanvas
-                bondStretch={bondStretch}
-                couplingScale={couplingScale}
-                onPluck={handlePluck}
-              />
-              <div className="qbeck-canvas-overlay-hint">
+            <div className="qbeck-observatory-window">
+              <div className="qbeck-window-hint">
                 <span>{regimeMeta.desc}</span>
-                <code>Click manifold to excite wavepacket</code>
+                <code>Click anywhere on screen to excite wavepacket &amp; sound</code>
               </div>
             </div>
 

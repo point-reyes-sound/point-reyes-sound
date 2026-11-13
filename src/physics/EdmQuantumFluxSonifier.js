@@ -282,4 +282,111 @@ export class EdmQuantumFluxSonifier {
     osc.stop(now + 0.48);
     mod.stop(now + 0.48);
   }
+
+  /**
+   * Physics-reflective click sound effect tailored to the active regime & simulated system.
+   */
+  triggerSimulationClickSfx({
+    regime = "liquid",
+    systemId = "h4",
+    pitchNorm = 0.5,
+    stretchNorm = 0.5,
+    entropyNorm = 0.5,
+  } = {}) {
+    const ctx = this.ensureContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    const dest = this.masterGain || ctx.destination;
+
+    const baseIdx = Math.min(
+      DORIAN_SCALE_HZ.length - 1,
+      Math.max(0, Math.round(pitchNorm * (DORIAN_SCALE_HZ.length - 1)))
+    );
+    const rootFreq = DORIAN_SCALE_HZ[baseIdx];
+
+    // System-specific multi-voice intervals
+    const systemIntervals = {
+      h2: [1, 1.5],
+      h3: [1, 1.25, 1.5],
+      h3_d3h: [1, 1.25, 1.5],
+      h4: [1, 1.2, 1.5, 2.0],
+      h4_square: [1, 1.2, 1.5, 2.0],
+      beh2: [1, 1.333],
+      beh2_ci: [1, 1.333],
+      h2o: [1, 1.5, 1.875],
+      n2: [1, 1.5, 2.25, 3.0],
+      benzyne: [1, 1.2, 1.4, 1.6, 1.8, 2.0],
+    };
+    const ratios = systemIntervals[systemId] || [1, 1.5];
+
+    if (regime === "eq") {
+      // Covalent Equilibrium: crisp crystalline harmonic bell
+      ratios.forEach((ratio, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(rootFreq * ratio, now + idx * 0.025);
+        gain.gain.setValueAtTime(0.11 / ratios.length + 0.04, now + idx * 0.025);
+        gain.gain.exponentialRampToValueAtTime(0.0005, now + idx * 0.025 + 0.38);
+        osc.connect(gain);
+        gain.connect(dest);
+        osc.start(now + idx * 0.025);
+        osc.stop(now + idx * 0.025 + 0.4);
+      });
+    } else if (regime === "mott") {
+      // Mott Insulator Limit: deep sub-bass thump + 4-voice entangled shimmer
+      const sub = ctx.createOscillator();
+      const subGain = ctx.createGain();
+      sub.type = "sine";
+      sub.frequency.setValueAtTime(92, now);
+      sub.frequency.exponentialRampToValueAtTime(38, now + 0.22);
+      subGain.gain.setValueAtTime(0.28, now);
+      subGain.gain.exponentialRampToValueAtTime(0.0005, now + 0.3);
+      sub.connect(subGain);
+      subGain.connect(dest);
+      sub.start(now);
+      sub.stop(now + 0.32);
+
+      ratios.forEach((ratio, idx) => {
+        const osc = ctx.createOscillator();
+        const filter = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(rootFreq * ratio * 0.75, now + idx * 0.035);
+        osc.detune.setValueAtTime((idx - 1.5) * (8 + entropyNorm * 14), now);
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(1200 + entropyNorm * 2200, now);
+        gain.gain.setValueAtTime(0.09, now + idx * 0.035);
+        gain.gain.exponentialRampToValueAtTime(0.0005, now + idx * 0.035 + 0.65);
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(dest);
+        osc.start(now + idx * 0.035);
+        osc.stop(now + idx * 0.035 + 0.68);
+      });
+    } else {
+      // Correlated Quantum Liquid: smooth resonant FM glide
+      ratios.forEach((ratio, idx) => {
+        const osc = ctx.createOscillator();
+        const filter = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+        osc.type = "sawtooth";
+        const f0 = rootFreq * ratio;
+        osc.frequency.setValueAtTime(f0 * (0.94 + 0.06 * stretchNorm), now + idx * 0.03);
+        osc.frequency.exponentialRampToValueAtTime(f0, now + idx * 0.03 + 0.14);
+        filter.type = "lowpass";
+        filter.Q.setValueAtTime(5.0, now);
+        filter.frequency.setValueAtTime(2400 + stretchNorm * 1800, now + idx * 0.03);
+        filter.frequency.exponentialRampToValueAtTime(340, now + idx * 0.03 + 0.32);
+        gain.gain.setValueAtTime(0.085, now + idx * 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0005, now + idx * 0.03 + 0.38);
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(dest);
+        osc.start(now + idx * 0.03);
+        osc.stop(now + idx * 0.03 + 0.42);
+      });
+    }
+  }
 }
+

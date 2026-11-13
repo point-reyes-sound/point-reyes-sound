@@ -1,4 +1,5 @@
 .qbeck-page {
+  position: relative;
   min-height: 100vh;
   background: radial-gradient(circle at 18% 8%, rgba(56, 189, 248, 0.08), transparent 44%),
     radial-gradient(circle at 82% 24%, rgba(52, 211, 153, 0.06), transparent 40%),
@@ -6,6 +7,16 @@
   color: #e2e8f0;
   font-family: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   padding-bottom: 5rem;
+}
+
+.qbeck-fullscreen-figure {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  cursor: crosshair;
+  pointer-events: auto;
 }
 
 .qbeck-topbar {
@@ -235,6 +246,8 @@
 }
 
 .qbeck-main {
+  position: relative;
+  z-index: 2;
   max-width: 1320px;
   margin: 0 auto;
   padding: 2.75rem 2.25rem 0;
@@ -346,10 +359,39 @@
 
 .qbeck-observatory-panel {
   border-radius: 16px;
-  background: rgba(7, 13, 24, 0.9);
-  border: 1px solid rgba(56, 189, 248, 0.22);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  background: rgba(5, 11, 22, 0.56);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
   overflow: hidden;
+}
+
+.qbeck-observatory-window {
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem 1.2rem;
+  background: radial-gradient(circle at center, rgba(56, 189, 248, 0.04), transparent 72%);
+}
+
+.qbeck-window-hint {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+.qbeck-window-hint code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  color: #7dd3fc;
+  background: rgba(2, 6, 14, 0.76);
+  padding: 0.22rem 0.55rem;
+  border-radius: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.24);
 }
 
 .qbeck-panel-header {

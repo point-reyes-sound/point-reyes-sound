@@ -1110,8 +1110,37 @@ export default function QBoltzAgentConsole({ onClose }) {
     });
   }, [currentR, trajMinR, trajMaxR, activeEntropy]);
 
+  const handleConsolePointerDown = useCallback(
+    (ev) => {
+      if (
+        !edmSonifierRef.current ||
+        (ev.target && ev.target.closest && ev.target.closest("input, textarea, select"))
+      ) {
+        return;
+      }
+      const stretchNorm = Math.min(
+        1,
+        Math.max(0, (currentR - trajMinR) / (trajMaxR - trajMinR || 1))
+      );
+      const entropyNorm = Math.min(1, Math.max(0, (Number(activeEntropy) || 0) / 2.0));
+      const regime = stretchNorm < 0.3 ? "eq" : stretchNorm < 0.7 ? "liquid" : "mott";
+      const pitchNorm = ev.clientX / (window.innerWidth || 1280);
+      edmSonifierRef.current.triggerSimulationClickSfx({
+        regime,
+        systemId: activeBenchmarkKey || "h2",
+        pitchNorm,
+        stretchNorm,
+        entropyNorm,
+      });
+    },
+    [currentR, trajMinR, trajMaxR, activeEntropy, activeBenchmarkKey]
+  );
+
   return (
-    <div className="qboltz-agent-overlay is-activated-fullscreen">
+    <div
+      className="qboltz-agent-overlay is-activated-fullscreen"
+      onPointerDown={handleConsolePointerDown}
+    >
       <div className="console-floating-card fullscreen-active-workstation">
         {/* Global Top Header — Matches Point Reyes Sound Landing Page Aesthetic */}
         <header className="console-card-header">
