@@ -10,11 +10,9 @@ export const PONG_BOUNDS = {
   zMin: -2.55,
   zMax: 2.55,
   gateX: 4.25,
-  gateCaptureRadius: 1.04,
-  holeDeathRadius: 0.52,
-  holePullRadius: 1.65,
+  gateCaptureRadius: 1.06,
   maxSpeed: 0.088,
-  minSpeed: 0.034,
+  minSpeed: 0.036,
 };
 
 export function createInitialPongState(seed = 0.35) {
@@ -22,16 +20,13 @@ export function createInitialPongState(seed = 0.35) {
     time: 0,
     puck: { x: -2.6, z: seed, vx: 0.052, vz: 0.022 },
     gate: { side: 1, z: 0.0, cooldown: 0 },
-    hole: { x: 0.0, z: 0.0 },
     score: 0,
-    graceFrames: 75,
-    collapsed: false,
     won: false,
   };
 }
 
 export function applyPerturbation(state, clickX, clickZ) {
-  if (state.collapsed || state.won) return { deflected: false, dist: 99 };
+  if (state.won) return { deflected: false, dist: 99 };
 
   const dx = state.puck.x - clickX;
   const dz = state.puck.z - clickZ;
@@ -57,44 +52,22 @@ export function stepQuantumPong(
 ) {
   state.time += dt;
   if (state.gate.cooldown > 0) state.gate.cooldown -= 1;
-  if (state.graceFrames > 0) state.graceFrames -= 1;
 
   const stretchNorm = (bondStretch - 0.8) / (3.2 - 0.8);
   const levelScale = 1 + Math.min(4, level - 1) * 0.12;
 
-  // Orbiting Decoherence Hole
-  state.hole.x = Math.sin(state.time * 0.36 * levelScale) * 1.35;
-  state.hole.z = Math.cos(state.time * 0.48 * levelScale) * 0.92;
-
-  if (state.collapsed || state.won) {
-    return { event: null, holeDanger: 0 };
-  }
-
-  // Gravitational pull near the decoherence hole
-  const hdx = state.hole.x - state.puck.x;
-  const hdz = state.hole.z - state.puck.z;
-  const hDist = Math.hypot(hdx, hdz);
-  const holeDanger = Math.max(0, Math.min(1, (1.8 - hDist) / 1.25));
-
-  if (state.graceFrames === 0 && hDist < PONG_BOUNDS.holePullRadius && hDist > 0.05) {
-    const pull = (0.00075 * levelScale) / (hDist * hDist + 0.45);
-    state.puck.vx += (hdx / hDist) * pull;
-    state.puck.vz += (hdz / hDist) * pull;
-  }
-
-  // Death check: puck falls into the decoherence hole (after grace period)
-  if (state.graceFrames === 0 && hDist < PONG_BOUNDS.holeDeathRadius) {
-    state.collapsed = true;
-    return { event: "collapse", x: state.hole.x, z: state.hole.z, holeDanger: 1 };
+  if (state.won) {
+    return { event: null };
   }
 
   // Gentle viscous damping so clicks feel deliberate & controllable
   state.puck.vx *= 0.996;
   state.puck.vz *= 0.996;
 
-  // Subtle quantum dispersion jitter
-  state.puck.vx += Math.sin(state.time * 2.1 + state.puck.z) * 0.00042 * (0.4 + stretchNorm);
-  state.puck.vz += Math.cos(state.time * 1.9 + state.puck.x) * 0.00042 * (0.4 + stretchNorm);
+  // Subtle quantum dispersion jitter (scales gently with level)
+  const dispAmp = 0.00042 * (0.4 + stretchNorm) * levelScale;
+  state.puck.vx += Math.sin(state.time * 2.1 + state.puck.z) * dispAmp;
+  state.puck.vz += Math.cos(state.time * 1.9 + state.puck.x) * dispAmp;
 
   // Maintain minimum lively momentum so puck never stalls
   const spd = Math.hypot(state.puck.vx, state.puck.vz);
@@ -109,7 +82,7 @@ export function stepQuantumPong(
   state.puck.x += state.puck.vx;
   state.puck.z += state.puck.vz;
 
-  // Top / Bottom momentum reflection
+  // Left / Right side-wall reflection
   if (state.puck.z > PONG_BOUNDS.zMax) {
     state.puck.z = PONG_BOUNDS.zMax;
     state.puck.vz = -Math.abs(state.puck.vz);
@@ -118,7 +91,7 @@ export function stepQuantumPong(
     state.puck.vz = Math.abs(state.puck.vz);
   }
 
-  // Check Target Resonance Gate capture
+  // Check Target Resonance Gate capture on the far wall (+X)
   const gateX = state.gate.side * PONG_BOUNDS.gateX;
   if (
     state.gate.cooldown === 0 &&
@@ -127,20 +100,20 @@ export function stepQuantumPong(
     state.score += 1;
     const scoredX = gateX;
     const scoredZ = state.gate.z;
-    state.gate.side *= -1;
-    // Keep next gate comfortably away from corners
-    state.gate.z = (Math.random() - 0.5) * 3.0;
-    state.gate.cooldown = 32;
-    state.puck.vx = -state.puck.vx * 1.03;
+    // Keep the hoop on the far wall the user is facing, shifting along Z
+    state.gate.side = 1;
+    state.gate.z = (Math.random() - 0.5) * 3.4;
+    state.gate.cooldown = 36;
+    state.puck.vx = -Math.abs(state.puck.vx) * 1.04;
 
     if (state.score >= targetResonances) {
       state.won = true;
-      return { event: "win", x: scoredX, z: scoredZ, holeDanger };
+      return { event: "win", x: scoredX, z: scoredZ };
     }
-    return { event: "score", x: scoredX, z: scoredZ, holeDanger };
+    return { event: "score", x: scoredX, z: scoredZ };
   }
 
-  // Left / Right wall reflection
+  // Far / Near wall reflection
   if (state.puck.x > PONG_BOUNDS.xMax) {
     state.puck.x = PONG_BOUNDS.xMax;
     state.puck.vx = -Math.abs(state.puck.vx);
@@ -149,12 +122,12 @@ export function stepQuantumPong(
     state.puck.vx = Math.abs(state.puck.vx);
   }
 
-  return { event: null, holeDanger };
+  return { event: null };
 }
 
 /**
  * Steering agent policy: computes an optimal perturbation click (x, z) to guide the puck
- * toward the active crimson gate while curving around the black decoherence hole.
+ * toward the crimson hoop on the far wall.
  */
 export function computeAgentClick(state, jitter = 0) {
   const gateX = state.gate.side * PONG_BOUNDS.gateX;
@@ -166,19 +139,6 @@ export function computeAgentClick(state, jitter = 0) {
   const tLen = Math.hypot(tx, tz) || 1;
   tx /= tLen;
   tz /= tLen;
-
-  // Repulsion from the decoherence hole if puck is anywhere near it
-  const hdx = state.puck.x - state.hole.x;
-  const hdz = state.puck.z - state.hole.z;
-  const hDist = Math.hypot(hdx, hdz) || 0.1;
-  if (hDist < 2.6) {
-    const avoidWeight = (2.6 - hDist) * 1.4;
-    tx += (hdx / hDist) * avoidWeight;
-    tz += (hdz / hDist) * avoidWeight;
-    const nLen = Math.hypot(tx, tz) || 1;
-    tx /= nLen;
-    tz /= nLen;
-  }
 
   // Click behind the puck opposite the desired velocity vector
   const clickDist = 0.85;

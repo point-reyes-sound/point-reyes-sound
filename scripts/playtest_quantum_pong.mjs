@@ -19,13 +19,12 @@ function runCohort(name, { episodes = 150, clickEveryFrames = 14, jitter = 0.25,
 
     for (let f = 0; f < maxFrames; f++) {
       if (!idle && f % clickEveryFrames === 0) {
-        // Only click if puck isn't already headed cleanly into the gate or is near the hole
+        // Only click if puck isn't already headed cleanly into the gate
         const gateX = state.gate.side * 4.25;
         const toGateX = gateX - state.puck.x;
         const toGateZ = state.gate.z - state.puck.z;
         const dot = state.puck.vx * toGateX + state.puck.vz * toGateZ;
-        const hDist = Math.hypot(state.puck.x - state.hole.x, state.puck.z - state.hole.z);
-        if (dot <= 0 || hDist < 2.1 || f % (clickEveryFrames * 2) === 0) {
+        if (dot <= 0 || f % (clickEveryFrames * 2) === 0) {
           const { x, z } = computeAgentClick(state, jitter);
           applyPerturbation(state, x, z);
           clicks += 1;
@@ -37,10 +36,6 @@ function runCohort(name, { episodes = 150, clickEveryFrames = 14, jitter = 0.25,
         wins += 1;
         totalWinFrames += f;
         totalClicksOnWin += clicks;
-        break;
-      }
-      if (event === "collapse") {
-        collapses += 1;
         break;
       }
       if (f === maxFrames - 1) {

@@ -74,9 +74,9 @@ function FullscreenQuantumPong({
     const height = window.innerHeight || 800;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(44, width / height, 0.1, 100);
-    camera.position.set(0, 4.1, 7.6);
-    camera.lookAt(0, 0, 0);
+    const camera = new THREE.PerspectiveCamera(46, width / height, 0.1, 100);
+    camera.position.set(-8.1, 3.65, 0);
+    camera.lookAt(0.4, 0.25, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
@@ -96,10 +96,10 @@ function FullscreenQuantumPong({
     blueLight.position.set(4, 3, 3);
     scene.add(blueLight);
 
-    // 1. Royal Blue & Crimson Wigner Phase-Space Manifold
+    // 1. Royal Blue & Crimson Wigner Phase-Space Sea
     const segX = 88;
     const segZ = 88;
-    const planeGeo = new THREE.PlaneGeometry(13.4, 8.8, segX, segZ);
+    const planeGeo = new THREE.PlaneGeometry(13.4, 9.6, segX, segZ);
     planeGeo.rotateX(-Math.PI / 2);
 
     const posAttr = planeGeo.attributes.position;
@@ -350,118 +350,6 @@ function FullscreenQuantumPong({
     gateMesh.rotation.y = Math.PI / 2;
     scene.add(gateMesh);
 
-    // 3b. Decoherence Singularity (3D Event Horizon + Gravitational Lensing + Swirling Accretion Disk)
-    const holeGroup = new THREE.Group();
-    const holeCoreGeo = new THREE.SphereGeometry(0.44, 64, 64);
-    const holeCoreMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
-    const holeCore = new THREE.Mesh(holeCoreGeo, holeCoreMat);
-    holeCore.position.y = 0.22;
-
-    const holeRimGeo = new THREE.TorusGeometry(0.46, 0.018, 24, 96);
-    holeRimGeo.rotateX(Math.PI / 2);
-    const holeRimMat = new THREE.MeshBasicMaterial({
-      color: 0xfb7185,
-      transparent: true,
-      opacity: 0.92,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    const holeRim = new THREE.Mesh(holeRimGeo, holeRimMat);
-    holeRim.position.y = 0.22;
-
-    const lensArcGeo = new THREE.TorusGeometry(0.51, 0.024, 24, 96);
-    const lensArcMat = new THREE.MeshBasicMaterial({
-      color: 0xe11d48,
-      transparent: true,
-      opacity: 0.55,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    const lensArc = new THREE.Mesh(lensArcGeo, lensArcMat);
-    lensArc.position.y = 0.22;
-    lensArc.rotation.x = 0.38;
-    lensArc.rotation.z = -0.22;
-
-    const accretionGeo = new THREE.RingGeometry(0.47, 1.38, 96, 8);
-    accretionGeo.rotateX(-Math.PI / 2);
-    const accretionMat = new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      side: THREE.DoubleSide,
-      blending: THREE.AdditiveBlending,
-      uniforms: {
-        uTime: { value: 0 },
-        uDanger: { value: 0 },
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        varying vec3 vPos;
-        void main() {
-          vUv = uv;
-          vPos = position;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform float uTime;
-        uniform float uDanger;
-        varying vec2 vUv;
-        varying vec3 vPos;
-        void main() {
-          float r = length(vPos.xz);
-          float normR = clamp((r - 0.47) / (1.38 - 0.47), 0.0, 1.0);
-          float angle = atan(vPos.z, vPos.x);
-          float kepler = angle - uTime * (2.6 + (1.0 - normR) * 3.8) + 7.5 / (r + 0.12);
-          float spiral1 = 0.5 + 0.5 * sin(kepler * 3.0);
-          float spiral2 = 0.5 + 0.5 * sin(kepler * 5.0 - uTime * 2.2);
-          float streaks = mix(spiral1, spiral2, 0.45);
-          float innerGlow = exp(-normR * 3.6);
-          float outerFade = smoothstep(1.0, 0.58, normR) * smoothstep(0.0, 0.08, normR);
-
-          vec3 hotCore = vec3(1.0, 0.84, 0.88);
-          vec3 crimson = vec3(0.88, 0.11, 0.28);
-          vec3 royalBlue = vec3(0.23, 0.51, 0.96);
-
-          vec3 col = mix(crimson, royalBlue, smoothstep(0.32, 0.92, normR));
-          col = mix(col, hotCore, innerGlow * (0.65 + uDanger * 0.35));
-          float alpha = outerFade * (0.28 + 0.52 * streaks + 0.45 * innerGlow) * (0.78 + uDanger * 0.35);
-          gl_FragColor = vec4(col, clamp(alpha, 0.0, 0.95));
-        }
-      `,
-    });
-    const accretionDisk = new THREE.Mesh(accretionGeo, accretionMat);
-    accretionDisk.position.y = 0.22;
-    accretionDisk.rotation.x = 0.18;
-    accretionDisk.rotation.z = -0.08;
-
-    const VORTEX_COUNT = 100;
-    const vortexPos = new Float32Array(VORTEX_COUNT * 3);
-    const vortexMeta = Array.from({ length: VORTEX_COUNT }, () => ({
-      angle: Math.random() * Math.PI * 2,
-      radius: 0.48 + Math.random() * 0.92,
-      speed: 1.6 + Math.random() * 2.4,
-      yOffset: (Math.random() - 0.5) * 0.14,
-    }));
-    const vortexGeo = new THREE.BufferGeometry();
-    vortexGeo.setAttribute('position', new THREE.BufferAttribute(vortexPos, 3));
-    const vortexMat = new THREE.PointsMaterial({
-      color: 0xfb7185,
-      size: 0.048,
-      transparent: true,
-      opacity: 0.72,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    const vortexPoints = new THREE.Points(vortexGeo, vortexMat);
-    vortexPoints.position.y = 0.22;
-
-    holeGroup.add(holeCore);
-    holeGroup.add(holeRim);
-    holeGroup.add(lensArc);
-    holeGroup.add(accretionDisk);
-    holeGroup.add(vortexPoints);
-    scene.add(holeGroup);
-
     // 4. Royal Blue & Crimson Quantum Flux Particles
     const particleCount = 480;
     const pPositions = new Float32Array(particleCount * 3);
@@ -493,7 +381,7 @@ function FullscreenQuantumPong({
 
     // Shared QuantumPongEngine physics state + exact 3D Raycaster
     const gameState = createInitialPongState(0.35);
-    const { puck, gate, hole } = gameState;
+    const { puck, gate } = gameState;
     let lastResetSeen = resetFlagRef.current;
     let agentTick = 0;
 
@@ -590,11 +478,10 @@ function FullscreenQuantumPong({
 
       // Live AI Agent steering when AGENT mode is active
       agentTick += 1;
-      if (isAgent && !isCollapsed && !isReward && agentTick % 16 === 0) {
+      if (isAgent && !isReward && agentTick % 16 === 0) {
         const gateX = gate.side * PONG_BOUNDS.gateX;
         const dot = puck.vx * (gateX - puck.x) + puck.vz * (gate.z - puck.z);
-        const hDist = Math.hypot(puck.x - hole.x, puck.z - hole.z);
-        if (dot <= 0 || hDist < 2.0 || agentTick % 32 === 0) {
+        if (dot <= 0 || agentTick % 32 === 0) {
           const { x: ax, z: az } = computeAgentClick(gameState, 0.16);
           rippleRef.current = { x: ax, z: az, amp: 1.1, age: 0 };
           applyPerturbation(gameState, ax, az);
@@ -604,17 +491,14 @@ function FullscreenQuantumPong({
         }
       }
 
-      const { event, x: evX, z: evZ, holeDanger = 0 } = stepQuantumPong(gameState, {
+      const { event, x: evX, z: evZ } = stepQuantumPong(gameState, {
         bondStretch: R,
         targetResonances: TARGET_RESONANCES,
         level: curLevel,
         dt: 0.018,
       });
 
-      if (event === "collapse") {
-        rippleRef.current = { x: evX, z: evZ, amp: 1.65, age: 0 };
-        if (callbacksRef.current.onCollapse) callbacksRef.current.onCollapse();
-      } else if (event === "score" || event === "win") {
+      if (event === "score" || event === "win") {
         rippleRef.current = { x: evX, z: evZ, amp: 1.45, age: 0 };
         if (callbacksRef.current.onScore) callbacksRef.current.onScore();
       }
@@ -633,35 +517,6 @@ function FullscreenQuantumPong({
       } else {
         clickRingMat.opacity = 0;
       }
-
-      holeGroup.position.set(hole.x, 0.05, hole.z);
-      const pulse = 1 + Math.sin(time * (4.5 + holeDanger * 9.0)) * (0.04 + holeDanger * 0.07);
-      holeRim.scale.setScalar(pulse);
-      holeRimMat.opacity = 0.85 + holeDanger * 0.15;
-      lensArc.scale.setScalar(1 + Math.cos(time * 3.2) * 0.03 + holeDanger * 0.06);
-      lensArc.rotation.y = time * 0.45;
-      lensArcMat.opacity = 0.45 + holeDanger * 0.42;
-      accretionMat.uniforms.uTime.value = time;
-      accretionMat.uniforms.uDanger.value = holeDanger;
-
-      const vAttr = vortexGeo.attributes.position;
-      for (let i = 0; i < VORTEX_COUNT; i++) {
-        const vm = vortexMeta[i];
-        vm.angle += dt * (vm.speed + (1.4 - vm.radius) * 2.2) * (1 + holeDanger * 0.75);
-        vm.radius -= dt * (0.28 + holeDanger * 0.32);
-        if (vm.radius < 0.45) {
-          vm.radius = 1.28 + Math.random() * 0.16;
-          vm.angle = Math.random() * Math.PI * 2;
-        }
-        vAttr.setXYZ(
-          i,
-          Math.cos(vm.angle) * vm.radius,
-          vm.yOffset * ((vm.radius - 0.44) / 0.95),
-          Math.sin(vm.angle) * vm.radius,
-        );
-      }
-      vAttr.needsUpdate = true;
-      vortexMat.opacity = 0.58 + holeDanger * 0.35;
 
       const puckY = 0.78 + Math.sin(time * 3.4) * 0.09;
       puckGroup.position.set(puck.x, puckY, puck.z);
@@ -723,8 +578,7 @@ function FullscreenQuantumPong({
             : 0;
 
         const puckDip = Math.exp(-((x - puck.x) ** 2 + (z - puck.z) ** 2) * 1.2) * 0.45;
-        const holeFunnel = -1.95 * Math.exp(-((x - hole.x) ** 2 + (z - hole.z) ** 2) / 0.55);
-        const y = (g1 + g2) * 0.85 + interference * 0.72 + rippleWave + puckDip + holeFunnel;
+        const y = (g1 + g2) * 0.85 + interference * 0.72 + rippleWave + puckDip;
         positions.setY(i, y - 0.35);
 
         // Positive lobes = deep Royal Blue (#1d4ed8 -> #60a5fa), Negative/ripples = Crimson (#be123c -> #fb7185)
@@ -774,16 +628,6 @@ function FullscreenQuantumPong({
       wireMat.dispose();
       gateGeo.dispose();
       gateMat.dispose();
-      holeCoreGeo.dispose();
-      holeCoreMat.dispose();
-      holeRimGeo.dispose();
-      holeRimMat.dispose();
-      lensArcGeo.dispose();
-      lensArcMat.dispose();
-      accretionGeo.dispose();
-      accretionMat.dispose();
-      vortexGeo.dispose();
-      vortexMat.dispose();
       clickRingGeo.dispose();
       clickRingMat.dispose();
       fishDisposables.forEach((d) => d.dispose());
@@ -817,7 +661,6 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
   const [streak, setStreak] = useState(0);
   const [level, setLevel] = useState(1);
   const [rewardUnlocked, setRewardUnlocked] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
   const [resetToken, setResetToken] = useState(0);
   const [agentEnabled, setAgentEnabled] = useState(false);
   const [isEdmPlaying, setIsEdmPlaying] = useState(false);
@@ -894,29 +737,11 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
     setScore(0);
     setStreak(0);
     setRewardUnlocked(false);
-    setCollapsed(false);
     setResetToken((t) => t + 1);
     setLevel((l) => l + 1);
     const nextIdx = (systemIdx + 1) % SYSTEMS.length;
     setSystemIdx(nextIdx);
     triggerReflectiveSfx(0.75, SYSTEMS[nextIdx].id);
-  };
-
-  const handleCollapse = () => {
-    setCollapsed(true);
-    setScore(0);
-    setStreak(0);
-    if (sonifierRef.current) {
-      sonifierRef.current.triggerCollapseSfx();
-    }
-  };
-
-  const handleReinitialize = () => {
-    setCollapsed(false);
-    setScore(0);
-    setStreak(0);
-    setResetToken((t) => t + 1);
-    triggerReflectiveSfx(0.5);
   };
 
   const toggleEdmSound = () => {
@@ -937,14 +762,12 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
         bondStretch={bondStretch}
         couplingScale={couplingScale}
         rewardUnlocked={rewardUnlocked}
-        collapsed={collapsed}
         resetToken={resetToken}
         level={level}
         agentEnabled={agentEnabled}
         onPluck={(pitchNorm) => triggerReflectiveSfx(pitchNorm)}
         onDeflect={handleDeflect}
         onScore={handleScore}
-        onCollapse={handleCollapse}
       />
 
       <header className="qbeck-top-bar">
@@ -985,20 +808,10 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
         </div>
       </header>
 
-      {score === 0 && !rewardUnlocked && !collapsed && (
+      {score === 0 && !rewardUnlocked && (
         <p className="qbeck-objective-line">
-          Steer the puck through the crimson ring five times—avoid the black decoherence hole.
+          Steer the quantum siren through the crimson hoop on the far wall five times.
         </p>
-      )}
-
-      {collapsed && (
-        <div className="qbeck-reward-banner" role="alert">
-          <span className="qbeck-reward-badge">DECOHERENCE SINGULARITY</span>
-          <strong className="qbeck-reward-title">Wavefunction Collapsed</strong>
-          <button type="button" className="qbeck-reward-btn" onClick={handleReinitialize}>
-            Re-Initialize
-          </button>
-        </div>
       )}
 
       {rewardUnlocked && (
