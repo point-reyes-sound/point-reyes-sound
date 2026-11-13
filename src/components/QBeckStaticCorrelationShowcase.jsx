@@ -27,6 +27,7 @@ function FullscreenQuantumPong({
   rewardUnlocked,
   collapsed,
   resetToken,
+  level,
   agentEnabled,
   onPluck,
   onDeflect,
@@ -39,6 +40,7 @@ function FullscreenQuantumPong({
     couplingScale,
     rewardUnlocked,
     collapsed,
+    level,
     agentEnabled,
   });
   const rippleRef = useRef({ x: 0, z: 0, amp: 0, age: 10 });
@@ -51,9 +53,10 @@ function FullscreenQuantumPong({
       couplingScale,
       rewardUnlocked,
       collapsed,
+      level,
       agentEnabled,
     };
-  }, [bondStretch, couplingScale, rewardUnlocked, collapsed, agentEnabled]);
+  }, [bondStretch, couplingScale, rewardUnlocked, collapsed, level, agentEnabled]);
 
   useEffect(() => {
     callbacksRef.current = { onPluck, onDeflect, onScore, onCollapse };
@@ -244,11 +247,30 @@ function FullscreenQuantumPong({
     const particlePoints = new THREE.Points(particleGeo, particleMat);
     scene.add(particlePoints);
 
-    // Shared QuantumPongEngine physics state
+    // Shared QuantumPongEngine physics state + exact 3D Raycaster
     const gameState = createInitialPongState(0.35);
     const { puck, gate, hole } = gameState;
     let lastResetSeen = resetFlagRef.current;
     let agentTick = 0;
+
+    const raycaster = new THREE.Raycaster();
+    const pointerNdc = new THREE.Vector2();
+    const phasePlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+    const hitPoint = new THREE.Vector3();
+
+    // Expanding 3D click shockwave ring
+    const clickRingGeo = new THREE.RingGeometry(0.16, 0.24, 48);
+    clickRingGeo.rotateX(-Math.PI / 2);
+    const clickRingMat = new THREE.MeshBasicMaterial({
+      color: 0x60a5fa,
+      transparent: true,
+      opacity: 0,
+      side: THREE.DoubleSide,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const clickRingMesh = new THREE.Mesh(clickRingGeo, clickRingMat);
+    scene.add(clickRingMesh);
 
     const handleGlobalPointerDown = (ev) => {
       if (
@@ -263,8 +285,11 @@ function FullscreenQuantumPong({
       const nx = (ev.clientX / w) * 2 - 1;
       const ny = -(ev.clientY / h) * 2 + 1;
 
-      const clickX = nx * 4.8;
-      const clickZ = -ny * 2.8;
+      pointerNdc.set(nx, ny);
+      raycaster.setFromCamera(pointerNdc, camera);
+      const hit = raycaster.ray.intersectPlane(phasePlane, hitPoint);
+      const clickX = hit ? THREE.MathUtils.clamp(hitPoint.x, -5.2, 5.2) : nx * 4.8;
+      const clickZ = hit ? THREE.MathUtils.clamp(hitPoint.z, -3.2, 3.2) : -ny * 2.8;
 
       rippleRef.current = {
         x: clickX,
@@ -294,6 +319,7 @@ function FullscreenQuantumPong({
         couplingScale: cScale,
         rewardUnlocked: isReward,
         collapsed: isCollapsed,
+        level: curLevel,
         agentEnabled: isAgent,
       } = paramsRef.current;
 
@@ -308,6 +334,7 @@ function FullscreenQuantumPong({
         gameState.gate.side = fresh.gate.side;
         gameState.gate.z = fresh.gate.z;
         gameState.gate.cooldown = 0;
+        gameState.graceFrames = fresh.graceFrames;
         gameState.score = 0;
         gameState.collapsed = false;
         gameState.won = false;
@@ -332,9 +359,10 @@ function FullscreenQuantumPong({
         }
       }
 
-      const { event, x: evX, z: evZ } = stepQuantumPong(gameState, {
+      const { event, x: evX, z: evZ, holeDanger = 0 } = stepQuantumPong(gameState, {
         bondStretch: R,
         targetResonances: TARGET_RESONANCES,
+        level: curLevel,
         dt: 0.018,
       });
 
@@ -352,8 +380,18 @@ function FullscreenQuantumPong({
       const rip = rippleRef.current;
       const ripEnv = Math.exp(-rip.age * 1.3) * rip.amp;
 
+      // Update expanding 3D click shockwave ring
+      if (rip.age < 1.8) {
+        clickRingMesh.position.set(rip.x, 0.25, rip.z);
+        clickRingMesh.scale.setScalar(1 + rip.age * 4.5);
+        clickRingMat.opacity = Math.max(0, 0.85 * (1 - rip.age / 1.8));
+      } else {
+        clickRingMat.opacity = 0;
+      }
+
       holeGroup.position.set(hole.x, 0.05, hole.z);
-      holeRim.scale.setScalar(1 + Math.sin(time * 4.5) * 0.07);
+      holeRim.scale.setScalar(1 + Math.sin(time * (4.5 + holeDanger * 9.0)) * (0.07 + holeDanger * 0.1));
+      holeRimMat.opacity = 0.85 + holeDanger * 0.15;
 
       const puckY = 0.78 + Math.sin(time * 3.2) * 0.09;
       puckGroup.position.set(puck.x, puckY, puck.z);
@@ -456,6 +494,8 @@ function FullscreenQuantumPong({
       holeCoreMat.dispose();
       holeRimGeo.dispose();
       holeRimMat.dispose();
+      clickRingGeo.dispose();
+      clickRingMat.dispose();
       puckCoreGeo.dispose();
       puckCoreMat.dispose();
       innerGlowGeo.dispose();
@@ -616,6 +656,7 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
         rewardUnlocked={rewardUnlocked}
         collapsed={collapsed}
         resetToken={resetToken}
+        level={level}
         agentEnabled={agentEnabled}
         onPluck={(pitchNorm) => triggerReflectiveSfx(pitchNorm)}
         onDeflect={handleDeflect}
@@ -631,9 +672,15 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
         <h1 className="qbeck-caps-title">Q-BECK</h1>
 
         <div className="qbeck-top-actions">
-          <span className="qbeck-score-pill" title="Quantum Resonances">
-            {Math.min(score, TARGET_RESONANCES)}/{TARGET_RESONANCES}
-          </span>
+          <div className="qbeck-pip-meter" title={`Level ${level} · ${score}/${TARGET_RESONANCES} Resonances`}>
+            <span className="qbeck-lvl-tag">L{level}</span>
+            {Array.from({ length: TARGET_RESONANCES }, (_, idx) => (
+              <span
+                key={idx}
+                className={`qbeck-pip ${idx < score ? "is-filled" : ""}`}
+              />
+            ))}
+          </div>
           <button
             className={`qbeck-edm-btn ${agentEnabled ? "is-playing" : ""}`}
             onClick={() => setAgentEnabled((a) => !a)}

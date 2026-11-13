@@ -24,6 +24,7 @@ export function createInitialPongState(seed = 0.35) {
     gate: { side: 1, z: 0.0, cooldown: 0 },
     hole: { x: 0.0, z: 0.0 },
     score: 0,
+    graceFrames: 75,
     collapsed: false,
     won: false,
   };
@@ -50,34 +51,41 @@ export function applyPerturbation(state, clickX, clickZ) {
   return { deflected: dist < 2.4, dist };
 }
 
-export function stepQuantumPong(state, { bondStretch = 1.85, targetResonances = 5, dt = 0.018 } = {}) {
+export function stepQuantumPong(
+  state,
+  { bondStretch = 1.85, targetResonances = 5, level = 1, dt = 0.018 } = {}
+) {
   state.time += dt;
   if (state.gate.cooldown > 0) state.gate.cooldown -= 1;
+  if (state.graceFrames > 0) state.graceFrames -= 1;
 
   const stretchNorm = (bondStretch - 0.8) / (3.2 - 0.8);
+  const levelScale = 1 + Math.min(4, level - 1) * 0.12;
 
   // Orbiting Decoherence Hole
-  state.hole.x = Math.sin(state.time * 0.36) * 1.35;
-  state.hole.z = Math.cos(state.time * 0.48) * 0.92;
+  state.hole.x = Math.sin(state.time * 0.36 * levelScale) * 1.35;
+  state.hole.z = Math.cos(state.time * 0.48 * levelScale) * 0.92;
 
   if (state.collapsed || state.won) {
-    return { event: null };
+    return { event: null, holeDanger: 0 };
   }
 
   // Gravitational pull near the decoherence hole
   const hdx = state.hole.x - state.puck.x;
   const hdz = state.hole.z - state.puck.z;
   const hDist = Math.hypot(hdx, hdz);
-  if (hDist < PONG_BOUNDS.holePullRadius && hDist > 0.05) {
-    const pull = 0.00075 / (hDist * hDist + 0.45);
+  const holeDanger = Math.max(0, Math.min(1, (1.8 - hDist) / 1.25));
+
+  if (state.graceFrames === 0 && hDist < PONG_BOUNDS.holePullRadius && hDist > 0.05) {
+    const pull = (0.00075 * levelScale) / (hDist * hDist + 0.45);
     state.puck.vx += (hdx / hDist) * pull;
     state.puck.vz += (hdz / hDist) * pull;
   }
 
-  // Death check: puck falls into the decoherence hole
-  if (hDist < PONG_BOUNDS.holeDeathRadius) {
+  // Death check: puck falls into the decoherence hole (after grace period)
+  if (state.graceFrames === 0 && hDist < PONG_BOUNDS.holeDeathRadius) {
     state.collapsed = true;
-    return { event: "collapse", x: state.hole.x, z: state.hole.z };
+    return { event: "collapse", x: state.hole.x, z: state.hole.z, holeDanger: 1 };
   }
 
   // Gentle viscous damping so clicks feel deliberate & controllable
@@ -127,9 +135,9 @@ export function stepQuantumPong(state, { bondStretch = 1.85, targetResonances = 
 
     if (state.score >= targetResonances) {
       state.won = true;
-      return { event: "win", x: scoredX, z: scoredZ };
+      return { event: "win", x: scoredX, z: scoredZ, holeDanger };
     }
-    return { event: "score", x: scoredX, z: scoredZ };
+    return { event: "score", x: scoredX, z: scoredZ, holeDanger };
   }
 
   // Left / Right wall reflection
@@ -141,7 +149,7 @@ export function stepQuantumPong(state, { bondStretch = 1.85, targetResonances = 
     state.puck.vx = Math.abs(state.puck.vx);
   }
 
-  return { event: null };
+  return { event: null, holeDanger };
 }
 
 /**

@@ -5,7 +5,7 @@ import {
   computeAgentClick,
 } from "../src/physics/QuantumPongEngine.js";
 
-function runCohort(name, { episodes = 150, clickEveryFrames = 14, jitter = 0.25, idle = false }) {
+function runCohort(name, { episodes = 150, clickEveryFrames = 14, jitter = 0.25, level = 1, idle = false }) {
   let wins = 0;
   let collapses = 0;
   let timeouts = 0;
@@ -32,7 +32,7 @@ function runCohort(name, { episodes = 150, clickEveryFrames = 14, jitter = 0.25,
         }
       }
 
-      const { event } = stepQuantumPong(state, { bondStretch: 1.85, targetResonances: 5 });
+      const { event } = stepQuantumPong(state, { bondStretch: 1.85, targetResonances: 5, level });
       if (event === "win") {
         wins += 1;
         totalWinFrames += f;
@@ -56,6 +56,8 @@ function runCohort(name, { episodes = 150, clickEveryFrames = 14, jitter = 0.25,
   );
 }
 
-runCohort("Skilled Human (220ms, low jitter)", { clickEveryFrames: 13, jitter: 0.18 });
-runCohort("Casual Human (330ms, med jitter)", { clickEveryFrames: 20, jitter: 0.45 });
-runCohort("Idle Baseline (no clicks)", { idle: true });
+runCohort("Skilled Human L1 (220ms, low jitter)", { clickEveryFrames: 13, jitter: 0.18, level: 1 });
+runCohort("Casual Human L1 (330ms, med jitter)", { clickEveryFrames: 20, jitter: 0.45, level: 1 });
+runCohort("Casual Human L3 (330ms, med jitter)", { clickEveryFrames: 20, jitter: 0.45, level: 3 });
+runCohort("Idle Baseline (no clicks)", { idle: true, level: 1 });
+
