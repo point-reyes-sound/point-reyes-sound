@@ -556,6 +556,12 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
         </div>
       </header>
 
+      {score === 0 && !rewardUnlocked && (
+        <p className="qbeck-objective-line">
+          Click anywhere on the Wigner surface to steer the wavepacket puck through the crimson ring five times.
+        </p>
+      )}
+
       {rewardUnlocked && (
         <div className="qbeck-reward-banner" role="status">
           <span className="qbeck-reward-badge">LEVEL {level} · SUPERFLUID COHERENCE UNLOCKED</span>

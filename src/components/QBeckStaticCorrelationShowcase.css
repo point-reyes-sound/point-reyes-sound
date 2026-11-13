@@ -137,6 +137,24 @@
   }
 }
 
+.qbeck-objective-line {
+  position: fixed;
+  top: 6.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 18;
+  margin: 0;
+  padding: 0.42rem 1rem;
+  border-radius: 999px;
+  background: rgba(4, 8, 20, 0.58);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 .qbeck-reward-banner {
   position: fixed;
   top: 9.5rem;
