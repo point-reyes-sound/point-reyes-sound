@@ -124,48 +124,199 @@ function FullscreenQuantumPong({
     const waveMesh = new THREE.Mesh(planeGeo, wireMat);
     scene.add(waveMesh);
 
-    // 2. High-Resolution Jewel Puck + Dual Gyroscopic Rings + Comet Wake
+    // 2. Quantum Siren-Fish (Sculpted hourglass koi-siren silhouette swimming in the quantum sea)
     const puckGroup = new THREE.Group();
-    const puckCoreGeo = new THREE.SphereGeometry(0.25, 64, 64);
-    const puckCoreMat = new THREE.MeshPhysicalMaterial({
-      color: 0x2563eb,
-      emissive: 0x1d4ed8,
-      emissiveIntensity: 0.75,
-      metalness: 0.25,
-      roughness: 0.08,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.04,
-    });
+    const fishDisposables = [];
+    const trackDisp = (item) => {
+      fishDisposables.push(item);
+      return item;
+    };
+
+    // Sculpted hourglass torso profile along Y, then rotated so +X is forward
+    const bodyProfile = [
+      new THREE.Vector2(0.001, 0.44),
+      new THREE.Vector2(0.085, 0.38),
+      new THREE.Vector2(0.115, 0.30), // slender neck/collar
+      new THREE.Vector2(0.168, 0.18), // upper torso / bust curve
+      new THREE.Vector2(0.112, 0.03), // tapered waist
+      new THREE.Vector2(0.158, -0.14), // hip / lower curve
+      new THREE.Vector2(0.115, -0.30),
+      new THREE.Vector2(0.058, -0.44), // tail peduncle
+      new THREE.Vector2(0.001, -0.50),
+    ];
+    const bodyCurve = new THREE.SplineCurve(bodyProfile);
+    const bodyPoints = bodyCurve.getPoints(40);
+    const puckCoreGeo = trackDisp(new THREE.LatheGeometry(bodyPoints, 48));
+    puckCoreGeo.rotateZ(-Math.PI / 2); // +X is head, -X is tail
+
+    const puckCoreMat = trackDisp(
+      new THREE.MeshPhysicalMaterial({
+        color: 0x3b82f6,
+        emissive: 0x1d4ed8,
+        emissiveIntensity: 0.68,
+        metalness: 0.18,
+        roughness: 0.1,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.04,
+        iridescence: 1.0,
+        iridescenceIOR: 1.38,
+        sheen: 0.85,
+        sheenColor: new THREE.Color(0xfb7185),
+      }),
+    );
     const puckCore = new THREE.Mesh(puckCoreGeo, puckCoreMat);
-
-    const innerGlowGeo = new THREE.SphereGeometry(0.14, 32, 32);
-    const innerGlowMat = new THREE.MeshBasicMaterial({ color: 0xf43f5e });
-    const innerGlow = new THREE.Mesh(innerGlowGeo, innerGlowMat);
-    puckCore.add(innerGlow);
-
-    const ring1Geo = new THREE.TorusGeometry(0.39, 0.022, 32, 96);
-    const ring1Mat = new THREE.MeshPhysicalMaterial({
-      color: 0x60a5fa,
-      emissive: 0x2563eb,
-      emissiveIntensity: 0.9,
-      metalness: 0.6,
-      roughness: 0.15,
-    });
-    const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
-
-    const ring2Geo = new THREE.TorusGeometry(0.49, 0.014, 24, 96);
-    const ring2Mat = new THREE.MeshPhysicalMaterial({
-      color: 0xf43f5e,
-      emissive: 0xdc2626,
-      emissiveIntensity: 0.95,
-      metalness: 0.6,
-      roughness: 0.15,
-    });
-    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-
     puckGroup.add(puckCore);
+
+    // Subtle pearl-opalescent head & feminine visage
+    const headGeo = trackDisp(new THREE.SphereGeometry(0.125, 32, 32));
+    headGeo.scale(1.18, 0.94, 0.88);
+    const headMat = trackDisp(
+      new THREE.MeshPhysicalMaterial({
+        color: 0xe0e7ff,
+        emissive: 0x60a5fa,
+        emissiveIntensity: 0.32,
+        metalness: 0.1,
+        roughness: 0.14,
+        clearcoat: 1.0,
+        iridescence: 0.8,
+      }),
+    );
+    const headMesh = new THREE.Mesh(headGeo, headMat);
+    headMesh.position.set(0.42, 0.03, 0);
+    puckGroup.add(headMesh);
+
+    // Luminous eyes & subtle crimson lip accent
+    const eyeGeo = trackDisp(new THREE.SphereGeometry(0.022, 16, 16));
+    const eyeMat = trackDisp(new THREE.MeshBasicMaterial({ color: 0x93c5fd }));
+    const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
+    leftEye.position.set(0.50, 0.055, 0.072);
+    const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
+    rightEye.position.set(0.50, 0.055, -0.072);
+    puckGroup.add(leftEye, rightEye);
+
+    const lipGeo = trackDisp(new THREE.TorusGeometry(0.022, 0.007, 12, 24, Math.PI));
+    lipGeo.rotateY(Math.PI / 2);
+    lipGeo.rotateX(Math.PI);
+    const lipMat = trackDisp(new THREE.MeshBasicMaterial({ color: 0xf43f5e }));
+    const lipMesh = new THREE.Mesh(lipGeo, lipMat);
+    lipMesh.position.set(0.555, 0.0, 0);
+    puckGroup.add(lipMesh);
+
+    // Luminous heart-core inside chest
+    const innerGlowGeo = trackDisp(new THREE.SphereGeometry(0.085, 24, 24));
+    const innerGlowMat = trackDisp(new THREE.MeshBasicMaterial({ color: 0xf43f5e }));
+    const innerGlow = new THREE.Mesh(innerGlowGeo, innerGlowMat);
+    innerGlow.position.set(0.18, 0.02, 0);
+    puckGroup.add(innerGlow);
+
+    // Flowing bioluminescent hair-tendrils sweeping back from the crown & temples
+    const tendrilConfigs = [
+      { pts: [[0.44, 0.11, 0.03], [0.22, 0.19, 0.11], [-0.05, 0.15, 0.16], [-0.32, 0.09, 0.11]], color: 0xfb7185, r: 0.015 },
+      { pts: [[0.44, 0.11, -0.03], [0.22, 0.19, -0.11], [-0.05, 0.15, -0.16], [-0.32, 0.09, -0.11]], color: 0xfb7185, r: 0.015 },
+      { pts: [[0.46, 0.13, 0.0], [0.20, 0.24, 0.0], [-0.10, 0.21, 0.02], [-0.38, 0.12, 0.0]], color: 0x60a5fa, r: 0.018 },
+    ];
+    tendrilConfigs.forEach((cfg) => {
+      const curve = new THREE.CatmullRomCurve3(cfg.pts.map((p) => new THREE.Vector3(...p)));
+      const tGeo = trackDisp(new THREE.TubeGeometry(curve, 28, cfg.r, 10, false));
+      const tMat = trackDisp(
+        new THREE.MeshBasicMaterial({
+          color: cfg.color,
+          transparent: true,
+          opacity: 0.82,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+        }),
+      );
+      puckGroup.add(new THREE.Mesh(tGeo, tMat));
+    });
+
+    // Translucent silk-veil fin material
+    const finMat = trackDisp(
+      new THREE.MeshPhysicalMaterial({
+        color: 0xf43f5e,
+        emissive: 0xbe123c,
+        emissiveIntensity: 0.72,
+        transparent: true,
+        opacity: 0.72,
+        roughness: 0.15,
+        side: THREE.DoubleSide,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      }),
+    );
+    const blueFinMat = trackDisp(
+      new THREE.MeshPhysicalMaterial({
+        color: 0x60a5fa,
+        emissive: 0x2563eb,
+        emissiveIntensity: 0.75,
+        transparent: true,
+        opacity: 0.68,
+        roughness: 0.15,
+        side: THREE.DoubleSide,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      }),
+    );
+
+    // Sweeping pectoral fins (graceful arm-like veil fins)
+    const pecShape = new THREE.Shape();
+    pecShape.moveTo(0, 0);
+    pecShape.quadraticCurveTo(-0.18, 0.08, -0.44, 0.24);
+    pecShape.quadraticCurveTo(-0.34, 0.04, -0.22, -0.06);
+    pecShape.quadraticCurveTo(-0.08, -0.05, 0, 0);
+    const pecGeo = trackDisp(new THREE.ShapeGeometry(pecShape, 24));
+    pecGeo.rotateX(Math.PI / 2);
+
+    const leftPec = new THREE.Mesh(pecGeo, blueFinMat);
+    leftPec.position.set(0.22, -0.02, 0.13);
+    leftPec.rotation.y = 0.22;
+    const rightPec = new THREE.Mesh(pecGeo, blueFinMat);
+    rightPec.position.set(0.22, -0.02, -0.13);
+    rightPec.scale.z = -1;
+    rightPec.rotation.y = -0.22;
+    puckGroup.add(leftPec, rightPec);
+
+    // Flowing dorsal crest fin
+    const dorsalShape = new THREE.Shape();
+    dorsalShape.moveTo(0.22, 0.13);
+    dorsalShape.quadraticCurveTo(0.02, 0.34, -0.26, 0.22);
+    dorsalShape.quadraticCurveTo(-0.34, 0.12, -0.42, 0.05);
+    dorsalShape.lineTo(0.22, 0.13);
+    const dorsalGeo = trackDisp(new THREE.ShapeGeometry(dorsalShape, 24));
+    const dorsalMesh = new THREE.Mesh(dorsalGeo, finMat);
+    puckGroup.add(dorsalMesh);
+
+    // Articulated forked koi-mermaid caudal tail fin
+    const tailPivot = new THREE.Group();
+    tailPivot.position.set(-0.46, 0, 0);
+    const tailShape = new THREE.Shape();
+    tailShape.moveTo(0, 0.03);
+    tailShape.quadraticCurveTo(-0.22, 0.26, -0.52, 0.36);
+    tailShape.quadraticCurveTo(-0.36, 0.12, -0.24, 0.0);
+    tailShape.quadraticCurveTo(-0.36, -0.12, -0.52, -0.36);
+    tailShape.quadraticCurveTo(-0.22, -0.26, 0, -0.03);
+    tailShape.closePath();
+    const tailGeo = trackDisp(new THREE.ShapeGeometry(tailShape, 32));
+    tailGeo.rotateX(Math.PI / 2);
+    const tailMesh = new THREE.Mesh(tailGeo, finMat);
+    tailPivot.add(tailMesh);
+    puckGroup.add(tailPivot);
+
+    // Subtle outer quantum aura ring orbiting her waist
+    const ring1Geo = trackDisp(new THREE.TorusGeometry(0.32, 0.012, 16, 64));
+    const ring1Mat = trackDisp(
+      new THREE.MeshBasicMaterial({
+        color: 0x60a5fa,
+        transparent: true,
+        opacity: 0.45,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      }),
+    );
+    const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
+    ring1.rotation.y = Math.PI / 2;
     puckGroup.add(ring1);
-    puckGroup.add(ring2);
+
     scene.add(puckGroup);
 
     // 18-node luminous comet wake behind the puck
@@ -511,10 +662,24 @@ function FullscreenQuantumPong({
       vAttr.needsUpdate = true;
       vortexMat.opacity = 0.58 + holeDanger * 0.35;
 
-      const puckY = 0.78 + Math.sin(time * 3.2) * 0.09;
+      const puckY = 0.78 + Math.sin(time * 3.4) * 0.09;
       puckGroup.position.set(puck.x, puckY, puck.z);
-      ring1.rotation.set(time * 1.8, time * 1.2, 0);
-      ring2.rotation.set(-time * 1.4, time * 2.1, Math.PI / 3);
+
+      // Swim headfirst along velocity vector with graceful banking & tail undulation
+      const speed = Math.hypot(puck.vx, puck.vz);
+      const targetYaw = speed > 0.05 ? Math.atan2(-puck.vz, puck.vx) : puckGroup.rotation.y;
+      let yawDiff = targetYaw - puckGroup.rotation.y;
+      while (yawDiff > Math.PI) yawDiff -= Math.PI * 2;
+      while (yawDiff < -Math.PI) yawDiff += Math.PI * 2;
+      puckGroup.rotation.y += yawDiff * Math.min(1, dt * 10);
+      puckGroup.rotation.x = THREE.MathUtils.clamp(-yawDiff * 0.35, -0.35, 0.35);
+      puckGroup.rotation.z = Math.sin(time * 3.4) * 0.06;
+
+      const swimPhase = time * (6.5 + speed * 1.9);
+      tailPivot.rotation.y = Math.sin(swimPhase) * (0.28 + Math.min(0.24, speed * 0.05));
+      leftPec.rotation.z = Math.sin(swimPhase * 0.7) * 0.22;
+      rightPec.rotation.z = -Math.sin(swimPhase * 0.7) * 0.22;
+      ring1.rotation.z = time * 1.4;
       puckCoreMat.emissive.setHex(isReward ? 0xf43f5e : 0x1d4ed8);
 
       // Update comet wake
@@ -620,14 +785,7 @@ function FullscreenQuantumPong({
       vortexMat.dispose();
       clickRingGeo.dispose();
       clickRingMat.dispose();
-      puckCoreGeo.dispose();
-      puckCoreMat.dispose();
-      innerGlowGeo.dispose();
-      innerGlowMat.dispose();
-      ring1Geo.dispose();
-      ring1Mat.dispose();
-      ring2Geo.dispose();
-      ring2Mat.dispose();
+      fishDisposables.forEach((d) => d.dispose());
       trailMeshes.forEach((m) => {
         m.geometry.dispose();
         m.material.dispose();
