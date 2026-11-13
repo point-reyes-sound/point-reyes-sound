@@ -314,7 +314,7 @@ body {
 .hero-section {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 48px 50px 48px;
+  padding: 0 48px;
 }
 
 /* CINEMATIC HERO VIDEO — FULL-VIEWPORT WIDESCREEN */
@@ -323,7 +323,7 @@ body {
   max-width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  margin-bottom: 48px;
+  margin-bottom: 0;
   display: flex;
   justify-content: center;
 }
@@ -2290,6 +2290,25 @@ body {
   font-size: 0.74rem;
   color: var(--text-muted);
   line-height: 1.5;
+}
+
+.footer-contact-emails {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.footer-contact-emails a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-contact-emails a:hover {
+  color: #38bdf8;
 }
 
 .footer-col-nav,
