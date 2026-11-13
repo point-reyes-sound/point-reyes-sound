@@ -1,6 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { EdmQuantumFluxSonifier } from "../physics/EdmQuantumFluxSonifier";
+import {
+  PONG_BOUNDS,
+  createInitialPongState,
+  applyPerturbation,
+  stepQuantumPong,
+  computeAgentClick,
+} from "../physics/QuantumPongEngine";
 import "./QBeckStaticCorrelationShowcase.css";
 
 const SYSTEMS = [
@@ -20,20 +27,33 @@ function FullscreenQuantumPong({
   rewardUnlocked,
   collapsed,
   resetToken,
+  agentEnabled,
   onPluck,
   onDeflect,
   onScore,
   onCollapse,
 }) {
   const mountRef = useRef(null);
-  const paramsRef = useRef({ bondStretch, couplingScale, rewardUnlocked, collapsed });
+  const paramsRef = useRef({
+    bondStretch,
+    couplingScale,
+    rewardUnlocked,
+    collapsed,
+    agentEnabled,
+  });
   const rippleRef = useRef({ x: 0, z: 0, amp: 0, age: 10 });
   const callbacksRef = useRef({ onPluck, onDeflect, onScore, onCollapse });
   const resetFlagRef = useRef(resetToken);
 
   useEffect(() => {
-    paramsRef.current = { bondStretch, couplingScale, rewardUnlocked, collapsed };
-  }, [bondStretch, couplingScale, rewardUnlocked, collapsed]);
+    paramsRef.current = {
+      bondStretch,
+      couplingScale,
+      rewardUnlocked,
+      collapsed,
+      agentEnabled,
+    };
+  }, [bondStretch, couplingScale, rewardUnlocked, collapsed, agentEnabled]);
 
   useEffect(() => {
     callbacksRef.current = { onPluck, onDeflect, onScore, onCollapse };
@@ -224,11 +244,11 @@ function FullscreenQuantumPong({
     const particlePoints = new THREE.Points(particleGeo, particleMat);
     scene.add(particlePoints);
 
-    // Pong physics state
-    const puck = { x: -2.4, z: 0.35, vx: 0.048, vz: 0.024 };
-    const gate = { side: 1, z: 0.0, cooldown: 0 };
-    const hole = { x: 0, z: 0 };
+    // Shared QuantumPongEngine physics state
+    const gameState = createInitialPongState(0.35);
+    const { puck, gate, hole } = gameState;
     let lastResetSeen = resetFlagRef.current;
+    let agentTick = 0;
 
     const handleGlobalPointerDown = (ev) => {
       if (
@@ -253,21 +273,9 @@ function FullscreenQuantumPong({
         age: 0,
       };
 
-      const dx = puck.x - clickX;
-      const dz = puck.z - clickZ;
-      const dist = Math.hypot(dx, dz) + 0.35;
-      const force = Math.min(0.088, 0.145 / (dist * dist + 0.4));
-      puck.vx += (dx / dist) * force;
-      puck.vz += (dz / dist) * force;
+      const { deflected } = applyPerturbation(gameState, clickX, clickZ);
 
-      const speed = Math.hypot(puck.vx, puck.vz);
-      const maxSpeed = 0.098;
-      if (speed > maxSpeed) {
-        puck.vx = (puck.vx / speed) * maxSpeed;
-        puck.vz = (puck.vz / speed) * maxSpeed;
-      }
-
-      if (dist < 2.2 && callbacksRef.current.onDeflect) {
+      if (deflected && callbacksRef.current.onDeflect) {
         callbacksRef.current.onDeflect((nx + 1) * 0.5);
       } else if (callbacksRef.current.onPluck) {
         callbacksRef.current.onPluck((nx + 1) * 0.5);
@@ -276,94 +284,76 @@ function FullscreenQuantumPong({
     window.addEventListener("pointerdown", handleGlobalPointerDown);
 
     let frameId = 0;
-    let time = 0;
 
     const animate = () => {
       frameId = requestAnimationFrame(animate);
-      time += 0.018;
       rippleRef.current.age += 0.045;
-      if (gate.cooldown > 0) gate.cooldown -= 1;
 
       const {
         bondStretch: R,
         couplingScale: cScale,
         rewardUnlocked: isReward,
         collapsed: isCollapsed,
+        agentEnabled: isAgent,
       } = paramsRef.current;
+
       if (resetFlagRef.current !== lastResetSeen) {
         lastResetSeen = resetFlagRef.current;
-        puck.x = -2.4;
-        puck.z = (Math.random() - 0.5) * 1.6;
-        puck.vx = 0.048;
-        puck.vz = 0.024;
-        gate.side = 1;
-        gate.z = 0;
-        gate.cooldown = 0;
+        const fresh = createInitialPongState((Math.random() - 0.5) * 1.4);
+        gameState.time = fresh.time;
+        gameState.puck.x = fresh.puck.x;
+        gameState.puck.z = fresh.puck.z;
+        gameState.puck.vx = fresh.puck.vx;
+        gameState.puck.vz = fresh.puck.vz;
+        gameState.gate.side = fresh.gate.side;
+        gameState.gate.z = fresh.gate.z;
+        gameState.gate.cooldown = 0;
+        gameState.score = 0;
+        gameState.collapsed = false;
+        gameState.won = false;
       }
 
+      gameState.collapsed = isCollapsed;
+      gameState.won = isReward;
+
+      // Live AI Agent steering when AGENT mode is active
+      agentTick += 1;
+      if (isAgent && !isCollapsed && !isReward && agentTick % 16 === 0) {
+        const gateX = gate.side * PONG_BOUNDS.gateX;
+        const dot = puck.vx * (gateX - puck.x) + puck.vz * (gate.z - puck.z);
+        const hDist = Math.hypot(puck.x - hole.x, puck.z - hole.z);
+        if (dot <= 0 || hDist < 2.0 || agentTick % 32 === 0) {
+          const { x: ax, z: az } = computeAgentClick(gameState, 0.16);
+          rippleRef.current = { x: ax, z: az, amp: 1.1, age: 0 };
+          applyPerturbation(gameState, ax, az);
+          if (callbacksRef.current.onDeflect) {
+            callbacksRef.current.onDeflect(THREE.MathUtils.clamp((ax / 4.8 + 1) * 0.5, 0, 1));
+          }
+        }
+      }
+
+      const { event, x: evX, z: evZ } = stepQuantumPong(gameState, {
+        bondStretch: R,
+        targetResonances: TARGET_RESONANCES,
+        dt: 0.018,
+      });
+
+      if (event === "collapse") {
+        rippleRef.current = { x: evX, z: evZ, amp: 1.65, age: 0 };
+        if (callbacksRef.current.onCollapse) callbacksRef.current.onCollapse();
+      } else if (event === "score" || event === "win") {
+        rippleRef.current = { x: evX, z: evZ, amp: 1.45, age: 0 };
+        if (callbacksRef.current.onScore) callbacksRef.current.onScore();
+      }
+
+      const time = gameState.time;
       const stretchNorm = (R - 0.8) / (3.2 - 0.8);
       const coupling = Math.max(0.15, cScale);
       const rip = rippleRef.current;
       const ripEnv = Math.exp(-rip.age * 1.3) * rip.amp;
 
-      // Orbiting Decoherence Hole
-      hole.x = Math.sin(time * 0.45) * 1.55;
-      hole.z = Math.cos(time * 0.62) * 1.05;
       holeGroup.position.set(hole.x, 0.05, hole.z);
       holeRim.scale.setScalar(1 + Math.sin(time * 4.5) * 0.07);
-
-      if (!isCollapsed) {
-        // Gravitational pull near the decoherence hole
-        const hdx = hole.x - puck.x;
-        const hdz = hole.z - puck.z;
-        const hDist = Math.hypot(hdx, hdz);
-        if (hDist < 2.2 && hDist > 0.05) {
-          const pull = 0.0018 / (hDist * hDist + 0.35);
-          puck.vx += (hdx / hDist) * pull;
-          puck.vz += (hdz / hDist) * pull;
-        }
-
-        // Death check: puck falls into the decoherence hole
-        if (hDist < 0.68 && !isReward) {
-          rippleRef.current = { x: hole.x, z: hole.z, amp: 1.65, age: 0 };
-          if (callbacksRef.current.onCollapse) {
-            callbacksRef.current.onCollapse();
-          }
-        }
-
-        puck.vx += Math.sin(time * 2.1 + puck.z) * 0.0005 * (0.4 + stretchNorm);
-        puck.vz += Math.cos(time * 1.9 + puck.x) * 0.0005 * (0.4 + stretchNorm);
-        puck.x += puck.vx;
-        puck.z += puck.vz;
-      }
-
-      if (puck.z > 2.55) {
-        puck.z = 2.55;
-        puck.vz = -Math.abs(puck.vz);
-      } else if (puck.z < -2.55) {
-        puck.z = -2.55;
-        puck.vz = Math.abs(puck.vz);
-      }
-
-      const gateX = gate.side * 4.25;
-      if (gate.cooldown === 0 && Math.hypot(puck.x - gateX, puck.z - gate.z) < 0.9) {
-        gate.side *= -1;
-        gate.z = (Math.random() - 0.5) * 3.2;
-        gate.cooldown = 36;
-        puck.vx = -puck.vx * 1.04;
-        rippleRef.current = { x: gateX, z: gate.z, amp: 1.45, age: 0 };
-        if (callbacksRef.current.onScore) {
-          callbacksRef.current.onScore();
-        }
-      }
-
-      if (puck.x > 4.65) {
-        puck.x = 4.65;
-        puck.vx = -Math.abs(puck.vx);
-      } else if (puck.x < -4.65) {
-        puck.x = -4.65;
-        puck.vx = Math.abs(puck.vx);
-      }
 
       const puckY = 0.78 + Math.sin(time * 3.2) * 0.09;
       puckGroup.position.set(puck.x, puckY, puck.z);
@@ -506,6 +496,7 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
   const [rewardUnlocked, setRewardUnlocked] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [resetToken, setResetToken] = useState(0);
+  const [agentEnabled, setAgentEnabled] = useState(false);
   const [isEdmPlaying, setIsEdmPlaying] = useState(false);
   const sonifierRef = useRef(null);
 
@@ -625,6 +616,7 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
         rewardUnlocked={rewardUnlocked}
         collapsed={collapsed}
         resetToken={resetToken}
+        agentEnabled={agentEnabled}
         onPluck={(pitchNorm) => triggerReflectiveSfx(pitchNorm)}
         onDeflect={handleDeflect}
         onScore={handleScore}
@@ -642,6 +634,13 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
           <span className="qbeck-score-pill" title="Quantum Resonances">
             {Math.min(score, TARGET_RESONANCES)}/{TARGET_RESONANCES}
           </span>
+          <button
+            className={`qbeck-edm-btn ${agentEnabled ? "is-playing" : ""}`}
+            onClick={() => setAgentEnabled((a) => !a)}
+            title="Toggle Automated Quantum Pong Agent"
+          >
+            {agentEnabled ? "AGENT: ON" : "AGENT"}
+          </button>
           <button
             className={`qbeck-edm-btn ${isEdmPlaying ? "is-playing" : ""}`}
             onClick={toggleEdmSound}
