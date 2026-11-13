@@ -749,7 +749,6 @@ export default function App() {
             <a href="#research" className="nav-research-link">
               <span className="pulse-dot"></span> Research
             </a>
-            <a href="#contact">Contact</a>
             <a 
               href="https://github.com/point-reyes-sound" 
               target="_blank" 
