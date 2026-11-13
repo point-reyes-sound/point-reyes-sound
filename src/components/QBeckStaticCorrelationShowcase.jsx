@@ -18,22 +18,30 @@ function FullscreenQuantumPong({
   bondStretch,
   couplingScale,
   rewardUnlocked,
+  collapsed,
+  resetToken,
   onPluck,
   onDeflect,
   onScore,
+  onCollapse,
 }) {
   const mountRef = useRef(null);
-  const paramsRef = useRef({ bondStretch, couplingScale, rewardUnlocked });
+  const paramsRef = useRef({ bondStretch, couplingScale, rewardUnlocked, collapsed });
   const rippleRef = useRef({ x: 0, z: 0, amp: 0, age: 10 });
-  const callbacksRef = useRef({ onPluck, onDeflect, onScore });
+  const callbacksRef = useRef({ onPluck, onDeflect, onScore, onCollapse });
+  const resetFlagRef = useRef(resetToken);
 
   useEffect(() => {
-    paramsRef.current = { bondStretch, couplingScale, rewardUnlocked };
-  }, [bondStretch, couplingScale, rewardUnlocked]);
+    paramsRef.current = { bondStretch, couplingScale, rewardUnlocked, collapsed };
+  }, [bondStretch, couplingScale, rewardUnlocked, collapsed]);
 
   useEffect(() => {
-    callbacksRef.current = { onPluck, onDeflect, onScore };
-  }, [onPluck, onDeflect, onScore]);
+    callbacksRef.current = { onPluck, onDeflect, onScore, onCollapse };
+  }, [onPluck, onDeflect, onScore, onCollapse]);
+
+  useEffect(() => {
+    resetFlagRef.current = resetToken;
+  }, [resetToken]);
 
   useEffect(() => {
     const container = mountRef.current;
@@ -168,6 +176,25 @@ function FullscreenQuantumPong({
     gateMesh.rotation.y = Math.PI / 2;
     scene.add(gateMesh);
 
+    // 3b. Decoherence Hole (Obsidian-black event horizon + crimson accretion rim)
+    const holeGroup = new THREE.Group();
+    const holeCoreGeo = new THREE.CircleGeometry(0.56, 48);
+    holeCoreGeo.rotateX(-Math.PI / 2);
+    const holeCoreMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    const holeCore = new THREE.Mesh(holeCoreGeo, holeCoreMat);
+
+    const holeRimGeo = new THREE.TorusGeometry(0.6, 0.045, 24, 64);
+    holeRimGeo.rotateX(Math.PI / 2);
+    const holeRimMat = new THREE.MeshBasicMaterial({
+      color: 0xe11d48,
+      transparent: true,
+      opacity: 0.92,
+    });
+    const holeRim = new THREE.Mesh(holeRimGeo, holeRimMat);
+    holeGroup.add(holeCore);
+    holeGroup.add(holeRim);
+    scene.add(holeGroup);
+
     // 4. Royal Blue & Crimson Quantum Flux Particles
     const particleCount = 480;
     const pPositions = new Float32Array(particleCount * 3);
@@ -198,8 +225,10 @@ function FullscreenQuantumPong({
     scene.add(particlePoints);
 
     // Pong physics state
-    const puck = { x: -1.8, z: 0.2, vx: 0.048, vz: 0.024 };
+    const puck = { x: -2.4, z: 0.35, vx: 0.048, vz: 0.024 };
     const gate = { side: 1, z: 0.0, cooldown: 0 };
+    const hole = { x: 0, z: 0 };
+    let lastResetSeen = resetFlagRef.current;
 
     const handleGlobalPointerDown = (ev) => {
       if (
@@ -255,16 +284,58 @@ function FullscreenQuantumPong({
       rippleRef.current.age += 0.045;
       if (gate.cooldown > 0) gate.cooldown -= 1;
 
-      const { bondStretch: R, couplingScale: cScale, rewardUnlocked: isReward } = paramsRef.current;
+      const {
+        bondStretch: R,
+        couplingScale: cScale,
+        rewardUnlocked: isReward,
+        collapsed: isCollapsed,
+      } = paramsRef.current;
+      if (resetFlagRef.current !== lastResetSeen) {
+        lastResetSeen = resetFlagRef.current;
+        puck.x = -2.4;
+        puck.z = (Math.random() - 0.5) * 1.6;
+        puck.vx = 0.048;
+        puck.vz = 0.024;
+        gate.side = 1;
+        gate.z = 0;
+        gate.cooldown = 0;
+      }
+
       const stretchNorm = (R - 0.8) / (3.2 - 0.8);
       const coupling = Math.max(0.15, cScale);
       const rip = rippleRef.current;
       const ripEnv = Math.exp(-rip.age * 1.3) * rip.amp;
 
-      puck.vx += Math.sin(time * 2.1 + puck.z) * 0.0005 * (0.4 + stretchNorm);
-      puck.vz += Math.cos(time * 1.9 + puck.x) * 0.0005 * (0.4 + stretchNorm);
-      puck.x += puck.vx;
-      puck.z += puck.vz;
+      // Orbiting Decoherence Hole
+      hole.x = Math.sin(time * 0.45) * 1.55;
+      hole.z = Math.cos(time * 0.62) * 1.05;
+      holeGroup.position.set(hole.x, 0.05, hole.z);
+      holeRim.scale.setScalar(1 + Math.sin(time * 4.5) * 0.07);
+
+      if (!isCollapsed) {
+        // Gravitational pull near the decoherence hole
+        const hdx = hole.x - puck.x;
+        const hdz = hole.z - puck.z;
+        const hDist = Math.hypot(hdx, hdz);
+        if (hDist < 2.2 && hDist > 0.05) {
+          const pull = 0.0018 / (hDist * hDist + 0.35);
+          puck.vx += (hdx / hDist) * pull;
+          puck.vz += (hdz / hDist) * pull;
+        }
+
+        // Death check: puck falls into the decoherence hole
+        if (hDist < 0.68 && !isReward) {
+          rippleRef.current = { x: hole.x, z: hole.z, amp: 1.65, age: 0 };
+          if (callbacksRef.current.onCollapse) {
+            callbacksRef.current.onCollapse();
+          }
+        }
+
+        puck.vx += Math.sin(time * 2.1 + puck.z) * 0.0005 * (0.4 + stretchNorm);
+        puck.vz += Math.cos(time * 1.9 + puck.x) * 0.0005 * (0.4 + stretchNorm);
+        puck.x += puck.vx;
+        puck.z += puck.vz;
+      }
 
       if (puck.z > 2.55) {
         puck.z = 2.55;
@@ -340,7 +411,8 @@ function FullscreenQuantumPong({
             : 0;
 
         const puckDip = Math.exp(-((x - puck.x) ** 2 + (z - puck.z) ** 2) * 1.2) * 0.45;
-        const y = (g1 + g2) * 0.85 + interference * 0.72 + rippleWave + puckDip;
+        const holeFunnel = -1.95 * Math.exp(-((x - hole.x) ** 2 + (z - hole.z) ** 2) / 0.55);
+        const y = (g1 + g2) * 0.85 + interference * 0.72 + rippleWave + puckDip + holeFunnel;
         positions.setY(i, y - 0.35);
 
         // Positive lobes = deep Royal Blue (#1d4ed8 -> #60a5fa), Negative/ripples = Crimson (#be123c -> #fb7185)
@@ -390,6 +462,10 @@ function FullscreenQuantumPong({
       wireMat.dispose();
       gateGeo.dispose();
       gateMat.dispose();
+      holeCoreGeo.dispose();
+      holeCoreMat.dispose();
+      holeRimGeo.dispose();
+      holeRimMat.dispose();
       puckCoreGeo.dispose();
       puckCoreMat.dispose();
       innerGlowGeo.dispose();
@@ -428,6 +504,8 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
   const [streak, setStreak] = useState(0);
   const [level, setLevel] = useState(1);
   const [rewardUnlocked, setRewardUnlocked] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [resetToken, setResetToken] = useState(0);
   const [isEdmPlaying, setIsEdmPlaying] = useState(false);
   const sonifierRef = useRef(null);
 
@@ -502,10 +580,29 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
     setScore(0);
     setStreak(0);
     setRewardUnlocked(false);
+    setCollapsed(false);
+    setResetToken((t) => t + 1);
     setLevel((l) => l + 1);
     const nextIdx = (systemIdx + 1) % SYSTEMS.length;
     setSystemIdx(nextIdx);
     triggerReflectiveSfx(0.75, SYSTEMS[nextIdx].id);
+  };
+
+  const handleCollapse = () => {
+    setCollapsed(true);
+    setScore(0);
+    setStreak(0);
+    if (sonifierRef.current) {
+      sonifierRef.current.triggerCollapseSfx();
+    }
+  };
+
+  const handleReinitialize = () => {
+    setCollapsed(false);
+    setScore(0);
+    setStreak(0);
+    setResetToken((t) => t + 1);
+    triggerReflectiveSfx(0.5);
   };
 
   const toggleEdmSound = () => {
@@ -526,9 +623,12 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
         bondStretch={bondStretch}
         couplingScale={couplingScale}
         rewardUnlocked={rewardUnlocked}
+        collapsed={collapsed}
+        resetToken={resetToken}
         onPluck={(pitchNorm) => triggerReflectiveSfx(pitchNorm)}
         onDeflect={handleDeflect}
         onScore={handleScore}
+        onCollapse={handleCollapse}
       />
 
       <header className="qbeck-top-bar">
@@ -556,10 +656,20 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
         </div>
       </header>
 
-      {score === 0 && !rewardUnlocked && (
+      {score === 0 && !rewardUnlocked && !collapsed && (
         <p className="qbeck-objective-line">
-          Click anywhere on the Wigner surface to steer the wavepacket puck through the crimson ring five times.
+          Steer the puck through the crimson ring five times—avoid the black decoherence hole.
         </p>
+      )}
+
+      {collapsed && (
+        <div className="qbeck-reward-banner" role="alert">
+          <span className="qbeck-reward-badge">DECOHERENCE SINGULARITY</span>
+          <strong className="qbeck-reward-title">Wavefunction Collapsed</strong>
+          <button type="button" className="qbeck-reward-btn" onClick={handleReinitialize}>
+            Re-Initialize
+          </button>
+        </div>
       )}
 
       {rewardUnlocked && (

@@ -447,5 +447,46 @@ export class EdmQuantumFluxSonifier {
       osc.stop(now + i * 0.06 + 1.15);
     });
   }
+
+  /**
+   * Dramatic descending sub-bass + filtered noise collapse when the puck falls into the decoherence hole.
+   */
+  triggerCollapseSfx() {
+    const ctx = this.ensureContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    const dest = this.masterGain || ctx.destination;
+
+    const osc = ctx.createOscillator();
+    const sub = ctx.createOscillator();
+    const filter = ctx.createBiquadFilter();
+    const gain = ctx.createGain();
+
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(220, now);
+    osc.frequency.exponentialRampToValueAtTime(34, now + 0.55);
+
+    sub.type = "sine";
+    sub.frequency.setValueAtTime(110, now);
+    sub.frequency.exponentialRampToValueAtTime(28, now + 0.65);
+
+    filter.type = "lowpass";
+    filter.Q.setValueAtTime(6.0, now);
+    filter.frequency.setValueAtTime(1800, now);
+    filter.frequency.exponentialRampToValueAtTime(90, now + 0.58);
+
+    gain.gain.setValueAtTime(0.32, now);
+    gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.68);
+
+    osc.connect(filter);
+    sub.connect(filter);
+    filter.connect(gain);
+    gain.connect(dest);
+
+    osc.start(now);
+    sub.start(now);
+    osc.stop(now + 0.7);
+    sub.stop(now + 0.7);
+  }
 }
 
