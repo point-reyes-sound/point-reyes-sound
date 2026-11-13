@@ -199,23 +199,116 @@ function FullscreenQuantumPong({
     gateMesh.rotation.y = Math.PI / 2;
     scene.add(gateMesh);
 
-    // 3b. Decoherence Hole (Obsidian-black event horizon + crimson accretion rim)
+    // 3b. Decoherence Singularity (3D Event Horizon + Gravitational Lensing + Swirling Accretion Disk)
     const holeGroup = new THREE.Group();
-    const holeCoreGeo = new THREE.CircleGeometry(0.56, 48);
-    holeCoreGeo.rotateX(-Math.PI / 2);
+    const holeCoreGeo = new THREE.SphereGeometry(0.44, 64, 64);
     const holeCoreMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
     const holeCore = new THREE.Mesh(holeCoreGeo, holeCoreMat);
+    holeCore.position.y = 0.22;
 
-    const holeRimGeo = new THREE.TorusGeometry(0.6, 0.045, 24, 64);
+    const holeRimGeo = new THREE.TorusGeometry(0.46, 0.018, 24, 96);
     holeRimGeo.rotateX(Math.PI / 2);
     const holeRimMat = new THREE.MeshBasicMaterial({
-      color: 0xe11d48,
+      color: 0xfb7185,
       transparent: true,
       opacity: 0.92,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
     });
     const holeRim = new THREE.Mesh(holeRimGeo, holeRimMat);
+    holeRim.position.y = 0.22;
+
+    const lensArcGeo = new THREE.TorusGeometry(0.51, 0.024, 24, 96);
+    const lensArcMat = new THREE.MeshBasicMaterial({
+      color: 0xe11d48,
+      transparent: true,
+      opacity: 0.55,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const lensArc = new THREE.Mesh(lensArcGeo, lensArcMat);
+    lensArc.position.y = 0.22;
+    lensArc.rotation.x = 0.38;
+    lensArc.rotation.z = -0.22;
+
+    const accretionGeo = new THREE.RingGeometry(0.47, 1.38, 96, 8);
+    accretionGeo.rotateX(-Math.PI / 2);
+    const accretionMat = new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+      blending: THREE.AdditiveBlending,
+      uniforms: {
+        uTime: { value: 0 },
+        uDanger: { value: 0 },
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        varying vec3 vPos;
+        void main() {
+          vUv = uv;
+          vPos = position;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        uniform float uDanger;
+        varying vec2 vUv;
+        varying vec3 vPos;
+        void main() {
+          float r = length(vPos.xz);
+          float normR = clamp((r - 0.47) / (1.38 - 0.47), 0.0, 1.0);
+          float angle = atan(vPos.z, vPos.x);
+          float kepler = angle - uTime * (2.6 + (1.0 - normR) * 3.8) + 7.5 / (r + 0.12);
+          float spiral1 = 0.5 + 0.5 * sin(kepler * 3.0);
+          float spiral2 = 0.5 + 0.5 * sin(kepler * 5.0 - uTime * 2.2);
+          float streaks = mix(spiral1, spiral2, 0.45);
+          float innerGlow = exp(-normR * 3.6);
+          float outerFade = smoothstep(1.0, 0.58, normR) * smoothstep(0.0, 0.08, normR);
+
+          vec3 hotCore = vec3(1.0, 0.84, 0.88);
+          vec3 crimson = vec3(0.88, 0.11, 0.28);
+          vec3 royalBlue = vec3(0.23, 0.51, 0.96);
+
+          vec3 col = mix(crimson, royalBlue, smoothstep(0.32, 0.92, normR));
+          col = mix(col, hotCore, innerGlow * (0.65 + uDanger * 0.35));
+          float alpha = outerFade * (0.28 + 0.52 * streaks + 0.45 * innerGlow) * (0.78 + uDanger * 0.35);
+          gl_FragColor = vec4(col, clamp(alpha, 0.0, 0.95));
+        }
+      `,
+    });
+    const accretionDisk = new THREE.Mesh(accretionGeo, accretionMat);
+    accretionDisk.position.y = 0.22;
+    accretionDisk.rotation.x = 0.18;
+    accretionDisk.rotation.z = -0.08;
+
+    const VORTEX_COUNT = 100;
+    const vortexPos = new Float32Array(VORTEX_COUNT * 3);
+    const vortexMeta = Array.from({ length: VORTEX_COUNT }, () => ({
+      angle: Math.random() * Math.PI * 2,
+      radius: 0.48 + Math.random() * 0.92,
+      speed: 1.6 + Math.random() * 2.4,
+      yOffset: (Math.random() - 0.5) * 0.14,
+    }));
+    const vortexGeo = new THREE.BufferGeometry();
+    vortexGeo.setAttribute('position', new THREE.BufferAttribute(vortexPos, 3));
+    const vortexMat = new THREE.PointsMaterial({
+      color: 0xfb7185,
+      size: 0.048,
+      transparent: true,
+      opacity: 0.72,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const vortexPoints = new THREE.Points(vortexGeo, vortexMat);
+    vortexPoints.position.y = 0.22;
+
     holeGroup.add(holeCore);
     holeGroup.add(holeRim);
+    holeGroup.add(lensArc);
+    holeGroup.add(accretionDisk);
+    holeGroup.add(vortexPoints);
     scene.add(holeGroup);
 
     // 4. Royal Blue & Crimson Quantum Flux Particles
@@ -390,8 +483,33 @@ function FullscreenQuantumPong({
       }
 
       holeGroup.position.set(hole.x, 0.05, hole.z);
-      holeRim.scale.setScalar(1 + Math.sin(time * (4.5 + holeDanger * 9.0)) * (0.07 + holeDanger * 0.1));
+      const pulse = 1 + Math.sin(time * (4.5 + holeDanger * 9.0)) * (0.04 + holeDanger * 0.07);
+      holeRim.scale.setScalar(pulse);
       holeRimMat.opacity = 0.85 + holeDanger * 0.15;
+      lensArc.scale.setScalar(1 + Math.cos(time * 3.2) * 0.03 + holeDanger * 0.06);
+      lensArc.rotation.y = time * 0.45;
+      lensArcMat.opacity = 0.45 + holeDanger * 0.42;
+      accretionMat.uniforms.uTime.value = time;
+      accretionMat.uniforms.uDanger.value = holeDanger;
+
+      const vAttr = vortexGeo.attributes.position;
+      for (let i = 0; i < VORTEX_COUNT; i++) {
+        const vm = vortexMeta[i];
+        vm.angle += dt * (vm.speed + (1.4 - vm.radius) * 2.2) * (1 + holeDanger * 0.75);
+        vm.radius -= dt * (0.28 + holeDanger * 0.32);
+        if (vm.radius < 0.45) {
+          vm.radius = 1.28 + Math.random() * 0.16;
+          vm.angle = Math.random() * Math.PI * 2;
+        }
+        vAttr.setXYZ(
+          i,
+          Math.cos(vm.angle) * vm.radius,
+          vm.yOffset * ((vm.radius - 0.44) / 0.95),
+          Math.sin(vm.angle) * vm.radius,
+        );
+      }
+      vAttr.needsUpdate = true;
+      vortexMat.opacity = 0.58 + holeDanger * 0.35;
 
       const puckY = 0.78 + Math.sin(time * 3.2) * 0.09;
       puckGroup.position.set(puck.x, puckY, puck.z);
@@ -494,6 +612,12 @@ function FullscreenQuantumPong({
       holeCoreMat.dispose();
       holeRimGeo.dispose();
       holeRimMat.dispose();
+      lensArcGeo.dispose();
+      lensArcMat.dispose();
+      accretionGeo.dispose();
+      accretionMat.dispose();
+      vortexGeo.dispose();
+      vortexMat.dispose();
       clickRingGeo.dispose();
       clickRingMat.dispose();
       puckCoreGeo.dispose();
