@@ -3,6 +3,7 @@ import "./App.css";
 import LandingPage from "./LandingPage";
 import MolecularOrbitalWorkstation from "./components/MolecularOrbitalWorkstation";
 import QBoltzAgentConsole from "./components/QBoltzAgentConsole";
+import QBeckStaticCorrelationShowcase from "./components/QBeckStaticCorrelationShowcase";
 import PreprintSpotlight from "./PreprintSpotlight";
 import { QuantumSonificationEngine } from "./physics/QuantumSonificationEngine";
 import PointReyesSound3DBackground from "./PointReyesSound3DBackground";
@@ -200,6 +201,14 @@ export default function App() {
     const path = window.location.pathname.toLowerCase().replace(/\/$/, "");
     const hash = window.location.hash.toLowerCase().replace(/^#\/?/, "");
     if (
+      path === "/qbeck" ||
+      path === "/static-correlation" ||
+      hash === "qbeck" ||
+      hash === "static-correlation"
+    ) {
+      return "qbeck";
+    }
+    if (
       path === "/interactive" ||
       path === "/interactive.html" ||
       path === "/lab" ||
@@ -355,6 +364,17 @@ export default function App() {
 
   const switchAppTab = (tab) => {
     openAppView(tab);
+  };
+
+  const openQBeckView = () => {
+    stopAudioIfPlaying();
+    setCurrentView("qbeck");
+    if (typeof window !== "undefined") {
+      window.history.pushState({ page: "qbeck" }, "", "/qbeck");
+    }
+    if (typeof document !== "undefined") {
+      document.title = "Q-BECK // Static Correlation & Cumulant Kernel Closure | Point Reyes Sound";
+    }
   };
 
   const closeAppView = () => {
@@ -530,6 +550,16 @@ export default function App() {
     if (!salesName || !salesEmail || !salesOrg) return;
     setSalesSubmitted(true);
   };
+
+  // If user opens the Q-BECK Static Correlation Preprint Observatory
+  if (currentView === "qbeck") {
+    return (
+      <QBeckStaticCorrelationShowcase
+        onBackHome={closeAppView}
+        onOpenConsole={() => openAppView("orbitals")}
+      />
+    );
+  }
 
   // If user opens the application view (Interactive Q-BOLTZ Agent Console)
   if (currentView === "interactive") {
@@ -744,6 +774,13 @@ export default function App() {
               title="Launch Interactive Molecular Orbital Workstation"
             >
               Preview
+            </button>
+            <button
+              className="nav-header-tab"
+              onClick={openQBeckView}
+              title="Explore Q-BECK Static Correlation Preprint Observatory (/qbeck)"
+            >
+              Q-BECK
             </button>
             <a href="#about">About</a>
             <a href="#research" className="nav-research-link">

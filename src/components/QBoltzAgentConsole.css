@@ -1758,3 +1758,52 @@
     min-height: 240px;
   }
 }
+
+.preprint-inline-finding {
+  margin-top: 0.95rem;
+  padding: 0.78rem 0.9rem;
+  border-radius: 10px;
+  background: rgba(56, 189, 248, 0.06);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.preprint-inline-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.preprint-inline-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  color: #34d399;
+}
+
+.preprint-inline-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: #7dd3fc;
+  text-decoration: none;
+}
+
+.preprint-inline-link:hover {
+  text-decoration: underline;
+}
+
+.preprint-inline-metric {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  color: #f8fafc;
+}
+
+.preprint-inline-note {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #94a3b8;
+}

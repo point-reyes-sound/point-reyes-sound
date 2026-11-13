@@ -38,7 +38,9 @@ export default defineConfig({
             req.url === '/q-boltz' || req.url === '/q-boltz/' ||
             req.url === '/qboltz' || req.url === '/qboltz/' ||
             req.url === '/demo' || req.url === '/demo/' ||
-            req.url === '/orbitals' || req.url === '/orbitals/'
+            req.url === '/orbitals' || req.url === '/orbitals/' ||
+            req.url === '/qbeck' || req.url === '/qbeck/' ||
+            req.url === '/static-correlation' || req.url === '/static-correlation/'
           ) {
             req.url = '/index.html';
           }

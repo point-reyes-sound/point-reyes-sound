@@ -141,6 +141,14 @@
       "destination": "/index.html"
     },
     {
+      "source": "/qbeck",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/static-correlation",
+      "destination": "/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
