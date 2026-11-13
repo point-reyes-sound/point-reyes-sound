@@ -88,8 +88,35 @@ const researchThemes = [
 
 const publicationList = [
   {
-    id: "arxiv-2608-14979",
+    id: "arxiv-2611-17245",
     type: "Lead Preprint",
+    title: "Quantum Boltzmann Equation for Static Correlation with Cumulant Kernel Closure",
+    authors: "Romit Chakraborty",
+    affil: "Point Reyes Sound, Inc.",
+    journal: "arXiv:2611.17245 [physics.chem-ph, quant-ph]",
+    date: "November 2026",
+    doi: "10.48550/arXiv.2611.17245",
+    doiUrl: "https://doi.org/10.48550/arXiv.2611.17245",
+    zenodoDoi: "10.5281/zenodo.24149207",
+    zenodoUrl: "https://doi.org/10.5281/zenodo.24149207",
+    datasetUrl: "https://github.com/point-reyes-sound/qbeck-static-correlation-data",
+    arxivUrl: "https://arxiv.org/abs/2611.17245",
+    pdf: "https://arxiv.org/pdf/2611.17245",
+    featured: true,
+    abstract: "We introduce the Quantum Boltzmann Equation with Cumulant Kernel Closure (Q-BECK), closing the two-particle cumulant directly inside the collision kernel to capture strong static correlation without explicit O(N⁴) two-particle reduced density matrix storage or manual active-space selection. Across 36 benchmark systems up to N_AO = 300 on a single Apple M2 CPU, Q-BECK exhibits empirical O(N^2.981) runtime scaling and bounded O(N²) working memory (12.44–28.88 MB), while resolving benzyne diradical isomer splittings, H₃ Generalized Pauli Constraint polytope trajectories, and N₂ triple-bond dissociation.",
+    bibtex: `@article{chakraborty2026qbeck,
+  title={Quantum Boltzmann Equation for Static Correlation with Cumulant Kernel Closure},
+  author={Chakraborty, Romit},
+  journal={arXiv preprint arXiv:2611.17245},
+  year={2026},
+  doi={10.48550/arXiv.2611.17245},
+  url={https://arxiv.org/abs/2611.17245},
+  note={Benchmark suite & dataset: Zenodo DOI 10.5281/zenodo.24149207}
+}`
+  },
+  {
+    id: "arxiv-2608-14979",
+    type: "Preprint",
     title: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities",
     authors: "Romit Chakraborty",
     affil: "Point Reyes Sound, Inc.",
@@ -764,7 +791,7 @@ export default function App() {
               onEnded={() => setIsVideoEnded(true)}
               onPlay={() => setIsVideoEnded(false)}
             />
-            {isVideoEnded ? (
+            {isVideoEnded && (
               <button 
                 onClick={handleReplay} 
                 className="video-replay-overlay-btn"
@@ -772,387 +799,18 @@ export default function App() {
               >
                 <span className="replay-icon">↺</span> Replay Video
               </button>
-            ) : (
-              <button 
-                onClick={toggleSound} 
-                className={`video-audio-toggle-btn ${!isVideoMuted ? 'audio-live' : ''}`}
-                title={isVideoMuted ? "Unmute" : "Mute"}
-              >
-                <span className="audio-toggle-icon" style={{ display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle', marginRight: '5px' }}>
-                  {isVideoMuted ? (
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-                  ) : (
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                  )}
-                </span>
-                {isVideoMuted ? "Unmute" : "Mute"}
-              </button>
             )}
           </div>
         </div>
       </section>
 
-      {/* 3. RESEARCH SECTION: QUANTUM BOLTZMANN SOLVER, PUBLICATIONS & PATENTS, HARDWARE ACCELERATION */}
-      <section id="research" className="section-block">
-        {/* QUANTUM BOLTZMANN SOLVER HERO BOX */}
-        <div className="hero-title-box">
-          <div className="hero-github-badge-row">
-            <a 
-              href="https://github.com/point-reyes-sound" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hero-github-badge"
-              title="Point Reyes Sound GitHub Organization"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="gh-badge-svg">
-                <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-              </svg>
-              <span className="badge-org">github.com/point-reyes-sound</span>
-              <span className="badge-sep">&bull;</span>
-              <span className="badge-tagline">Continuous phase-space kinetics for strongly correlated electrons.</span>
-            </a>
-          </div>
-          <h1 className="hero-title">
-            Quantum Boltzmann Solver
-          </h1>
-          <p className="hero-lead">
-            Building Electronic Structure for the Next Century
-          </p>
-          <div className="hero-institutional-footnote-wrap">
-            <a 
-              href="/news/alchemist-chicago-2026" 
-              className="hero-institutional-footnote"
-              title="View Point Reyes Sound milestone announcement"
-            >
-              Point Reyes Sound is excited to join Alchemist Chicago’s final selection stage in Chicago, October 19–23, as one of 30 companies selected for the program.
-            </a>
-            <span className="hero-institutional-sep" aria-hidden="true">&bull;</span>
-            <a 
-              href="https://polsky.uchicago.edu/2026/10/19/meet-the-30-semifinalists-in-alchemist-chicagos-second-cohort/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hero-institutional-press-link"
-              title="Read official announcement on University of Chicago Polsky Center"
-            >
-              Polsky Press Release ↗
-            </a>
-          </div>
-        </div>
-
-        {/* FEATURED RESEARCH PAPER SPOTLIGHT — INTERACTIVE ACTIVE BELT */}
-        <PreprintSpotlight 
-          onCopyBibtex={() => handleCopyBibtex(publicationList[0])}
-          copiedBibtexId={copiedBibtexId}
-        />
-
-        {/* PUBLICATIONS & INTELLECTUAL PROPERTY SUB-BLOCK */}
-        <div className="research-pub-block">
-          <div className="section-head sub-head">
-            <div className="section-kicker">SCHOLARLY OUTPUT & INTELLECTUAL PROPERTY</div>
-            <h3 className="section-title sub-title">Publications & Patents</h3>
-            <p className="section-sub">
-              Peer-reviewed articles, preprints, patents, and foundational methodologies developed by the research pod.
-            </p>
-          </div>
-
-          <div className="pub-list">
-            {publicationList.map((pub) => (
-              <article key={pub.id} className={`pub-card ${pub.featured ? "featured-pub" : ""}`}>
-                <div className="pub-card-top">
-                  <span className="pub-type-badge">{pub.type}</span>
-                  <span className="pub-date">{pub.date}</span>
-                </div>
-                <h3 className="pub-card-title">{pub.title}</h3>
-                <div className="pub-card-authors">{pub.authors} &bull; <span className="pub-affil">{pub.affil}</span></div>
-                {pub.journal && <div className="pub-card-journal">{pub.journal}</div>}
-                <p className="pub-card-abstract">{pub.abstract}</p>
-
-                <div className="pub-card-actions">
-                  {pub.arxivUrl && (
-                    <a href={pub.arxivUrl} target="_blank" rel="noopener noreferrer" className="pub-link">
-                      arXiv Page &rarr;
-                    </a>
-                  )}
-                  {pub.doi && (
-                    <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" className="pub-link">
-                      DOI: {pub.doi} &rarr;
-                    </a>
-                  )}
-                  {pub.zenodoUrl && (
-                    <a href={pub.zenodoUrl} target="_blank" rel="noopener noreferrer" className="pub-link" title="Quantum Boltzmann Equation Benchmark Suite on Zenodo">
-                      Zenodo Dataset &rarr;
-                    </a>
-                  )}
-                  {pub.doi && (
-                    <a href={`https://scite.ai/reports/${pub.doi}`} target="_blank" rel="noopener noreferrer" className="pub-link">
-                      scite Citations &rarr;
-                    </a>
-                  )}
-                  {pub.pdf && (
-                    <a href={pub.pdf} target="_blank" rel="noopener noreferrer" className="pub-link">
-                      Download PDF
-                    </a>
-                  )}
-                  <button 
-                    onClick={() => handleCopyBibtex(pub)} 
-                    className="pub-copy-btn"
-                  >
-                    {copiedBibtexId === pub.id ? "✓ Copied" : "Cite BibTeX"}
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        {/* HARDWARE ACCELERATION SUB-BLOCK */}
-        <div className="research-pub-block">
-          <div className="section-head sub-head">
-            <div className="section-kicker">INFRASTRUCTURE & COMPUTING</div>
-            <h3 className="section-title sub-title">Hardware Acceleration</h3>
-            <p className="section-sub">
-              Bridging theoretical quantum kinetic equations with modern GPU supercomputing architectures and distributed cloud infrastructure.
-            </p>
-          </div>
-
-          <div className="grants-grid">
-            {/* NVIDIA INCEPTION CARD */}
-            <div 
-              className="grant-card nvidia-accent clickable-grant-card"
-              onClick={() => handleSelectHardwareCard("NVIDIA Inception GPU Acceleration", "Inquiry regarding custom CUDA/shader matrix kernels and H100/H200 compute evaluation.")}
-              title="Click to contact sales & compute team regarding NVIDIA Inception"
-            >
-              <div className="grant-header">
-                <div className="grant-logo-badge">NVIDIA INCEPTION PROGRAM</div>
-                <span className="grant-status">Application Track</span>
-              </div>
-              <h3>GPU Acceleration</h3>
-              <p>
-                Density-Fitted QBE-SCF mapped to modern streaming multiprocessor architectures for accelerated CPU&rarr;GPU interconnect and fast phase-space transport.
-              </p>
-              <ul className="grant-specs">
-                <li><strong>Target Compute:</strong> NVIDIA H100 / H200 & Grace Hopper Superchips</li>
-                <li><strong>Speedup Goal:</strong> 100× throughput acceleration for density matrix kinetic relaxation</li>
-                <li><strong>Matrix Kernels:</strong> Custom trace-preserving Fermi-Dirac rotation shaders</li>
-              </ul>
-              <div className="grant-action-row">
-                <button 
-                  type="button" 
-                  className="grant-contact-btn nvidia-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleSelectHardwareCard("NVIDIA Inception GPU Acceleration", "Inquiry regarding custom CUDA/shader matrix kernels and H100/H200 compute evaluation.");
-                  }}
-                >
-                  Contact Sales & Compute Access &rarr;
-                </button>
-              </div>
-            </div>
-
-            {/* GOOGLE CLOUD RESEARCH CARD */}
-            <div 
-              className="grant-card google-accent clickable-grant-card"
-              onClick={() => handleSelectHardwareCard("Google Cloud HPC Research Integration", "Inquiry regarding Google Cloud A3 Mega GPU clusters and TPU v5p chemical discovery pipelines.")}
-              title="Click to contact sales & compute team regarding Google Cloud HPC"
-            >
-              <div className="grant-header">
-                <div className="grant-logo-badge">GOOGLE CLOUD RESEARCH</div>
-                <span className="grant-status">Research Grant Track</span>
-              </div>
-              <h3>HPC</h3>
-              <p>
-                Scaling molecular Wigner tomography and multi-center transition-metal simulations across Google Cloud A3 Mega GPU clusters and TPU v5p acceleration pods for high-throughput chemical discovery.
-              </p>
-              <ul className="grant-specs">
-                <li><strong>Infrastructure:</strong> Distributed Vertex AI & Google Cloud HPC Slurm Clusters</li>
-                <li><strong>Scope:</strong> Scaling from small diatomics to 500+ atom metalloprotein complexes</li>
-                <li><strong>Data Architecture:</strong> Cloud-native phase-space trajectory storage & analysis</li>
-              </ul>
-              <div className="grant-action-row">
-                <button 
-                  type="button" 
-                  className="grant-contact-btn google-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleSelectHardwareCard("Google Cloud HPC Research Integration", "Inquiry regarding Google Cloud A3 Mega GPU clusters and TPU v5p chemical discovery pipelines.");
-                  }}
-                >
-                  Inquire for HPC & Enterprise &rarr;
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* 3. RESEARCH SECTION: LINKEDIN CAROUSEL PANELS ON BLACK WIDESCREEN STAGE */}
+      <section id="research" className="section-block" style={{ maxWidth: "none", padding: 0, margin: 0 }}>
+        <PreprintSpotlight />
       </section>
 
-      {/* 4. CONTACT */}
-      <section id="contact" className="section-block dark-tint">
-        <span id="investors" style={{ position: "relative", top: "-80px", display: "block" }}></span>
-        <span id="team" style={{ position: "relative", top: "-80px", display: "block" }}></span>
-        <span id="leadership" style={{ position: "relative", top: "-80px", display: "block" }}></span>
-        <span id="advisors" style={{ position: "relative", top: "-80px", display: "block" }}></span>
-        <span id="people" style={{ position: "relative", top: "-80px", display: "block" }}></span>
-        <div className="section-head">
-          <div className="section-kicker">COMMUNICATIONS &amp; INQUIRIES</div>
-          <h2 className="section-title">Contact</h2>
-          <p className="section-sub">
-            Direct scientific inquiries, computational chemistry collaboration, and institutional correspondence.
-          </p>
-        </div>
-
-        <div className="contact-grid">
-          {/* CONTACT INFO CARD */}
-          <div className="contact-info-card">
-            <div className="contact-block">
-              <span className="contact-label">MAILING & REGISTERED OFFICE</span>
-              <div className="contact-value-box">
-                <p className="contact-address-text">
-                  <strong>Point Reyes Sound, Inc.</strong><br />
-                  2261 Market Street, STE 72927<br />
-                  San Francisco, CA 94114<br />
-                  United States
-                </p>
-              </div>
-            </div>
-
-            <div className="contact-block">
-              <span className="contact-label">DIRECT ELECTRONIC INQUIRIES</span>
-              <div className="contact-emails">
-                <div className="email-row">
-                  <span className="email-type">Founder & Research:</span>
-                  <a href="mailto:romit@pointreyessound.com" className="email-link">romit@pointreyessound.com</a>
-                </div>
-                <div className="email-row">
-                  <span className="email-type">Board & Directors:</span>
-                  <a href="mailto:directors@pointreyessound.com" className="email-link">directors@pointreyessound.com</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* FILL-OUT MESSAGE FORM */}
-          <div className="contact-form-card">
-            <h3 className="form-card-title">Send a Message</h3>
-            
-            {formSubmitted ? (
-              <div className="form-success-box">
-                <div className="success-icon">✓</div>
-                <h4>Message Transmitted</h4>
-                <p>Thank you for reaching out. We will review your inquiry and follow up promptly.</p>
-                <div className="mailto-fallback">
-                  <span>Need an immediate copy? </span>
-                  <a 
-                    href={`mailto:romit@pointreyessound.com,directors@pointreyessound.com?subject=${encodeURIComponent(contactForm.subject || "Point Reyes Sound Inquiry")}&body=${encodeURIComponent(`From: ${contactForm.name} (${contactForm.affiliation || "N/A"})\nEmail: ${contactForm.email}\n\n${contactForm.message}`)}`}
-                    className="mailto-btn"
-                  >
-                    Open in Mail Client &rarr;
-                  </a>
-                </div>
-                <button 
-                  className="reset-form-btn"
-                  onClick={() => {
-                    setFormSubmitted(false);
-                    setContactForm({ name: "", email: "", affiliation: "", subject: "", message: "" });
-                  }}
-                >
-                  Send Another Inquiry
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleContactSubmit} className="inquiry-form">
-                <div className="form-group">
-                  <label htmlFor="inquiryType">Inquiry Category *</label>
-                  <select 
-                    id="inquiryType" 
-                    name="inquiryType"
-                    value={contactForm.inquiryType || "diligence"}
-                    onChange={handleContactChange}
-                    className="form-select"
-                  >
-                    <option value="diligence">Institutional Research &amp; Technical Briefing</option>
-                    <option value="commercial">Commercial Enterprise Pilot / Compute Allocation</option>
-                    <option value="hardware">Hardware &amp; Accelerator Partnership (GPU / HPC)</option>
-                    <option value="academic">Academic &amp; Research Collaboration</option>
-                    <option value="general">General Corporate Inquiry</option>
-                  </select>
-                </div>
-
-                <div className="form-row-2">
-                  <div className="form-group">
-                    <label htmlFor="name">Full Name *</label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      name="name" 
-                      required 
-                      value={contactForm.name} 
-                      onChange={handleContactChange} 
-                      placeholder="Dr. Marco Mazzeratti"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="email">Email Address *</label>
-                    <input 
-                      type="email" 
-                      id="email" 
-                      name="email" 
-                      required 
-                      value={contactForm.email} 
-                      onChange={handleContactChange} 
-                      placeholder="marco.mazzeratti@fund.com or university.edu"
-                    />
-                  </div>
-                </div>
-
-                <div className="form-row-2">
-                  <div className="form-group">
-                    <label htmlFor="affiliation">Affiliation / Fund / Institution</label>
-                    <input 
-                      type="text" 
-                      id="affiliation" 
-                      name="affiliation" 
-                      value={contactForm.affiliation} 
-                      onChange={handleContactChange} 
-                      placeholder="Venture Fund / Enterprise R&D / Department"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="subject">Subject</label>
-                    <input 
-                      type="text" 
-                      id="subject" 
-                      name="subject" 
-                      value={contactForm.subject} 
-                      onChange={handleContactChange} 
-                      placeholder="Seed Round Diligence / Compute Grant / Collaboration"
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="message">Inquiry / Message *</label>
-                  <textarea 
-                    id="message" 
-                    name="message" 
-                    rows={4} 
-                    required 
-                    value={contactForm.message} 
-                    onChange={handleContactChange} 
-                    placeholder="Describe your investment focus or enterprise computing requirements..."
-                  />
-                </div>
-
-                <button type="submit" className="action-btn primary submit-btn">
-                  Transmit Inquiry &rarr;
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* 9. FOOTER: SPREAD ACROSS 4 BALANCED COLUMNS */}
-      <footer className="pod-footer">
+      {/* 4. FOOTER: SPREAD ACROSS 4 BALANCED COLUMNS */}
+      <footer id="contact" className="pod-footer">
         <div className="footer-inner">
           <div className="footer-col-brand">
             <div className="brand-lockup">
@@ -1166,6 +824,10 @@ export default function App() {
             </p>
             <div className="footer-address">
               2261 Market Street, STE 72927 &bull; San Francisco, CA 94114 &bull; United States
+            </div>
+            <div className="footer-contact-emails">
+              <a href="mailto:romit@pointreyessound.com">romit@pointreyessound.com</a>
+              <a href="mailto:directors@pointreyessound.com">directors@pointreyessound.com</a>
             </div>
           </div>
 

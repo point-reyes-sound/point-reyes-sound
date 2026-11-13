@@ -1,366 +1,160 @@
-import React, { useState } from "react";
+import { useState, useRef } from "react";
 import "./PreprintSpotlight.css";
 
-const topologicalFeatures = [
+const CAROUSEL_SLIDES = [
   {
-    id: "coulson-fischer-h2",
-    badge: "TOPOLOGICAL CUSP",
-    system: "H₂ / cc-pVTZ",
-    featureName: "Coulson-Fischer Crossing",
-    sublabel: "Homolytic Bond Cleavage & Cusp Smoothing",
-    imageDarkSrc: "/assets/preprint/Fig2_H2_Dissociation_dark.png",
-    imageWhiteSrc: "/assets/preprint/Fig2_H2_Dissociation.png",
-    figureTag: "FIGURE 2: POTENTIAL ENERGY SURFACE",
-    caption: "H₂ dissociation showing RHF energy cusp and unphysical spin-symmetry breaking vs smooth QBE-SCF (T = 0.06 Ha) Helmholtz free energy path.",
-    scientificTakeaway:
-      "At the Coulson-Fischer bifurcation point (R ≈ 2.3 Bohr), single-determinant RHF develops an unphysical derivative cusp before branching into spin-contaminated UHF. QBE-SCF introduces finite-temperature configurational entropy (S_conf) and von Neumann entropy (S_vN), yielding a strictly smooth C¹ free energy path F = E - TS that matches Full-CI dissociation without symmetry breaking.",
-    telemetry: [
-      { label: "Singularity Type", value: "Derivative Cusp / Bifurcation" },
-      { label: "Relaxation Mode", value: "BGK Collision Operator" },
-      { label: "Entropic Parameter", value: "T = 0.06 Ha" },
-      { label: "Asymptotic Bound", value: "Neutral Biradical (2 H•)" }
-    ]
+    id: "qbescf",
+    imageSrc: "/assets/preprint/QBESCF-slide1.png",
+    alt: "QBE-SCF",
+    arxivUrl: "https://arxiv.org/abs/2608.14979"
   },
   {
-    id: "static-correlation-h3",
-    badge: "STATIC CORRELATION",
-    system: "H₃ / cc-pVDZ",
-    featureName: "Static Correlation & GVB Limit",
-    sublabel: "Symmetric D₃ₕ Stretch & Orbital Near-Degeneracy",
-    imageDarkSrc: "/assets/preprint/Fig3_H3_Dissociation_dark.png",
-    imageWhiteSrc: "/assets/preprint/Fig3_H3_Dissociation.png",
-    figureTag: "FIGURE 3: MULTIREFERENCE DECOUPLING",
-    caption: "H₃ symmetric equilateral stretch at D₃ₕ geometry: Single-reference failure vs exact QBE-SCF GVB asymptotic plateau.",
-    scientificTakeaway:
-      "Simultaneous equilateral elongation of H₃ generates an E' ⊗ e' Jahn-Teller orbital near-degeneracy with intense static multireference correlation. Standard mean-field solvers either fail to converge or collapse into unphysical symmetry-broken states. QBE-SCF continuously depopulates and repopulates natural orbitals, rigorously reproducing the Generalized Valence Bond (GVB) limit with O(N³) computational complexity.",
-    telemetry: [
-      { label: "Singularity Type", value: "E' ⊗ e' Orbital Near-Degeneracy" },
-      { label: "Entropy Metric", value: "Decoupled S_conf vs S_vN" },
-      { label: "Complexity", value: "O(N³) Polynomial" },
-      { label: "Asymptotic Bound", value: "Exact GVB 3-Atom Limit" }
-    ]
-  },
-  {
-    id: "berry-phase-h4",
-    badge: "BERRY PHASE",
-    system: "H₄ / 6-31G",
-    featureName: "H₄ Berry Phase Loop",
-    sublabel: "Geometric Phase Loop & Dual Entropy Signature",
-    imageDarkSrc: "/assets/preprint/Fig6_H4_Berry_dark.png",
-    imageWhiteSrc: "/assets/preprint/Fig6_H4_Berry.png",
-    figureTag: "FIGURE 6: TOPOLOGICAL GEOMETRIC PHASE",
-    caption: "H₄ pseudorotation trajectory encircling the D₄ₕ conical seam: Electronic wavefunction sign inversion and continuous operator transport.",
-    scientificTakeaway:
-      "Parametric pseudorotation around the square D₄ₕ geometry traverses a conical intersection, inducing a topological Berry phase of π (electronic wavefunction sign inversion). While traditional SCF exhibits violent cyclic discontinuity and hysteresis, QBE-SCF guarantees smooth, single-valued transport of the density matrix spectrum around the complete loop θ ∈ [0, 2π) with a characteristic dual-entropy peak at the degenerate crossing.",
-    telemetry: [
-      { label: "Singularity Type", value: "Conical Seam / π Berry Phase" },
-      { label: "Trajectory", value: "θ ∈ [0, 2π) Pseudorotation" },
-      { label: "Geometric Phase", value: "Gauge-Invariant Sign Flip" },
-      { label: "Cyclic Stability", value: "Zero Hysteresis" }
-    ]
-  },
-  {
-    id: "conical-intersection-beh2",
-    badge: "CONICAL INTERSECTION",
-    system: "BeH₂ / 6-31G",
-    featureName: "BeH₂ Conical Intersection",
-    sublabel: "1¹A₁ ↔ 2¹A₁ Non-Adiabatic Seam Regularization",
-    imageDarkSrc: "/assets/preprint/Fig7_Composite_BeH2_dark.png",
-    imageWhiteSrc: "/assets/preprint/Fig7_Composite_BeH2.png",
-    figureTag: "FIGURE 7: COMPOSITE SEAM & HESSIAN MODES",
-    caption: "Be insertion into H₂ along C₂ᵥ coordinates: Entropic smoothing of the 1¹A₁/2¹A₁ avoided crossing with positive semi-definite Hessians.",
-    scientificTakeaway:
-      "The perpendicular insertion of Be into H₂ features an avoided crossing and conical intersection between 1¹A₁ and 2¹A₁ electronic states. Conventional DIIS and Newton-Raphson solvers suffer catastrophic charge sloshing and negative Hessian instabilities. QBE-SCF utilizes algebraic connectivity (Fiedler friction) to stabilize kinetic transport across the gap minimum, generating smooth, differentiable free energy surfaces suitable for non-adiabatic molecular dynamics.",
-    telemetry: [
-      { label: "Singularity Type", value: "1¹A₁ / 2¹A₁ State Crossing" },
-      { label: "Kinetic Damping", value: "Fiedler Algebraic Friction" },
-      { label: "Hessian Stability", value: "Positive Semi-Definite" },
-      { label: "Force Evaluation", value: "Continuous C¹ Gradient" }
-    ]
+    id: "qbeck",
+    imageSrc: "/assets/preprint/QBECK-slide2.png",
+    alt: "Q-BECK",
+    arxivUrl: "https://arxiv.org/abs/2611.17245"
   }
 ];
 
-const PREPRINT_BIBTEX = `@article{chakraborty2026qbescf,
-  title={Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities},
-  author={Chakraborty, Romit},
-  journal={arXiv preprint arXiv:2608.14979},
-  year={2026},
-  doi={10.48550/arXiv.2608.14979},
-  url={https://arxiv.org/abs/2608.14979},
-  note={Benchmark suite & dataset: Zenodo DOI 10.5281/zenodo.21940451}
-}`;
+export default function PreprintSpotlight() {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [dragOffsetPx, setDragOffsetPx] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
-export default function PreprintSpotlight({ onCopyBibtex, copiedBibtexId }) {
-  const [activeFeatureIdx, setActiveFeatureIdx] = useState(0);
-  const [plotTheme, setPlotTheme] = useState("dark"); // Default to Dark for marketing promo
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [localCopied, setLocalCopied] = useState(false);
+  const dragStartXRef = useRef(null);
+  const didDragRef = useRef(false);
 
-  const currentFeature = topologicalFeatures[activeFeatureIdx];
-  const activeImageSrc =
-    plotTheme === "dark" ? currentFeature.imageDarkSrc : currentFeature.imageWhiteSrc;
+  const goToSlide = (nextIdx) => {
+    const clamped = Math.max(0, Math.min(CAROUSEL_SLIDES.length - 1, nextIdx));
+    setActiveIdx(clamped);
+  };
 
-  const handleCopyCitation = () => {
-    if (onCopyBibtex) {
-      onCopyBibtex();
-    } else {
-      navigator.clipboard.writeText(PREPRINT_BIBTEX);
-      setLocalCopied(true);
-      setTimeout(() => setLocalCopied(false), 2400);
+  const handlePointerDown = (e) => {
+    // Do not hijack clicks on links or buttons
+    if (e.target.closest("a, button")) return;
+    dragStartXRef.current = e.clientX;
+    didDragRef.current = false;
+    setIsDragging(true);
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDragging || dragStartXRef.current === null) return;
+    const deltaX = e.clientX - dragStartXRef.current;
+    if (Math.abs(deltaX) > 6) {
+      didDragRef.current = true;
+    }
+    setDragOffsetPx(deltaX);
+  };
+
+  const finishDrag = () => {
+    if (!isDragging) return;
+    const threshold = 55;
+    if (dragOffsetPx < -threshold && activeIdx < CAROUSEL_SLIDES.length - 1) {
+      setActiveIdx((prev) => prev + 1);
+    } else if (dragOffsetPx > threshold && activeIdx > 0) {
+      setActiveIdx((prev) => prev - 1);
+    }
+    dragStartXRef.current = null;
+    setIsDragging(false);
+    setDragOffsetPx(0);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowRight") {
+      goToSlide(activeIdx + 1);
+    } else if (e.key === "ArrowLeft") {
+      goToSlide(activeIdx - 1);
     }
   };
 
-  const isCopied = copiedBibtexId === "arxiv-2608-14979" || localCopied;
+  const currentSlide = CAROUSEL_SLIDES[activeIdx];
 
   return (
-    <div className="preprint-spotlight-wrapper" id="preprint">
-      <div className="preprint-spotlight-card">
-        {/* Spotlight Header Bar */}
-        <div className="spotlight-top-bar">
-          <div className="spotlight-tag-group">
-            <span className="spotlight-badge">PREPRINT</span>
-            <span className="spotlight-meta">
-              arXiv:2608.14979 [physics.chem-ph, quant-ph] &bull; August 2026
-            </span>
-          </div>
+    <div
+      className="research-carousel-stage"
+      id="preprint"
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      aria-label="Research Preprints Carousel"
+    >
+      <div className="research-carousel-shell">
+        <button
+          type="button"
+          className={`research-nav-arrow prev ${activeIdx === 0 ? "is-disabled" : ""}`}
+          onClick={() => goToSlide(activeIdx - 1)}
+          disabled={activeIdx === 0}
+          aria-label="Previous slide"
+        >
+          &#8249;
+        </button>
 
-          <div className="spotlight-status-row">
-            <span className="spotlight-status">Open Access</span>
-            <a
-              href="https://doi.org/10.48550/arXiv.2608.14979"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="spotlight-doi-pill"
-              title="Preprint Digital Object Identifier"
-            >
-              DOI: 10.48550/arXiv.2608.14979
-            </a>
-            <a
-              href="https://doi.org/10.5281/zenodo.21940451"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="spotlight-doi-pill"
-              title="Zenodo Open Benchmark Dataset (DOI: 10.5281/zenodo.21940451)"
-            >
-              Zenodo: 10.5281/zenodo.21940451
-            </a>
-          </div>
-        </div>
-
-        {/* Paper Title & Author Details */}
-        <h2 className="spotlight-title">
-          Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities
-        </h2>
-        <p className="spotlight-author">
-          <strong>Point Reyes Sound</strong>
-        </p>
-
-        {/* Interactive Topological Stage */}
-        <div className="spotlight-stage">
-          {/* Active Belt (2x2 Matrix Grid) */}
-          <div className="active-belt" role="tablist" aria-label="Topological Features">
-            <div className="belt-header">
-              <span className="belt-kicker">ACTIVE BELT &bull; 4 TOPOLOGICAL PHENOMENA</span>
-            </div>
-
-            {topologicalFeatures.map((feat, idx) => {
-              const isActive = idx === activeFeatureIdx;
-              return (
-                <button
-                  key={feat.id}
-                  role="tab"
-                  aria-selected={isActive}
-                  className={`belt-button ${isActive ? "active" : ""}`}
-                  onClick={() => setActiveFeatureIdx(idx)}
-                >
-                  <div className="belt-btn-top">
-                    <span className="belt-badge">{feat.badge}</span>
-                    <span className="belt-system">{feat.system}</span>
-                  </div>
-                  <h4 className="belt-btn-title">{feat.featureName}</h4>
-                  <p className="belt-btn-desc">{feat.sublabel}</p>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Plot Showcase Panel */}
-          <div className="plot-showcase-panel">
-            <div className="plot-viewer-header">
-              <div className="plot-title-group">
-                <span className="plot-kicker">{currentFeature.figureTag}</span>
-                <h3 className="plot-title">{currentFeature.featureName}</h3>
-              </div>
-
-              {/* Theme Toggle (Dark Promo vs Paper White) & Zoom Controls */}
-              <div className="plot-controls-group">
-                <div className="plot-theme-toggle" role="group" aria-label="Plot Theme Palette">
-                  <button
-                    type="button"
-                    className={`theme-toggle-btn ${plotTheme === "dark" ? "active" : ""}`}
-                    onClick={() => setPlotTheme("dark")}
-                    title="Dark Promo Theme (aligned with site UI)"
-                  >
-                    <span className="theme-dot dark-dot"></span>
-                    Dark (Promo)
-                  </button>
-                  <button
-                    type="button"
-                    className={`theme-toggle-btn ${plotTheme === "white" ? "active" : ""}`}
-                    onClick={() => setPlotTheme("white")}
-                    title="Preprint & Paper White Theme"
-                  >
-                    <span className="theme-dot white-dot"></span>
-                    Paper (White)
-                  </button>
-                </div>
-
-                <button
-                  type="button"
-                  className="plot-inspect-badge"
-                  onClick={() => setIsLightboxOpen(true)}
-                  title="Expand and zoom figure"
-                >
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-                  </svg>
-                  Zoom Plot
-                </button>
-              </div>
-            </div>
-
-            {/* Central Plot Image Frame */}
-            <div
-              className={`plot-image-container ${plotTheme === "dark" ? "dark-mode" : "white-mode"}`}
-              onClick={() => setIsLightboxOpen(true)}
-              title="Click to view full-resolution figure"
-            >
-              <img
-                src={activeImageSrc}
-                alt={currentFeature.featureName}
-                className="plot-figure-img"
-                loading="eager"
-              />
-              <span className="plot-figure-overlay-hint">🔍 Click to expand</span>
-            </div>
-
-            {/* Scientific Insight / Takeaway */}
-            <div className="plot-insight-box">
-              <p className="plot-insight-text">
-                {currentFeature.scientificTakeaway}
-              </p>
-            </div>
-
-            {/* Telemetry Metric Grid */}
-            <div className="plot-telemetry-grid">
-              {currentFeature.telemetry.map((t, i) => (
-                <div key={i} className="plot-telemetry-cell">
-                  <div className="plot-telemetry-label">{t.label}</div>
-                  <div className="plot-telemetry-value">{t.value}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Action Button Row & Scite Badge */}
-        <div className="spotlight-actions-bar">
-          <div className="spotlight-btn-group">
-            <a
-              href="https://arxiv.org/abs/2608.14979"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="action-btn-styled primary"
-            >
-              <span>View on arXiv (2608.14979)</span>
-              <span>&rarr;</span>
-            </a>
-
-            <a
-              href="https://arxiv.org/pdf/2608.14979.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="action-btn-styled secondary"
-            >
-              <span>Download Manuscript PDF</span>
-              <span>&darr;</span>
-            </a>
-
-            <button
-              type="button"
-              onClick={handleCopyCitation}
-              className={`action-btn-styled outline ${isCopied ? "copied" : ""}`}
-            >
-              <span>{isCopied ? "✓ Citation Copied" : "Copy BibTeX"}</span>
-            </button>
-
-            <a
-              href="https://doi.org/10.5281/zenodo.21940451"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="action-btn-styled outline"
-              title="Quantum Boltzmann Equation Benchmark Suite on Zenodo (DOI: 10.5281/zenodo.21940451)"
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-              </svg>
-              <span>Zenodo Dataset</span>
-            </a>
-
-            <a
-              href="https://github.com/point-reyes-sound/p1_qbescf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="action-btn-styled outline"
-              title="Open-Source Numerical Benchmark Reproduction Suite on GitHub"
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                />
-              </svg>
-              <span>Reproduce Data &amp; Plots</span>
-            </a>
-          </div>
-
-          <div
-            className="scite-badge"
-            data-doi="10.48550/arXiv.2608.14979"
-            data-layout="horizontal"
-            data-show-zero="false"
-            data-small="true"
-          />
-        </div>
-      </div>
-
-      {/* High-Resolution Zoom Lightbox Modal */}
-      {isLightboxOpen && (
         <div
-          className="plot-lightbox-modal"
-          onClick={() => setIsLightboxOpen(false)}
-          role="dialog"
-          aria-modal="true"
+          className={`research-carousel-viewport ${isDragging ? "is-dragging" : ""}`}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={finishDrag}
+          onPointerCancel={finishDrag}
+          onPointerLeave={finishDrag}
         >
           <div
-            className={`lightbox-content ${plotTheme === "dark" ? "dark-mode" : "white-mode"}`}
-            onClick={(e) => e.stopPropagation()}
+            className={`research-carousel-track ${isDragging ? "no-transition" : ""}`}
+            style={{
+              transform: `translate3d(calc(-${activeIdx * 100}% + ${dragOffsetPx}px), 0, 0)`
+            }}
           >
-            <button
-              type="button"
-              className="lightbox-close-btn"
-              onClick={() => setIsLightboxOpen(false)}
-            >
-              ✕ Close
-            </button>
-            <img src={activeImageSrc} alt={currentFeature.featureName} />
-            <p className="lightbox-caption">
-              <strong>{currentFeature.featureName}:</strong> {currentFeature.caption}
-            </p>
+            {CAROUSEL_SLIDES.map((slide) => (
+              <div key={slide.id} className="research-slide-item">
+                <div className="research-slide-frame">
+                  <img
+                    src={slide.imageSrc}
+                    alt={slide.alt}
+                    className="research-slide-img"
+                    draggable={false}
+                    loading="eager"
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      )}
+
+        <button
+          type="button"
+          className={`research-nav-arrow next ${
+            activeIdx === CAROUSEL_SLIDES.length - 1 ? "is-disabled" : ""
+          }`}
+          onClick={() => goToSlide(activeIdx + 1)}
+          disabled={activeIdx === CAROUSEL_SLIDES.length - 1}
+          aria-label="Next slide"
+        >
+          &#8250;
+        </button>
+      </div>
+
+      <div className="research-carousel-footer">
+        <a
+          href={currentSlide.arxivUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="research-read-paper-btn"
+        >
+          Read Paper
+        </a>
+
+        <div className="research-dots-nav" role="tablist" aria-label="Carousel Slides">
+          {CAROUSEL_SLIDES.map((slide, idx) => (
+            <button
+              key={slide.id}
+              type="button"
+              role="tab"
+              aria-selected={idx === activeIdx}
+              aria-label={slide.alt}
+              className={`research-dot-btn ${idx === activeIdx ? "active" : ""}`}
+              onClick={() => goToSlide(idx)}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
