@@ -560,7 +560,7 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
         <div className="qbeck-reward-banner" role="status">
           <span className="qbeck-reward-badge">LEVEL {level} · SUPERFLUID COHERENCE UNLOCKED</span>
           <strong className="qbeck-reward-title">
-            {activeSystem.label} Resonance Mastered ({activeSystem.sub})
+            {activeSystem.label} Mastered ({activeSystem.sub})
           </strong>
           <button type="button" className="qbeck-reward-btn" onClick={handleQuantumShift}>
             Quantum Shift
