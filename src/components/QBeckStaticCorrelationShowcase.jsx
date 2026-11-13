@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { EdmQuantumFluxSonifier } from "../physics/EdmQuantumFluxSonifier";
 import {
@@ -556,6 +556,7 @@ function FullscreenQuantumPong({
 
     const animate = () => {
       frameId = requestAnimationFrame(animate);
+      const dt = 0.018;
       rippleRef.current.age += 0.045;
 
       const {

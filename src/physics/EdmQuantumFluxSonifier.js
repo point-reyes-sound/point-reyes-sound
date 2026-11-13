@@ -25,6 +25,7 @@ export class EdmQuantumFluxSonifier {
   constructor() {
     this.ctx = null;
     this.masterGain = null;
+    this.sfxGain = null;
     this.padGain = null;
     this.padFilter = null;
     this.padOscs = [];
@@ -47,6 +48,11 @@ export class EdmQuantumFluxSonifier {
     if (!AudioCtx) return null;
     if (!this.ctx) {
       this.ctx = new AudioCtx();
+    }
+    if (!this.sfxGain) {
+      this.sfxGain = this.ctx.createGain();
+      this.sfxGain.gain.setValueAtTime(0.28, this.ctx.currentTime);
+      this.sfxGain.connect(this.ctx.destination);
     }
     if (this.ctx.state === "suspended") {
       this.ctx.resume().catch(() => {});
@@ -256,7 +262,7 @@ export class EdmQuantumFluxSonifier {
     );
     const freq = DORIAN_SCALE_HZ[idx];
 
-    const dest = this.masterGain || ctx.destination;
+    const dest = this.masterGain || this.sfxGain || ctx.destination;
     const osc = ctx.createOscillator();
     const mod = ctx.createOscillator();
     const modGain = ctx.createGain();
@@ -296,7 +302,7 @@ export class EdmQuantumFluxSonifier {
     const ctx = this.ensureContext();
     if (!ctx) return;
     const now = ctx.currentTime;
-    const dest = this.masterGain || ctx.destination;
+    const dest = this.masterGain || this.sfxGain || ctx.destination;
 
     const baseIdx = Math.min(
       DORIAN_SCALE_HZ.length - 1,
@@ -375,10 +381,10 @@ export class EdmQuantumFluxSonifier {
         osc.frequency.setValueAtTime(f0 * (0.94 + 0.06 * stretchNorm), now + idx * 0.03);
         osc.frequency.exponentialRampToValueAtTime(f0, now + idx * 0.03 + 0.14);
         filter.type = "lowpass";
-        filter.Q.setValueAtTime(5.0, now);
-        filter.frequency.setValueAtTime(2400 + stretchNorm * 1800, now + idx * 0.03);
-        filter.frequency.exponentialRampToValueAtTime(340, now + idx * 0.03 + 0.32);
-        gain.gain.setValueAtTime(0.085, now + idx * 0.03);
+        filter.Q.setValueAtTime(2.0, now);
+        filter.frequency.setValueAtTime(1800 + stretchNorm * 1200, now + idx * 0.03);
+        filter.frequency.exponentialRampToValueAtTime(320, now + idx * 0.03 + 0.28);
+        gain.gain.setValueAtTime(0.06, now + idx * 0.03);
         gain.gain.exponentialRampToValueAtTime(0.0005, now + idx * 0.03 + 0.38);
         osc.connect(filter);
         filter.connect(gain);
@@ -396,7 +402,7 @@ export class EdmQuantumFluxSonifier {
     const ctx = this.ensureContext();
     if (!ctx) return;
     const now = ctx.currentTime;
-    const dest = this.masterGain || ctx.destination;
+    const dest = this.masterGain || this.sfxGain || ctx.destination;
 
     const idx = Math.min(
       DORIAN_SCALE_HZ.length - 1,
@@ -426,7 +432,7 @@ export class EdmQuantumFluxSonifier {
     const ctx = this.ensureContext();
     if (!ctx) return;
     const now = ctx.currentTime;
-    const dest = this.masterGain || ctx.destination;
+    const dest = this.masterGain || this.sfxGain || ctx.destination;
 
     const chord = [293.66, 349.23, 440.0, 523.25, 587.33, 880.0]; // D minor 9 / 11 shimmer
     chord.forEach((freq, i) => {
@@ -455,7 +461,7 @@ export class EdmQuantumFluxSonifier {
     const ctx = this.ensureContext();
     if (!ctx) return;
     const now = ctx.currentTime;
-    const dest = this.masterGain || ctx.destination;
+    const dest = this.masterGain || this.sfxGain || ctx.destination;
 
     const osc = ctx.createOscillator();
     const sub = ctx.createOscillator();
