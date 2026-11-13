@@ -233,7 +233,7 @@ def build_svg(plot_b64, logo_b64, exp_overall):
   <!-- Editorial Hero Typography -->
   <g id="hero-copy">
     <text x="76" y="218" font-family="'EB Garamond', Georgia, serif" font-size="152" font-weight="600" letter-spacing="-2.4" fill="#FFFFFF">Q-BECK</text>
-    <text x="78" y="298" font-family="'EB Garamond', Georgia, serif" font-size="50" font-weight="400" letter-spacing="-0.4" fill="#F0CB69">Static Correlation at Scale.</text>
+    <text x="78" y="298" font-family="'EB Garamond', Georgia, serif" font-size="50" font-weight="400" letter-spacing="-0.4" fill="#F8DF98">Static Correlation at Scale</text>
     <text x="78" y="342" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="21" font-weight="400" letter-spacing="0.5" fill="#A7BDF2">Quantum Boltzmann Equation &#183; Cumulant-Kernel</text>
   </g>
 
