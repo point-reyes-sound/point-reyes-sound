@@ -12,19 +12,28 @@ const SYSTEMS = [
   { id: "benzyne", label: "C₆H₄", sub: "85.7% healed" },
 ];
 
-function FullscreenQuantumFigure({ bondStretch, couplingScale, onPluck }) {
+const TARGET_RESONANCES = 5;
+
+function FullscreenQuantumPong({
+  bondStretch,
+  couplingScale,
+  rewardUnlocked,
+  onPluck,
+  onDeflect,
+  onScore,
+}) {
   const mountRef = useRef(null);
-  const paramsRef = useRef({ bondStretch, couplingScale });
+  const paramsRef = useRef({ bondStretch, couplingScale, rewardUnlocked });
   const rippleRef = useRef({ x: 0, z: 0, amp: 0, age: 10 });
-  const onPluckRef = useRef(onPluck);
+  const callbacksRef = useRef({ onPluck, onDeflect, onScore });
 
   useEffect(() => {
-    paramsRef.current = { bondStretch, couplingScale };
-  }, [bondStretch, couplingScale]);
+    paramsRef.current = { bondStretch, couplingScale, rewardUnlocked };
+  }, [bondStretch, couplingScale, rewardUnlocked]);
 
   useEffect(() => {
-    onPluckRef.current = onPluck;
-  }, [onPluck]);
+    callbacksRef.current = { onPluck, onDeflect, onScore };
+  }, [onPluck, onDeflect, onScore]);
 
   useEffect(() => {
     const container = mountRef.current;
@@ -35,7 +44,7 @@ function FullscreenQuantumFigure({ bondStretch, couplingScale, onPluck }) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(44, width / height, 0.1, 100);
-    camera.position.set(0, 3.6, 7.2);
+    camera.position.set(0, 4.1, 7.6);
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -43,6 +52,7 @@ function FullscreenQuantumFigure({ bondStretch, couplingScale, onPluck }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     container.appendChild(renderer.domElement);
 
+    // 1. Wigner Phase-Space Manifold
     const segX = 76;
     const segZ = 76;
     const planeGeo = new THREE.PlaneGeometry(13.0, 8.6, segX, segZ);
@@ -70,12 +80,35 @@ function FullscreenQuantumFigure({ bondStretch, couplingScale, onPluck }) {
     const waveMesh = new THREE.Mesh(planeGeo, wireMat);
     scene.add(waveMesh);
 
-    const particleCount = 480;
+    // 2. Quantum Wavepacket Puck (the Pong ball steered by Wigner fluctuations)
+    const puckGroup = new THREE.Group();
+    const puckCore = new THREE.Mesh(
+      new THREE.SphereGeometry(0.22, 24, 24),
+      new THREE.MeshBasicMaterial({ color: 0x34d399 })
+    );
+    const puckHalo = new THREE.Mesh(
+      new THREE.TorusGeometry(0.36, 0.035, 16, 48),
+      new THREE.MeshBasicMaterial({ color: 0x7dd3fc, transparent: true, opacity: 0.85 })
+    );
+    puckHalo.rotation.x = Math.PI / 2;
+    puckGroup.add(puckCore);
+    puckGroup.add(puckHalo);
+    scene.add(puckGroup);
+
+    // 3. Target Resonance Gate (shifts left <-> right on each score)
+    const gateGeo = new THREE.TorusGeometry(0.68, 0.06, 16, 48);
+    const gateMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
+    const gateMesh = new THREE.Mesh(gateGeo, gateMat);
+    gateMesh.rotation.y = Math.PI / 2;
+    scene.add(gateMesh);
+
+    // 4. Quantum Flux Particles
+    const particleCount = 460;
     const pPositions = new Float32Array(particleCount * 3);
     const pColors = new Float32Array(particleCount * 3);
     const pSeeds = new Float32Array(particleCount);
     for (let i = 0; i < particleCount; i++) {
-      pPositions[i * 3] = (Math.random() - 0.5) * 9.0;
+      pPositions[i * 3] = (Math.random() - 0.5) * 9.5;
       pPositions[i * 3 + 1] = Math.random() * 1.8;
       pPositions[i * 3 + 2] = (Math.random() - 0.5) * 6.0;
       pSeeds[i] = Math.random() * Math.PI * 2;
@@ -97,34 +130,53 @@ function FullscreenQuantumFigure({ bondStretch, couplingScale, onPluck }) {
     const particlePoints = new THREE.Points(particleGeo, particleMat);
     scene.add(particlePoints);
 
-    const nodeGroup = new THREE.Group();
-    const nodeColors = [0x38bdf8, 0x34d399, 0x34d399, 0xfbbf24];
-    const nodes = nodeColors.map((hex, i) => {
-      const geo = new THREE.SphereGeometry(0.15, 24, 24);
-      const mat = new THREE.MeshBasicMaterial({ color: hex });
-      const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set(-1.95 + i * 1.3, 0.9, 0);
-      nodeGroup.add(mesh);
-      return mesh;
-    });
-    scene.add(nodeGroup);
+    // Pong physics state in phase space (x in [-4.6, 4.6], z in [-2.6, 2.6])
+    const puck = { x: -1.8, z: 0.2, vx: 0.048, vz: 0.024 };
+    const gate = { side: 1, z: 0.0, cooldown: 0 };
 
     const handleGlobalPointerDown = (ev) => {
-      if (ev.target && ev.target.closest && ev.target.closest(".qbeck-dials-dock, .qbeck-top-bar")) {
+      if (
+        ev.target &&
+        ev.target.closest &&
+        ev.target.closest(".qbeck-dials-dock, .qbeck-top-bar, .qbeck-reward-banner")
+      ) {
         return;
       }
       const w = window.innerWidth || 1280;
       const h = window.innerHeight || 800;
       const nx = (ev.clientX / w) * 2 - 1;
       const ny = -(ev.clientY / h) * 2 + 1;
+
+      const clickX = nx * 4.8;
+      const clickZ = -ny * 2.8;
+
       rippleRef.current = {
-        x: nx * 4.6,
-        z: -ny * 3.0,
-        amp: 1.15,
+        x: clickX,
+        z: clickZ,
+        amp: 1.2,
         age: 0,
       };
-      if (onPluckRef.current) {
-        onPluckRef.current((nx + 1) * 0.5);
+
+      // Perturb the Quantum Pong puck via local Wigner gradient force
+      const dx = puck.x - clickX;
+      const dz = puck.z - clickZ;
+      const dist = Math.hypot(dx, dz) + 0.35;
+      const force = Math.min(0.085, 0.14 / (dist * dist + 0.4));
+      puck.vx += (dx / dist) * force;
+      puck.vz += (dz / dist) * force;
+
+      // Clamp puck speed so it stays playful and controllable
+      const speed = Math.hypot(puck.vx, puck.vz);
+      const maxSpeed = 0.095;
+      if (speed > maxSpeed) {
+        puck.vx = (puck.vx / speed) * maxSpeed;
+        puck.vz = (puck.vz / speed) * maxSpeed;
+      }
+
+      if (dist < 2.2 && callbacksRef.current.onDeflect) {
+        callbacksRef.current.onDeflect((nx + 1) * 0.5);
+      } else if (callbacksRef.current.onPluck) {
+        callbacksRef.current.onPluck((nx + 1) * 0.5);
       }
     };
     window.addEventListener("pointerdown", handleGlobalPointerDown);
@@ -136,13 +188,60 @@ function FullscreenQuantumFigure({ bondStretch, couplingScale, onPluck }) {
       frameId = requestAnimationFrame(animate);
       time += 0.018;
       rippleRef.current.age += 0.045;
+      if (gate.cooldown > 0) gate.cooldown -= 1;
 
-      const { bondStretch: R, couplingScale: cScale } = paramsRef.current;
+      const { bondStretch: R, couplingScale: cScale, rewardUnlocked: isReward } = paramsRef.current;
       const stretchNorm = (R - 0.8) / (3.2 - 0.8);
       const coupling = Math.max(0.15, cScale);
       const rip = rippleRef.current;
       const ripEnv = Math.exp(-rip.age * 1.3) * rip.amp;
 
+      // Quantum dispersion jitter increases with bond stretch R
+      puck.vx += Math.sin(time * 2.1 + puck.z) * 0.0005 * (0.4 + stretchNorm);
+      puck.vz += Math.cos(time * 1.9 + puck.x) * 0.0005 * (0.4 + stretchNorm);
+      puck.x += puck.vx;
+      puck.z += puck.vz;
+
+      // Momentum boundaries (top/bottom reflection)
+      if (puck.z > 2.55) {
+        puck.z = 2.55;
+        puck.vz = -Math.abs(puck.vz);
+      } else if (puck.z < -2.55) {
+        puck.z = -2.55;
+        puck.vz = Math.abs(puck.vz);
+      }
+
+      // Check Resonance Gate capture on target side
+      const gateX = gate.side * 4.25;
+      if (gate.cooldown === 0 && Math.hypot(puck.x - gateX, puck.z - gate.z) < 0.88) {
+        gate.side *= -1;
+        gate.z = (Math.random() - 0.5) * 3.2;
+        gate.cooldown = 36;
+        puck.vx = -puck.vx * 1.04;
+        rippleRef.current = { x: gateX, z: gate.z, amp: 1.4, age: 0 };
+        if (callbacksRef.current.onScore) {
+          callbacksRef.current.onScore();
+        }
+      }
+
+      // Left / Right phase-space wall reflection
+      if (puck.x > 4.65) {
+        puck.x = 4.65;
+        puck.vx = -Math.abs(puck.vx);
+      } else if (puck.x < -4.65) {
+        puck.x = -4.65;
+        puck.vx = Math.abs(puck.vx);
+      }
+
+      puckGroup.position.set(puck.x, 0.72 + Math.sin(time * 3.0) * 0.08, puck.z);
+      puckHalo.rotation.z = time * 1.8;
+      puckCore.material.color.setHex(isReward ? 0xfbbf24 : 0x34d399);
+
+      gateMesh.position.set(gate.side * 4.25, 0.72, gate.z);
+      gateMesh.rotation.x = time * 1.1;
+      gateMesh.scale.setScalar(1 + Math.sin(time * 3.2) * 0.08);
+
+      // Update Wigner surface vertices
       const positions = planeGeo.attributes.position;
       const colorAttr = planeGeo.attributes.color;
 
@@ -167,16 +266,18 @@ function FullscreenQuantumFigure({ bondStretch, couplingScale, onPluck }) {
             ? Math.sin(dRip * 4.2 - rip.age * 7.8) * Math.exp(-dRip * 0.55) * ripEnv
             : 0;
 
-        const y = (g1 + g2) * 0.92 + interference * 0.78 + rippleWave;
+        const puckDip = Math.exp(-((x - puck.x) ** 2 + (z - puck.z) ** 2) * 1.2) * 0.45;
+        const y = (g1 + g2) * 0.85 + interference * 0.72 + rippleWave + puckDip;
         positions.setY(i, y - 0.35);
 
         const t = THREE.MathUtils.clamp((y + 0.4) / 1.7, 0, 1);
         const neg = interference < 0 ? Math.min(1, -interference * 1.4) : 0;
+        const goldBoost = isReward ? 0.35 : 0;
         colorAttr.setXYZ(
           i,
-          0.12 + 0.82 * neg + 0.15 * t + Math.abs(rippleWave) * 0.45,
-          0.42 + 0.48 * t - 0.22 * neg + Math.abs(rippleWave) * 0.3,
-          0.75 + 0.25 * (1 - neg)
+          0.12 + 0.82 * neg + 0.15 * t + Math.abs(rippleWave) * 0.45 + goldBoost,
+          0.42 + 0.48 * t - 0.22 * neg + Math.abs(rippleWave) * 0.3 + goldBoost * 0.65,
+          0.75 + 0.25 * (1 - neg) - goldBoost * 0.3
         );
       }
       positions.needsUpdate = true;
@@ -191,18 +292,6 @@ function FullscreenQuantumFigure({ bondStretch, couplingScale, onPluck }) {
       }
       pPos.needsUpdate = true;
 
-      nodes.forEach((node, idx) => {
-        const phase = time * 1.3 + idx * 1.25;
-        node.position.y = 0.88 + Math.sin(phase) * (0.16 + 0.2 * stretchNorm);
-        const scale = 0.85 + 0.45 * (1 - Math.abs(stretchNorm - 0.5));
-        node.scale.setScalar(scale);
-      });
-
-      const rotY = Math.sin(time * 0.22) * 0.14;
-      surfaceMesh.rotation.y = rotY;
-      waveMesh.rotation.y = rotY;
-      particlePoints.rotation.y = rotY;
-      nodeGroup.rotation.y = rotY;
       renderer.render(scene, camera);
     };
 
@@ -224,12 +313,14 @@ function FullscreenQuantumFigure({ bondStretch, couplingScale, onPluck }) {
       planeGeo.dispose();
       surfaceMat.dispose();
       wireMat.dispose();
+      gateGeo.dispose();
+      gateMat.dispose();
+      puckCore.geometry.dispose();
+      puckCore.material.dispose();
+      puckHalo.geometry.dispose();
+      puckHalo.material.dispose();
       particleGeo.dispose();
       particleMat.dispose();
-      nodes.forEach((n) => {
-        n.geometry.dispose();
-        n.material.dispose();
-      });
       renderer.dispose();
       if (renderer.domElement && renderer.domElement.parentNode === container) {
         container.removeChild(renderer.domElement);
@@ -241,7 +332,7 @@ function FullscreenQuantumFigure({ bondStretch, couplingScale, onPluck }) {
     <div
       ref={mountRef}
       className="qbeck-fullscreen-figure"
-      aria-label="Interactive Wigner-Cumulant Phase-Space Figure"
+      aria-label="Q-BECK Quantum Pong Phase-Space Figure"
     />
   );
 }
@@ -249,8 +340,7 @@ function FullscreenQuantumFigure({ bondStretch, couplingScale, onPluck }) {
 function CircularDial({ label, valueText, subText, norm, accent, children }) {
   const radius = 26;
   const circumference = 2 * Math.PI * radius;
-  const arcFraction = 0.75; // 270-degree dial sweep
-  const totalArc = circumference * arcFraction;
+  const totalArc = circumference * 0.75;
   const filledArc = Math.max(0, Math.min(1, norm)) * totalArc;
 
   return (
@@ -296,7 +386,11 @@ function CircularDial({ label, valueText, subText, norm, accent, children }) {
 export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConsole }) {
   const [bondStretch, setBondStretch] = useState(1.85);
   const [couplingScale, setCouplingScale] = useState(1.0);
-  const [systemIdx, setSystemIdx] = useState(1); // H4 default
+  const [systemIdx, setSystemIdx] = useState(1);
+  const [score, setScore] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [level, setLevel] = useState(1);
+  const [rewardUnlocked, setRewardUnlocked] = useState(false);
   const [isEdmPlaying, setIsEdmPlaying] = useState(false);
   const sonifierRef = useRef(null);
 
@@ -345,6 +439,38 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
     });
   };
 
+  const handleDeflect = (pitchNorm) => {
+    setStreak((s) => s + 1);
+    if (sonifierRef.current) {
+      sonifierRef.current.triggerPongDeflectSfx(pitchNorm, streak + 1);
+    }
+  };
+
+  const handleScore = () => {
+    setScore((prev) => {
+      const next = prev + 1;
+      if (next >= TARGET_RESONANCES && !rewardUnlocked) {
+        setRewardUnlocked(true);
+        if (sonifierRef.current) {
+          sonifierRef.current.triggerRewardFanfare();
+        }
+      } else if (sonifierRef.current) {
+        sonifierRef.current.triggerPongDeflectSfx(0.85, next);
+      }
+      return next;
+    });
+  };
+
+  const handleNextLevel = () => {
+    setScore(0);
+    setStreak(0);
+    setRewardUnlocked(false);
+    setLevel((l) => l + 1);
+    const nextIdx = (systemIdx + 1) % SYSTEMS.length;
+    setSystemIdx(nextIdx);
+    triggerReflectiveSfx(0.75, SYSTEMS[nextIdx].id);
+  };
+
   const toggleEdmSound = () => {
     const s = sonifierRef.current;
     if (!s) return;
@@ -363,18 +489,15 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
     triggerReflectiveSfx(0.35 + nextIdx * 0.1, SYSTEMS[nextIdx].id);
   };
 
-  const cycleRegimePreset = () => {
-    const nextR = bondStretch < 1.15 ? 1.85 : bondStretch < 2.15 ? 2.95 : 0.92;
-    setBondStretch(nextR);
-    triggerReflectiveSfx(0.6);
-  };
-
   return (
     <div className="qbeck-page">
-      <FullscreenQuantumFigure
+      <FullscreenQuantumPong
         bondStretch={bondStretch}
         couplingScale={couplingScale}
+        rewardUnlocked={rewardUnlocked}
         onPluck={(pitchNorm) => triggerReflectiveSfx(pitchNorm)}
+        onDeflect={handleDeflect}
+        onScore={handleScore}
       />
 
       <header className="qbeck-top-bar">
@@ -399,7 +522,19 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
         </div>
       </header>
 
-      <section className="qbeck-dials-dock" aria-label="Simulation Data Dials">
+      {rewardUnlocked && (
+        <div className="qbeck-reward-banner" role="status">
+          <span className="qbeck-reward-badge">LEVEL {level} · SUPERFLUID COHERENCE UNLOCKED</span>
+          <strong className="qbeck-reward-title">
+            {activeSystem.label} Resonance Mastered ({activeSystem.sub})
+          </strong>
+          <button type="button" className="qbeck-reward-btn" onClick={handleNextLevel}>
+            Next Quantum Level &rarr;
+          </button>
+        </div>
+      )}
+
+      <section className="qbeck-dials-dock" aria-label="Quantum Pong Data Dials">
         {/* DIAL 1: Bond Stretch R */}
         <CircularDial
           label="STRETCH R"
@@ -420,25 +555,23 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
           />
         </CircularDial>
 
-        {/* DIAL 2: Configurational Entropy */}
+        {/* DIAL 2: Resonance Score / Concrete Reward Progress */}
         <CircularDial
-          label="ENTROPY"
+          label="RESONANCE"
+          valueText={`${Math.min(score, TARGET_RESONANCES)}/${TARGET_RESONANCES}`}
+          subText={rewardUnlocked ? "Reward Unlocked" : `Streak ${streak}`}
+          norm={Math.min(1, score / TARGET_RESONANCES)}
+          accent="#fbbf24"
+        >
+          <span className="qbeck-dial-hint">Steer puck to gold ring</span>
+        </CircularDial>
+
+        {/* DIAL 3: Fluctuation Entropy */}
+        <CircularDial
+          label="FLUCTUATION"
           valueText={entropyBits.toFixed(2)}
           subText="bits / 4.00"
           norm={entropyBits / 4}
-          accent="#fbbf24"
-        >
-          <button type="button" className="qbeck-dial-tap" onClick={cycleRegimePreset}>
-            Step Regime
-          </button>
-        </CircularDial>
-
-        {/* DIAL 3: Correlation Coupling */}
-        <CircularDial
-          label="COUPLING"
-          valueText={`${couplingScale.toFixed(2)}×`}
-          subText="Flux Width"
-          norm={(couplingScale - 0.3) / (2.0 - 0.3)}
           accent="#34d399"
         >
           <input
@@ -449,7 +582,7 @@ export default function QBeckStaticCorrelationShowcase({ onBackHome, onOpenConso
             step="0.02"
             value={couplingScale}
             onChange={(e) => setCouplingScale(parseFloat(e.target.value))}
-            aria-label="Correlation Coupling"
+            aria-label="Quantum Fluctuation Coupling"
           />
         </CircularDial>
 

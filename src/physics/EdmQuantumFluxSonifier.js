@@ -388,5 +388,64 @@ export class EdmQuantumFluxSonifier {
       });
     }
   }
+
+  /**
+   * Crisp harmonic Pong deflection sound when a Wigner perturbation steers the wavepacket.
+   */
+  triggerPongDeflectSfx(pitchNorm = 0.5, streak = 1) {
+    const ctx = this.ensureContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    const dest = this.masterGain || ctx.destination;
+
+    const idx = Math.min(
+      DORIAN_SCALE_HZ.length - 1,
+      Math.max(0, Math.round(pitchNorm * (DORIAN_SCALE_HZ.length - 1)))
+    );
+    const freq = DORIAN_SCALE_HZ[idx] * (1 + Math.min(4, streak) * 0.03);
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(freq * 1.5, now);
+    osc.frequency.exponentialRampToValueAtTime(freq, now + 0.09);
+
+    gain.gain.setValueAtTime(0.24, now);
+    gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.28);
+
+    osc.connect(gain);
+    gain.connect(dest);
+    osc.start(now);
+    osc.stop(now + 0.3);
+  }
+
+  /**
+   * Concrete reward fanfare when the player achieves 5/5 Quantum Resonances.
+   */
+  triggerRewardFanfare() {
+    const ctx = this.ensureContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    const dest = this.masterGain || ctx.destination;
+
+    const chord = [293.66, 349.23, 440.0, 523.25, 587.33, 880.0]; // D minor 9 / 11 shimmer
+    chord.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const filter = ctx.createBiquadFilter();
+      const gain = ctx.createGain();
+      osc.type = i < 2 ? "sawtooth" : "triangle";
+      osc.frequency.setValueAtTime(freq, now + i * 0.06);
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(3200, now + i * 0.06);
+      filter.frequency.exponentialRampToValueAtTime(650, now + i * 0.06 + 0.9);
+      gain.gain.setValueAtTime(0.14, now + i * 0.06);
+      gain.gain.exponentialRampToValueAtTime(0.0005, now + i * 0.06 + 1.1);
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(dest);
+      osc.start(now + i * 0.06);
+      osc.stop(now + i * 0.06 + 1.15);
+    });
+  }
 }
 
