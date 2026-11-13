@@ -3,8 +3,9 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 42%, rgba(14, 116, 144, 0.14), transparent 58%),
-    linear-gradient(180deg, #02050b 0%, #050c17 55%, #02050b 100%);
+  background: radial-gradient(circle at 50% 42%, rgba(37, 99, 235, 0.16), transparent 58%),
+    radial-gradient(circle at 20% 75%, rgba(220, 38, 38, 0.1), transparent 52%),
+    linear-gradient(180deg, #02040a 0%, #050a18 55%, #02040a 100%);
   color: #e2e8f0;
   font-family: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   user-select: none;
@@ -28,7 +29,7 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 1.15rem 1.75rem;
+  padding: 1.25rem 1.85rem;
   pointer-events: none;
 }
 
@@ -44,12 +45,12 @@
   margin: 0;
   justify-self: center;
   font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+  font-size: clamp(2.8rem, 5.2vw, 4.4rem);
   font-weight: 600;
-  letter-spacing: 0.42em;
+  letter-spacing: 0.44em;
   text-transform: uppercase;
   color: #f8fafc;
-  text-shadow: 0 0 28px rgba(56, 189, 248, 0.55);
+  text-shadow: 0 0 36px rgba(37, 99, 235, 0.72), 0 0 18px rgba(225, 29, 72, 0.35);
   pointer-events: none;
 }
 
@@ -60,11 +61,22 @@
   gap: 0.6rem;
 }
 
+.qbeck-score-pill {
+  padding: 0.42rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(5, 11, 24, 0.68);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  color: #fda4af;
+}
+
 .qbeck-icon-btn {
-  background: rgba(5, 11, 22, 0.62);
+  background: rgba(5, 11, 24, 0.65);
   backdrop-filter: blur(12px);
   color: #cbd5e1;
-  border: 1px solid rgba(148, 163, 184, 0.22);
+  border: 1px solid rgba(148, 163, 184, 0.24);
   border-radius: 999px;
   padding: 0.42rem 0.88rem;
   font-family: "JetBrains Mono", monospace;
@@ -75,7 +87,7 @@
 }
 
 .qbeck-icon-btn:hover {
-  border-color: rgba(56, 189, 248, 0.55);
+  border-color: rgba(59, 130, 246, 0.65);
   color: #f8fafc;
 }
 
@@ -83,10 +95,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background: rgba(5, 11, 22, 0.65);
+  background: rgba(5, 11, 24, 0.68);
   backdrop-filter: blur(12px);
-  color: #7dd3fc;
-  border: 1px solid rgba(56, 189, 248, 0.32);
+  color: #93c5fd;
+  border: 1px solid rgba(59, 130, 246, 0.38);
   border-radius: 999px;
   padding: 0.42rem 0.88rem;
   font-family: "JetBrains Mono", monospace;
@@ -97,10 +109,10 @@
 }
 
 .qbeck-edm-btn.is-playing {
-  background: rgba(16, 185, 129, 0.18);
-  border-color: rgba(52, 211, 153, 0.65);
-  color: #6ee7b7;
-  box-shadow: 0 0 18px rgba(52, 211, 153, 0.28);
+  background: rgba(37, 99, 235, 0.26);
+  border-color: rgba(96, 165, 250, 0.72);
+  color: #dbeafe;
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.38);
 }
 
 .qbeck-edm-dot {
@@ -125,135 +137,22 @@
   }
 }
 
-.qbeck-dials-dock {
-  position: fixed;
-  bottom: 1.4rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(168px, 1fr));
-  gap: 0.85rem;
-  padding: 0.8rem 1rem;
-  border-radius: 18px;
-  background: rgba(4, 10, 20, 0.66);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
-  max-width: calc(100vw - 2rem);
-}
-
-.qbeck-dial-card {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.35rem 0.5rem;
-  border-radius: 12px;
-  background: rgba(10, 18, 32, 0.42);
-  border: 1px solid rgba(148, 163, 184, 0.1);
-}
-
-.qbeck-dial-ring-wrap {
-  position: relative;
-  width: 64px;
-  height: 64px;
-  flex-shrink: 0;
-}
-
-.qbeck-dial-svg {
-  width: 64px;
-  height: 64px;
-  display: block;
-}
-
-.qbeck-dial-center {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.qbeck-dial-val {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #f8fafc;
-}
-
-.qbeck-dial-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.22rem;
-  min-width: 0;
-  flex: 1;
-}
-
-.qbeck-dial-label {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.66rem;
-  letter-spacing: 0.1em;
-  color: #94a3b8;
-}
-
-.qbeck-dial-sub {
-  font-size: 0.74rem;
-  color: #e2e8f0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.qbeck-dial-slider {
-  width: 100%;
-  accent-color: #38bdf8;
-  cursor: pointer;
-  margin-top: 0.12rem;
-}
-
-.qbeck-dial-tap {
-  margin-top: 0.12rem;
-  padding: 0.22rem 0.5rem;
-  border-radius: 6px;
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.28);
-  color: #bae6fd;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.65rem;
-  cursor: pointer;
-  text-align: center;
-  transition: background 0.16s ease, border-color 0.16s ease;
-}
-
-.qbeck-dial-tap:hover {
-  background: rgba(56, 189, 248, 0.24);
-  border-color: rgba(56, 189, 248, 0.55);
-}
-
-.qbeck-dial-hint {
-  margin-top: 0.14rem;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.62rem;
-  color: #fbbf24;
-  white-space: nowrap;
-}
-
 .qbeck-reward-banner {
   position: fixed;
-  top: 5.2rem;
+  top: 6.4rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 25;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.45rem;
-  padding: 1rem 1.5rem;
+  gap: 0.5rem;
+  padding: 1.05rem 1.65rem;
   border-radius: 16px;
-  background: rgba(6, 14, 28, 0.84);
+  background: rgba(4, 8, 20, 0.82);
   backdrop-filter: blur(18px);
-  border: 1px solid rgba(251, 191, 36, 0.58);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.65), 0 0 32px rgba(251, 191, 36, 0.22);
+  border: 1px solid rgba(59, 130, 246, 0.48);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.68), 0 0 34px rgba(37, 99, 235, 0.28);
   text-align: center;
 }
 
@@ -261,43 +160,44 @@
   font-family: "JetBrains Mono", monospace;
   font-size: 0.68rem;
   letter-spacing: 0.12em;
-  color: #fbbf24;
+  color: #fda4af;
 }
 
 .qbeck-reward-title {
   font-family: "EB Garamond", Georgia, serif;
-  font-size: 1.35rem;
+  font-size: 1.38rem;
   font-weight: 500;
   color: #f8fafc;
 }
 
 .qbeck-reward-btn {
-  margin-top: 0.2rem;
-  padding: 0.42rem 1rem;
+  margin-top: 0.22rem;
+  padding: 0.48rem 1.25rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, #f59e0b, #fbbf24);
-  color: #020617;
-  border: none;
+  background: linear-gradient(135deg, #020617 0%, #1e3a8a 52%, #2563eb 100%);
+  color: #f8fafc;
+  border: 1px solid rgba(59, 130, 246, 0.68);
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 600;
+  letter-spacing: 0.06em;
   cursor: pointer;
-  transition: transform 0.15s ease;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .qbeck-reward-btn:hover {
   transform: translateY(-1px);
+  box-shadow: 0 8px 26px rgba(37, 99, 235, 0.52);
 }
 
-@media (max-width: 860px) {
-  .qbeck-dials-dock {
-    grid-template-columns: repeat(2, minmax(150px, 1fr));
-    bottom: 0.9rem;
-    padding: 0.65rem;
-    gap: 0.6rem;
-  }
-
+@media (max-width: 720px) {
   .qbeck-top-bar {
     padding: 0.9rem 1rem;
+  }
+
+  .qbeck-caps-title {
+    font-size: 2rem;
+    letter-spacing: 0.28em;
   }
 }
