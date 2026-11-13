@@ -194,9 +194,9 @@ def build_svg(wigner_b64, logo_b64, vlim):
   <!-- Editorial Hero Typography -->
   <g id="hero-copy">
     <text x="76" y="230" font-family="'EB Garamond', Georgia, serif" font-size="158" font-weight="600" letter-spacing="-2.6" fill="#FFFFFF">QBE-SCF</text>
-    <text x="78" y="298" font-family="'EB Garamond', Georgia, serif" font-size="50" font-weight="400" letter-spacing="-0.4" fill="#F8FAFF">Free Electrons for the AI economy</text>
-    <text x="78" y="346" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="21" font-weight="400" letter-spacing="0.5" fill="#A7BDF2">Quantum Boltzmann Equation &#183; Self-Consistent Field</text>
-    <text x="78" y="384" font-family="'EB Garamond', Georgia, serif" font-style="italic" font-size="24" font-weight="400" letter-spacing="0.2" fill="#DCE6FF">Accepted for publication, The Journal of Chemical Physics (2026).</text>
+    <text x="78" y="314" font-family="'EB Garamond', Georgia, serif" font-size="50" font-weight="400" letter-spacing="-0.4" fill="#F0CB69">Free Electrons for the AI economy</text>
+    <text x="78" y="358" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="21" font-weight="400" letter-spacing="0.5" fill="#A7BDF2">Quantum Boltzmann Equation Self-Consistent Field</text>
+    <text x="78" y="394" font-family="'EB Garamond', Georgia, serif" font-style="italic" font-size="24" font-weight="400" letter-spacing="0.2" fill="#DCE6FF">Accepted for publication, The Journal of Chemical Physics (2026).</text>
   </g>
 
   <!-- Hero Wigner Distribution (~2/3 of composition) -->
