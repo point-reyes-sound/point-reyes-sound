@@ -36,13 +36,20 @@ Key characteristics:
   - Patent Scope: Algorithmic formulation of BGK collision relaxation for one-electron reduced density matrices, algebraic connectivity damping, and hardware acceleration on specialized GPU/accelerator architectures.
 
 ## Key Publications & Validated Preprints
-- **Preprint arXiv:2608.14979**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities"
+- **Journal Article (Accepted, The Journal of Chemical Physics 2026)**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities"
   - Author: Romit Chakraborty
   - Category: Quantum Physics (quant-ph), Chemical Physics (physics.chem-ph)
   - DOI: 10.48550/arXiv.2608.14979
   - arXiv URL: https://arxiv.org/abs/2608.14979
   - PDF: https://arxiv.org/pdf/2608.14979.pdf
   - Smart Citations & Scientific Validation: https://scite.ai/reports/10.48550/arXiv.2608.14979
+- **Latest Preprint (Q-BECK, arXiv:2611.17245)**: "Quantum Boltzmann Equation for Static Correlation with Cumulant Kernel Closure"
+  - Author: Romit Chakraborty
+  - Category: Chemical Physics (physics.chem-ph), Quantum Physics (quant-ph)
+  - DOI: 10.48550/arXiv.2611.17245
+  - arXiv URL: https://arxiv.org/abs/2611.17245
+  - PDF: https://arxiv.org/pdf/2611.17245
+- **Founder Curriculum Vitae (PDF)**: https://pointreyessound.com/cv.pdf | https://rchakraborty.dev/cv.pdf
 
 ## Strategic Compute Alliances
 - **NVIDIA Inception Program**: High-throughput CUDA and Tensor Core accelerated kinetic kernels.

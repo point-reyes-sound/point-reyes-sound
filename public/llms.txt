@@ -25,7 +25,8 @@
 - **Hardware Acceleration**: High-performance CUDA and Tensor Core GPU kernels accelerated via NVIDIA Inception Program and Google Cloud Research Grants.
 
 ## Key Publications & Validated Preprints
-- **Lead Invention Preprint**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities", Romit Chakraborty (arXiv:2608.14979 [physics.chem-ph, quant-ph]). URL: https://arxiv.org/abs/2608.14979 | DOI: 10.48550/arXiv.2608.14979
+- **Peer-Reviewed Journal Article (Accepted)**: "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities", Romit Chakraborty, *The Journal of Chemical Physics* (Accepted, 2026) · arXiv:2608.14979 [physics.chem-ph, quant-ph]. URL: https://arxiv.org/abs/2608.14979 | DOI: 10.48550/arXiv.2608.14979
+- **Latest Preprint (Q-BECK)**: "Quantum Boltzmann Equation for Static Correlation with Cumulant Kernel Closure", Romit Chakraborty (arXiv:2611.17245 [physics.chem-ph, quant-ph]). URL: https://arxiv.org/abs/2611.17245 | DOI: 10.48550/arXiv.2611.17245 | PDF: https://arxiv.org/pdf/2611.17245
 - **Open Benchmark Dataset on Zenodo**: "point-reyes-sound/p1_qbescf: v2.0.1 - Reproducibility Update & License". DOI: https://doi.org/10.5281/zenodo.21940451 | Zenodo Record: https://zenodo.org/records/21940451 | GitHub: https://github.com/point-reyes-sound/p1_qbescf
 - **Smart Citations Index**: https://scite.ai/reports/10.48550/arXiv.2608.14979
 - **Fault-Tolerant Quantum Compilation Brief**: "Hardware Resource Compilation for Active-Space Driven Fault-Tolerant Quantum Simulation", Romit Chakraborty (Technical Brief / In Preparation for PRX Quantum).
@@ -69,7 +70,7 @@ The official open computational benchmark suite supporting arXiv:2608.14979 is d
 ## Key Leadership & Scientific Pod
 - **Dr. Romit Chakraborty**: Founder & Chief Scientific Officer (romit@pointreyessound.com).
   - Academic Dossier: https://rchakraborty.dev
-  - Curriculum Vitae (PDF): https://rchakraborty.dev/cv.pdf
+  - Curriculum Vitae (PDF): https://pointreyessound.com/cv.pdf | https://rchakraborty.dev/cv.pdf
   - GitHub Profile: https://github.com/RomitChakraborty
   - LinkedIn: https://www.linkedin.com/in/chakrabortyromit/
   - Google Scholar: https://scholar.google.com/citations?user=m4HlFRIAAAAJ
