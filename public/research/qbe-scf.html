@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QBE-SCF: Quantum Boltzmann Equation Self-Consistent-Field | Point Reyes Sound</title>
+    <meta name="description" content="Accepted for publication in The Journal of Chemical Physics (2026). QBE-SCF replaces static Hartree-Fock eigenvalue diagonalization with non-equilibrium BGK kinetic transport of the 1-RDM to regularize Coulson-Fischer points and mean-field singularities in O(N^3) time." />
+    <meta name="keywords" content="QBE-SCF, Quantum Boltzmann Equation, Self-Consistent Field, Coulson-Fischer point, mean-field singularity, entropic regularization, 1-RDM, BGK collision operator, quantum chemistry solver, Romit Chakraborty, Point Reyes Sound" />
+    <link rel="canonical" href="https://www.pointreyessound.com/research/qbe-scf" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="QBE-SCF: Quantum Boltzmann Equation Self-Consistent-Field (J. Chem. Phys. 2026)" />
+    <meta property="og:description" content="Entropic regularization of mean-field singularities and Coulson-Fischer points via phase-space kinetic transport." />
+    <meta property="og:image" content="https://www.pointreyessound.com/assets/preprint/QBESCF-slide1.png" />
+    <meta property="og:url" content="https://www.pointreyessound.com/research/qbe-scf" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": "Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities",
+        "author": {
+          "@type": "Person",
+          "name": "Romit Chakraborty",
+          "url": "https://rchakraborty.dev"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "The Journal of Chemical Physics (Accepted, 2026)"
+        },
+        "datePublished": "2026-08-01",
+        "identifier": "arXiv:2608.14979",
+        "sameAs": "https://arxiv.org/abs/2608.14979",
+        "url": "https://www.pointreyessound.com/research/qbe-scf",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Point Reyes Sound, Inc.",
+          "url": "https://www.pointreyessound.com"
+        }
+      }
+    </script>
+    <style>
+      body {
+        margin: 0;
+        background: #040814;
+        color: #f8fafc;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.7;
+      }
+      .wrap {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 56px 24px 80px;
+      }
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 44px;
+        font-size: 0.9rem;
+      }
+      .nav a {
+        color: #93c5fd;
+        text-decoration: none;
+      }
+      .nav a:hover { text-decoration: underline; }
+      .kicker {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        color: #f8df98;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      h1 {
+        font-family: "EB Garamond", Georgia, serif;
+        font-size: clamp(2rem, 4.2vw, 3rem);
+        font-weight: 600;
+        line-height: 1.15;
+        margin: 0 0 14px;
+      }
+      .meta {
+        color: #cbd5e1;
+        font-size: 0.98rem;
+        margin-bottom: 28px;
+      }
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 36px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 11px 22px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.92rem;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #1d4ed8 0%, #991b1b 100%);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+      }
+      .btn-secondary {
+        background: rgba(15, 23, 42, 0.85);
+        color: #e2e8f0;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+      }
+      section {
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(148, 163, 184, 0.18);
+      }
+      h2 {
+        font-family: "EB Garamond", Georgia, serif;
+        font-size: 1.55rem;
+        margin: 0 0 12px;
+        color: #f8df98;
+      }
+      p, li { color: #cbd5e1; }
+      pre {
+        background: #02050d;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 10px;
+        padding: 16px;
+        overflow-x: auto;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.82rem;
+        color: #e2e8f0;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <nav class="nav">
+        <a href="https://www.pointreyessound.com/#research">&larr; Point Reyes Sound Research</a>
+        <a href="https://www.pointreyessound.com/interactive">Launch Q-BOLTZ Demo &rarr;</a>
+      </nav>
+
+      <div class="kicker">Accepted for Publication &middot; The Journal of Chemical Physics (2026)</div>
+      <h1>Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities</h1>
+      <div class="meta">
+        Romit Chakraborty &mdash; Point Reyes Sound, Inc. &middot; arXiv:2608.14979 [physics.chem-ph, quant-ph]
+      </div>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://arxiv.org/abs/2608.14979" target="_blank" rel="noopener noreferrer">Read Paper on arXiv</a>
+        <a class="btn btn-secondary" href="https://arxiv.org/pdf/2608.14979.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a>
+        <a class="btn btn-secondary" href="https://doi.org/10.5281/zenodo.21940451" target="_blank" rel="noopener noreferrer">Zenodo Benchmark Dataset</a>
+      </div>
+
+      <section>
+        <h2>Abstract</h2>
+        <p>
+          Standard Hartree&ndash;Fock and Kohn&ndash;Sham self-consistent-field (SCF) algorithms formulate electronic structure as an iterative eigenvalue diagonalization problem, causing derivative discontinuities, charge sloshing, and unphysical symmetry breaking at Coulson&ndash;Fischer points and conical intersections. QBE-SCF reformulates electronic self-consistency as continuous non-equilibrium phase-space kinetic transport of the one-electron reduced density matrix (1-RDM) governed by a Bhatnagar&ndash;Gross&ndash;Krook (BGK) collision operator.
+        </p>
+        <p>
+          By coupling algebraic connectivity damping (Fiedler friction) directly into the collision operator, QBE-SCF achieves smooth, analytically regular potential energy surfaces across strongly correlated dissociations and avoided crossings in deterministic <em>O(N&sup3;)</em> matrix complexity while recovering exact Hartree&ndash;Fock stationary states in the zero-temperature limit.
+        </p>
+      </section>
+
+      <section>
+        <h2>Benchmark Systems (DOI: 10.5281/zenodo.21940451)</h2>
+        <ul>
+          <li><strong>Symmetric H<sub>3</sub> Dissociation:</strong> Continuous kinetic traversal across the Coulson&ndash;Fischer crossing without broken-symmetry cusps.</li>
+          <li><strong>BeH<sub>2</sub> Avoided Crossing (C<sub>2v</sub> &rarr; D<sub>&infin;h</sub>):</strong> Smooth potential energy profile through near-degenerate frontier orbitals.</li>
+          <li><strong>H<sub>4</sub> Rectangular Automerization (D<sub>2h</sub> &rarr; D<sub>4h</sub> &rarr; D<sub>2h</sub>):</strong> Positive semi-definite orbital Hessians across the square barrier.</li>
+          <li><strong>N<sub>2</sub> Triple-Bond Dissociation:</strong> Exact trace conservation and zero [F, P] commutator residual across STO-3G, 6-31G, and cc-pVTZ.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>BibTeX Citation</h2>
+        <pre>@article{chakraborty2026qbescf,
+  title   = {Quantum Boltzmann Equation Self-Consistent-Field for the Entropic Regularization of Mean-Field Singularities},
+  author  = {Chakraborty, Romit},
+  journal = {The Journal of Chemical Physics (Accepted) / arXiv preprint arXiv:2608.14979},
+  year    = {2026},
+  doi     = {10.48550/arXiv.2608.14979},
+  url     = {https://arxiv.org/abs/2608.14979}
+}</pre>
+      </section>
+    </main>
+  </body>
+</html>

@@ -141,6 +141,14 @@
       "destination": "/index.html"
     },
     {
+      "source": "/research/qbe-scf",
+      "destination": "/research/qbe-scf.html"
+    },
+    {
+      "source": "/research/qbeck",
+      "destination": "/research/qbeck.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

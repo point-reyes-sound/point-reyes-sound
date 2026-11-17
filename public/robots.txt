@@ -68,4 +68,4 @@ Allow: /
 User-agent: Diffbot
 Allow: /
 
-Sitemap: https://pointreyessound.com/sitemap.xml
+Sitemap: https://www.pointreyessound.com/sitemap.xml
