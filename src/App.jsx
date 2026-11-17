@@ -846,6 +846,12 @@ export default function App() {
             <a href="https://arxiv.org/abs/2608.14979" target="_blank" rel="noopener noreferrer">
               Preprint (arXiv:2608.14979) &rarr;
             </a>
+            <a href="/research/qbe-scf">
+              QBE-SCF (J. Chem. Phys. 2026) &rarr;
+            </a>
+            <a href="/research/qbeck">
+              Q-BECK (arXiv:2611.17245) &rarr;
+            </a>
             <a href="/public-deck" target="_blank" rel="noopener noreferrer">
               Technical Prospectus &rarr;
             </a>

@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Q-BECK: Quantum Boltzmann Equation for Static Correlation at Scale | Point Reyes Sound</title>
+    <meta name="description" content="Q-BECK (arXiv:2611.17245) resolves strong static correlation at zero electronic temperature in O(N^3) empirical runtime and O(N^2) working memory (<29 MB at 300 atomic orbitals) via BBGKY cumulant-kernel closure." />
+    <meta name="keywords" content="Q-BECK, static correlation, cumulant kernel closure, Quantum Boltzmann Equation, BBGKY hierarchy, Wigner-Weyl isomorphism, N2 triple bond dissociation, benzyne diradical, H4 Mott transition, O(N^3) quantum chemistry, Romit Chakraborty, Point Reyes Sound" />
+    <link rel="canonical" href="https://www.pointreyessound.com/research/qbeck" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Q-BECK: Static Correlation at Scale (arXiv:2611.17245)" />
+    <meta property="og:description" content="O(N^3) runtime and O(N^2) working memory static correlation solver benchmarked across 36 molecular systems up to 300 atomic orbitals." />
+    <meta property="og:image" content="https://www.pointreyessound.com/assets/preprint/QBECK-slide2.png" />
+    <meta property="og:url" content="https://www.pointreyessound.com/research/qbeck" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": "Quantum Boltzmann Equation for Static Correlation with Cumulant Kernel Closure",
+        "author": {
+          "@type": "Person",
+          "name": "Romit Chakraborty",
+          "url": "https://rchakraborty.dev"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Point Reyes Sound, Inc."
+        },
+        "datePublished": "2026-11-12",
+        "identifier": "arXiv:2611.17245",
+        "sameAs": "https://arxiv.org/abs/2611.17245",
+        "url": "https://www.pointreyessound.com/research/qbeck",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Point Reyes Sound, Inc.",
+          "url": "https://www.pointreyessound.com"
+        }
+      }
+    </script>
+    <style>
+      body {
+        margin: 0;
+        background: #040814;
+        color: #f8fafc;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.7;
+      }
+      .wrap {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 56px 24px 80px;
+      }
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 44px;
+        font-size: 0.9rem;
+      }
+      .nav a {
+        color: #93c5fd;
+        text-decoration: none;
+      }
+      .nav a:hover { text-decoration: underline; }
+      .kicker {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        color: #f8df98;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      h1 {
+        font-family: "EB Garamond", Georgia, serif;
+        font-size: clamp(2rem, 4.2vw, 3rem);
+        font-weight: 600;
+        line-height: 1.15;
+        margin: 0 0 14px;
+      }
+      .meta {
+        color: #cbd5e1;
+        font-size: 0.98rem;
+        margin-bottom: 28px;
+      }
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 36px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 11px 22px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.92rem;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #1d4ed8 0%, #991b1b 100%);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+      }
+      .btn-secondary {
+        background: rgba(15, 23, 42, 0.85);
+        color: #e2e8f0;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin: 24px 0;
+      }
+      .metric-card {
+        background: rgba(9, 25, 74, 0.45);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 12px;
+        padding: 18px 20px;
+      }
+      .metric-val {
+        font-family: "EB Garamond", Georgia, serif;
+        font-size: 2rem;
+        font-weight: 600;
+        color: #f8df98;
+      }
+      .metric-label {
+        font-size: 0.85rem;
+        color: #cbd5e1;
+      }
+      section {
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(148, 163, 184, 0.18);
+      }
+      h2 {
+        font-family: "EB Garamond", Georgia, serif;
+        font-size: 1.55rem;
+        margin: 0 0 12px;
+        color: #f8df98;
+      }
+      p, li { color: #cbd5e1; }
+      pre {
+        background: #02050d;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 10px;
+        padding: 16px;
+        overflow-x: auto;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.82rem;
+        color: #e2e8f0;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <nav class="nav">
+        <a href="https://www.pointreyessound.com/#research">&larr; Point Reyes Sound Research</a>
+        <a href="https://www.pointreyessound.com/interactive">Launch Q-BOLTZ Demo &rarr;</a>
+      </nav>
+
+      <div class="kicker">arXiv:2611.17245 &middot; Static Correlation at Scale</div>
+      <h1>Quantum Boltzmann Equation for Static Correlation with Cumulant Kernel Closure (Q-BECK)</h1>
+      <div class="meta">
+        Romit Chakraborty &mdash; Point Reyes Sound, Inc. &middot; November 2026 &middot; [physics.chem-ph, quant-ph]
+      </div>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://arxiv.org/abs/2611.17245" target="_blank" rel="noopener noreferrer">Read Paper on arXiv</a>
+        <a class="btn btn-secondary" href="https://arxiv.org/pdf/2611.17245" target="_blank" rel="noopener noreferrer">Download PDF</a>
+      </div>
+
+      <div class="metrics">
+        <div class="metric-card">
+          <div class="metric-val">O(N&sup3;)</div>
+          <div class="metric-label">Empirical runtime scaling (N<sup>2.98</sup> fit on Apple M2 CPU)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">O(N&sup2;)</div>
+          <div class="metric-label">Bounded working memory (&lt;29 MB at 300 atomic orbitals)</div>
+        </div>
+      </div>
+
+      <section>
+        <h2>Abstract</h2>
+        <p>
+          Q-BECK maps the Bogoliubov&ndash;Born&ndash;Green&ndash;Kirkwood&ndash;Yvon (BBGKY) hierarchy onto discrete atomic-orbital matrix mechanics via the Wigner&ndash;Weyl isomorphism to evaluate two-body cumulant scattering without explicit <em>O(N&#8308;)</em> 2-RDM storage or manual active-space selection.
+        </p>
+        <p>
+          By projecting the two-body cumulant onto its lowest unitary invariant and evaluating a susceptibility-windowed orbital scattering scale through a single Coulomb-exchange contraction, Q-BECK relaxes onto a hyperbolic-tangent cumulant attractor that regularizes derivative cusps and resolves strong static correlation at zero electronic temperature.
+        </p>
+      </section>
+
+      <section>
+        <h2>Validated Benchmark Suite (36 Systems up to 300 AOs)</h2>
+        <ul>
+          <li><strong>N<sub>2</sub> Triple-Bond Dissociation:</strong> Smooth breaking of six active electrons without active-space explosion.</li>
+          <li><strong>Benzyne Diradical Isomers (<em>o</em>-, <em>m</em>-, <em>p</em>-Benzyne):</strong> Accurate singlet&ndash;triplet splittings across 1-RDM relaxation.</li>
+          <li><strong>Collinear H<sub>3</sub> Generalized Pauli Constraint Polytope:</strong> Pure <em>N</em>-representability preservation throughout exchange dynamics.</li>
+          <li><strong>D<sub>4h</sub> Square H<sub>4</sub> Mott Transition, BeH<sub>2</sub> Avoided Crossing, H<sub>2</sub>O Symmetric Cleavage, &amp; MR-MGN-BE17 (11 molecules).</strong></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>BibTeX Citation</h2>
+        <pre>@article{chakraborty2026qbeck,
+  title   = {Quantum Boltzmann Equation for Static Correlation with Cumulant Kernel Closure},
+  author  = {Chakraborty, Romit},
+  journal = {arXiv preprint arXiv:2611.17245},
+  year    = {2026},
+  doi     = {10.48550/arXiv.2611.17245},
+  url     = {https://arxiv.org/abs/2611.17245}
+}</pre>
+      </section>
+    </main>
+  </body>
+</html>
