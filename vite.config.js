@@ -34,6 +34,9 @@ export default defineConfig({
           if (req.url === '/a16z-appendix' || req.url === '/a16z-appendix/') {
             req.url = '/a16z-appendix.html';
           }
+          if (req.url === '/lynam' || req.url === '/lynam/' || req.url === '/lynam-deck' || req.url === '/lynam-deck/') {
+            req.url = '/lynam-deck.html';
+          }
           if (
             req.url === '/q-boltz' || req.url === '/q-boltz/' ||
             req.url === '/qboltz' || req.url === '/qboltz/' ||
@@ -57,6 +60,7 @@ export default defineConfig({
         alchemist: resolve(__dirname, 'alchemist-deck.html'),
         a16z: resolve(__dirname, 'a16z-deck.html'),
         a16z_appendix: resolve(__dirname, 'a16z-appendix.html'),
+        lynam: resolve(__dirname, 'lynam-deck.html'),
         news_alchemist: resolve(__dirname, 'news/alchemist-chicago-2026/index.html'),
         film: resolve(__dirname, 'film/index.html')
       }

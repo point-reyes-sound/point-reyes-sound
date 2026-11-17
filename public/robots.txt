@@ -24,6 +24,10 @@ Disallow: /a16z-deck
 Disallow: /a16z-deck.html
 Disallow: /a16z-appendix
 Disallow: /a16z-appendix.html
+Disallow: /lynam
+Disallow: /lynam.html
+Disallow: /lynam-deck
+Disallow: /lynam-deck.html
 Disallow: /usistef-qmf-deck
 Disallow: /usistef-qmf-deck.html
 
