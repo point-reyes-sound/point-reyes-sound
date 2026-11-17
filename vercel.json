@@ -117,6 +117,10 @@
       "destination": "/lynam-deck.html"
     },
     {
+      "source": "/pre-seed-deck",
+      "destination": "/lynam-deck.html"
+    },
+    {
       "source": "/papers/(.*)",
       "destination": "/papers/$1"
     },

@@ -34,7 +34,7 @@ export default defineConfig({
           if (req.url === '/a16z-appendix' || req.url === '/a16z-appendix/') {
             req.url = '/a16z-appendix.html';
           }
-          if (req.url === '/lynam' || req.url === '/lynam/' || req.url === '/lynam-deck' || req.url === '/lynam-deck/') {
+          if (req.url === '/lynam' || req.url === '/lynam/' || req.url === '/lynam-deck' || req.url === '/lynam-deck/' || req.url === '/pre-seed-deck' || req.url === '/pre-seed-deck/') {
             req.url = '/lynam-deck.html';
           }
           if (
