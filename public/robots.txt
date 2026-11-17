@@ -28,6 +28,7 @@ Disallow: /lynam
 Disallow: /lynam.html
 Disallow: /lynam-deck
 Disallow: /lynam-deck.html
+Disallow: /pre-seed-deck
 Disallow: /usistef-qmf-deck
 Disallow: /usistef-qmf-deck.html
 
