@@ -109,6 +109,14 @@
       "destination": "/a16z-appendix.html"
     },
     {
+      "source": "/lynam",
+      "destination": "/lynam-deck.html"
+    },
+    {
+      "source": "/lynam-deck",
+      "destination": "/lynam-deck.html"
+    },
+    {
       "source": "/papers/(.*)",
       "destination": "/papers/$1"
     },
