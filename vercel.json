@@ -137,6 +137,10 @@
       "destination": "/interactive.html"
     },
     {
+      "source": "/preview",
+      "destination": "/index.html"
+    },
+    {
       "source": "/qboltz",
       "destination": "/index.html"
     },

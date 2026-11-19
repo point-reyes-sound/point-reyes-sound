@@ -209,6 +209,7 @@ export default function App() {
     const path = window.location.pathname.toLowerCase().replace(/\/$/, "");
     const hash = window.location.hash.toLowerCase().replace(/^#\/?/, "");
     if (
+      path === "/preview" ||
       path === "/interactive" ||
       path === "/interactive.html" ||
       path === "/lab" ||
@@ -219,6 +220,7 @@ export default function App() {
       path === "/q-boltz" ||
       path === "/demo" ||
       path === "/orbitals" ||
+      hash === "preview" ||
       hash === "interactive" ||
       hash === "lab" ||
       hash === "simulator" ||
@@ -244,6 +246,13 @@ export default function App() {
 
   const [currentView, setCurrentView] = useState(getInitialActiveView);
   const [labTab, setLabTab] = useState(getInitialLabTab);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (currentView === "interactive") {
+      document.title = "Preview | Point Reyes Sound";
+    }
+  }, [currentView]);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const [activeCarouselIdx, setActiveCarouselIdx] = useState(0);
@@ -353,12 +362,12 @@ export default function App() {
     stopAudioIfPlaying();
     setLabTab("orbitals");
     setCurrentView("interactive");
-    const targetPath = "/q-boltz";
+    const targetPath = "/preview";
     if (typeof window !== "undefined" && window.location.pathname !== targetPath) {
       window.history.pushState({ page: "interactive", tab: "orbitals" }, "", targetPath);
     }
     if (typeof document !== "undefined") {
-      document.title = "Q-BOLTZ // Molecular Orbital Active-Space Workstation | Point Reyes Sound";
+      document.title = "Preview | Point Reyes Sound";
     }
   };
 
