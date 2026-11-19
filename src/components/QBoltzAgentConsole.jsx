@@ -729,9 +729,10 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
   const [loopDir, setLoopDir] = useState(1);
   const [playbackSpeed, setPlaybackSpeed] = useState(180);
 
-  // Web Audio Synth for Singularity Crossing Acoustic Cue & Ethereal Ambient Soundscape
+  // Web Audio Synth for Singularity Crossing Acoustic Cue & Studio Film Audio Loop
   const audioCtxRef = useRef(null);
   const ambientNodesRef = useRef(null);
+  const previewAudioRef = useRef(null);
   const [isAmbientMuted, setIsAmbientMuted] = useState(false);
   const isAmbientMutedRef = useRef(false);
 
@@ -1249,6 +1250,28 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
     ];
 
     const isBeH2 = activeBenchmarkKey === "beh2_ci";
+    const previewAudioSrc =
+      activeBenchmarkKey === "beh2_ci"
+        ? "/media/preview_audio/beh2.m4a"
+        : activeBenchmarkKey === "h3_d3h"
+          ? "/media/preview_audio/h3.m4a"
+          : activeBenchmarkKey === "h4_square"
+            ? "/media/preview_audio/h4.m4a"
+            : "/media/preview_audio/h2.m4a";
+
+    const syncPreviewAudio = (shouldPlay, mutedFlag) => {
+      const el = previewAudioRef.current;
+      if (!el) return;
+      el.muted = mutedFlag;
+      el.volume = 0.85;
+      if (shouldPlay && !mutedFlag) {
+        const p = el.play();
+        if (p && p.catch) p.catch(() => {});
+      } else {
+        el.pause();
+      }
+    };
+
     const activeMolFormula =
       activeBenchmarkKey === "beh2_ci" ? (
         <>BeH<sub>2</sub></>
@@ -1261,7 +1284,24 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
       );
 
     return (
-      <div className="prs-phone-preview-shell prs-unified-fullscreen prs-gallery-black">
+      <div
+        className="prs-phone-preview-shell prs-unified-fullscreen prs-gallery-black"
+        onPointerDown={() => {
+          if (isPlaying && !isAmbientMuted) {
+            syncPreviewAudio(true, false);
+          }
+        }}
+      >
+        {/* Studio 96 BPM Film Audio Loop synced to active molecular system */}
+        <audio
+          ref={previewAudioRef}
+          key={previewAudioSrc}
+          src={previewAudioSrc}
+          autoPlay={isPlaying && !isAmbientMuted}
+          muted={isAmbientMuted}
+          loop
+          playsInline
+        />
         {/* Centered 4:5 Landing-Page-Congruent Quantum Card + Seeking Dots */}
         <div className="prs-phone-bezel prs-landing-congruent-col">
           {/* 1. Top Centered Φ Point Reyes Sound Lockup in EB Garamond */}
@@ -1368,16 +1408,46 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
             })}
           </div>
 
-          {/* 4. Compact Play/Pause + Coordinate Scrubber Dock */}
+          {/* 4. Compact Play/Pause + Audio Toggle + Coordinate Scrubber Dock */}
           <div className="prs-stretch-dock prs-dock-compact">
             <button
               type="button"
               className={`prs-play-circle ${isPlaying ? "playing" : ""}`}
-              onClick={() => setIsPlaying((p) => !p)}
-              title={isPlaying ? "Pause trajectory" : "Play trajectory"}
+              onClick={() => {
+                const nextPlay = !isPlaying;
+                setIsPlaying(nextPlay);
+                syncPreviewAudio(nextPlay, isAmbientMuted);
+              }}
+              title={isPlaying ? "Pause trajectory & audio" : "Play trajectory & audio"}
               aria-label={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? "❚❚" : "▶"}
+            </button>
+            <button
+              type="button"
+              className={`prs-play-circle ${!isAmbientMuted ? "playing" : ""}`}
+              onClick={() => {
+                const nextMuted = !isAmbientMuted;
+                setIsAmbientMuted(nextMuted);
+                isAmbientMutedRef.current = nextMuted;
+                syncPreviewAudio(isPlaying, nextMuted);
+              }}
+              title={isAmbientMuted ? "Unmute studio audio" : "Mute studio audio"}
+              aria-label={isAmbientMuted ? "Unmute audio" : "Mute audio"}
+            >
+              {isAmbientMuted ? (
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              ) : (
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                </svg>
+              )}
             </button>
             <div className="prs-stretch-slider-wrap">
               <div className="prs-stretch-labels">

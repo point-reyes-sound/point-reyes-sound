@@ -101,20 +101,28 @@ const WIGNER_FRAGMENT_SHADER = `
     return exp(-zeta * dist) * wDepth;
   }
 
-  // Whisper-thin 3D equatorial perspective ring so 3D rotation is immediately intuitive
+  // Whisper-thin 72-point 3D equatorial perspective ring so 3D rotation is razor-sharp & intuitive
   float eval3DRing(vec2 xy, float ringR, float cy, float sy, float cp, float sp) {
     float best = 0.0;
-    const int N = 40;
+    const int N = 72;
     for (int i = 0; i < N; i++) {
       float ang = float(i) * (6.2831853 / float(N));
       vec3 p0 = vec3(ringR * cos(ang), 0.0, ringR * sin(ang));
       vec4 pr = project3D(p0, cy, sy, cp, sp);
       vec2 d = xy - pr.xy;
-      float dw = clamp(0.55 + 0.45 * (pr.z / max(ringR, 0.5)), 0.18, 1.0);
-      float g = exp(-dot(d, d) / (2.0 * 0.020 * 0.020)) * dw;
+      float dw = clamp(0.55 + 0.45 * (pr.z / max(ringR, 0.5)), 0.16, 1.0);
+      float g = exp(-dot(d, d) / (2.0 * 0.013 * 0.013)) * dw;
       best = max(best, g);
     }
     return best;
+  }
+
+  // Screen-space derivative anti-aliased hairline contour (vector-crisp at any resolution!)
+  float crispContour(float fieldVal, float freq, float lineWidthPx) {
+    float v = fieldVal * freq;
+    float fw = max(fwidth(v), 0.0005);
+    float distToLine = abs(fract(v + 0.5) - 0.5) / fw;
+    return 1.0 - smoothstep(lineWidthPx * 0.45, lineWidthPx * 1.15, distToLine);
   }
 
   void main() {
@@ -158,18 +166,16 @@ const WIGNER_FRAGMENT_SHADER = `
     float shade = clamp(dot(normal, lightDir), 0.72, 1.18);
     col *= mix(1.0, shade, 0.38);
 
-    // Delicate pearl-cyan positive (#dcfaf4) & sapphire-ice dashed negative (#7eb2ff) iso-Wigner contours
-    float support = smoothstep(0.06, 0.24, abs(W));
-    if (W > 0.14) {
-      float cPos = sin(W * 22.0);
-      float linePos = smoothstep(0.92, 0.992, cPos) * support;
-      col = mix(col, vec3(0.863, 0.980, 0.957), linePos * 0.28);
+    // Vector-crisp fwidth anti-aliased iso-Wigner contours (#dcfaf4 positive, #7eb2ff dashed negative)
+    float support = smoothstep(0.06, 0.22, abs(W));
+    if (W > 0.12) {
+      float linePos = crispContour(W, 3.6, 1.25) * support;
+      col = mix(col, vec3(0.863, 0.980, 0.957), linePos * 0.30);
     }
-    if (W < -0.14) {
-      float cNeg = sin(abs(W) * 20.0);
-      float dash = smoothstep(0.10, 0.32, sin(z * 14.0) * 0.5 + 0.5);
-      float lineNeg = smoothstep(0.92, 0.992, cNeg) * support * dash;
-      col = mix(col, vec3(0.494, 0.698, 1.000), lineNeg * 0.24);
+    if (W < -0.12) {
+      float dash = smoothstep(0.12, 0.34, sin(z * 16.0) * 0.5 + 0.5);
+      float lineNeg = crispContour(abs(W), 3.2, 1.15) * support * dash;
+      col = mix(col, vec3(0.494, 0.698, 1.000), lineNeg * 0.26);
     }
 
     // Symmetric vertical fade & deep oceanic vignette matching JCP Cover
@@ -274,8 +280,8 @@ const WIGNER_FRAGMENT_SHADER = `
       //   BeH2    -> Bioluminescent Jade-Emerald (#26d6a2 / #8cf5d4)
       float rhoSoft = pow(rho, 1.18) * 0.78;
       float rhoCore = pow(clamp((rho - 0.36) / 0.64, 0.0, 1.0), 1.65);
-      float rhoSupp = smoothstep(0.10, 0.28, rho);
-      float isoRho = smoothstep(0.92, 0.992, sin(rho * 24.0)) * rhoSupp * 0.46;
+      float rhoSupp = smoothstep(0.10, 0.24, rho);
+      float isoRho = crispContour(rho, 4.0, 1.45) * rhoSupp * 0.54;
 
       vec3 densRgb;
       if (u_molType < 1.5) {
@@ -352,14 +358,15 @@ export default function WebGlWignerPlot({
       alpha: false,
       powerPreference: "high-performance"
     });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    const superDpr = Math.max(2.5, Math.min((window.devicePixelRatio || 1) * 1.5, 3.0));
+    renderer.setPixelRatio(superDpr);
+    renderer.setSize(width, height, true);
     mount.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
     const uniforms = {
       u_time: { value: 0.0 },
-      u_resolution: { value: new THREE.Vector2(width, height) },
+      u_resolution: { value: new THREE.Vector2(width * superDpr, height * superDpr) },
       u_R: { value: Number(r || 1.6) },
       u_nBond: { value: Number(nBond || 1.918) },
       u_nAntibond: { value: Number(nAntibond || 0.082) },
@@ -399,8 +406,9 @@ export default function WebGlWignerPlot({
       const w = mount.clientWidth;
       const h = mount.clientHeight;
       if (w === 0 || h === 0) return;
-      renderer.setSize(w, h);
-      material.uniforms.u_resolution.value.set(w, h);
+      const dpr = renderer.getPixelRatio();
+      renderer.setSize(w, h, true);
+      material.uniforms.u_resolution.value.set(w * dpr, h * dpr);
     };
 
     const resizeObserver = new ResizeObserver(handleResize);
