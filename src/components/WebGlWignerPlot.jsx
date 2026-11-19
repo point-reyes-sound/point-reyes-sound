@@ -24,114 +24,116 @@ const WIGNER_FRAGMENT_SHADER = `
   uniform float u_nBond;
   uniform float u_nAntibond;
 
+  // Exact SubtleCoolDelicate palette from p1_qbescf Figure 7(d) & JCP Cover
+  // t in [0, 1] maps W from deep obsidian negativity (-W) -> midnight sapphire (W ~ 0)
+  // -> oceanic aquamarine -> silky pearl-jade crest (+W)
+  vec3 subtleCoolDelicate(float t) {
+    float x = clamp(t, 0.0, 1.0);
+    vec3 c0 = vec3(0.004, 0.012, 0.043); // 0.00 #01030b (deep W < 0 pocket)
+    vec3 c1 = vec3(0.008, 0.047, 0.169); // 0.14 #020c2b
+    vec3 c2 = vec3(0.020, 0.118, 0.329); // 0.28 #051e54
+    vec3 c3 = vec3(0.031, 0.235, 0.490); // 0.42 #083c7d (W = 0 oceanic sapphire sea)
+    vec3 c4 = vec3(0.051, 0.388, 0.612); // 0.52 #0d639c
+    vec3 c5 = vec3(0.122, 0.584, 0.722); // 0.66 #1f95b8 (oceanic aquamarine)
+    vec3 c6 = vec3(0.306, 0.769, 0.698); // 0.80 #4ec4b2 (silky aquamarine-jade)
+    vec3 c7 = vec3(0.608, 0.878, 0.784); // 0.92 #9be0c8 (pearl-jade)
+    vec3 c8 = vec3(0.886, 0.961, 0.902); // 1.00 #e2f5e6 (luminous pearl crest)
+
+    if (x < 0.14) return mix(c0, c1, x / 0.14);
+    if (x < 0.28) return mix(c1, c2, (x - 0.14) / 0.14);
+    if (x < 0.42) return mix(c2, c3, (x - 0.28) / 0.14);
+    if (x < 0.52) return mix(c3, c4, (x - 0.42) / 0.10);
+    if (x < 0.66) return mix(c4, c5, (x - 0.52) / 0.14);
+    if (x < 0.80) return mix(c5, c6, (x - 0.66) / 0.14);
+    if (x < 0.92) return mix(c6, c7, (x - 0.80) / 0.12);
+    return mix(c7, c8, (x - 0.92) / 0.08);
+  }
+
+  // Exact 1D Wigner quasi-probability W(z, p) with physically accurate
+  // momentum-space coherence fringes cos(2 * p * R) matching p1_qbescf Panel (d)
+  float evalWigner(float z, float p, float R, float nBond, float nAnti, float timeVal) {
+    float zA = -R * 0.5;
+    float zB = +R * 0.5;
+    float sigZ = 0.92;
+    float sigP = 1.65;
+
+    float wA = exp(-((z - zA) * (z - zA)) / (sigZ * sigZ) - (p * p) / (sigP * sigP));
+    float wB = exp(-((z - zB) * (z - zB)) / (sigZ * sigZ) - (p * p) / (sigP * sigP));
+
+    // Coherent central horizontal momentum-interference wavepacket (oscillates in p!)
+    float S = exp(-(R * R) / (4.0 * sigZ * sigZ));
+    float envMid = exp(-(z * z) / (1.35 * sigZ * sigZ) - (p * p) / (2.35 * sigP * sigP));
+    float envAtomic = exp(-((z - zA) * (z - zA)) / (1.15 * sigZ * sigZ) - (p * p) / (2.60 * sigP * sigP))
+                    + exp(-((z - zB) * (z - zB)) / (1.15 * sigZ * sigZ) - (p * p) / (2.60 * sigP * sigP));
+
+    // Physically exact momentum fringe cos(2 * p * R) + subtle higher harmonic giving
+    // the signature Panel (d) obsidian negative pockets flanking the k_y = 0 pearl crest
+    float kFreq = max(1.15, R * 1.48);
+    float osc = cos(2.0 * p * kFreq + sin(timeVal * 0.45) * 0.12);
+    float subOsc = cos(1.0 * p * kFreq * 1.35);
+
+    float crossTerm = 1.65 * envMid * osc + 0.52 * envAtomic * subOsc;
+
+    float w_g = (wA + wB + crossTerm) / (2.0 + 1.4 * S);
+    float w_u = (wA + wB - crossTerm) / (2.0 - 1.4 * S + 0.14);
+
+    // Total correlated Wigner distribution normalized to [-1, +1]
+    float W = (nBond * w_g - nAnti * w_u) * 0.56;
+    // Enhance central horizontal k_y = 0 coherent band & flanking negative pockets like Fig 7(d)
+    float crest = 0.55 * (wA + wB) * exp(-(p * p) / 0.28);
+    float negPockets = -0.62 * (0.5 * (wA + wB) + 0.55 * envMid) * exp(-((abs(p) - 0.95) * (abs(p) - 0.95)) / 0.24);
+    return W + crest + negPockets * (0.55 + 0.45 * clamp(nAnti + R * 0.15, 0.0, 1.0));
+  }
+
   void main() {
-    // Coordinate mapping: z in [-3.6, 3.6] Å, p_z in [-3.6, 3.6] ℏ/a₀
-    float zSpan = 3.6;
-    float pSpan = 3.6;
+    // Coordinate mapping matching p1_qbescf Panel (d): y in [-3.2, 3.2], k_y in [-5.4, 5.4]
+    float zSpan = 3.2;
+    float pSpan = 5.4;
     float z = (vUv.x - 0.5) * 2.0 * zSpan;
     float p = (vUv.y - 0.5) * 2.0 * pSpan;
 
-    float R = max(0.4, u_R);
-    float zA = -R * 0.5;
-    float zB = +R * 0.5;
-    float sigma = 0.85;
+    float R = max(0.5, u_R);
+    float W = evalWigner(z, p, R, u_nBond, u_nAntibond, u_time);
 
-    // Single-atom Wigner Gaussians
-    float distA2 = (z - zA) * (z - zA) + p * p;
-    float distB2 = (z - zB) * (z - zB) + p * p;
-    float wA = exp(-distA2 / (sigma * sigma));
-    float wB = exp(-distB2 / (sigma * sigma));
+    // Map W in [-1.15, 1.35] -> [0, 1] matching Panel (d) vmin=-6, vmax=7 (zero sits at ~0.46)
+    float normW = clamp((W + 1.15) / 2.50, 0.0, 1.0);
+    vec3 col = subtleCoolDelicate(normW);
 
-    // Quantum Covalent Overlap & Non-Classical Cross Interference Term
-    float S = exp(-(R * R) / (4.0 * sigma * sigma));
-    float envCenter = exp(-(z * z + p * p) / (sigma * sigma));
-    float crossInterference = 2.0 * envCenter * cos(2.0 * z * R * 0.85 + u_time * 0.35);
+    // Physically-derived subtle hillshading from exact Wigner gradient (az=315, alt=52)
+    float eps = 0.035;
+    float dWz = (evalWigner(z + eps, p, R, u_nBond, u_nAntibond, u_time) - evalWigner(z - eps, p, R, u_nBond, u_nAntibond, u_time)) / (2.0 * eps);
+    float dWp = (evalWigner(z, p + eps, R, u_nBond, u_nAntibond, u_time) - evalWigner(z, p - eps, R, u_nBond, u_nAntibond, u_time)) / (2.0 * eps);
+    vec3 normal = normalize(vec3(-dWz * 0.34, -dWp * 0.34, 1.0));
+    vec3 lightDir = normalize(vec3(-0.44, 0.44, 0.78));
+    float shade = clamp(dot(normal, lightDir), 0.72, 1.18);
+    col *= mix(1.0, shade, 0.38);
 
-    // Bonding and Antibonding Wigner functions
-    float w_sigma_g = (wA + wB + crossInterference) / (2.0 + 2.0 * S);
-    float w_sigma_u = (wA + wB - crossInterference) / (2.0 - 2.0 * S + 0.06);
-
-    // Correlated Wigner distribution W(z, p_z)
-    float W = (u_nBond * w_sigma_g - u_nAntibond * w_sigma_u) / 2.0;
-
-    // Active quantum support envelope (prevents zero-contour tinting in vacuum)
-    float supportEnv = smoothstep(0.015, 0.09, max(max(wA, wB), envCenter));
-
-    // Deep Celestial Obsidian Void (matches Landing Page quantum canvas)
-    vec3 voidBase = vec3(0.008, 0.018, 0.036);
-    vec3 col = voidBase;
-
-    // Colormap Interpolation:
-    // Positive quasi-probability (+W): Deep Cobalt -> Luminous Sky Cyan -> Ice-White Core
-    if (W > 0.0) {
-      float t = clamp(W / 0.82, 0.0, 1.0);
-      vec3 c1 = vec3(0.05, 0.38, 0.86); // Royal Sapphire
-      vec3 c2 = vec3(0.14, 0.82, 0.98); // Luminous Oceanic Cyan
-      vec3 c3 = vec3(0.88, 0.98, 1.00); // Coherent Crest White
-
-      if (t < 0.38) {
-        col = mix(voidBase, c1, t / 0.38);
-      } else if (t < 0.76) {
-        col = mix(c1, c2, (t - 0.38) / 0.38);
-      } else {
-        col = mix(c2, c3, (t - 0.76) / 0.24);
-      }
-    } else {
-      // Quantum Negativity (-W): Point Reyes Beacon Crimson -> Coral Rose -> Soft Ivory Peak
-      float t = clamp(-W / 0.42, 0.0, 1.0);
-      vec3 r1 = vec3(0.76, 0.10, 0.24); // Deep Beacon Crimson
-      vec3 r2 = vec3(0.98, 0.30, 0.42); // Luminous Scarlet-Rose
-      vec3 r3 = vec3(1.00, 0.78, 0.86); // High-Contrast Interference Crest
-
-      if (t < 0.38) {
-        col = mix(voidBase, r1, t / 0.38);
-      } else if (t < 0.76) {
-        col = mix(r1, r2, (t - 0.38) / 0.38);
-      } else {
-        col = mix(r2, r3, (t - 0.76) / 0.24);
-      }
+    // Delicate razor-fine iso-Wigner contours matching JCP Cover (render_data_cover.py)
+    float support = smoothstep(0.06, 0.24, abs(W));
+    // Positive pearl-cyan iso-contours (#dcfaf4)
+    if (W > 0.14) {
+      float cPos = sin(W * 22.0);
+      float linePos = smoothstep(0.92, 0.992, cPos) * support;
+      col = mix(col, vec3(0.863, 0.980, 0.957), linePos * 0.28);
+    }
+    // Delicate sapphire-ice negative pocket contours (#7eb2ff)
+    if (W < -0.14) {
+      float cNeg = sin(abs(W) * 20.0);
+      // Subtle dashed modulation along z
+      float dash = smoothstep(0.1, 0.3, sin(z * 14.0) * 0.5 + 0.5);
+      float lineNeg = smoothstep(0.92, 0.992, cNeg) * support * dash;
+      col = mix(col, vec3(0.494, 0.698, 1.000), lineNeg * 0.24);
     }
 
-    // Smooth Anti-Aliased Periodic Isocontour Rings strictly within wavepacket support
-    float contour = sin(abs(W) * 44.0);
-    float contourLine = smoothstep(0.84, 0.98, contour) * supportEnv;
-    col += vec3(0.32, 0.86, 1.0) * contourLine * 0.20;
+    // Strictly symmetric vertical fade & vignette about (z=0, p=0) matching JCP Cover
+    float vertFade = pow(clamp((abs(p) - 3.35) / 2.25, 0.0, 1.0), 1.55);
+    float edgeR = length(vec2(z / 3.5, p / 6.2));
+    float vignette = pow(clamp((edgeR - 0.70) / 0.55, 0.0, 1.0), 2.0);
+    vec3 bgDeep = vec3(0.004, 0.014, 0.052);
+    col = mix(col, bgDeep, 0.54 * vertFade);
+    col = mix(col, bgDeep, 0.24 * vignette);
 
-    // Nodal Separation Line (W = 0 Boundary ONLY inside active interference region)
-    float zeroBoundary = (1.0 - smoothstep(0.0, 0.014, abs(W))) * supportEnv;
-    col = mix(col, vec3(0.45, 0.88, 0.98), zeroBoundary * 0.32);
-
-    // Subtle phase-space coordinate grid lines
-    float gridX = smoothstep(0.975, 0.996, sin(vUv.x * 6.28318 * 6.0));
-    float gridY = smoothstep(0.975, 0.996, sin(vUv.y * 6.28318 * 6.0));
-    col += vec3(0.14, 0.32, 0.52) * (gridX + gridY) * 0.16;
-
-    // Origin crosshairs (z = 0 and p_z = 0)
-    float axisX = 1.0 - smoothstep(0.0, 0.0035, abs(vUv.y - 0.5));
-    float axisY = 1.0 - smoothstep(0.0, 0.0035, abs(vUv.x - 0.5));
-    col += vec3(0.22, 0.74, 0.97) * (axisX + axisY) * 0.26;
-
-    // Nuclear Coordinate Indicators in Phase Space (zA, 0) and (zB, 0)
-    vec2 uvA = vec2(0.5 + (zA / (2.0 * zSpan)), 0.5);
-    vec2 uvB = vec2(0.5 + (zB / (2.0 * zSpan)), 0.5);
-    vec2 dUV_A = (vUv - uvA) * u_resolution / min(u_resolution.x, u_resolution.y);
-    vec2 dUV_B = (vUv - uvB) * u_resolution / min(u_resolution.x, u_resolution.y);
-    float distA = length(dUV_A);
-    float distB = length(dUV_B);
-
-    float coreA = 1.0 - smoothstep(0.0, 0.017, distA);
-    float haloA = 1.0 - smoothstep(0.0, 0.042, distA);
-    float coreB = 1.0 - smoothstep(0.0, 0.017, distB);
-    float haloB = 1.0 - smoothstep(0.0, 0.042, distB);
-
-    col += vec3(1.0, 1.0, 1.0) * (coreA + coreB) * 0.95;
-    col += vec3(0.22, 0.78, 0.98) * (haloA + haloB) * 0.45;
-
-    // Subtle Vignette
-    float vig = 1.0 - length(vUv - 0.5) * 0.36;
-    col *= clamp(vig, 0.45, 1.0);
-
-    gl_FragColor = vec4(col, 1.0);
+    gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
   }
 `;
 
@@ -242,30 +244,41 @@ export default function WebGlWignerPlot({
       const u = x / rect.width;
       const v = 1.0 - y / rect.height; // invert y for positive p_z upward
 
-      const zSpan = 3.6;
-      const pSpan = 3.6;
+      const zSpan = 3.2;
+      const pSpan = 5.4;
       const z = (u - 0.5) * 2.0 * zSpan;
       const p = (v - 0.5) * 2.0 * pSpan;
 
-      const bondR = Number(r || 1.6);
+      const bondR = Math.max(0.5, Number(r || 1.6));
       const zA = -bondR * 0.5;
       const zB = +bondR * 0.5;
-      const sigma = 0.85;
+      const sigZ = 0.92;
+      const sigP = 1.65;
 
-      const distA2 = (z - zA) * (z - zA) + p * p;
-      const distB2 = (z - zB) * (z - zB) + p * p;
-      const wA = Math.exp(-distA2 / (sigma * sigma));
-      const wB = Math.exp(-distB2 / (sigma * sigma));
+      const wA = Math.exp(-((z - zA) * (z - zA)) / (sigZ * sigZ) - (p * p) / (sigP * sigP));
+      const wB = Math.exp(-((z - zB) * (z - zB)) / (sigZ * sigZ) - (p * p) / (sigP * sigP));
 
-      const S = Math.exp(-(bondR * bondR) / (4.0 * sigma * sigma));
-      const cross = 2.0 * Math.exp(-(z * z + p * p) / (sigma * sigma)) * Math.cos(2.0 * z * bondR * 0.85);
+      const S = Math.exp(-(bondR * bondR) / (4.0 * sigZ * sigZ));
+      const envMid = Math.exp(-(z * z) / (1.35 * sigZ * sigZ) - (p * p) / (2.35 * sigP * sigP));
+      const envAtomic =
+        Math.exp(-((z - zA) * (z - zA)) / (1.15 * sigZ * sigZ) - (p * p) / (2.60 * sigP * sigP)) +
+        Math.exp(-((z - zB) * (z - zB)) / (1.15 * sigZ * sigZ) - (p * p) / (2.60 * sigP * sigP));
+      const kFreq = Math.max(1.15, bondR * 1.48);
+      const cross = 1.65 * envMid * Math.cos(2.0 * p * kFreq) + 0.52 * envAtomic * Math.cos(p * kFreq * 1.35);
 
-      const w_sigma_g = (wA + wB + cross) / (2.0 + 2.0 * S);
-      const w_sigma_u = (wA + wB - cross) / (2.0 - 2.0 * S + 0.06);
+      const w_sigma_g = (wA + wB + cross) / (2.0 + 1.4 * S);
+      const w_sigma_u = (wA + wB - cross) / (2.0 - 1.4 * S + 0.14);
 
       const nb = Number(nBond || 1.918);
       const na = Number(nAntibond || 0.082);
-      const W = (nb * w_sigma_g - na * w_sigma_u) / 2.0;
+      const baseW = (nb * w_sigma_g - na * w_sigma_u) * 0.56;
+      const crest = 0.55 * (wA + wB) * Math.exp(-(p * p) / 0.28);
+      const negPockets =
+        -0.62 *
+        (0.5 * (wA + wB) + 0.55 * envMid) *
+        Math.exp(-((Math.abs(p) - 0.95) * (Math.abs(p) - 0.95)) / 0.24) *
+        (0.55 + 0.45 * Math.min(1.0, Math.max(0.0, na + bondR * 0.15)));
+      const W = baseW + crest + negPockets;
 
       setHoverData({
         xPx: x,
