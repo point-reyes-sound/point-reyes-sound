@@ -41,12 +41,13 @@ export default defineConfig({
             req.url = '/pre-seed-deck.html';
           }
           if (
+            req.url === '/preview' || req.url === '/preview/' ||
             req.url === '/q-boltz' || req.url === '/q-boltz/' ||
             req.url === '/qboltz' || req.url === '/qboltz/' ||
             req.url === '/demo' || req.url === '/demo/' ||
             req.url === '/orbitals' || req.url === '/orbitals/'
           ) {
-            req.url = '/index.html';
+            req.url = '/preview.html';
           }
           next();
         });
@@ -57,6 +58,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
+        preview: resolve(__dirname, 'preview.html'),
+        q_boltz: resolve(__dirname, 'q-boltz.html'),
         interactive: resolve(__dirname, 'interactive.html'),
         demo: resolve(__dirname, 'demo.html'),
         anfa: resolve(__dirname, 'anfa-deck.html'),
