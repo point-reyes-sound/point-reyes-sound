@@ -2173,17 +2173,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(248, 223, 152, 0.16);
-  border: 1.5px solid #F8DF98;
-  color: #F8DF98;
+  background: rgba(196, 32, 56, 0.12);
+  border: 1.5px solid #C42038;
+  color: #E0465C;
   font-size: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .prs-play-circle:hover {
-  background: #F8DF98;
-  color: #09194A;
+  background: #C42038;
+  color: #FFFFFF;
 }
 
 .prs-stretch-slider-wrap {
@@ -2204,14 +2204,14 @@
 }
 
 .prs-stretch-labels .gold {
-  color: #F8DF98;
+  color: #E8A0AA;
   font-weight: 700;
 }
 
 .prs-stretch-range {
   width: 100%;
   height: 4px;
-  accent-color: #F8DF98;
+  accent-color: #C42038;
   cursor: pointer;
 }
 
@@ -2312,9 +2312,9 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #F8DF98;
+  background: #C42038;
   border: 2.5px solid #09194A;
-  box-shadow: 0 0 12px rgba(248, 223, 152, 0.55);
+  box-shadow: 0 0 12px rgba(196, 32, 56, 0.55);
   cursor: pointer;
 }
 

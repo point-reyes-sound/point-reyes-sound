@@ -1465,7 +1465,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
             })}
           </div>
 
-          {/* 4. Compact Play/Pause + Audio Toggle + Coordinate Scrubber Dock */}
+          {/* 4. Minimal Play/Pause + Coordinate Scrubber Dock */}
           <div className="prs-stretch-dock prs-dock-compact">
             <button
               type="button"
@@ -1473,38 +1473,12 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
               onClick={() => {
                 const nextPlay = !isPlaying;
                 setIsPlaying(nextPlay);
-                syncPreviewAudio(nextPlay, isAmbientMuted);
+                syncPreviewAudio(nextPlay, false);
               }}
-              title={isPlaying ? "Pause trajectory & audio" : "Play trajectory & audio"}
+              title={isPlaying ? "Pause scan & audio" : "Play scan & audio"}
               aria-label={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? "❚❚" : "▶"}
-            </button>
-            <button
-              type="button"
-              className={`prs-play-circle ${!isAmbientMuted ? "playing" : ""}`}
-              onClick={() => {
-                const nextMuted = !isAmbientMuted;
-                setIsAmbientMuted(nextMuted);
-                isAmbientMutedRef.current = nextMuted;
-                syncPreviewAudio(isPlaying, nextMuted);
-              }}
-              title={isAmbientMuted ? "Unmute studio audio" : "Mute studio audio"}
-              aria-label={isAmbientMuted ? "Unmute audio" : "Mute audio"}
-            >
-              {isAmbientMuted ? (
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                  <line x1="23" y1="9" x2="17" y2="15" />
-                  <line x1="17" y1="9" x2="23" y2="15" />
-                </svg>
-              ) : (
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-                </svg>
-              )}
             </button>
             <div className="prs-stretch-slider-wrap">
               <div className="prs-stretch-labels">
