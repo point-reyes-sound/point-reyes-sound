@@ -232,18 +232,18 @@ def build_svg(plot_b64, logo_b64, exp_overall):
 
   <!-- Editorial Hero Typography -->
   <g id="hero-copy">
-    <text x="76" y="218" font-family="'EB Garamond', Georgia, serif" font-size="152" font-weight="600" letter-spacing="-2.4" fill="#FFFFFF">Q-BECK</text>
-    <text x="78" y="298" font-family="'EB Garamond', Georgia, serif" font-size="50" font-weight="400" letter-spacing="-0.4" fill="#F8DF98">Static Correlation at Scale</text>
-    <text x="78" y="342" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="21" font-weight="400" letter-spacing="0.5" fill="#A7BDF2">Quantum Boltzmann Equation &#183; Cumulant-Kernel</text>
+    <text x="523" y="218" text-anchor="middle" font-family="'EB Garamond', Georgia, serif" font-size="152" font-weight="600" letter-spacing="-2.4" fill="#FFFFFF">Q-BECK</text>
+    <text x="523" y="298" text-anchor="middle" font-family="'EB Garamond', Georgia, serif" font-size="50" font-weight="400" letter-spacing="-0.4" fill="#F8DF98">Static Correlation at Scale</text>
+    <text x="523" y="342" text-anchor="middle" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="21" font-weight="400" letter-spacing="0.5" fill="#A7BDF2">Quantum Boltzmann Equation &#183; Cumulant-Kernel</text>
   </g>
 
   <!-- Key Scaling Metrics Strip -->
   <g id="metrics-strip">
-    <text x="78" y="418" font-family="'EB Garamond', Georgia, serif" font-size="56" font-weight="600" fill="#F0CB69">O(N<tspan dy="-20" font-size="32">3</tspan><tspan dy="20">)</tspan></text>
-    <text x="78" y="450" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="17" font-weight="500" letter-spacing="0.4" fill="#C7D8FF">Near-cubic time per step*</text>
+    <text x="300" y="418" text-anchor="middle" font-family="'EB Garamond', Georgia, serif" font-size="56" font-weight="600" fill="#F0CB69">O(N<tspan dy="-20" font-size="32">3</tspan><tspan dy="20">)</tspan></text>
+    <text x="300" y="450" text-anchor="middle" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="17" font-weight="500" letter-spacing="0.4" fill="#C7D8FF">Near-cubic time per step*</text>
 
-    <text x="520" y="418" font-family="'EB Garamond', Georgia, serif" font-size="56" font-weight="600" fill="#FFF5CC">O(N<tspan dy="-20" font-size="32">2</tspan><tspan dy="20">)</tspan></text>
-    <text x="520" y="450" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="17" font-weight="500" letter-spacing="0.4" fill="#C7D8FF">Working memory &#183; &lt;29 MB at 300 AOs</text>
+    <text x="746" y="418" text-anchor="middle" font-family="'EB Garamond', Georgia, serif" font-size="56" font-weight="600" fill="#FFF5CC">O(N<tspan dy="-20" font-size="32">2</tspan><tspan dy="20">)</tspan></text>
+    <text x="746" y="450" text-anchor="middle" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="17" font-weight="500" letter-spacing="0.4" fill="#C7D8FF">Working memory &#183; &lt;29 MB at 300 AOs</text>
   </g>
 
   <!-- Hero Scaling Plot -->
@@ -253,7 +253,7 @@ def build_svg(plot_b64, logo_b64, exp_overall):
 
   <!-- Image Caption & Quiet Footer -->
   <g id="footer">
-    <text x="78" y="1256" font-family="'EB Garamond', Georgia, serif" font-size="25" fill="#E3ECFF">Measured across 36 molecular systems up to 300 atomic orbitals.</text>
+    <text x="523" y="1256" text-anchor="middle" font-family="'EB Garamond', Georgia, serif" font-size="25" fill="#E3ECFF">Measured across 36 molecular systems up to 300 atomic orbitals.</text>
     <line x1="78" y1="1282" x2="968" y2="1282" stroke="#9BB4F0" stroke-opacity="0.26" stroke-width="1"/>
     <text x="78" y="1314" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="16" font-weight="500" letter-spacing="0.6" fill="#9BB2EA">pointreyessound.com</text>
     <text x="968" y="1314" text-anchor="end" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="16" font-weight="500" letter-spacing="0.4" fill="#9BB2EA">*Overall fit N<tspan dy="-5" font-size="11">{exp_overall:.2f}</tspan><tspan dy="5">&#8201;&#183;&#8201;Apple M2 CPU&#8201;&#183;&#8201;arXiv:2611.17245</tspan></text>
