@@ -1225,7 +1225,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
   const trajMinR = hasTrajectory ? trajectory[0].r : 0.5;
   const trajMaxR = hasTrajectory ? trajectory[trajectory.length - 1].r : 3.5;
 
-  // Auto-launch default H2 simulation when opened in unified phone UI
+  // Auto-launch default BeH2 simulation when opened in unified Preview UI
   const phoneBootedRef = useRef(false);
   useEffect(() => {
     if (useUnifiedPhoneUI && !phoneBootedRef.current && !hasResult && !loading) {
@@ -1233,6 +1233,28 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
       executeQuery(QUICK_QUERY_PROMPTS[1].prompt);
     }
   }, [useUnifiedPhoneUI, hasResult, loading]);
+
+  // Automatically cycle through all four molecular systems (BeH₂ → H₂ → H₃ → H₄)
+  // in sync with the 15.0 s 96 BPM studio score while playing.
+  useEffect(() => {
+    if (!useUnifiedPhoneUI || !isPlaying || !hasTrajectory || loading) return undefined;
+    const cycleOrder = [
+      { key: "beh2_ci", prompt: QUICK_QUERY_PROMPTS[1].prompt },
+      { key: "h2", prompt: QUICK_QUERY_PROMPTS[0].prompt },
+      { key: "h3_d3h", prompt: QUICK_QUERY_PROMPTS[2].prompt },
+      { key: "h4_square", prompt: QUICK_QUERY_PROMPTS[3].prompt }
+    ];
+    const currentIdx = cycleOrder.findIndex((item) => item.key === activeBenchmarkKey);
+    const nextItem = cycleOrder[(currentIdx >= 0 ? currentIdx + 1 : 1) % cycleOrder.length];
+
+    const timer = setTimeout(() => {
+      setSelectedOrbitalIdx(0);
+      setQuery(nextItem.prompt);
+      executeQuery(nextItem.prompt);
+    }, 15000);
+
+    return () => clearTimeout(timer);
+  }, [useUnifiedPhoneUI, isPlaying, hasTrajectory, loading, activeBenchmarkKey, executeQuery]);
 
   // Unified Single-Screen Interface (Default: Phase + Orb united; tap either pill to toggle layer)
   if (useUnifiedPhoneUI) {
@@ -1465,7 +1487,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
             })}
           </div>
 
-          {/* 4. Minimal Play/Pause + Coordinate Scrubber Dock */}
+          {/* 4. Minimal Centered Crimson Play/Pause Control */}
           <div className="prs-stretch-dock prs-dock-compact">
             <button
               type="button"
@@ -1475,28 +1497,11 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
                 setIsPlaying(nextPlay);
                 syncPreviewAudio(nextPlay, false);
               }}
-              title={isPlaying ? "Pause scan & audio" : "Play scan & audio"}
+              title={isPlaying ? "Pause preview & audio" : "Play preview & audio"}
               aria-label={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? "❚❚" : "▶"}
             </button>
-            <div className="prs-stretch-slider-wrap">
-              <div className="prs-stretch-labels">
-                <span>{stretchLabel}</span>
-              </div>
-              <input
-                type="range"
-                className="prs-stretch-range"
-                min={trajMinR}
-                max={trajMaxR}
-                step={0.01}
-                value={Number(currentR || trajMinR)}
-                onChange={(e) => {
-                  setIsPlaying(false);
-                  jumpToCoordinate(parseFloat(e.target.value));
-                }}
-              />
-            </div>
           </div>
         </div>
       </div>

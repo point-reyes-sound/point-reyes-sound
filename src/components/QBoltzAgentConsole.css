@@ -2762,6 +2762,7 @@
 .prs-dock-compact {
   width: min(560px, calc(100vw - 32px));
   margin: 0 auto;
+  justify-content: center;
   border-top: none !important;
   padding: 4px 8px 6px !important;
   background: transparent !important;
