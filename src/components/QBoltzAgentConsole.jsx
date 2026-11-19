@@ -1165,7 +1165,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
   useEffect(() => {
     if (useUnifiedPhoneUI && !phoneBootedRef.current && !hasResult && !loading) {
       phoneBootedRef.current = true;
-      executeQuery("Conceptualize and envision the dissociation of H2 in phase space.");
+      executeQuery(QUICK_QUERY_PROMPTS[1].prompt);
     }
   }, [useUnifiedPhoneUI, hasResult, loading]);
 
@@ -1243,10 +1243,10 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
           : "BOND STRETCH";
 
     const molButtons = [
+      { label: "BeH₂", key: "beh2_ci", prompt: QUICK_QUERY_PROMPTS[1].prompt },
       { label: "H₂", key: "h2", prompt: QUICK_QUERY_PROMPTS[0].prompt },
       { label: "H₃", key: "h3_d3h", prompt: QUICK_QUERY_PROMPTS[2].prompt },
-      { label: "H₄", key: "h4_square", prompt: QUICK_QUERY_PROMPTS[3].prompt },
-      { label: "BeH₂", key: "beh2_ci", prompt: QUICK_QUERY_PROMPTS[1].prompt }
+      { label: "H₄", key: "h4_square", prompt: QUICK_QUERY_PROMPTS[3].prompt }
     ];
 
     const isBeH2 = activeBenchmarkKey === "beh2_ci";
