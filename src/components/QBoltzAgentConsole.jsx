@@ -1341,20 +1341,6 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
 
             {/* Framed WebGL Wigner + 3D Real-Space Density Viewport */}
             <div className="prs-unified-stage prs-gallery-viewport mode-lens">
-              <button
-                type="button"
-                className={`prs-phi-toggle ${showOrbitals ? "active" : ""}`}
-                onClick={() => {
-                  setShowPhaseLayer(true);
-                  setShowOrbLayer((v) => !v);
-                }}
-                aria-pressed={showOrbitals}
-                aria-label={showOrbitals ? "Hide real-space density overlay" : "Open real-space density overlay in phase space"}
-                title={showOrbitals ? "Phase Space + Real-Space Density (click for pure Phase Space)" : "Open Real-Space Density in Phase Space (Φ)"}
-              >
-                <span className="prs-phi-glyph">Φ</span>
-              </button>
-
               <div className="prs-stage-layer prs-layer-wigner">
                 <WebGlWignerPlot
                   r={currentR}
@@ -1362,7 +1348,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
                   nAntibond={nAntibondVal}
                   coordUnit={coordUnit}
                   moleculeId={activeBenchmarkKey}
-                  showDensityOverlay={showOrbitals}
+                  showDensityOverlay={true}
                   hideInternalChrome={true}
                 />
               </div>
