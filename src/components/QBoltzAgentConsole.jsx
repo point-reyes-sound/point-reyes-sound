@@ -644,20 +644,9 @@ function DissociationCurvePlot({ curveData, currentPoint, coordUnit = "Å", canS
 // Aligned with Point Reyes Sound Landing Page Aesthetic
 // ---------------------------------------------------------------------------
 export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null }) {
-  const [isMobileViewport, setIsMobileViewport] = useState(
-    () => typeof window !== "undefined" && window.innerWidth <= 768
-  );
-  const useUnifiedPhoneUI = Boolean(initialPhoneMode) || isMobileViewport;
+  const useUnifiedPhoneUI = true;
   const [phoneLens, setPhoneLens] = useState("overlay"); // "overlay" | "wigner" | "orbitals"
   const [selectedOrbitalIdx, setSelectedOrbitalIdx] = useState(0); // -1 = All (superposition), 0..N-1 = specific orbital
-  const [fullWidthPreview, setFullWidthPreview] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const onResize = () => setIsMobileViewport(window.innerWidth <= 768);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
 
   const [query, setQuery] = useState("Conceptualize and envision the dissociation of H2 in phase space.");
   const [loading, setLoading] = useState(false);
@@ -1176,20 +1165,8 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
     ];
 
     return (
-      <div className={`prs-phone-preview-shell ${fullWidthPreview ? "is-full-width" : ""}`}>
-        {/* Quiet Desktop Phone-Frame Toggle (auto-hidden on phones <= 768px) */}
-        <div className="prs-phone-ab-bar">
-          <span className="prs-ab-label">Q-BOLTZ · Mobile View</span>
-          <button
-            type="button"
-            className="prs-ab-btn subtle"
-            onClick={() => setFullWidthPreview((v) => !v)}
-          >
-            {fullWidthPreview ? "Phone Frame" : "Expand"}
-          </button>
-        </div>
-
-        {/* Single Unified Phone Instrument (100dvh, Zero Scroll) */}
+      <div className="prs-phone-preview-shell prs-unified-fullscreen">
+        {/* Single Unified Quantum Instrument (Full-screen 100vw x 100dvh on desktop & phone) */}
         <div className="prs-phone-bezel">
           {/* 1. Compact Header + Molecule Switcher */}
           <div className="prs-phone-topbar">
