@@ -2479,15 +2479,39 @@
 .prs-gallery-black .prs-phone-topbar {
   background: #000000;
   border-bottom: 1px solid rgba(182, 206, 240, 0.14);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 14px 10px;
 }
 
-.prs-gallery-black .prs-gallery-wordmark {
-  font-family: "EB Garamond", "Cormorant Garamond", Georgia, serif;
-  font-size: 18px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  text-transform: none;
-  color: #e8f0fc;
+.prs-gallery-black .prs-phone-brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.prs-gallery-black .prs-phone-brand img {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: 1px solid rgba(248, 223, 152, 0.28);
+}
+
+.prs-gallery-black .prs-phone-brand span.prs-gallery-wordmark {
+  font-family: "EB Garamond", Georgia, "Times New Roman", serif !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.015em !important;
+  line-height: 1.1 !important;
+  text-transform: none !important;
+  color: #eef4ff !important;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 .prs-gallery-black .prs-phone-telemetry {
@@ -2642,8 +2666,30 @@
 }
 
 @media (min-width: 769px) {
-  .prs-gallery-black .prs-gallery-wordmark {
-    font-size: 21px;
+  .prs-gallery-black .prs-phone-topbar {
+    flex-direction: row;
+    justify-content: flex-end;
+    min-height: 58px;
+    padding: 12px 28px;
+  }
+
+  .prs-gallery-black .prs-phone-brand {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    gap: 11px;
+  }
+
+  .prs-gallery-black .prs-phone-brand img {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+  }
+
+  .prs-gallery-black .prs-phone-brand span.prs-gallery-wordmark {
+    font-size: 23px !important;
+    letter-spacing: 0.015em !important;
   }
 
   .prs-gallery-frame-grid {
