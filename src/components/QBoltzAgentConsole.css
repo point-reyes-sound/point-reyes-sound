@@ -1980,38 +1980,53 @@
   font-size: 12px;
 }
 
-/* Option B Floating Lens Switcher */
-.prs-lens-bar {
+/* Symbolic Φ Overlay Toggle Medallion */
+.prs-phi-toggle {
   position: absolute;
-  top: 12px;
+  top: 14px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 12;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   display: inline-flex;
-  gap: 3px;
-  padding: 4px;
-  background: rgba(5, 13, 38, 0.78);
-  border: 1px solid rgba(167, 189, 242, 0.28);
-  border-radius: 999px;
-  backdrop-filter: blur(14px);
-}
-
-.prs-lens-pill {
-  background: transparent;
-  border: none;
-  color: #C7D8FF;
-  font-size: 11.5px;
-  font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease;
+  background: rgba(4, 12, 34, 0.74);
+  border: 1px solid rgba(155, 224, 200, 0.34);
+  color: rgba(214, 236, 255, 0.86);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 6px 20px rgba(1, 5, 18, 0.48);
+  transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, color 0.22s ease;
 }
 
-.prs-lens-pill.active {
-  background: #F8DF98;
-  color: #09194A;
+.prs-phi-toggle:hover {
+  transform: translateX(-50%) scale(1.06);
+  border-color: rgba(248, 223, 152, 0.72);
+  color: #F8DF98;
+}
+
+.prs-phi-toggle:active {
+  transform: translateX(-50%) scale(0.96);
+}
+
+.prs-phi-toggle.active {
+  background: radial-gradient(circle at 32% 28%, rgba(248, 223, 152, 0.26), rgba(9, 25, 74, 0.86) 72%);
+  border-color: rgba(248, 223, 152, 0.82);
+  color: #F8DF98;
+  box-shadow: 0 0 22px rgba(248, 223, 152, 0.30), inset 0 0 12px rgba(248, 223, 152, 0.16);
+}
+
+.prs-phi-glyph {
+  font-family: "EB Garamond", "Cormorant Garamond", Georgia, serif;
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 1;
+  transform: translateY(-0.5px);
 }
 
 /* Floating Orbital Isolation Chip */
@@ -2408,15 +2423,14 @@
     font-size: 13.5px;
   }
 
-  .prs-unified-fullscreen .prs-lens-bar {
-    top: 16px;
-    padding: 5px;
+  .prs-unified-fullscreen .prs-phi-toggle {
+    top: 18px;
+    width: 48px;
+    height: 48px;
   }
 
-  .prs-unified-fullscreen .prs-lens-pill {
-    min-width: 82px;
-    padding: 7px 18px;
-    font-size: 13px;
+  .prs-unified-fullscreen .prs-phi-glyph {
+    font-size: 25px;
   }
 
   .prs-unified-fullscreen .prs-orb-carousel-bar {

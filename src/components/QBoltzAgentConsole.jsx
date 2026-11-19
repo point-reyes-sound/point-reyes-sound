@@ -1306,24 +1306,19 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
 
           {/* 3. ONE GIANT UNIFIED HERO STAGE (~80% height) */}
           <div className="prs-unified-stage mode-lens">
-            <div className="prs-lens-bar" role="group" aria-label="Visible layers">
-              <button
-                type="button"
-                className={`prs-lens-pill ${showPhaseLayer ? "active" : ""}`}
-                onClick={togglePhaseLayer}
-                aria-pressed={showPhaseLayer}
-              >
-                Phase
-              </button>
-              <button
-                type="button"
-                className={`prs-lens-pill ${showOrbLayer ? "active" : ""}`}
-                onClick={toggleOrbLayer}
-                aria-pressed={showOrbLayer}
-              >
-                Orb
-              </button>
-            </div>
+            <button
+              type="button"
+              className={`prs-phi-toggle ${showOrbitals ? "active" : ""}`}
+              onClick={() => {
+                setShowPhaseLayer(true);
+                setShowOrbLayer((v) => !v);
+              }}
+              aria-pressed={showOrbitals}
+              aria-label={showOrbitals ? "Hide orbital overlay in phase space" : "Open orbital overlay in phase space"}
+              title={showOrbitals ? "Phase Space + Orbital Overlay (click for Phase Space)" : "Open Orbital Overlay in Phase Space (Φ)"}
+            >
+              <span className="prs-phi-glyph">Φ</span>
+            </button>
 
             {/* Layer 1: Full-Bleed Wigner Phase-Space Field */}
             {showWigner && (
