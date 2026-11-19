@@ -29,27 +29,27 @@ const WIGNER_FRAGMENT_SHADER = `
   uniform float u_yawOffset;
   uniform float u_pitchOffset;
 
-  // Royal Blue Panel (d) Wigner Palette (matching Point Reyes Sound Gallery Masters)
-  vec3 royalWignerPalette(float t) {
+  // Exact JCP Cover Graphic Art Palette (SubtleCoolDelicate from p1_qbescf/jcp_production/render_data_cover.py)
+  vec3 jcpCoverWignerPalette(float t) {
     float x = clamp(t, 0.0, 1.0);
-    vec3 c0 = vec3(0.004, 0.008, 0.032); // 0.00 #010208 (deep W < 0 pocket)
-    vec3 c1 = vec3(0.008, 0.028, 0.125); // 0.14 #020720
-    vec3 c2 = vec3(0.018, 0.078, 0.285); // 0.28 #051449
-    vec3 c3 = vec3(0.035, 0.165, 0.485); // 0.42 #092a7c (W ~ 0 deep Royal Blue sea)
-    vec3 c4 = vec3(0.065, 0.295, 0.715); // 0.54 #104bb6 (vivid Royal Blue)
-    vec3 c5 = vec3(0.145, 0.475, 0.885); // 0.68 #2579e2 (luminous Royal Sapphire)
-    vec3 c6 = vec3(0.360, 0.685, 0.965); // 0.82 #5caff6 (cobalt-ice crest)
-    vec3 c7 = vec3(0.680, 0.865, 0.990); // 0.93 #adddfc (luminous sky)
-    vec3 c8 = vec3(0.910, 0.965, 1.000); // 1.00 #e8f6ff (coherent ice-white peak)
+    vec3 c0 = vec3(0.004, 0.012, 0.043); // 0.00 #01030b (deep W < 0 pocket)
+    vec3 c1 = vec3(0.008, 0.047, 0.169); // 0.14 #020c2b
+    vec3 c2 = vec3(0.020, 0.118, 0.329); // 0.28 #051e54
+    vec3 c3 = vec3(0.031, 0.235, 0.490); // 0.42 #083c7d (oceanic midnight sapphire sea)
+    vec3 c4 = vec3(0.051, 0.388, 0.612); // 0.52 #0d639c
+    vec3 c5 = vec3(0.122, 0.584, 0.722); // 0.66 #1f95b8 (oceanic aquamarine)
+    vec3 c6 = vec3(0.306, 0.769, 0.698); // 0.80 #4ec4b2 (silky aquamarine-jade)
+    vec3 c7 = vec3(0.608, 0.878, 0.784); // 0.92 #9be0c8 (pearl-jade)
+    vec3 c8 = vec3(0.886, 0.961, 0.902); // 1.00 #e2f5e6 (luminous pearl crest)
 
     if (x < 0.14) return mix(c0, c1, x / 0.14);
     if (x < 0.28) return mix(c1, c2, (x - 0.14) / 0.14);
     if (x < 0.42) return mix(c2, c3, (x - 0.28) / 0.14);
-    if (x < 0.54) return mix(c3, c4, (x - 0.42) / 0.12);
-    if (x < 0.68) return mix(c4, c5, (x - 0.54) / 0.14);
-    if (x < 0.82) return mix(c5, c6, (x - 0.68) / 0.14);
-    if (x < 0.93) return mix(c6, c7, (x - 0.82) / 0.11);
-    return mix(c7, c8, (x - 0.93) / 0.07);
+    if (x < 0.52) return mix(c3, c4, (x - 0.42) / 0.10);
+    if (x < 0.66) return mix(c4, c5, (x - 0.52) / 0.14);
+    if (x < 0.80) return mix(c5, c6, (x - 0.66) / 0.14);
+    if (x < 0.92) return mix(c6, c7, (x - 0.80) / 0.12);
+    return mix(c7, c8, (x - 0.92) / 0.08);
   }
 
   float evalWigner(float z, float p, float R_eff, float nBond, float nAnti, float timeVal) {
@@ -144,41 +144,41 @@ const WIGNER_FRAGMENT_SHADER = `
       R_eff = max(0.8, (R / 3.6) * 3.1); // BeH2 (Bohr)
     }
 
-    // 1. Background: Exact Royal Blue Panel (d) Wigner Phase-Space Field W(z, p_z)
+    // 1. Background: Exact JCP Cover Graphic Art (SubtleCoolDelicate) Wigner Field W(z, p_z)
     float W = evalWigner(z, p, R_eff, u_nBond, u_nAntibond, u_time);
     float normW = clamp((W + 1.15) / 2.50, 0.0, 1.0);
-    vec3 col = royalWignerPalette(normW);
+    vec3 col = jcpCoverWignerPalette(normW);
 
     // Subtle physically-derived hillshading from Wigner gradient
     float eps = 0.035;
     float dWz = (evalWigner(z + eps, p, R_eff, u_nBond, u_nAntibond, u_time) - evalWigner(z - eps, p, R_eff, u_nBond, u_nAntibond, u_time)) / (2.0 * eps);
     float dWp = (evalWigner(z, p + eps, R_eff, u_nBond, u_nAntibond, u_time) - evalWigner(z, p - eps, R_eff, u_nBond, u_nAntibond, u_time)) / (2.0 * eps);
-    vec3 normal = normalize(vec3(-dWz * 0.30, -dWp * 0.30, 1.0));
+    vec3 normal = normalize(vec3(-dWz * 0.34, -dWp * 0.34, 1.0));
     vec3 lightDir = normalize(vec3(-0.44, 0.44, 0.78));
-    float shade = clamp(dot(normal, lightDir), 0.74, 1.16);
+    float shade = clamp(dot(normal, lightDir), 0.72, 1.18);
     col *= mix(1.0, shade, 0.38);
 
-    // Delicate ice-blue positive (#d8eeff) & cobalt dashed negative (#6da6ff) iso-Wigner contours
+    // Delicate pearl-cyan positive (#dcfaf4) & sapphire-ice dashed negative (#7eb2ff) iso-Wigner contours
     float support = smoothstep(0.06, 0.24, abs(W));
     if (W > 0.14) {
       float cPos = sin(W * 22.0);
       float linePos = smoothstep(0.92, 0.992, cPos) * support;
-      col = mix(col, vec3(0.847, 0.933, 1.000), linePos * 0.26);
+      col = mix(col, vec3(0.863, 0.980, 0.957), linePos * 0.28);
     }
     if (W < -0.14) {
       float cNeg = sin(abs(W) * 20.0);
       float dash = smoothstep(0.10, 0.32, sin(z * 14.0) * 0.5 + 0.5);
       float lineNeg = smoothstep(0.92, 0.992, cNeg) * support * dash;
-      col = mix(col, vec3(0.427, 0.651, 1.000), lineNeg * 0.22);
+      col = mix(col, vec3(0.494, 0.698, 1.000), lineNeg * 0.24);
     }
 
-    // Symmetric vertical fade & deep royal-obsidian vignette
+    // Symmetric vertical fade & deep oceanic vignette matching JCP Cover
     float vertFade = pow(clamp((abs(p) - 3.35) / 2.25, 0.0, 1.0), 1.55);
     float edgeR = length(vec2(z / 3.9, p / 6.2));
     float vignette = pow(clamp((edgeR - 0.72) / 0.55, 0.0, 1.0), 2.0);
-    vec3 bgDeep = vec3(0.004, 0.010, 0.042);
+    vec3 bgDeep = vec3(0.004, 0.014, 0.052);
     col = mix(col, bgDeep, 0.54 * vertFade);
-    col = mix(col, bgDeep, 0.26 * vignette);
+    col = mix(col, bgDeep, 0.24 * vignette);
 
     // 2. Juxtaposed Continuous 3D-Rotated Real-Space Electron Density Overlay (toggled by Φ!)
     if (u_showDensity > 0.01) {
