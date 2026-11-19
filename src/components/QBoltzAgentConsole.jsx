@@ -1483,11 +1483,6 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
             <div className="prs-stretch-slider-wrap">
               <div className="prs-stretch-labels">
                 <span>{stretchLabel}</span>
-                <span className="gold">
-                  {Number(currentR || 0.74).toFixed(2)} {coordUnit}
-                  {activeEqbeEv !== undefined ? `  ·  ${Number(activeEqbeEv).toFixed(2)} eV` : ""}
-                  {activeEntropy !== undefined ? `  ·  S = ${Number(activeEntropy).toFixed(2)} b` : ""}
-                </span>
               </div>
               <input
                 type="range"
