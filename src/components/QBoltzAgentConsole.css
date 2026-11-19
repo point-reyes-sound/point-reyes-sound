@@ -1758,3 +1758,600 @@
     min-height: 240px;
   }
 }
+
+
+/* ==========================================================================
+   UNIFIED SINGLE-SCREEN PHONE PREVIEW (Option A: Composite | Option B: Lens)
+   ========================================================================== */
+.prs-phone-preview-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: radial-gradient(circle at 50% 0%, #0D2264 0%, #050B21 55%, #020307 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px;
+  overflow: hidden;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.prs-phone-ab-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px;
+  background: rgba(9, 25, 74, 0.78);
+  border: 1px solid rgba(167, 189, 242, 0.24);
+  border-radius: 999px;
+  backdrop-filter: blur(14px);
+  flex-shrink: 0;
+}
+
+.prs-ab-btn {
+  background: transparent;
+  color: #C7D8FF;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.prs-ab-btn.active {
+  background: #F8DF98;
+  color: #09194A;
+  box-shadow: 0 2px 12px rgba(248, 223, 152, 0.3);
+}
+
+.prs-ab-btn.subtle {
+  color: #9BB2EA;
+  border-left: 1px solid rgba(167, 189, 242, 0.2);
+  border-radius: 0 999px 999px 0;
+  padding-left: 14px;
+}
+
+.prs-phone-bezel {
+  width: 412px;
+  max-width: 100%;
+  height: min(844px, calc(100dvh - 76px));
+  background: #030714;
+  border: 1.5px solid rgba(167, 189, 242, 0.28);
+  border-radius: 34px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(248, 223, 152, 0.08) inset;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.prs-phone-preview-shell.is-full-width .prs-phone-bezel {
+  width: min(1100px, 100%);
+  border-radius: 20px;
+}
+
+.prs-phone-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px 8px;
+  background: linear-gradient(180deg, rgba(13, 34, 100, 0.65), rgba(3, 7, 20, 0.92));
+  border-bottom: 1px solid rgba(79, 114, 198, 0.24);
+  flex-shrink: 0;
+}
+
+.prs-phone-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  padding: 0;
+}
+
+.prs-phone-brand img {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  object-fit: cover;
+  border: 1px solid rgba(248, 223, 152, 0.35);
+}
+
+.prs-phone-brand span {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  color: #C7D8FF;
+}
+
+.prs-phone-mol-pills {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.prs-mol-pill {
+  background: rgba(13, 33, 94, 0.65);
+  border: 1px solid rgba(167, 189, 242, 0.24);
+  color: #C7D8FF;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.prs-mol-pill.active,
+.prs-mol-pill:hover {
+  background: rgba(248, 223, 152, 0.16);
+  border-color: #F8DF98;
+  color: #F8DF98;
+}
+
+.prs-phone-telemetry {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 7px 12px;
+  background: rgba(6, 14, 38, 0.92);
+  border-bottom: 1px solid rgba(79, 114, 198, 0.2);
+  flex-shrink: 0;
+}
+
+.prs-tel-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.prs-tel-k {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.9px;
+  color: #7D96C9;
+  text-transform: uppercase;
+}
+
+.prs-tel-v {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.prs-tel-v.gold {
+  color: #F8DF98;
+}
+
+.prs-tel-v.ice {
+  color: #A7BDF2;
+}
+
+/* ONE GIANT UNIFIED STAGE */
+.prs-unified-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  background: #020512;
+  overflow: hidden;
+}
+
+.prs-stage-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.prs-layer-wigner {
+  z-index: 1;
+}
+
+.prs-layer-wigner.is-backdrop {
+  opacity: 0.82;
+  filter: saturate(1.08) contrast(1.04);
+}
+
+.prs-layer-orbitals {
+  z-index: 3;
+}
+
+.prs-stage-loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9BB2EA;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+
+/* Option B Floating Lens Switcher */
+.prs-lens-bar {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  display: inline-flex;
+  gap: 3px;
+  padding: 4px;
+  background: rgba(5, 13, 38, 0.78);
+  border: 1px solid rgba(167, 189, 242, 0.28);
+  border-radius: 999px;
+  backdrop-filter: blur(14px);
+}
+
+.prs-lens-pill {
+  background: transparent;
+  border: none;
+  color: #C7D8FF;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.prs-lens-pill.active {
+  background: #F8DF98;
+  color: #09194A;
+}
+
+/* Floating Orbital Isolation Chip */
+.prs-orb-filter-bar {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  display: inline-flex;
+  gap: 4px;
+  padding: 3px 5px;
+  background: rgba(5, 13, 38, 0.74);
+  border: 1px solid rgba(167, 189, 242, 0.24);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+}
+
+.prs-orb-chip {
+  background: transparent;
+  border: none;
+  color: #A7BDF2;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.18s ease;
+}
+
+.prs-orb-chip.active {
+  background: rgba(248, 223, 152, 0.18);
+  color: #F8DF98;
+}
+
+/* Bottom Interactive PES Thumb-Scrubber Dock */
+.prs-pes-dock {
+  height: 196px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, rgba(8, 20, 58, 0.94), rgba(4, 10, 28, 0.98));
+  border-top: 1px solid rgba(167, 189, 242, 0.26);
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px 10px;
+}
+
+.prs-pes-dock-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  flex-shrink: 0;
+}
+
+.prs-pes-dock-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.prs-pes-dock-title span:first-child {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #F8DF98;
+}
+
+.prs-pes-hint {
+  font-size: 10px;
+  color: #8DA5DE;
+}
+
+.prs-play-mini {
+  background: rgba(248, 223, 152, 0.14);
+  border: 1px solid rgba(248, 223, 152, 0.45);
+  color: #F8DF98;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.prs-pes-scrubber-wrap {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+/* Real Phone Viewport (Full-Bleed Edge-to-Edge, Zero Bezel, Zero Scroll) */
+@media (max-width: 600px) {
+  .prs-phone-preview-shell {
+    padding: 0;
+    gap: 0;
+  }
+
+  .prs-phone-ab-bar {
+    display: none;
+  }
+
+  .prs-phone-bezel {
+    width: 100vw;
+    height: 100dvh;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/* Hide redundant internal Wigner header inside unified phone stage */
+.prs-unified-stage .wigner-panel-header {
+  display: none !important;
+}
+
+.prs-unified-stage .wigner-workstation-panel,
+.prs-unified-stage .wigner-canvas-container {
+  height: 100% !important;
+  min-height: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+/* Option B: Minimalist 64px Bond-Stretch Scrubber Dock (gives ~80% height to the Giant Stage) */
+.prs-stretch-dock {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px 16px;
+  background: linear-gradient(180deg, rgba(8, 20, 58, 0.92), rgba(4, 10, 28, 0.98));
+  border-top: 1px solid rgba(167, 189, 242, 0.24);
+  flex-shrink: 0;
+}
+
+.prs-play-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(248, 223, 152, 0.16);
+  border: 1.5px solid #F8DF98;
+  color: #F8DF98;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.prs-play-circle:hover {
+  background: #F8DF98;
+  color: #09194A;
+}
+
+.prs-stretch-slider-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prs-stretch-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 1.1px;
+  color: #8DA5DE;
+}
+
+.prs-stretch-labels .gold {
+  color: #F8DF98;
+  font-weight: 700;
+}
+
+.prs-stretch-range {
+  width: 100%;
+  height: 4px;
+  accent-color: #F8DF98;
+  cursor: pointer;
+}
+
+/* Scrollable Orbital Carousel with Symmetry Point Group Badge */
+.prs-orb-carousel-bar {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  background: rgba(5, 13, 38, 0.80);
+  border: 1px solid rgba(167, 189, 242, 0.26);
+  border-radius: 999px;
+  backdrop-filter: blur(14px);
+}
+
+.prs-pg-badge {
+  flex-shrink: 0;
+  font-family: "EB Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 14px;
+  font-weight: 600;
+  color: #F8DF98;
+  background: rgba(248, 223, 152, 0.14);
+  border: 1px solid rgba(248, 223, 152, 0.42);
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.4px;
+}
+
+.prs-orb-carousel-track {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prs-orb-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.prs-orb-carousel-track .prs-orb-chip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 5px 11px;
+  border: 1px solid transparent;
+}
+
+.prs-orb-carousel-track .prs-orb-chip.active {
+  background: rgba(248, 223, 152, 0.18);
+  border-color: rgba(248, 223, 152, 0.45);
+  color: #F8DF98;
+}
+
+.prs-orb-irrep {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.prs-orb-occ {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9.5px;
+  opacity: 0.82;
+}
+
+.prs-ab-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: #F8DF98;
+  padding: 0 12px;
+}
+
+/* Touch-friendly champagne-gold slider thumb for phones */
+.prs-stretch-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(167, 189, 242, 0.25);
+  outline: none;
+}
+
+.prs-stretch-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #F8DF98;
+  border: 2.5px solid #09194A;
+  box-shadow: 0 0 12px rgba(248, 223, 152, 0.55);
+  cursor: pointer;
+}
+
+/* Full-bleed iOS/Android Phone Optimization (<= 768px) with notch/home-indicator safe areas */
+@media (max-width: 768px) {
+  .prs-phone-preview-shell {
+    padding: 0;
+    gap: 0;
+  }
+
+  .prs-phone-ab-bar {
+    display: none !important;
+  }
+
+  .prs-phone-bezel {
+    width: 100vw;
+    height: 100dvh;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .prs-phone-topbar {
+    padding-top: max(12px, env(safe-area-inset-top));
+  }
+
+  .prs-stretch-dock {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Mobile Touch Ergonomics & Consumption Polish */
+.prs-phone-bezel {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.prs-lens-pill {
+  min-width: 68px;
+  min-height: 30px;
+  padding: 6px 14px;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+.prs-mol-pill {
+  min-height: 30px;
+  padding: 5px 10px;
+}
+
+.prs-play-circle {
+  width: 42px;
+  height: 42px;
+}

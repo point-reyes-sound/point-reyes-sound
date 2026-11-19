@@ -194,9 +194,18 @@ export default function App() {
   const [activeTheme, setActiveTheme] = useState(0);
   const [copiedBibtexId, setCopiedBibtexId] = useState(null);
 
+  const getPhoneUiMode = () => {
+    if (typeof window === "undefined") return null;
+    const params = new URLSearchParams(window.location.search);
+    const ui = (params.get("ui") || "").toLowerCase();
+    if (ui === "composite" || ui === "lens") return ui;
+    return null;
+  };
+
   // Deep link helper to detect if URL points to Interactive (Q-BOLTZ)
   const getInitialActiveView = () => {
     if (typeof window === "undefined") return "home";
+    if (getPhoneUiMode()) return "interactive";
     const path = window.location.pathname.toLowerCase().replace(/\/$/, "");
     const hash = window.location.hash.toLowerCase().replace(/^#\/?/, "");
     if (
@@ -538,7 +547,7 @@ export default function App() {
         <div className="interactive-wrapper console-view">
           <PointReyesSound3DBackground />
           <ConsoleErrorBoundary>
-            <QBoltzAgentConsole onClose={closeAppView} />
+            <QBoltzAgentConsole onClose={closeAppView} initialPhoneMode={getPhoneUiMode()} />
           </ConsoleErrorBoundary>
         </div>
       );
