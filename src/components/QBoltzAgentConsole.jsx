@@ -839,8 +839,9 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
     }
   }, [startEtherealSound, stopEtherealSound]);
 
-  // Start ethereal background sound on mount & unlock seamlessly on first gesture if suspended
+  // Start ethereal background sound on mount (legacy non-unified mode only; unified Preview uses studio .m4a tracks)
   useEffect(() => {
+    if (useUnifiedPhoneUI) return undefined;
     startEtherealSound();
     const unlock = () => {
       if (!isAmbientMutedRef.current) {
@@ -854,7 +855,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
       window.removeEventListener("keydown", unlock);
       stopEtherealSound(true);
     };
-  }, [startEtherealSound, stopEtherealSound]);
+  }, [useUnifiedPhoneUI, startEtherealSound, stopEtherealSound]);
 
   const playCoulsonFischerPop = useCallback(() => {
     try {
@@ -919,8 +920,70 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
 
   const trajectory = simulation?.trajectory || [];
   const hasTrajectory = trajectory.length > 0;
-  const activeBenchmarkKey = simulation?.benchmark?.key || "h2";
+  const activeBenchmarkKey = simulation?.benchmark?.key || "beh2_ci";
   const coordUnit = activeBenchmarkKey === "beh2_ci" ? "Bohr" : "Å";
+
+  const previewAudioSrc =
+    activeBenchmarkKey === "beh2_ci"
+      ? "/media/preview_audio/beh2.m4a"
+      : activeBenchmarkKey === "h3_d3h"
+        ? "/media/preview_audio/h3.m4a"
+        : activeBenchmarkKey === "h4_square"
+          ? "/media/preview_audio/h4.m4a"
+          : "/media/preview_audio/h2.m4a";
+
+  // Auto-play bespoke studio film audio on Preview mount & system switch,
+  // with seamless first-gesture unlock fallback if browser blocks cold unmuted autoplay.
+  useEffect(() => {
+    if (!useUnifiedPhoneUI) return undefined;
+    const el = previewAudioRef.current;
+    if (!el) return undefined;
+
+    el.muted = isAmbientMuted;
+    el.volume = 0.85;
+
+    if (!isPlaying || isAmbientMuted) {
+      el.pause();
+      return undefined;
+    }
+
+    let cleanedUp = false;
+    const unlockEvents = ["pointerdown", "touchstart", "keydown"];
+    const removeUnlockListeners = () => {
+      unlockEvents.forEach((evt) => window.removeEventListener(evt, handleUnlock));
+    };
+    const handleUnlock = () => {
+      if (cleanedUp || isAmbientMutedRef.current) return;
+      const audioEl = previewAudioRef.current;
+      if (!audioEl) return;
+      audioEl.muted = false;
+      audioEl.volume = 0.85;
+      const p = audioEl.play();
+      if (p && p.then) {
+        p.then(removeUnlockListeners).catch(() => {});
+      } else {
+        removeUnlockListeners();
+      }
+    };
+
+    const tryPlay = () => {
+      const p = el.play();
+      if (p && p.catch) {
+        p.catch(() => {
+          if (!cleanedUp) {
+            unlockEvents.forEach((evt) => window.addEventListener(evt, handleUnlock, { passive: true }));
+          }
+        });
+      }
+    };
+
+    tryPlay();
+
+    return () => {
+      cleanedUp = true;
+      removeUnlockListeners();
+    };
+  }, [useUnifiedPhoneUI, previewAudioSrc, isPlaying, isAmbientMuted]);
 
   useEffect(() => {
     if (!isPlaying || !hasTrajectory) return;
@@ -935,22 +998,24 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
           next = Math.min(trajectory.length - 1, 1);
         }
 
-        const prevR = trajectory[prev]?.r;
-        const nextR = trajectory[next]?.r;
-        const cfR = activeBenchmarkKey === "beh2_ci" ? 2.54 : 1.20;
-        if (
-          prevR !== undefined &&
-          nextR !== undefined &&
-          ((prevR < cfR && nextR >= cfR) || (prevR > cfR && nextR <= cfR) || Math.abs(nextR - cfR) < 0.035)
-        ) {
-          playCoulsonFischerPop();
+        if (!useUnifiedPhoneUI && !isAmbientMutedRef.current) {
+          const prevR = trajectory[prev]?.r;
+          const nextR = trajectory[next]?.r;
+          const cfR = activeBenchmarkKey === "beh2_ci" ? 2.54 : 1.20;
+          if (
+            prevR !== undefined &&
+            nextR !== undefined &&
+            ((prevR < cfR && nextR >= cfR) || (prevR > cfR && nextR <= cfR) || Math.abs(nextR - cfR) < 0.035)
+          ) {
+            playCoulsonFischerPop();
+          }
         }
 
         return next;
       });
     }, playbackSpeed);
     return () => clearInterval(interval);
-  }, [isPlaying, hasTrajectory, loopDir, trajectory, playbackSpeed, playCoulsonFischerPop, activeBenchmarkKey]);
+  }, [isPlaying, hasTrajectory, loopDir, trajectory, playbackSpeed, playCoulsonFischerPop, activeBenchmarkKey, useUnifiedPhoneUI]);
 
   const getApiBaseUrl = () => {
     const envUrl = (import.meta.env.VITE_QBOLTZ_API_URL || "").trim().replace(/\/$/, "");
@@ -1005,7 +1070,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
       const targetR = requestedCoord !== null ? requestedCoord : defaultTarget;
       const initIdx = data.simulation.trajectory.findIndex((f) => f.r >= targetR);
       setCurrentFrameIdx(initIdx >= 0 ? initIdx : 0);
-      setIsPlaying(requestedCoord === null);
+      setIsPlaying(useUnifiedPhoneUI ? true : requestedCoord === null);
       setLoopDir(1);
     } else {
       setCurrentFrameIdx(0);
@@ -1250,14 +1315,6 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
     ];
 
     const isBeH2 = activeBenchmarkKey === "beh2_ci";
-    const previewAudioSrc =
-      activeBenchmarkKey === "beh2_ci"
-        ? "/media/preview_audio/beh2.m4a"
-        : activeBenchmarkKey === "h3_d3h"
-          ? "/media/preview_audio/h3.m4a"
-          : activeBenchmarkKey === "h4_square"
-            ? "/media/preview_audio/h4.m4a"
-            : "/media/preview_audio/h2.m4a";
 
     const syncPreviewAudio = (shouldPlay, mutedFlag) => {
       const el = previewAudioRef.current;
