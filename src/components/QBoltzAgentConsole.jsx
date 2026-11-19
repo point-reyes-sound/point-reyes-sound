@@ -645,7 +645,8 @@ function DissociationCurvePlot({ curveData, currentPoint, coordUnit = "Å", canS
 // ---------------------------------------------------------------------------
 export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null }) {
   const useUnifiedPhoneUI = true;
-  const [phoneLens, setPhoneLens] = useState("overlay"); // "overlay" | "wigner" | "orbitals"
+  const [showPhaseLayer, setShowPhaseLayer] = useState(true);
+  const [showOrbLayer, setShowOrbLayer] = useState(true);
   const [selectedOrbitalIdx, setSelectedOrbitalIdx] = useState(0); // -1 = All (superposition), 0..N-1 = specific orbital
 
   const [query, setQuery] = useState("Conceptualize and envision the dissociation of H2 in phase space.");
@@ -1102,10 +1103,28 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
     }
   }, [useUnifiedPhoneUI, hasResult, loading]);
 
-  // Unified Single-Screen Phone Interface (Option B: Giant Stage + Lens + Orbital Symmetry Carousel + Geometry Scrubber)
+  // Unified Single-Screen Interface (Default: Phase + Orb united; tap either pill to toggle layer)
   if (useUnifiedPhoneUI) {
-    const showWigner = phoneLens === "wigner" || phoneLens === "overlay";
-    const showOrbitals = phoneLens === "orbitals" || phoneLens === "overlay";
+    const showWigner = showPhaseLayer;
+    const showOrbitals = showOrbLayer;
+
+    const togglePhaseLayer = () => {
+      if (showPhaseLayer && !showOrbLayer) {
+        setShowOrbLayer(true);
+        setShowPhaseLayer(false);
+      } else {
+        setShowPhaseLayer((v) => !v);
+      }
+    };
+
+    const toggleOrbLayer = () => {
+      if (showOrbLayer && !showPhaseLayer) {
+        setShowPhaseLayer(true);
+        setShowOrbLayer(false);
+      } else {
+        setShowOrbLayer((v) => !v);
+      }
+    };
 
     const POINT_GROUP_MAP = {
       h2: "D∞h",
@@ -1222,25 +1241,20 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
 
           {/* 3. ONE GIANT UNIFIED HERO STAGE (~80% height) */}
           <div className="prs-unified-stage mode-lens">
-            <div className="prs-lens-bar" role="tablist" aria-label="View lens">
+            <div className="prs-lens-bar" role="group" aria-label="Visible layers">
               <button
                 type="button"
-                className={`prs-lens-pill ${phoneLens === "overlay" ? "active" : ""}`}
-                onClick={() => setPhoneLens("overlay")}
-              >
-                Overlay
-              </button>
-              <button
-                type="button"
-                className={`prs-lens-pill ${phoneLens === "wigner" ? "active" : ""}`}
-                onClick={() => setPhoneLens("wigner")}
+                className={`prs-lens-pill ${showPhaseLayer ? "active" : ""}`}
+                onClick={togglePhaseLayer}
+                aria-pressed={showPhaseLayer}
               >
                 Phase
               </button>
               <button
                 type="button"
-                className={`prs-lens-pill ${phoneLens === "orbitals" ? "active" : ""}`}
-                onClick={() => setPhoneLens("orbitals")}
+                className={`prs-lens-pill ${showOrbLayer ? "active" : ""}`}
+                onClick={toggleOrbLayer}
+                aria-pressed={showOrbLayer}
               >
                 Orb
               </button>
