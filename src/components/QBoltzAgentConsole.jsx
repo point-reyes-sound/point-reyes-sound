@@ -639,6 +639,71 @@ function DissociationCurvePlot({ curveData, currentPoint, coordUnit = "Å", canS
   );
 }
 
+// Format Schoenflies Point Group with proper HTML subscripts (e.g. D∞h -> D<sub>∞h</sub>)
+function renderPointGroup(pg) {
+  if (!pg) return null;
+  const normalized = pg
+    .replace(/₁/g, "1")
+    .replace(/₂/g, "2")
+    .replace(/₃/g, "3")
+    .replace(/₄/g, "4");
+  const match = normalized.match(/^([A-Za-z])(.+)$/);
+  if (!match) return pg;
+  return (
+    <>
+      {match[1]}
+      <sub>{match[2]}</sub>
+    </>
+  );
+}
+
+// Format Molecular Orbital Irrep Label with proper HTML subscripts & superscripts
+function renderOrbitalLabel(raw) {
+  const token = (raw || "").split(" ")[0]
+    .replace(/₁/g, "1")
+    .replace(/₂/g, "2")
+    .replace(/₃/g, "3")
+    .replace(/₄/g, "4");
+  if (!token) return null;
+
+  if (token.includes("_")) {
+    const [head, tailRaw] = token.split("_");
+    const hasStar = tailRaw.endsWith("*");
+    const sub = hasStar ? tailRaw.slice(0, -1) : tailRaw;
+    return (
+      <>
+        {head.replace("'", "′")}
+        {sub && <sub>{sub}</sub>}
+        {hasStar && <sup>*</sup>}
+      </>
+    );
+  }
+
+  const primeMatch = token.match(/^(\d*[a-zA-Zσπδ]+)(\d+)(['′])(\*?)$/);
+  if (primeMatch) {
+    return (
+      <>
+        {primeMatch[1]}
+        <sub>{primeMatch[2]}</sub>
+        <sup>{primeMatch[3]}{primeMatch[4]}</sup>
+      </>
+    );
+  }
+
+  const compactMatch = token.match(/^(\d*[a-zA-Zσπδ]+)([0-9]+[gu]?)(\*?)$/);
+  if (compactMatch) {
+    return (
+      <>
+        {compactMatch[1]}
+        <sub>{compactMatch[2]}</sub>
+        {compactMatch[3] && <sup>*</sup>}
+      </>
+    );
+  }
+
+  return token.replace("'", "′");
+}
+
 // ---------------------------------------------------------------------------
 // Main Fullscreen Q-BOLTZ Interactive Discovery Workstation
 // Aligned with Point Reyes Sound Landing Page Aesthetic
@@ -1235,7 +1300,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
             </div>
             <div className="prs-tel-item">
               <span className="prs-tel-k">SYM</span>
-              <span className="prs-tel-v gold">{pointGroupLabel}</span>
+              <span className="prs-tel-v gold">{renderPointGroup(pointGroupLabel)}</span>
             </div>
           </div>
 
@@ -1294,7 +1359,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
             {showOrbitals && (
               <div className="prs-orb-carousel-bar" role="region" aria-label="Orbital symmetry carousel">
                 <span className="prs-pg-badge" title="Molecular Symmetry Point Group">
-                  {pointGroupLabel}
+                  {renderPointGroup(pointGroupLabel)}
                 </span>
                 <div className="prs-orb-carousel-track">
                   {activeOrbitals.map((orb, idx) => {
@@ -1304,7 +1369,6 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
                         : idx === safeAntibondingIdx
                           ? nAntibondVal
                           : orb?.occupation;
-                    const shortLabel = (orb?.label || `φ_${idx + 1}`).split(" ")[0];
                     return (
                       <button
                         key={`orb-car-${idx}`}
@@ -1312,7 +1376,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
                         className={`prs-orb-chip ${safeSelectedIdx === idx ? "active" : ""}`}
                         onClick={() => setSelectedOrbitalIdx(idx)}
                       >
-                        <span className="prs-orb-irrep">{shortLabel}</span>
+                        <span className="prs-orb-irrep">{renderOrbitalLabel(orb?.label || `φ_${idx + 1}`)}</span>
                         {occ !== undefined && (
                           <span className="prs-orb-occ">n={Number(occ).toFixed(2)}</span>
                         )}

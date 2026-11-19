@@ -311,7 +311,7 @@ export default function WebGlWignerPlot({
       >
         {/* Minimal Phase Space Axis Labels */}
         <div className="wigner-axis-label axis-z-center">z ({coordUnit})</div>
-        <div className="wigner-axis-label axis-p-center">p_z (ℏ/a₀)</div>
+        <div className="wigner-axis-label axis-p-center">p<sub>z</sub> (ℏ/a<sub>0</sub>)</div>
 
         {/* Real-Time Interactive Coordinate Hover Readout */}
         {hoverData && (
