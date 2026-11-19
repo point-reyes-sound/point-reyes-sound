@@ -2666,21 +2666,6 @@
 }
 
 @media (min-width: 769px) {
-  .prs-gallery-black .prs-phone-topbar {
-    flex-direction: row;
-    justify-content: flex-end;
-    min-height: 58px;
-    padding: 12px 28px;
-  }
-
-  .prs-gallery-black .prs-phone-brand {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    gap: 11px;
-  }
-
   .prs-gallery-black .prs-phone-brand img {
     width: 28px;
     height: 28px;
@@ -2692,24 +2677,92 @@
     letter-spacing: 0.015em !important;
   }
 
-  .prs-gallery-frame-grid {
-    width: min(1020px, calc(100vw - 64px));
-    margin: 14px auto 16px;
-    grid-template-columns: 48px minmax(0, 1fr);
-    padding: 18px 26px 14px 12px;
-    border-radius: 24px;
+  .prs-gallery-frame-grid.prs-card-4x5 {
+    flex: 0 1 auto;
+    height: min(69vh, 660px);
+    width: auto;
+    aspect-ratio: 4 / 5;
+    max-width: min(560px, calc(100vw - 48px));
+    margin: 0 auto;
+    grid-template-columns: 38px minmax(0, 1fr);
+    padding: 16px 20px 14px 8px;
+    border-radius: 22px;
   }
 
   .prs-gallery-viewport {
-    border-radius: 16px;
+    border-radius: 14px;
   }
 
   .prs-axis-label-v,
   .prs-axis-label-h {
-    font-size: 16px;
+    font-size: 14.5px;
   }
 
   .prs-gallery-system-caption {
-    font-size: 19px;
+    font-size: 20px;
   }
+}
+
+/* Landing-Page-Congruent Centered 4:5 Column & Seeking Pagination Dots */
+.prs-landing-congruent-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 16px 12px 14px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.prs-landing-header-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.prs-gallery-system-sub {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11.5px;
+  color: rgba(156, 178, 212, 0.85);
+  text-align: center;
+  margin-top: 1px;
+}
+
+.prs-landing-seek-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 2px 0;
+}
+
+.prs-seek-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: rgba(142, 168, 210, 0.38);
+  transition: width 0.25s ease, background 0.25s ease;
+}
+
+.prs-seek-dot:hover {
+  background: rgba(142, 168, 210, 0.72);
+}
+
+.prs-seek-dot.active {
+  width: 28px;
+  background: #4f9cf9;
+}
+
+.prs-dock-compact {
+  width: min(560px, calc(100vw - 32px));
+  margin: 0 auto;
+  border-top: none !important;
+  padding: 4px 8px 6px !important;
+  background: transparent !important;
 }

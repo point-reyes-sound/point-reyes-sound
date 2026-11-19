@@ -1243,9 +1243,9 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
 
     const molButtons = [
       { label: "H₂", key: "h2", prompt: QUICK_QUERY_PROMPTS[0].prompt },
-      { label: "BeH₂", key: "beh2_ci", prompt: QUICK_QUERY_PROMPTS[1].prompt },
       { label: "H₃", key: "h3_d3h", prompt: QUICK_QUERY_PROMPTS[2].prompt },
-      { label: "H₄", key: "h4_square", prompt: QUICK_QUERY_PROMPTS[3].prompt }
+      { label: "H₄", key: "h4_square", prompt: QUICK_QUERY_PROMPTS[3].prompt },
+      { label: "BeH₂", key: "beh2_ci", prompt: QUICK_QUERY_PROMPTS[1].prompt }
     ];
 
     const isBeH2 = activeBenchmarkKey === "beh2_ci";
@@ -1262,10 +1262,10 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
 
     return (
       <div className="prs-phone-preview-shell prs-unified-fullscreen prs-gallery-black">
-        {/* Single Unified Quantum Gallery Instrument (Pure #000 Black Canvas on Desktop & Mobile) */}
-        <div className="prs-phone-bezel">
-          {/* 1. Compact Header + Molecule Switcher */}
-          <div className="prs-phone-topbar">
+        {/* Centered 4:5 Landing-Page-Congruent Quantum Card + Seeking Dots */}
+        <div className="prs-phone-bezel prs-landing-congruent-col">
+          {/* 1. Top Centered Φ Point Reyes Sound Lockup in EB Garamond */}
+          <div className="prs-landing-header-center">
             <button
               type="button"
               className="prs-phone-brand"
@@ -1275,49 +1275,10 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
               <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
               <span className="prs-gallery-wordmark">Point Reyes Sound</span>
             </button>
-            <div className="prs-phone-mol-pills">
-              {molButtons.map((item) => {
-                const isActive = activeBenchmarkKey === item.key;
-                return (
-                  <button
-                    key={item.key}
-                    type="button"
-                    className={`prs-mol-pill ${isActive ? "active" : ""}`}
-                    onClick={() => {
-                      setSelectedOrbitalIdx(0);
-                      setQuery(item.prompt);
-                      executeQuery(item.prompt);
-                    }}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
-            </div>
           </div>
 
-          {/* 2. Quiet Live Telemetry Strip */}
-          <div className="prs-phone-telemetry">
-            <div className="prs-tel-item">
-              <span className="prs-tel-k">R</span>
-              <span className="prs-tel-v gold">{Number(currentR || 0.74).toFixed(2)} {coordUnit}</span>
-            </div>
-            <div className="prs-tel-item">
-              <span className="prs-tel-k">E</span>
-              <span className="prs-tel-v">{activeEqbeEv !== undefined ? `${Number(activeEqbeEv).toFixed(2)} eV` : "-22.84 eV"}</span>
-            </div>
-            <div className="prs-tel-item">
-              <span className="prs-tel-k">S</span>
-              <span className="prs-tel-v ice">{activeEntropy !== undefined ? `${Number(activeEntropy).toFixed(2)} b` : "0.99 b"}</span>
-            </div>
-            <div className="prs-tel-item">
-              <span className="prs-tel-k">SYM</span>
-              <span className="prs-tel-v gold">{renderPointGroup(pointGroupLabel)}</span>
-            </div>
-          </div>
-
-          {/* 3. PURE-BLACK FRAMED GALLERY STAGE WITH EB GARAMOND POSITION & MOMENTUM AXES */}
-          <div className="prs-gallery-frame-grid">
+          {/* 2. Centered 4:5 Rounded Midnight-Sapphire Card (Identical to Landing Page Video) */}
+          <div className="prs-gallery-frame-grid prs-card-4x5">
             {/* Left Vertical Momentum Axis */}
             <div className="prs-axis-y-col" aria-hidden="true">
               <span className="prs-axis-line-v prs-axis-arrow-up" />
@@ -1339,7 +1300,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
               <span className="prs-axis-line-v" />
             </div>
 
-            {/* Framed WebGL Wigner + 3D Real-Space Density Viewport */}
+            {/* Framed WebGL JCP-Cover Wigner + 3D Real-Space Density Viewport */}
             <div className="prs-unified-stage prs-gallery-viewport mode-lens">
               <div className="prs-stage-layer prs-layer-wigner">
                 <WebGlWignerPlot
@@ -1354,7 +1315,7 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
               </div>
             </div>
 
-            {/* Bottom Horizontal Position Axis + Embedded System Caption */}
+            {/* Bottom Horizontal Position Axis + Minimal System Caption inside Card */}
             <div className="prs-axis-x-row">
               <div className="prs-axis-x-guide" aria-hidden="true">
                 <span className="prs-axis-line-h" />
@@ -1378,11 +1339,37 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
                 <span className="prs-sys-dot">·</span>
                 <span>{renderPointGroup(pointGroupLabel)}</span>
               </div>
+              <div className="prs-gallery-system-sub">
+                Real-space electron density over Wigner phase space.
+              </div>
             </div>
           </div>
 
-          {/* 4. Slim Thumb-Intuitive Geometry Scrubber Dock */}
-          <div className="prs-stretch-dock">
+          {/* 3. Landing-Page Seeking Pagination Dots (Click any dot to seek H₂ · H₃ · H₄ · BeH₂) */}
+          <div className="prs-landing-seek-dots" role="tablist" aria-label="Select molecular system">
+            {molButtons.map((item) => {
+              const isActive = activeBenchmarkKey === item.key;
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-label={`View ${item.label}`}
+                  title={item.label}
+                  className={`prs-seek-dot ${isActive ? "active" : ""}`}
+                  onClick={() => {
+                    setSelectedOrbitalIdx(0);
+                    setQuery(item.prompt);
+                    executeQuery(item.prompt);
+                  }}
+                />
+              );
+            })}
+          </div>
+
+          {/* 4. Compact Play/Pause + Coordinate Scrubber Dock */}
+          <div className="prs-stretch-dock prs-dock-compact">
             <button
               type="button"
               className={`prs-play-circle ${isPlaying ? "playing" : ""}`}
@@ -1395,7 +1382,11 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
             <div className="prs-stretch-slider-wrap">
               <div className="prs-stretch-labels">
                 <span>{stretchLabel}</span>
-                <span className="gold">{Number(currentR || 0.74).toFixed(2)} {coordUnit}</span>
+                <span className="gold">
+                  {Number(currentR || 0.74).toFixed(2)} {coordUnit}
+                  {activeEqbeEv !== undefined ? `  ·  ${Number(activeEqbeEv).toFixed(2)} eV` : ""}
+                  {activeEntropy !== undefined ? `  ·  S = ${Number(activeEntropy).toFixed(2)} b` : ""}
+                </span>
               </div>
               <input
                 type="range"
