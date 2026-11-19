@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Point Reyes Sound — a16z Pitch Deck</title>
   <title>Point Reyes Sound — Pre-Seed Pitch Deck</title>
-    <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg?v=5" />
+  <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg?v=5" />
   <link rel="icon" type="image/png" sizes="32x32" href="/prs_favicon_32.png?v=5" />
   <link rel="apple-touch-icon" sizes="180x180" href="/prs_favicon_180.png?v=5" />
   <link rel="shortcut icon" href="/favicon.ico?v=5" />
@@ -13,7 +13,9 @@
   <!-- Google Fonts: EB Garamond, JetBrains Mono, Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <!-- Three.js CDN for 3D Hero -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -30,21 +32,25 @@
       --font-mono: "JetBrains Mono", monospace;
       --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 
-      --bg-core: #030704;
-      --bg-panel: #07120a;
-      --bg-card: rgba(8, 20, 12, 0.85);
-      
-      --accent-emerald: #35ff82;
-      --accent-emerald-dim: rgba(53, 255, 130, 0.12);
-      --accent-emerald-glow: rgba(53, 255, 130, 0.35);
-      --accent-cyan: #64c8ff;
-      --accent-gold: #f5c542;
+      /* Classic Point Reyes Sound Brand Palette (LinkedIn Campaign & Prospectus) */
+      --bg-core: #061030;
+      --bg-panel: #09194A;
+      --bg-card: rgba(13, 33, 94, 0.82);
 
-      --text-primary: #f0f7f2;
-      --text-secondary: #a3c2ad;
-      --text-muted: #62826c;
-      --border-subtle: rgba(53, 255, 130, 0.18);
-      --border-active: #35ff82;
+      --accent-emerald: #F8DF98;
+      --accent-emerald-dim: rgba(248, 223, 152, 0.14);
+      --accent-emerald-glow: rgba(248, 223, 152, 0.35);
+      --accent-cyan: #A7BDF2;
+      --accent-gold: #F8DF98;
+      --accent-champagne: #FFF5CC;
+      --accent-crimson: #A81038;
+      --accent-blush: #E9C7D1;
+
+      --text-primary: #FFFFFF;
+      --text-secondary: #C7D8FF;
+      --text-muted: #9BB2EA;
+      --border-subtle: rgba(79, 114, 198, 0.36);
+      --border-active: #F8DF98;
 
       /* Dynamic responsive sizing for circular hero */
       --hero-circle-size: clamp(330px, min(41vh, 23vw), 620px);
@@ -64,7 +70,7 @@
 
     body {
       font-family: var(--font-serif);
-      background-color: var(--bg-core);
+      background-color: #020307;
       color: var(--text-primary);
       overflow: hidden;
       width: 100vw;
@@ -73,25 +79,48 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background-image: 
-        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(53, 255, 130, 0.04) 0%, transparent 80%),
-        linear-gradient(rgba(53, 255, 130, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(53, 255, 130, 0.015) 1px, transparent 1px);
-      background-size: 100% 100%, 36px 36px, 36px 36px;
+      background-image:
+        radial-gradient(ellipse 60% 45% at 50% 10%, rgba(20, 42, 108, 0.12) 0%, transparent 72%),
+        linear-gradient(180deg, #03050B 0%, #020307 100%);
+      background-size: 100% 100%;
     }
 
-    /* Deck Viewport (Aspect Ratio 16:9) */
+    /* Deck Viewport (Aspect Ratio 16:9) — Obsidian Black for Slides 1-4 */
     .deck-viewport {
       width: 100vw;
       height: 100vh;
-      max-width: 177.78vh; /* 16:9 */
+      max-width: 177.78vh;
+      /* 16:9 */
       max-height: 56.25vw;
       position: relative;
-      background: radial-gradient(circle at 80% 20%, #08170d 0%, #030704 75%);
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(53, 255, 130, 0.05);
-      border: 1px solid var(--border-subtle);
+      background: #020307;
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.92);
+      border: 1px solid rgba(79, 114, 198, 0.22);
       overflow: hidden;
       container-type: size;
+    }
+
+    /* Slides 5 & 6: Classic Point Reyes Sound Midnight Sapphire + Royal Crimson Wedge */
+    #slide-5,
+    #slide-6 {
+      background:
+        radial-gradient(circle at 22% 16%, rgba(30, 70, 184, 0.32) 0%, rgba(9, 25, 74, 0) 52%),
+        linear-gradient(175deg, #0D2264 0%, #09194A 38%, #09194A 100%);
+    }
+
+    #slide-5::after,
+    #slide-6::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2.8%;
+      height: 100%;
+      background: #A81038;
+      opacity: 0.94;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 62% 100%);
+      pointer-events: none;
+      z-index: 30;
     }
 
     .slide {
@@ -148,29 +177,30 @@
       flex-shrink: 0;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
     .brand-logo-animated:hover {
       transform: scale(1.06);
       box-shadow: 0 0 14px rgba(164, 32, 55, 0.7);
     }
 
     .company-tag {
-      font-family: var(--font-mono);
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: #4169e1;
-      text-shadow: 0 0 16px rgba(65, 105, 225, 0.45);
+      font-family: var(--font-sans);
+      font-size: clamp(0.8rem, 1.45cqh, 1.1rem);
+      font-weight: 600;
+      letter-spacing: 3.5px;
+      color: #C7D8FF;
+      text-shadow: none;
     }
 
     .header-qboltz-tag {
       font-family: var(--font-mono);
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #93c5fd;
-      letter-spacing: 1.2px;
-      background: rgba(37, 99, 235, 0.15);
-      border: 1px solid rgba(59, 130, 246, 0.4);
-      padding: 2px 8px;
+      font-size: clamp(0.68rem, 1.2cqh, 0.9rem);
+      font-weight: 600;
+      color: #F8DF98;
+      letter-spacing: 1.4px;
+      background: rgba(248, 223, 152, 0.10);
+      border: 1px solid rgba(248, 223, 152, 0.32);
+      padding: 3px 10px;
       border-radius: 12px;
       margin-left: 8px;
       display: inline-flex;
@@ -179,33 +209,36 @@
     }
 
     .slide-num {
-      font-family: var(--font-mono);
-      font-size: 0.95rem;
-      color: var(--accent-emerald);
-      background: var(--accent-emerald-dim);
+      font-family: var(--font-sans);
+      font-size: clamp(0.82rem, 1.45cqh, 1.05rem);
+      font-weight: 500;
+      letter-spacing: 1.8px;
+      color: #E9C7D1;
+      background: rgba(13, 33, 94, 0.55);
       padding: 4px 12px;
       border-radius: 12px;
       border: 1px solid var(--border-subtle);
+      margin-right: 1.8%;
     }
 
     /* Typography */
     h2 {
       font-family: var(--font-serif);
-      font-size: 3.1rem;
+      font-size: clamp(2.1rem, 4.8cqh, 4.2rem);
       font-weight: 600;
       letter-spacing: -0.5px;
-      color: #4169e1;
-      text-shadow: 0 0 35px rgba(65, 105, 225, 0.35);
-      margin-top: 0.3rem;
+      color: #FFFFFF;
+      text-shadow: 0 2px 24px rgba(13, 34, 100, 0.6);
+      margin-top: 0.2rem;
       margin-bottom: 0.2rem;
     }
 
     .subtitle {
       font-family: var(--font-serif);
-      font-size: 1.15rem;
-      color: var(--accent-emerald);
-      font-style: italic;
-      margin-bottom: 0.9rem;
+      font-size: clamp(1.05rem, 2.2cqh, 1.85rem);
+      color: #F8DF98;
+      font-style: normal;
+      margin-bottom: 0.8rem;
     }
 
     /* Footer */
@@ -224,7 +257,7 @@
     .badge {
       display: inline-flex;
       align-items: center;
-      background: rgba(53, 255, 130, 0.08);
+      background: rgba(248, 223, 152, 0.08);
       border: 1px solid var(--border-subtle);
       padding: 6px 14px;
       border-radius: 20px;
@@ -235,7 +268,7 @@
 
     .play-deck-cta {
       background: linear-gradient(135deg, #10b981, #059669);
-      color: #030704;
+      color: #09194A;
       font-family: var(--font-mono);
       font-size: 1.05rem;
       font-weight: 700;
@@ -422,7 +455,7 @@
     .card-img-wrap {
       border-radius: 6px;
       overflow: hidden;
-      border: 1px solid rgba(53, 255, 130, 0.25);
+      border: 1px solid rgba(248, 223, 152, 0.25);
       background: #040b07;
       flex: 1;
       min-height: 160px;
@@ -446,7 +479,7 @@
       background: rgba(4, 15, 8, 0.85);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
     .pipeline-node {
@@ -468,7 +501,7 @@
     /* Clickable GPU Acceleration Card -> NVIDIA Evaluation Whitepaper */
     .gpu-card-link {
       flex: 1;
-      background: rgba(8, 20, 12, 0.9);
+      background: rgba(13, 33, 94, 0.9);
       border: 1.5px solid rgba(118, 185, 0, 0.45);
       border-radius: 12px;
       padding: 1.6rem 1.4rem;
@@ -523,8 +556,17 @@
     }
 
     @keyframes pulseArrow {
-      0%, 100% { opacity: 0.5; transform: translateX(0); }
-      50% { opacity: 1; transform: translateX(4px); }
+
+      0%,
+      100% {
+        opacity: 0.5;
+        transform: translateX(0);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translateX(4px);
+      }
     }
 
     /* Apple Music Aesthetic Play Button */
@@ -559,8 +601,10 @@
     .apple-music-play-btn svg {
       width: 22px;
       height: 22px;
-      fill: #fa243c; /* Signature Apple Music Red */
-      margin-left: 3px; /* Optical center for triangle */
+      fill: #fa243c;
+      /* Signature Apple Music Red */
+      margin-left: 3px;
+      /* Optical center for triangle */
       transition: transform 0.2s ease;
     }
 
@@ -569,52 +613,61 @@
     }
 
     @keyframes applePulse {
-      0%, 100% {
+
+      0%,
+      100% {
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(250, 36, 60, 0.25);
       }
+
       50% {
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 28px rgba(250, 36, 60, 0.55);
       }
     }
 
     .apple-music-play-btn.is-playing {
-      background: #35ff82;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 24px rgba(53, 255, 130, 0.6);
+      background: #F8DF98;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 24px rgba(248, 223, 152, 0.6);
       animation: greenPulse 2s infinite ease-in-out;
     }
 
     .apple-music-play-btn.is-playing svg {
-      fill: #030704;
+      fill: #09194A;
       margin-left: 0;
     }
 
     @keyframes greenPulse {
-      0%, 100% {
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(53, 255, 130, 0.35);
+
+      0%,
+      100% {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(248, 223, 152, 0.35);
       }
+
       50% {
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 28px rgba(53, 255, 130, 0.75);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 28px rgba(248, 223, 152, 0.75);
       }
     }
 
     .apple-music-play-btn.film-ready {
-      background: linear-gradient(135deg, #ffffff 0%, #35ff82 100%);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 26px rgba(53, 255, 130, 0.85);
+      background: linear-gradient(135deg, #ffffff 0%, #F8DF98 100%);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 26px rgba(248, 223, 152, 0.85);
       animation: filmReadyPulse 2s infinite ease-in-out;
     }
 
     .apple-music-play-btn.film-ready svg {
-      fill: #030704;
+      fill: #09194A;
       margin-left: 3px;
     }
 
     @keyframes filmReadyPulse {
-      0%, 100% {
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 18px rgba(53, 255, 130, 0.5);
+
+      0%,
+      100% {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 18px rgba(248, 223, 152, 0.5);
         transform: scale(1);
       }
+
       50% {
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 34px rgba(53, 255, 130, 0.95);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 34px rgba(248, 223, 152, 0.95);
         transform: scale(1.06);
       }
     }
@@ -628,15 +681,15 @@
       flex-shrink: 0;
       cursor: pointer;
       position: relative;
-      border: 1px solid rgba(53, 255, 130, 0.2);
-      box-shadow: 0 0 35px rgba(53, 255, 130, 0.16), inset 0 0 25px rgba(53, 255, 130, 0.08);
+      border: 1px solid rgba(248, 223, 152, 0.2);
+      box-shadow: 0 0 35px rgba(248, 223, 152, 0.16), inset 0 0 25px rgba(248, 223, 152, 0.08);
       transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
       user-select: none;
     }
 
     #qboltz-3d-container:hover {
-      border-color: rgba(53, 255, 130, 0.55) !important;
-      box-shadow: 0 0 45px rgba(53, 255, 130, 0.3), inset 0 0 28px rgba(53, 255, 130, 0.14) !important;
+      border-color: rgba(248, 223, 152, 0.55) !important;
+      box-shadow: 0 0 45px rgba(248, 223, 152, 0.3), inset 0 0 28px rgba(248, 223, 152, 0.14) !important;
     }
 
     #qboltz-3d-container.state-on6 {
@@ -651,8 +704,8 @@
     }
 
     #qboltz-3d-container.state-on3 {
-      border-color: rgba(53, 255, 130, 0.85) !important;
-      box-shadow: 0 0 60px rgba(53, 255, 130, 0.55), inset 0 0 35px rgba(53, 255, 130, 0.28) !important;
+      border-color: rgba(248, 223, 152, 0.85) !important;
+      box-shadow: 0 0 60px rgba(248, 223, 152, 0.55), inset 0 0 35px rgba(248, 223, 152, 0.28) !important;
     }
 
     #river-electrons-video {
@@ -742,18 +795,20 @@
       color: #4169e1;
       text-shadow: 0 0 45px rgba(65, 105, 225, 0.6), 0 0 20px rgba(65, 105, 225, 0.4);
     }
+
     .hero-formula-math.on6-math .katex {
       font-size: 1em !important;
       color: #4169e1 !important;
     }
 
     .hero-formula-math.on3-math {
-      color: #35ff82;
-      text-shadow: 0 0 55px rgba(53, 255, 130, 0.7), 0 0 24px rgba(100, 200, 255, 0.45);
+      color: #F8DF98;
+      text-shadow: 0 0 55px rgba(248, 223, 152, 0.7), 0 0 24px rgba(100, 200, 255, 0.45);
     }
+
     .hero-formula-math.on3-math .katex {
       font-size: 1em !important;
-      color: #35ff82 !important;
+      color: #F8DF98 !important;
     }
 
     .hero-latex-tag {
@@ -772,15 +827,15 @@
     }
 
     .hero-latex-tag.on3-tag {
-      color: #35ff82;
-      text-shadow: 0 0 12px rgba(53, 255, 130, 0.6);
+      color: #F8DF98;
+      text-shadow: 0 0 12px rgba(248, 223, 152, 0.6);
     }
 
     /* Clickable Static p-Orbital Frame & LaTeX Math Transition on Slide 3 */
     #static-porbital-container {
       cursor: pointer;
       position: relative;
-      border: 1px solid rgba(53, 255, 130, 0.18);
+      border: 1px solid rgba(248, 223, 152, 0.18);
       transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
       user-select: none;
     }
@@ -971,7 +1026,7 @@
     .code-text {
       font-family: var(--font-mono);
       color: var(--accent-emerald);
-      background: rgba(53, 255, 130, 0.08);
+      background: rgba(248, 223, 152, 0.08);
       padding: 1px 5px;
       border-radius: 4px;
       font-size: 0.88em;
@@ -1030,6 +1085,7 @@
       flex: 1;
       justify-content: center;
     }
+
     .flow-step-card {
       display: flex;
       align-items: center;
@@ -1044,16 +1100,19 @@
       overflow: hidden;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
     }
+
     .flow-step-card:hover {
       background: rgba(8, 22, 14, 0.95);
-      border-color: rgba(53, 255, 130, 0.4);
+      border-color: rgba(248, 223, 152, 0.4);
       transform: translateX(4px);
     }
+
     .flow-step-card.is-active {
       background: rgba(6, 26, 15, 0.95);
-      border-color: #35ff82;
-      box-shadow: 0 0 20px rgba(53, 255, 130, 0.22), 0 8px 24px rgba(0, 0, 0, 0.6);
+      border-color: #F8DF98;
+      box-shadow: 0 0 20px rgba(248, 223, 152, 0.22), 0 8px 24px rgba(0, 0, 0, 0.6);
     }
+
     .flow-step-card .step-badge {
       font-family: 'Menlo', monospace !important;
       font-size: 0.85rem;
@@ -1067,18 +1126,21 @@
       text-align: center;
       transition: all 0.25s ease;
     }
+
     .flow-step-card.is-active .step-badge {
       color: #040d07;
-      background: #35ff82;
-      border-color: #35ff82;
-      box-shadow: 0 0 10px rgba(53, 255, 130, 0.6);
+      background: #F8DF98;
+      border-color: #F8DF98;
+      box-shadow: 0 0 10px rgba(248, 223, 152, 0.6);
     }
+
     .flow-step-card .step-content {
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 0.15rem;
     }
+
     .flow-step-card .step-title {
       font-family: 'Menlo', monospace !important;
       font-size: 0.95rem;
@@ -1087,9 +1149,11 @@
       letter-spacing: -0.2px;
       transition: color 0.25s ease;
     }
+
     .flow-step-card.is-active .step-title {
       color: #ffffff;
     }
+
     .flow-step-card .step-desc {
       font-family: 'Menlo', monospace !important;
       font-size: 0.76rem;
@@ -1097,9 +1161,11 @@
       line-height: 1.32;
       transition: color 0.25s ease;
     }
+
     .flow-step-card.is-active .step-desc {
       color: #c5ded0;
     }
+
     .flow-step-card .step-indicator {
       width: 6px;
       height: 6px;
@@ -1107,6 +1173,7 @@
       background: rgba(255, 255, 255, 0.2);
       transition: all 0.25s ease;
     }
+
     .flow-badge {
       position: absolute;
       background: rgba(2, 10, 5, 0.88);
@@ -1122,17 +1189,20 @@
       cursor: pointer;
       user-select: none;
     }
+
     .flow-badge:hover {
       opacity: 0.9;
       transform: scale(1.0);
     }
+
     .flow-badge.is-active {
       opacity: 1.0;
       transform: scale(1.06);
       background: rgba(2, 12, 6, 0.94);
-      border-color: var(--badge-border, #35ff82);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 20px var(--badge-glow, rgba(53, 255, 130, 0.4));
+      border-color: var(--badge-border, #F8DF98);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 20px var(--badge-glow, rgba(248, 223, 152, 0.4));
     }
+
     .flow-badge-title {
       font-family: 'Menlo', monospace !important;
       font-size: 0.92rem;
@@ -1142,31 +1212,34 @@
       align-items: center;
       gap: 7px;
     }
+
     .flow-badge-num {
-      color: var(--badge-color, #35ff82);
+      color: var(--badge-color, #F8DF98);
       font-weight: 800;
     }
+
     .flow-badge-sub {
       font-family: 'Menlo', monospace !important;
       font-size: 0.72rem;
-      color: var(--badge-color, #35ff82);
+      color: var(--badge-color, #F8DF98);
       margin-top: 3px;
       letter-spacing: 0.3px;
       opacity: 0.85;
       transition: opacity 0.3s ease;
     }
+
     .flow-badge.is-active .flow-badge-sub {
       opacity: 1;
       font-weight: 600;
     }
 
-    /* Floating Navigation Controls */
+    /* Floating Navigation Controls — Classic PRS Midnight Sapphire */
     .deck-controls {
       position: fixed;
       bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(3, 7, 4, 0.92);
+      background: rgba(9, 25, 74, 0.92);
       border: 1px solid var(--border-subtle);
       padding: 8px 18px;
       border-radius: 30px;
@@ -1175,7 +1248,7 @@
       gap: 14px;
       z-index: 1000;
       backdrop-filter: blur(16px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(53, 255, 130, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 20px rgba(30, 70, 184, 0.22);
     }
 
     .deck-btn {
@@ -1214,9 +1287,12 @@
       size: 16in 9in;
       margin: 0;
     }
+
     @media print {
-      html, body {
-        background: #030704 !important;
+
+      html,
+      body {
+        background: #09194A !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         overflow: visible !important;
@@ -1226,6 +1302,7 @@
         margin: 0 !important;
         padding: 0 !important;
       }
+
       .deck-controls,
       .video-hud-overlay,
       .apple-music-play-btn,
@@ -1243,6 +1320,7 @@
       #virtual-ripple {
         display: none !important;
       }
+
       .deck-viewport {
         width: 16in !important;
         height: auto !important;
@@ -1254,6 +1332,7 @@
         display: block !important;
         position: static !important;
       }
+
       .slide {
         position: relative !important;
         width: 16in !important;
@@ -1274,6 +1353,7 @@
         padding: 3.5rem 5rem 3rem !important;
         box-sizing: border-box !important;
       }
+
       .slide#slide-2 {
         padding: 0 !important;
       }
@@ -1283,6 +1363,7 @@
       #video-hud {
         display: none !important;
       }
+
       .slide2-print-cover {
         display: flex !important;
         position: absolute !important;
@@ -1296,6 +1377,7 @@
         background: #010408 !important;
         overflow: hidden !important;
       }
+
       .slide2-print-poster {
         position: absolute !important;
         top: 0 !important;
@@ -1305,6 +1387,7 @@
         object-fit: cover !important;
         opacity: 0.8 !important;
       }
+
       .slide2-print-overlay {
         position: relative !important;
         z-index: 10 !important;
@@ -1318,17 +1401,19 @@
         padding: 2.8rem 4.5rem !important;
         box-shadow: 0 0 60px rgba(56, 189, 248, 0.3) !important;
       }
+
       .slide2-print-play-badge {
         width: 88px !important;
         height: 88px !important;
         border-radius: 50% !important;
-        background: linear-gradient(135deg, #35ff82 0%, #64c8ff 100%) !important;
+        background: linear-gradient(135deg, #F8DF98 0%, #64c8ff 100%) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        box-shadow: 0 0 35px rgba(53, 255, 130, 0.7) !important;
+        box-shadow: 0 0 35px rgba(248, 223, 152, 0.7) !important;
         margin-bottom: 1.5rem !important;
       }
+
       .slide2-print-title {
         font-family: var(--font-serif) !important;
         font-size: 2.6rem !important;
@@ -1337,6 +1422,7 @@
         letter-spacing: 1px !important;
         margin-bottom: 0.6rem !important;
       }
+
       .slide2-print-sub {
         font-family: var(--font-primary) !important;
         font-size: 1.35rem !important;
@@ -1344,23 +1430,26 @@
         margin-bottom: 1.5rem !important;
         max-width: 600px !important;
       }
+
       .slide2-print-cta {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         gap: 6px !important;
-        background: rgba(53, 255, 130, 0.12) !important;
-        border: 1.5px solid rgba(53, 255, 130, 0.5) !important;
+        background: rgba(248, 223, 152, 0.12) !important;
+        border: 1.5px solid rgba(248, 223, 152, 0.5) !important;
         border-radius: 30px !important;
         padding: 10px 24px !important;
       }
+
       .slide2-print-cta span:first-child {
         font-family: var(--font-mono) !important;
         font-size: 1.05rem !important;
         font-weight: 700 !important;
-        color: #35ff82 !important;
+        color: #F8DF98 !important;
         letter-spacing: 1.5px !important;
       }
+
       .slide2-print-url {
         font-family: var(--font-mono) !important;
         font-size: 0.85rem !important;
@@ -1384,12 +1473,14 @@
         visibility: visible !important;
         display: block !important;
       }
+
       #revenue-step-indicator {
         content: '● ● ● ● ●' !important;
       }
     }
   </style>
 </head>
+
 <body>
 
   <div class="deck-viewport" id="deck-viewport">
@@ -1398,28 +1489,55 @@
     <section class="slide active" id="slide-1" data-slide="1">
       <div class="header">
         <div class="brand-lockup">
-          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated"
+            onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">A16Z SEED PRESENTATION</span>
         </div>
         <span class="slide-num">01 / 06</span>
       </div>
-      
-      <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; text-align: center; min-height: 0; padding: clamp(0.3rem, 1.2cqh, 1.2rem) 0;">
-        
+
+      <div
+        style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; text-align: center; min-height: 0; padding: clamp(0.3rem, 1.2cqh, 1.2rem) 0;">
+
         <!-- Centered Title in EB Garamond (Royal Blue) -->
-        <h1 style="font-family: var(--font-serif); font-size: clamp(3.2rem, 6.8cqh, 5.4rem); font-weight: 500; letter-spacing: -0.5px; line-height: 1.05; margin: 0; color: #4169e1; text-shadow: 0 0 45px rgba(65, 105, 225, 0.35), 0 4px 24px rgba(0, 0, 0, 0.7);">
+        <h1
+          style="font-family: var(--font-serif); font-size: clamp(3.2rem, 6.8cqh, 5.4rem); font-weight: 500; letter-spacing: -0.5px; line-height: 1.05; margin: 0; color: #4169e1; text-shadow: 0 0 45px rgba(65, 105, 225, 0.35), 0 4px 24px rgba(0, 0, 0, 0.7);">
           Point Reyes Sound
         </h1>
 
         <!-- Centered Circular Frame: 3D Q-Boltz Hero with In-Frame River of Electrons Reveal & Scaling Progression -->
-        <div id="qboltz-3d-container" class="state-orbital" title="Move cursor to explore · Click to view O(N⁶) scaling" tabindex="0" role="button" aria-label="Interactive quantum orbital manifold and complexity progression" style="position: relative; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 50%, rgba(53, 255, 130, 0.08) 0%, rgba(3, 7, 4, 0) 70%); margin: 0 auto; cursor: pointer;">
+        <div id="qboltz-3d-container" class="state-orbital" title="Move cursor to explore · Click to view O(N⁶) scaling"
+          tabindex="0" role="button" aria-label="Interactive quantum orbital manifold and complexity progression"
+          style="position: relative; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 35% 28%, #163B9E 0%, #0D2264 48%, #09194A 100%); margin: 0 auto; cursor: pointer;">
           <canvas id="qboltz-3d-canvas" style="width: 100%; height: 100%; display: block; border-radius: 50%;"></canvas>
-          
+
           <!-- Step 3: O(N^6) Complexity Formula Overlay -->
           <div id="hero-latex-on6" class="hero-latex-overlay">
             <div id="hero-math-on6-target" class="hero-formula-math on6-math">
-              <span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="script">O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>6</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{O}(N^6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1141em;vertical-align:-0.25em;"></span><span class="mord mathcal" style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span>
+              <span class="katex-display"><span class="katex"><span class="katex-mathml"><math
+                      xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                      <semantics>
+                        <mrow>
+                          <mi mathvariant="script">O</mi>
+                          <mo stretchy="false">(</mo>
+                          <msup>
+                            <mi>N</mi>
+                            <mn>6</mn>
+                          </msup>
+                          <mo stretchy="false">)</mo>
+                        </mrow>
+                        <annotation encoding="application/x-tex">\mathcal{O}(N^6)</annotation>
+                      </semantics>
+                    </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut"
+                        style="height:1.1141em;vertical-align:-0.25em;"></span><span class="mord mathcal"
+                        style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord"><span
+                          class="mord mathnormal" style="margin-right:0.109em;">N</span><span class="msupsub"><span
+                            class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span
+                                  style="top:-3.113em;margin-right:0.05em;"><span class="pstrut"
+                                    style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span
+                                      class="mord mtight">6</span></span></span></span></span></span></span></span><span
+                        class="mclose">)</span></span></span></span></span>
             </div>
             <div class="hero-latex-tag on6-tag">CONVENTIONAL SCALING</div>
           </div>
@@ -1433,7 +1551,29 @@
           <!-- Step 5: O(N^3) PRS Scaling Formula Overlay -->
           <div id="hero-latex-on3" class="hero-latex-overlay">
             <div id="hero-math-on3-target" class="hero-formula-math on3-math">
-              <span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="script">O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>3</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{O}(N^3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1141em;vertical-align:-0.25em;"></span><span class="mord mathcal" style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span>
+              <span class="katex-display"><span class="katex"><span class="katex-mathml"><math
+                      xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                      <semantics>
+                        <mrow>
+                          <mi mathvariant="script">O</mi>
+                          <mo stretchy="false">(</mo>
+                          <msup>
+                            <mi>N</mi>
+                            <mn>3</mn>
+                          </msup>
+                          <mo stretchy="false">)</mo>
+                        </mrow>
+                        <annotation encoding="application/x-tex">\mathcal{O}(N^3)</annotation>
+                      </semantics>
+                    </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut"
+                        style="height:1.1141em;vertical-align:-0.25em;"></span><span class="mord mathcal"
+                        style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord"><span
+                          class="mord mathnormal" style="margin-right:0.109em;">N</span><span class="msupsub"><span
+                            class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span
+                                  style="top:-3.113em;margin-right:0.05em;"><span class="pstrut"
+                                    style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span
+                                      class="mord mtight">3</span></span></span></span></span></span></span></span><span
+                        class="mclose">)</span></span></span></span></span>
             </div>
             <div class="hero-latex-tag on3-tag">POINT REYES SOUND · Q-BET</div>
           </div>
@@ -1441,15 +1581,27 @@
 
         <!-- Centered Apple Music Aesthetic Play Button Underneath 3D Logo (Slide 1 Voiceover / Executive Film) -->
         <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-          <button class="apple-music-play-btn" id="btn-play-deck-slide1" onclick="handleSlide1PlayClick()" title="Play Slide 1 Voiceover" aria-label="Play Slide 1 Voiceover" style="width: clamp(48px, 5.2cqh, 64px); height: clamp(48px, 5.2cqh, 64px);">
+          <button class="apple-music-play-btn" id="btn-play-deck-slide1" onclick="handleSlide1PlayClick()"
+            title="Play Slide 1 Voiceover" aria-label="Play Slide 1 Voiceover"
+            style="width: clamp(48px, 5.2cqh, 64px); height: clamp(48px, 5.2cqh, 64px);">
             <svg id="slide1-play-icon" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z"/>
+              <path d="M8 5v14l11-7z" />
             </svg>
           </button>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <span id="slide1-play-label" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER · 0:50</span>
-            <button id="slide1-replay-btn" onclick="replaySlide1Voiceover(event)" style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';" title="Replay Slide 1 Voiceover">↺ Replay Voiceover</button>
-            <a href="/a16z_slide1_voiceover.mp4" target="_blank" rel="noopener noreferrer" style="font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(53, 255, 130, 0.65); text-decoration: none; padding: 2px 6px; border: 1px solid rgba(53, 255, 130, 0.2); border-radius: 4px; transition: all 0.2s ease;" onmouseover="this.style.color='#35ff82'; this.style.borderColor='rgba(53, 255, 130, 0.5)';" onmouseout="this.style.color='rgba(53, 255, 130, 0.65)'; this.style.borderColor='rgba(53, 255, 130, 0.2)';" title="Watch standalone 1080p video">1080p MP4</a>
+            <span id="slide1-play-label"
+              style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER
+              · 0:50</span>
+            <button id="slide1-replay-btn" onclick="replaySlide1Voiceover(event)"
+              style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;"
+              onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';"
+              onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';"
+              title="Replay Slide 1 Voiceover">↺ Replay Voiceover</button>
+            <a href="/a16z_slide1_voiceover.mp4" target="_blank" rel="noopener noreferrer"
+              style="font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(248, 223, 152, 0.65); text-decoration: none; padding: 2px 6px; border: 1px solid rgba(248, 223, 152, 0.2); border-radius: 4px; transition: all 0.2s ease;"
+              onmouseover="this.style.color='#F8DF98'; this.style.borderColor='rgba(248, 223, 152, 0.5)';"
+              onmouseout="this.style.color='rgba(248, 223, 152, 0.65)'; this.style.borderColor='rgba(248, 223, 152, 0.2)';"
+              title="Watch standalone 1080p video">1080p MP4</a>
           </div>
           <audio id="slide1-voiceover-audio" preload="auto">
             <source src="./a16z_slide1_voiceover.mp3" type="audio/mpeg">
@@ -1460,7 +1612,9 @@
       </div>
 
       <div class="footer">
-        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS" style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
+        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS"
+            style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;"
+            onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
         <span>Confidential — Frontier Deep Tech Seed (a16z)</span>
         <span>Confidential — Frontier Deep Tech Pre-Seed</span>
       </div>
@@ -1468,14 +1622,17 @@
 
     <!-- SLIDE 2: Full-Frame Cinema Video Player (Executive Film) -->
     <section class="slide" id="slide-2" data-slide="2" style="padding: 0;">
-        <!-- Subtle Brand Lockup on Video Slide -->
-        <div style="position: absolute; top: 1.5rem; left: 2rem; z-index: 25; display: flex; align-items: center; gap: 10px; background: rgba(3, 7, 4, 0.75); backdrop-filter: blur(8px); padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(53, 255, 130, 0.18); box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
-          <img src="/prs_logo_128.png" alt="Point Reyes Sound" style="width: 20px; height: 20px; border-radius: 4px; object-fit: cover; border: 1px solid rgba(40, 74, 137, 0.6);" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
-          <span class="company-tag" style="font-size: 0.85rem; letter-spacing: 1.5px;">POINT REYES SOUND, INC.</span>
-          <span class="header-qboltz-tag" style="font-size: 0.75rem;">EXECUTIVE FILM</span>
-        </div>
+      <!-- Subtle Brand Lockup on Video Slide -->
+      <div
+        style="position: absolute; top: 1.5rem; left: 2rem; z-index: 25; display: flex; align-items: center; gap: 10px; background: rgba(3, 7, 4, 0.75); backdrop-filter: blur(8px); padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(248, 223, 152, 0.18); box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        <img src="/prs_logo_128.png" alt="Point Reyes Sound"
+          style="width: 20px; height: 20px; border-radius: 4px; object-fit: cover; border: 1px solid rgba(40, 74, 137, 0.6);"
+          onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+        <span class="company-tag" style="font-size: 0.85rem; letter-spacing: 1.5px;">POINT REYES SOUND, INC.</span>
+        <span class="header-qboltz-tag" style="font-size: 0.75rem;">EXECUTIVE FILM</span>
+      </div>
       <div class="video-slide-container" id="video-container">
-        
+
         <!-- Video Stream with point_reyes_sound_complete_film.mp4 -->
         <video class="full-frame-video" id="deck-film" playsinline controls preload="auto">
           <source src="./point_reyes_sound_complete_film.mp4" type="video/mp4">
@@ -1484,11 +1641,14 @@
         </video>
 
         <!-- PDF / Print Interactive Link Poster (Hidden on screen, Active in Print & PDF) -->
-        <a href="https://pointreyessound.com/film?autoplay=1" target="_blank" class="slide2-print-cover" style="display: none;" title="Click to Watch Executive Film">
+        <a href="https://pointreyessound.com/film?autoplay=1" target="_blank" class="slide2-print-cover"
+          style="display: none;" title="Click to Watch Executive Film">
           <img src="/film_watch_poster.jpg" alt="Executive Film Poster" class="slide2-print-poster" />
           <div class="slide2-print-overlay">
             <div class="slide2-print-play-badge">
-              <svg viewBox="0 0 24 24" width="44" height="44" fill="#030704" style="margin-left: 5px;"><path d="M8 5v14l11-7z"/></svg>
+              <svg viewBox="0 0 24 24" width="44" height="44" fill="#09194A" style="margin-left: 5px;">
+                <path d="M8 5v14l11-7z" />
+              </svg>
             </div>
             <div class="slide2-print-title">EXECUTIVE FILM · 0:58</div>
             <div class="slide2-print-sub">Continuous Phase-Space Kinetics &amp; Quantum Boltzmann Solver</div>
@@ -1540,7 +1700,8 @@
     <section class="slide" id="slide-3" data-slide="3">
       <div class="header">
         <div class="brand-lockup">
-          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated"
+            onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
           <span class="company-tag">POINT REYES SOUND, INC.</span>
           <span class="header-qboltz-tag">ELECTRONIC DESIGN AUTOMATION</span>
         </div>
@@ -1549,7 +1710,8 @@
 
       <div style="text-align: center; width: 100%; margin: 0.15rem auto 0.75rem;">
         <h2 style="margin: 0; line-height: 1.12; font-size: 2.35rem;">Electronic Design Automation</h2>
-        <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 600; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent-gold); margin-top: 0.4rem;">
+        <div
+          style="font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 600; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent-gold); margin-top: 0.4rem;">
           $35 Billion USD Market
         </div>
       </div>
@@ -1562,7 +1724,8 @@
             <div class="card-desc">Kinetic relaxation in the sub-2 nanometer regime</div>
           </div>
           <div class="card-img-wrap">
-            <img src="./vertical_semiconductors.jpg" alt="Semiconductor GAA-FET quantum p-wave tunneling" class="card-img" onerror="this.src='/vertical_semiconductors.jpg'" />
+            <img src="./vertical_semiconductors.jpg" alt="Semiconductor GAA-FET quantum p-wave tunneling"
+              class="card-img" onerror="this.src='/vertical_semiconductors.jpg'" />
           </div>
         </div>
 
@@ -1573,7 +1736,8 @@
             <div class="card-desc">SEI degradation</div>
           </div>
           <div class="card-img-wrap">
-            <img src="./vertical_batteries.jpg" alt="Solid-State Battery SEI p-wave phase-space transport" class="card-img" onerror="this.src='/vertical_batteries.jpg'" />
+            <img src="./vertical_batteries.jpg" alt="Solid-State Battery SEI p-wave phase-space transport"
+              class="card-img" onerror="this.src='/vertical_batteries.jpg'" />
           </div>
         </div>
 
@@ -1584,21 +1748,30 @@
             <div class="card-desc">Transition-state searches</div>
           </div>
           <div class="card-img-wrap">
-            <img src="./vertical_catalysis.jpg" alt="Chemical Catalysis transition-state p-wave orbital hybridization" class="card-img" onerror="this.src='/vertical_catalysis.jpg'" />
+            <img src="./vertical_catalysis.jpg" alt="Chemical Catalysis transition-state p-wave orbital hybridization"
+              class="card-img" onerror="this.src='/vertical_catalysis.jpg'" />
           </div>
         </div>
       </div>
 
       <!-- Centered Apple Music Aesthetic Play Button (Slide 3 Voiceover) -->
       <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0.25rem auto 0.2rem;">
-        <button class="apple-music-play-btn" id="btn-play-deck-slide3" onclick="handleSlide3PlayClick()" title="Play Slide 3 Voiceover" aria-label="Play Slide 3 Voiceover" style="width: clamp(44px, 4.8cqh, 54px); height: clamp(44px, 4.8cqh, 54px);">
+        <button class="apple-music-play-btn" id="btn-play-deck-slide3" onclick="handleSlide3PlayClick()"
+          title="Play Slide 3 Voiceover" aria-label="Play Slide 3 Voiceover"
+          style="width: clamp(44px, 4.8cqh, 54px); height: clamp(44px, 4.8cqh, 54px);">
           <svg id="slide3-play-icon" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
+            <path d="M8 5v14l11-7z" />
           </svg>
         </button>
         <div style="display: flex; align-items: center; gap: 8px;">
-          <span id="slide3-play-label" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER · 0:08</span>
-          <button id="slide3-replay-btn" onclick="replaySlide3Voiceover(event)" style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';" title="Replay Slide 3 Voiceover">↺ Replay</button>
+          <span id="slide3-play-label"
+            style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER
+            · 0:08</span>
+          <button id="slide3-replay-btn" onclick="replaySlide3Voiceover(event)"
+            style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;"
+            onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';"
+            onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';"
+            title="Replay Slide 3 Voiceover">↺ Replay</button>
         </div>
         <audio id="slide3-voiceover-audio" preload="auto">
           <source src="./a16z_slide3_voiceover.mp3" type="audio/mpeg">
@@ -1607,174 +1780,253 @@
       </div>
 
       <div class="footer">
-        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS" style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
+        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS"
+            style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;"
+            onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
         <span>Electronic Design Automation &middot; $35B USD Market</span>
       </div>
     </section>
 
-    <!-- SLIDE 4: Quantum Supremacy in 2028 -->
+    <!-- SLIDE 4: Electronic Design Automation for Chip Manufacturers -->
     <section class="slide" id="slide-4" data-slide="4">
       <div class="header">
         <div class="brand-lockup">
-          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated"
+            onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
           <span class="company-tag">POINT REYES SOUND, INC.</span>
-          <span class="header-qboltz-tag">QUANTUM SUPREMACY</span>
+          <span class="header-qboltz-tag">ELECTRONIC DESIGN AUTOMATION</span>
         </div>
         <span class="slide-num">04 / 06</span>
       </div>
 
-      <div style="text-align: center; width: 100%; margin: 0.4rem auto 0.4rem;">
-        <h2 style="margin: 0; line-height: 1.15;">Quantum Supremacy<br><span style="font-size: 2.2rem; display: block; margin-top: 0.2rem;">2028</span></h2>
-      </div>
-
-      <div class="slide-body" style="flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; padding: 0.25rem 1.5rem 0.5rem;">
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 2rem; width: 100%; max-width: 1400px; height: 100%; max-height: 580px; margin: auto;">
-          
-          <!-- TILE 1: > 100 Logical Qubits -->
-          <div class="card" id="card-qubits" style="border-left: 5px solid var(--accent-cyan); border-color: rgba(100, 200, 255, 0.4); background: rgba(8, 20, 12, 0.92); padding: 2.2rem 2.6rem; border-radius: 16px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55); display: flex; flex-direction: column; justify-content: center; cursor: pointer;">
-            <div style="font-family: var(--font-serif); font-size: 2.3rem; font-weight: 700; color: #fff; margin-bottom: 0.9rem; letter-spacing: -0.02em;">
-              &gt; 100 Logical Qubits
-            </div>
-            <div id="metric-qubits" style="font-family: var(--font-primary); font-size: 1.45rem; color: var(--text-secondary); line-height: 1.5; min-height: 48px; display: flex; align-items: center; opacity: 0; transform: translateY(10px); transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);">
-              <div><span style="color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 700; font-size: 2.1rem; text-shadow: 0 0 20px rgba(0, 229, 255, 0.4);">6.6×</span> <span style="color: #fff; font-weight: 600; font-size: 1.5rem; margin-left: 0.4rem;">compression</span></div>
-            </div>
-          </div>
-
-          <!-- TILE 2: > 1 Million Quantum Operations -->
-          <div class="card" id="card-operations" style="border-left: 5px solid var(--accent-emerald); border-color: rgba(53, 255, 130, 0.4); background: rgba(8, 20, 12, 0.92); padding: 2.2rem 2.6rem; border-radius: 16px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55); display: flex; flex-direction: column; justify-content: center; cursor: pointer;">
-            <div style="font-family: var(--font-serif); font-size: 2.3rem; font-weight: 700; color: #fff; margin-bottom: 0.9rem; letter-spacing: -0.02em;">
-              &gt; 1 Million Quantum Operations
-            </div>
-            <div id="metric-operations" style="font-family: var(--font-primary); font-size: 1.45rem; color: var(--text-secondary); line-height: 1.5; min-height: 48px; display: flex; align-items: center; opacity: 0; transform: translateY(10px); transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);">
-              <div><span style="color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 700; font-size: 2.1rem; text-shadow: 0 0 20px rgba(53, 255, 130, 0.4);">1,748×</span> <span style="color: #fff; font-weight: 600; font-size: 1.5rem; margin-left: 0.4rem;">Toffoli gate reduction</span></div>
-            </div>
-          </div>
-
-          <!-- TILE 3: Q-Boltz Advantage -->
-          <div class="card" id="card-qboltz" style="border-left: 5px solid #60a5fa; border-color: rgba(96, 165, 250, 0.4); background: rgba(8, 20, 12, 0.92); padding: 2.2rem 2.6rem; border-radius: 16px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55); display: flex; flex-direction: column; justify-content: center; opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer;">
-            <div style="font-family: var(--font-serif); font-size: 2.3rem; font-weight: 700; color: #60a5fa; margin-bottom: 0.9rem; letter-spacing: -0.02em; text-shadow: 0 0 20px rgba(96, 165, 250, 0.35);">
-              Q-Boltz Advantage
-            </div>
-            <div style="font-family: var(--font-primary); font-size: 1.35rem; color: var(--text-secondary); line-height: 1.65; display: flex; flex-direction: column; gap: 0.55rem; min-height: 80px; justify-content: center;">
-              <div id="qboltz-time"><span style="color: #60a5fa; font-family: var(--font-mono); font-weight: 700; font-size: 1.85rem; text-shadow: 0 0 20px rgba(96, 165, 250, 0.35);">3 days → 2.25 minutes</span></div>
-              <div id="qboltz-patent" style="opacity: 0; transform: translateY(10px); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);"><strong style="color: #fff;">Patent App No.</strong> <span style="color: #60a5fa; font-family: var(--font-mono); font-weight: 600; font-size: 1.35rem; margin-left: 0.3rem;">64/033,274</span></div>
-            </div>
-          </div>
-
-          <!-- TILE 4: Quantum Solutions (Interactive Build Sequence) -->
-          <div class="card" id="revenue-card" style="border-left: 5px solid var(--accent-gold); border-color: rgba(245, 197, 66, 0.4); background: rgba(8, 20, 12, 0.92); padding: 2.2rem 2.6rem; border-radius: 16px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55); display: flex; flex-direction: column; justify-content: center; cursor: pointer; user-select: none; opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;" title="Click slide or press Space/Right to advance">
-            <div style="font-family: var(--font-serif); font-size: 2.3rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 0.9rem; letter-spacing: -0.02em; text-shadow: 0 0 20px rgba(245, 197, 66, 0.35); display: flex; align-items: center; justify-content: space-between;">
-              <span>Quantum Solutions</span>
-              <span id="revenue-step-indicator" style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-gold); opacity: 0.8; letter-spacing: 3px;">● ○ ○ ○ ○</span>
-            </div>
-            <div style="font-family: var(--font-primary); font-size: 1.25rem; color: var(--text-secondary); line-height: 1.65; display: flex; flex-direction: column; gap: 0.55rem; min-height: 135px; justify-content: center;">
-              <div class="revenue-item" id="rev-item-1" style="opacity: 1; transform: translateY(0); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: auto;">
-                <strong style="color: #fff;">Today:</strong> <span style="color: #60a5fa; font-weight: 600; text-shadow: 0 0 15px rgba(96, 165, 250, 0.4); margin-left: 0.25rem;">AWS and Infleqtion</span> <span style="color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 600; font-size: 1.35rem; margin-left: 0.35rem;">$25k–$50k</span>
-              </div>
-              <div class="revenue-item" id="rev-item-2" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none;">
-                <strong style="color: #fff;">Stage 2 · 2027:</strong> <span style="color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 600; font-size: 1.35rem; margin-left: 0.25rem;">$250k–$750k</span>
-                <span id="rev-extra-2" style="color: #93c5fd; font-weight: 500; font-size: 1.15rem; margin-left: 0.65rem; opacity: 0; transform: translateX(8px); transition: opacity 0.35s ease, transform 0.35s ease; display: inline-block;">· Joint Development Agreement</span>
-              </div>
-              <div class="revenue-item" id="rev-item-3" style="opacity: 0; transform: translateY(12px); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none;">
-                <strong style="color: #fff;">Stage 3 · 2028:</strong> <span style="color: var(--accent-gold); font-family: var(--font-mono); font-weight: 600; font-size: 1.35rem; margin-left: 0.25rem;">$15M+ ARR</span>
-                <span id="rev-extra-3" style="color: #fde047; font-weight: 500; font-size: 1.15rem; margin-left: 0.65rem; opacity: 0; transform: translateX(8px); transition: opacity 0.35s ease, transform 0.35s ease; display: inline-block;">· Original Equipment Manufacturer</span>
-              </div>
-            </div>
-          </div>
-
+      <div style="text-align: center; width: 100%; margin: 0.4cqh auto 0.5cqh;">
+        <h2 style="margin: 0; line-height: 1.08; font-size: clamp(2.1rem, 4.9cqh, 4.2rem);">Electronic Design Automation</h2>
+        <div style="font-family: var(--font-serif); font-size: clamp(1.05rem, 2.3cqh, 1.9rem); color: #F8DF98; margin-top: 0.35cqh; letter-spacing: 0.2px;">
+          From Sub-2nm Physics Breakthrough to $15M+ Enterprise EDA Licensing
         </div>
       </div>
 
-      <!-- Centered Apple Music Aesthetic Play Button (Slide 4 Voiceover) -->
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0.15rem auto 0.25rem;">
-        <button class="apple-music-play-btn" id="btn-play-deck-slide4" onclick="handleSlide4PlayClick()" title="Play Slide 4 Voiceover" aria-label="Play Slide 4 Voiceover" style="width: clamp(44px, 4.8cqh, 54px); height: clamp(44px, 4.8cqh, 54px);">
-          <svg id="slide4-play-icon" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </button>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span id="slide4-play-label" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER · 0:57</span>
-          <button id="slide4-replay-btn" onclick="replaySlide4Voiceover(event)" style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';" title="Replay Slide 4 Voiceover">↺ Replay</button>
-        </div>
-        <audio id="slide4-voiceover-audio" preload="auto">
-          <source src="./a16z_slide4_voiceover.mp3" type="audio/mpeg">
-          <source src="/a16z_slide4_voiceover.mp3" type="audio/mpeg">
-        </audio>
+      <!-- Full-Screen Editorial Story Plot (Crisp Inline Vector SVG on Obsidian Black) -->
+      <div class="slide-body" style="flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; padding: 0.2cqh 0 0.4cqh;">
+        <svg viewBox="0 0 1440 620" style="width: 100%; height: 100%; max-height: 100%; overflow: visible;" role="img" aria-label="Point Reyes Sound EDA Commercial Trajectory Plot: $25k-50k Today to $250k-750k Foundry JDAs in 2027 to $15M+ ARR in 2028 within the $35B EDA Market">
+          <defs>
+            <linearGradient id="eda-gold-area" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#F8DF98" stop-opacity="0.22" />
+              <stop offset="65%" stop-color="#1E46B8" stop-opacity="0.08" />
+              <stop offset="100%" stop-color="#020307" stop-opacity="0" />
+            </linearGradient>
+            <linearGradient id="eda-gold-stroke" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#A7BDF2" />
+              <stop offset="45%" stop-color="#F8DF98" />
+              <stop offset="100%" stop-color="#FFF5CC" />
+            </linearGradient>
+            <filter id="eda-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="6" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Subtle Horizontal Gridlines (Log Revenue Scale) -->
+          <g stroke="#243866" stroke-width="1" stroke-dasharray="3 6" opacity="0.55">
+            <line x1="145" y1="88" x2="1365" y2="88" />
+            <line x1="145" y1="185" x2="1365" y2="185" />
+            <line x1="145" y1="305" x2="1365" y2="305" />
+            <line x1="145" y1="425" x2="1365" y2="425" />
+            <line x1="145" y1="530" x2="1365" y2="530" stroke-dasharray="none" stroke="#36518E" opacity="0.85" />
+          </g>
+
+          <!-- Left Y-Axis Spine -->
+          <line x1="145" y1="70" x2="145" y2="530" stroke="#36518E" stroke-width="1.3" opacity="0.85" />
+
+          <!-- Y-Axis Labels -->
+          <g font-family="'JetBrains Mono', monospace" font-size="14" fill="#8FA8D6" text-anchor="end">
+            <text x="128" y="93" fill="#F8DF98" font-weight="600">$35B EDA</text>
+            <text x="128" y="190" fill="#FFF5CC">$15M+ ARR</text>
+            <text x="128" y="310">$750k</text>
+            <text x="128" y="430">$50k</text>
+          </g>
+
+          <!-- $35B Market Horizon Band at Top -->
+          <rect x="145" y="64" width="1220" height="36" fill="#F8DF98" opacity="0.045" />
+          <text x="1352" y="81" font-family="'Inter', sans-serif" font-size="13" font-weight="600" letter-spacing="1.6" fill="#F8DF98" text-anchor="end" opacity="0.85">
+            GLOBAL EDA &amp; MATERIALS HORIZON · SYNOPSYS · CADENCE · ANSYS ($35B)
+          </text>
+
+          <!-- Vertical Stage Guides -->
+          <g stroke="#243866" stroke-width="1" stroke-dasharray="4 6" opacity="0.45">
+            <line x1="280" y1="100" x2="280" y2="530" />
+            <line x1="720" y1="100" x2="720" y2="530" />
+            <line x1="1180" y1="100" x2="1180" y2="530" />
+          </g>
+
+          <!-- Legacy TCAD / Mean-Field Wall (Crimson Dashed — Stalls at Sub-2nm) -->
+          <path d="M 210 475 C 390 455, 560 442, 720 442 L 1280 442"
+                fill="none" stroke="#D93B5E" stroke-width="2.4" stroke-dasharray="7 7" opacity="0.72" />
+          <text x="1275" y="468" font-family="'Inter', sans-serif" font-size="14.5" font-weight="500" fill="#F07A96" text-anchor="end">
+            Legacy DFT / TCAD Wall · Mean-field singularities &amp; 3-day runtimes stall at sub-2nm
+          </text>
+
+          <!-- Shaded Area Under Point Reyes Sound Growth Curve -->
+          <path d="M 280 425 C 470 400, 560 335, 720 305 C 900 272, 1020 218, 1180 185 C 1255 170, 1310 148, 1365 126 L 1365 530 L 280 530 Z"
+                fill="url(#eda-gold-area)" />
+
+          <!-- Point Reyes Sound Luminous Growth Curve -->
+          <path d="M 280 425 C 470 400, 560 335, 720 305 C 900 272, 1020 218, 1180 185 C 1255 170, 1310 148, 1365 126"
+                fill="none" stroke="url(#eda-gold-stroke)" stroke-width="4.2" stroke-linecap="round" filter="url(#eda-glow)" />
+
+          <!-- NODE 1: TODAY (2026) — AWS & Infleqtion Pilots -->
+          <g>
+            <circle cx="280" cy="425" r="18" fill="#A7BDF2" opacity="0.16" />
+            <circle cx="280" cy="425" r="8" fill="#A7BDF2" stroke="#020307" stroke-width="2.5" />
+            <text x="280" y="348" font-family="'EB Garamond', Georgia, serif" font-size="30" font-weight="700" fill="#FFFFFF" text-anchor="middle">$25k–$50k</text>
+            <text x="280" y="374" font-family="'Inter', sans-serif" font-size="15.5" font-weight="600" fill="#A7BDF2" text-anchor="middle">AWS &amp; Infleqtion Pilots</text>
+            <text x="280" y="396" font-family="'Inter', sans-serif" font-size="13.5" fill="#9BB2EA" text-anchor="middle">J. Chem. Phys. (2026) · Patent 64/033,274</text>
+          </g>
+
+          <!-- NODE 2: 2027 — Foundry Joint Development -->
+          <g>
+            <circle cx="720" cy="305" r="22" fill="#F8DF98" opacity="0.18" />
+            <circle cx="720" cy="305" r="9" fill="#F8DF98" stroke="#020307" stroke-width="2.5" />
+            <text x="720" y="218" font-family="'EB Garamond', Georgia, serif" font-size="34" font-weight="700" fill="#F8DF98" text-anchor="middle">$250k–$750k / JDA</text>
+            <text x="720" y="246" font-family="'Inter', sans-serif" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">Sub-2nm Foundry Joint Development</text>
+            <text x="720" y="270" font-family="'Inter', sans-serif" font-size="14" fill="#C7D8FF" text-anchor="middle">O(N³) GPU Solver · 3 days → 2.25 min · &lt; 29 MB at 300 AOs</text>
+          </g>
+
+          <!-- NODE 3: 2028 — Enterprise EDA Licensing -->
+          <g>
+            <circle cx="1180" cy="185" r="28" fill="#FFF5CC" opacity="0.20" />
+            <circle cx="1180" cy="185" r="10.5" fill="#FFF5CC" stroke="#020307" stroke-width="2.5" />
+            <text x="1180" y="132" font-family="'EB Garamond', Georgia, serif" font-size="40" font-weight="700" fill="#FFF5CC" text-anchor="middle">$15M+ ARR</text>
+            <text x="1180" y="158" font-family="'Inter', sans-serif" font-size="16" font-weight="600" fill="#F8DF98" text-anchor="middle">Enterprise EDA &amp; OEM Licensing</text>
+          </g>
+
+          <!-- Bottom Physics Proof Callout Pill (Quiet, Center-Right) -->
+          <g transform="translate(810, 342)">
+            <rect x="0" y="0" width="510" height="58" rx="10" fill="#0B183D" fill-opacity="0.72" stroke="#36518E" stroke-width="1" />
+            <text x="255" y="25" font-family="'Inter', sans-serif" font-size="14.5" font-weight="600" fill="#F8DF98" text-anchor="middle">
+              1,748× Gate Reduction  ·  Deterministic O(N³) Kinetics
+            </text>
+            <text x="255" y="45" font-family="'Inter', sans-serif" font-size="13" fill="#C7D8FF" text-anchor="middle">
+              Gate-All-Around (GAA) channels &amp; sub-2nm dielectric interfaces
+            </text>
+          </g>
+
+          <!-- X-Axis Timeline Labels -->
+          <g font-family="'Inter', sans-serif" text-anchor="middle">
+            <text x="280" y="562" font-size="16" font-weight="700" fill="#FFFFFF">2026 · Today</text>
+            <text x="280" y="584" font-size="13" fill="#8FA8D6">Validation &amp; Early Pilots</text>
+
+            <text x="720" y="562" font-size="16" font-weight="700" fill="#F8DF98">2027 · Scale</text>
+            <text x="720" y="584" font-size="13" fill="#8FA8D6">$1.5M+ Foundry Pilot Revenue</text>
+
+            <text x="1180" y="562" font-size="16" font-weight="700" fill="#FFF5CC">2028 · Enterprise</text>
+            <text x="1180" y="584" font-size="13" fill="#8FA8D6">Chipmaker &amp; EDA OEM Rollout</text>
+          </g>
+        </svg>
       </div>
 
       <div class="footer">
-        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS" style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
-        <span>Commercial Validation &amp; Scaling</span>
+        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS"
+            style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;"
+            onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
+        <span>Electronic Design Automation in Chip Design</span>
       </div>
     </section>
 
-    <!-- SLIDE 5: Team -->
+    <!-- SLIDE 5: Leadership -->
     <section class="slide" id="slide-5" data-slide="5">
       <div class="header">
         <div class="brand-lockup">
-          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated"
+            onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
           <span class="company-tag">POINT REYES SOUND, INC.</span>
-          <span class="header-qboltz-tag">TEAM</span>
+          <span class="header-qboltz-tag">LEADERSHIP</span>
         </div>
         <span class="slide-num">05 / 06</span>
       </div>
 
-      <div style="text-align: center; width: 100%; margin: 0.6rem auto 0.2rem;">
-        <h2 style="font-size: 2.7rem;">Team</h2>
-      </div>
+      <!-- Full-Screen Balanced 16:9 Two-Tier Leadership Grid -->
+      <div class="slide-body"
+        style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 2.2cqh; padding: 1.8cqh 1.8% 1.6cqh 0; min-height: 0;">
 
-      <!-- Founder & Advisory Layout -->
-      <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; padding: 0.5rem 0;">
-        
-        <!-- 1. Founder Section -->
-        <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-          <div style="width: 150px; height: 150px; border-radius: 50%; padding: 4px; background: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.4) 0%, rgba(3, 7, 4, 0.9) 70%); border: 2px solid #60a5fa; box-shadow: 0 0 25px rgba(96, 165, 250, 0.35); margin-bottom: 0.9rem; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+        <!-- Tier 1: Founder & CEO Full-Width Centered Card -->
+        <div class="card" style="flex: 1.25; flex-direction: column !important; justify-content: center !important; align-items: center; text-align: center; gap: 1.4cqh; padding: 2.6cqh 4.0cqw; border-radius: 14px; border: 1.5px solid rgba(248, 223, 152, 0.42); background: linear-gradient(135deg, rgba(16, 40, 112, 0.76), rgba(9, 25, 74, 0.90));">
+          <div style="width: clamp(145px, 24cqh, 260px); height: clamp(145px, 24cqh, 260px); flex-shrink: 0; border-radius: 50%; padding: 4px; background: radial-gradient(circle at 50% 50%, rgba(248, 223, 152, 0.45) 0%, rgba(9, 25, 74, 0.92) 72%); border: 2px solid #F8DF98; box-shadow: 0 0 30px rgba(248, 223, 152, 0.24); overflow: hidden; display: flex; align-items: center; justify-content: center;">
             <img src="./rc_scholar_portrait.jpeg" alt="Romit Chakraborty" style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%; border-radius: 50%;" onerror="this.src='/rc_scholar_portrait.jpeg'" />
           </div>
-          <h3 style="font-family: var(--font-serif); font-size: 2.1rem; font-weight: 600; color: #fff; line-height: 1.15;">
-            Romit Chakraborty
-          </h3>
-          <p style="font-family: var(--font-mono); font-size: 1.15rem; color: #60a5fa; font-weight: 600; margin-top: 6px; letter-spacing: 0.5px; text-shadow: 0 0 15px rgba(96, 165, 250, 0.4);">
-            Founder and CEO
-          </p>
-          <p style="font-family: var(--font-primary); font-size: 1.05rem; color: #cbd5e1; font-weight: 400; margin-top: 4px; letter-spacing: 0.3px;">
-            UChicago, Berkeley, LBNL, PsiQuantum
-          </p>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 0.65cqh; max-width: 82%;">
+            <h3 style="font-family: var(--font-serif); font-size: clamp(2.1rem, 4.8cqh, 3.9rem); font-weight: 600; color: #FFFFFF; line-height: 1.08; margin: 0;">
+              Romit Chakraborty, Ph.D.
+            </h3>
+            <div style="font-family: var(--font-mono); font-size: clamp(0.82rem, 1.55cqh, 1.2rem); color: #F8DF98; font-weight: 700; letter-spacing: 2.6px; text-transform: uppercase;">
+              Founder &amp; CEO
+            </div>
+            <div style="font-family: var(--font-sans); font-size: clamp(0.98rem, 2.0cqh, 1.55rem); color: #C7D8FF; letter-spacing: 0.5px; font-weight: 500; margin-top: 0.3cqh;">
+              PsiQuantum &nbsp;·&nbsp; UC Berkeley / Q-Chem 5 &nbsp;·&nbsp; University of Chicago Ph.D.
+            </div>
+          </div>
         </div>
 
-        <!-- Divider -->
-        <div style="width: 60%; height: 1px; background: linear-gradient(90deg, transparent, var(--border-subtle), transparent); margin: 0.4rem 0;"></div>
-
-        <!-- 2. Scientific Advisory Board Section -->
-        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-          <div style="font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 2px; margin-bottom: 1.1rem; text-transform: uppercase;">
+        <!-- Tier 2: Scientific Advisory Board Two-Column Horizontal Cards -->
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 1.2cqh; min-height: 0;">
+          <div
+            style="text-align: center; font-family: var(--font-mono); font-size: clamp(0.75rem, 1.45cqh, 1.15rem); font-weight: 700; color: #F8DF98; letter-spacing: 2.6px; text-transform: uppercase;">
             Scientific Advisory Board
           </div>
 
-          <div style="display: flex; justify-content: center; gap: 5rem; align-items: center; width: 100%;">
+          <div class="grid-2" style="grid-template-columns: 1fr 1fr; gap: 2.2cqw; flex: 1; margin-bottom: 0;">
             <!-- Advisor 1: David Mazziotti -->
-            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-              <div style="width: 105px; height: 105px; border-radius: 50%; padding: 3px; background: radial-gradient(circle at 50% 50%, rgba(100, 200, 255, 0.3) 0%, rgba(3, 7, 4, 0.9) 70%); border: 1.5px solid rgba(100, 200, 255, 0.6); box-shadow: 0 0 20px rgba(100, 200, 255, 0.25); margin-bottom: 0.6rem; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                <img src="./david_mazziotti.jpg" alt="David Mazziotti" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" onerror="this.src='/david_mazziotti.jpg'" />
+            <div class="card"
+              style="flex-direction: row !important; justify-content: flex-start !important; align-items: center; gap: 2.2cqw; padding: 2.2cqh 2.6cqw; border-radius: 14px; background: linear-gradient(135deg, rgba(16, 40, 112, 0.72), rgba(9, 25, 74, 0.88));">
+              <div
+                style="width: clamp(110px, 18cqh, 200px); height: clamp(110px, 18cqh, 200px); flex-shrink: 0; border-radius: 50%; padding: 3px; background: radial-gradient(circle at 50% 50%, rgba(167, 189, 242, 0.38) 0%, rgba(9, 25, 74, 0.92) 72%); border: 1.5px solid #A7BDF2; box-shadow: 0 0 24px rgba(167, 189, 242, 0.22); overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <img src="./david_mazziotti.jpg" alt="David Mazziotti"
+                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+                  onerror="this.src='/david_mazziotti.jpg'" />
               </div>
-              <div style="font-family: var(--font-serif); font-size: 1.35rem; font-weight: 600; color: #fff;">
-                David Mazziotti
-              </div>
-              <div style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-cyan); margin-top: 2px;">
-                UChicago
+              <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.7cqh;">
+                <div
+                  style="font-family: var(--font-serif); font-size: clamp(1.55rem, 3.4cqh, 2.8rem); font-weight: 600; color: #FFFFFF; line-height: 1.1;">
+                  David Mazziotti
+                </div>
+                <div
+                  style="font-family: var(--font-mono); font-size: clamp(0.82rem, 1.55cqh, 1.25rem); color: #F8DF98; font-weight: 600;">
+                  University of Chicago
+                </div>
+                <div
+                  style="font-family: var(--font-primary); font-size: clamp(1.0rem, 2.0cqh, 1.6rem); color: #C7D8FF; line-height: 1.38;">
+                  Professor of Chemistry · Pioneer in 2-RDM electronic structure theory and many-electron quantum
+                  mechanics.
+                </div>
               </div>
             </div>
 
             <!-- Advisor 2: David Schuster -->
-            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-              <div style="width: 105px; height: 105px; border-radius: 50%; padding: 3px; background: radial-gradient(circle at 50% 50%, rgba(100, 200, 255, 0.3) 0%, rgba(3, 7, 4, 0.9) 70%); border: 1.5px solid rgba(100, 200, 255, 0.6); box-shadow: 0 0 20px rgba(100, 200, 255, 0.25); margin-bottom: 0.6rem; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                <img src="./david_schuster.jpg" alt="David Schuster" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" onerror="this.src='/david_schuster.jpg'" />
+            <div class="card"
+              style="flex-direction: row !important; justify-content: flex-start !important; align-items: center; gap: 2.2cqw; padding: 2.2cqh 2.6cqw; border-radius: 14px; background: linear-gradient(135deg, rgba(16, 40, 112, 0.72), rgba(9, 25, 74, 0.88));">
+              <div
+                style="width: clamp(110px, 18cqh, 200px); height: clamp(110px, 18cqh, 200px); flex-shrink: 0; border-radius: 50%; padding: 3px; background: radial-gradient(circle at 50% 50%, rgba(167, 189, 242, 0.38) 0%, rgba(9, 25, 74, 0.92) 72%); border: 1.5px solid #A7BDF2; box-shadow: 0 0 24px rgba(167, 189, 242, 0.22); overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <img src="./david_schuster.jpg" alt="David Schuster"
+                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+                  onerror="this.src='/david_schuster.jpg'" />
               </div>
-              <div style="font-family: var(--font-serif); font-size: 1.35rem; font-weight: 600; color: #fff;">
-                David Schuster
-              </div>
-              <div style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-cyan); margin-top: 2px;">
-                Stanford
+              <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.7cqh;">
+                <div
+                  style="font-family: var(--font-serif); font-size: clamp(1.55rem, 3.4cqh, 2.8rem); font-weight: 600; color: #FFFFFF; line-height: 1.1;">
+                  David Schuster
+                </div>
+                <div
+                  style="font-family: var(--font-mono); font-size: clamp(0.82rem, 1.55cqh, 1.25rem); color: #F8DF98; font-weight: 600;">
+                  Stanford University
+                </div>
+                <div
+                  style="font-family: var(--font-primary); font-size: clamp(1.0rem, 2.0cqh, 1.6rem); color: #C7D8FF; line-height: 1.38;">
+                  Professor of Applied Physics · Leader in superconducting quantum hardware, cavity QED, and quantum
+                  simulation.
+                </div>
               </div>
             </div>
           </div>
@@ -1782,165 +2034,221 @@
 
       </div>
 
-      <!-- Centered Apple Music Aesthetic Play Button (Slide 5 Voiceover) -->
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0.15rem auto 0.25rem;">
-        <button class="apple-music-play-btn" id="btn-play-deck-slide5" onclick="handleSlide5PlayClick()" title="Play Slide 5 Voiceover" aria-label="Play Slide 5 Voiceover" style="width: clamp(44px, 4.8cqh, 54px); height: clamp(44px, 4.8cqh, 54px);">
-          <svg id="slide5-play-icon" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </button>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span id="slide5-play-label" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER · 0:27</span>
-          <button id="slide5-replay-btn" onclick="replaySlide5Voiceover(event)" style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';" title="Replay Slide 5 Voiceover">↺ Replay</button>
-        </div>
-        <audio id="slide5-voiceover-audio" preload="auto">
-          <source src="./a16z_slide5_voiceover.mp3" type="audio/mpeg">
-          <source src="/a16z_slide5_voiceover.mp3" type="audio/mpeg">
-        </audio>
-      </div>
-
-      <div class="footer">
-        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS" style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
+      <div class="footer" style="padding-right: 1.8%;">
+        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS"
+            style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;"
+            onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
         <span>Leadership &amp; Scientific Advisory</span>
       </div>
     </section>
 
-    <!-- SLIDE 6: Seed Financing & Strategic Milestones -->
+    <!-- SLIDE 6: Pre-Seed Financing — Classic PRS Sapphire & Gold -->
     <section class="slide" id="slide-6" data-slide="6">
       <div class="header">
         <div class="brand-lockup">
-          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
+          <img src="/prs_logo_128.png" alt="Point Reyes Sound" class="brand-logo-animated"
+            onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />
           <span class="company-tag">POINT REYES SOUND, INC.</span>
-          <span class="header-qboltz-tag">SEED FINANCING</span>
           <span class="header-qboltz-tag">PRE-SEED FINANCING</span>
         </div>
         <span class="slide-num">06 / 06</span>
       </div>
-      
-      <h2>Seed Financing &amp; Strategic Milestones</h2>
-      <h2>Pre-Seed Financing &amp; Strategic Milestones</h2>
-      <p class="subtitle">
-        Point Reyes Sound is raising a <strong>$750,000 seed round</strong> on a post-money valuation cap of <strong>$6M</strong>.
-        Point Reyes Sound is raising a <strong>$2,000,000 pre-seed round</strong> on a post-money valuation cap of <strong>$16M</strong>.
-      </p>
 
-      <div class="slide-body">
-        <div class="grid-2">
-          <!-- Card 1: Capital Allocation Donut / Pie Chart -->
-          <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem 1.6rem;">
-            <div class="card-header" style="font-size: 1.35rem; margin-bottom: 0.5rem;">
-              Capital Allocation ($750,000)
+      <div style="text-align: center; width: 100%; margin: 0.5cqh auto 1.0cqh;">
+        <h2 style="margin: 0; line-height: 1.08; font-size: clamp(2.2rem, 5.0cqh, 4.3rem);">Pre-Seed Financing</h2>
+        <div
+          style="font-family: var(--font-serif); font-size: clamp(1.1rem, 2.4cqh, 2.0rem); color: #F8DF98; margin-top: 0.35cqh;">
+          $2.0M on $16.0M Post-Money Cap &nbsp;·&nbsp; 12.5% Equity &nbsp;·&nbsp; 24-Month Runway
+        </div>
+      </div>
+
+      <div class="slide-body"
+        style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 1.8cqh; padding: 0.2cqh 1.8% 0.8cqh 0; min-height: 0;">
+
+        <!-- Top Key Metrics Strip (Classic PRS Gold / Champagne / Ice-Blue) -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8cqw;">
+          <div class="card"
+            style="padding: 1.4cqh 1.6cqw; text-align: center; border-radius: 12px; border: 1px solid rgba(248, 223, 152, 0.38); background: rgba(13, 33, 94, 0.78); justify-content: center;">
+            <div
+              style="font-family: var(--font-serif); font-size: clamp(1.85rem, 4.2cqh, 3.4rem); font-weight: 700; color: #F8DF98; line-height: 1.08;">
+              $2.0M / $16.0M</div>
+            <div
+              style="font-family: var(--font-sans); font-size: clamp(0.72rem, 1.35cqh, 1.05rem); color: #C7D8FF; margin-top: 0.4cqh; letter-spacing: 0.8px; text-transform: uppercase;">
+              Pre-Seed on Post-Money Cap</div>
+          </div>
+          <div class="card"
+            style="padding: 1.4cqh 1.6cqw; text-align: center; border-radius: 12px; border: 1px solid rgba(255, 245, 204, 0.35); background: rgba(13, 33, 94, 0.78); justify-content: center;">
+            <div
+              style="font-family: var(--font-serif); font-size: clamp(1.85rem, 4.2cqh, 3.4rem); font-weight: 700; color: #FFF5CC; line-height: 1.08;">
+              $1.5M+</div>
+            <div
+              style="font-family: var(--font-sans); font-size: clamp(0.72rem, 1.35cqh, 1.05rem); color: #C7D8FF; margin-top: 0.4cqh; letter-spacing: 0.8px; text-transform: uppercase;">
+              Target Foundry Pilot Revenue (24 Mo)</div>
+          </div>
+          <div class="card"
+            style="padding: 1.4cqh 1.6cqw; text-align: center; border-radius: 12px; border: 1px solid rgba(167, 189, 242, 0.38); background: rgba(13, 33, 94, 0.78); justify-content: center;">
+            <div
+              style="font-family: var(--font-serif); font-size: clamp(1.85rem, 4.2cqh, 3.4rem); font-weight: 700; color: #A7BDF2; line-height: 1.08;">
+              $15M+</div>
+            <div
+              style="font-family: var(--font-sans); font-size: clamp(0.72rem, 1.35cqh, 1.05rem); color: #C7D8FF; margin-top: 0.4cqh; letter-spacing: 0.8px; text-transform: uppercase;">
+              Target Enterprise Licensing ARR (2028)</div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="grid-template-columns: 1fr 1fr; flex: 1; gap: 2.0cqw; margin-bottom: 0;">
+          <!-- Card 1: Capital Allocation (Exact Prospectus Gold / Ice-Blue / Champagne) -->
+          <div class="card"
+            style="display: flex; flex-direction: column; justify-content: space-between; padding: 2.2cqh 2.4cqw; border-radius: 14px; background: linear-gradient(135deg, rgba(16, 40, 112, 0.74), rgba(9, 25, 74, 0.90));">
+            <div
+              style="font-family: var(--font-serif); font-size: clamp(1.35rem, 2.8cqh, 2.2rem); font-weight: 600; color: #FFFFFF; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.9cqh;">
               Capital Allocation ($2,000,000)
             </div>
-            
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.4rem; flex: 1;">
-              <div style="width: 145px; height: 145px; flex-shrink: 0;">
+
+            <div
+              style="display: flex; align-items: center; justify-content: space-between; gap: 2.2cqw; flex: 1; padding: 1.0cqh 0;">
+              <div
+                style="width: clamp(150px, 23cqh, 240px); height: clamp(150px, 23cqh, 240px); flex-shrink: 0; position: relative;">
                 <svg viewBox="0 0 42 42" style="width: 100%; height: 100%; transform: rotate(-90deg);">
-                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#071a0f" stroke-width="7"></circle>
-                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#35ff82" stroke-width="7" stroke-dasharray="53.33 46.67" stroke-dashoffset="0" style="filter: drop-shadow(0 0 5px rgba(53, 255, 130, 0.6));"></circle>
-                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#64c8ff" stroke-width="7" stroke-dasharray="26.67 73.33" stroke-dashoffset="-53.33"></circle>
-                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#f5c542" stroke-width="7" stroke-dasharray="20.00 80.00" stroke-dashoffset="-80.00"></circle>
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#18327A" stroke-width="6.2">
+                  </circle>
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#F8DF98" stroke-width="6.2"
+                    stroke-dasharray="53.00 47.00" stroke-dashoffset="0"></circle>
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#A7BDF2" stroke-width="6.2"
+                    stroke-dasharray="27.00 73.00" stroke-dashoffset="-53.00"></circle>
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#FFF5CC" stroke-width="6.2"
+                    stroke-dasharray="20.00 80.00" stroke-dashoffset="-80.00"></circle>
                 </svg>
+                <div
+                  style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
+                  <span
+                    style="font-family: var(--font-serif); font-size: clamp(1.4rem, 3.0cqh, 2.3rem); font-weight: 700; color: #FFFFFF; line-height: 1;">$2.0M</span>
+                  <span
+                    style="font-family: var(--font-mono); font-size: clamp(0.6rem, 1.15cqh, 0.9rem); color: #A7BDF2; margin-top: 4px; letter-spacing: 1px;">24
+                    MONTHS</span>
+                </div>
               </div>
-              <div style="flex: 1; font-family: var(--font-primary); font-size: 1.15rem; line-height: 1.75;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 7px; background: rgba(53, 255, 130, 0.08); padding: 4px 10px; border-radius: 5px;">
-                  <span style="color: var(--accent-emerald); font-weight: 600;">● Compiler Engineer Hire:</span>
-                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.98rem;">$400,000 (53%)</strong>
-                  <span style="color: var(--accent-emerald); font-weight: 600;">● Compiler &amp; Kernel Team:</span>
-                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.98rem;">$1,060,000 (53%)</strong>
+              <div
+                style="flex: 1; font-family: var(--font-primary); font-size: clamp(1.05rem, 2.1cqh, 1.65rem); display: flex; flex-direction: column; gap: 1.4cqh;">
+                <div
+                  style="display: flex; justify-content: space-between; align-items: center; background: rgba(248, 223, 152, 0.10); padding: 1.1cqh 1.2cqw; border-radius: 7px; border-left: 3.5px solid #F8DF98;">
+                  <span style="color: #F8DF98; font-weight: 600;">Compiler &amp; GPU Kernel Team</span>
+                  <strong
+                    style="color: #FFFFFF; font-family: var(--font-mono); font-size: clamp(0.88rem, 1.7cqh, 1.3rem);">$1,060k
+                    (53%)</strong>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 7px; background: rgba(100, 200, 255, 0.08); padding: 4px 10px; border-radius: 5px;">
-                  <span style="color: var(--accent-cyan); font-weight: 600;">● Productionize Solver:</span>
-                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.98rem;">$200,000 (27%)</strong>
-                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.98rem;">$540,000 (27%)</strong>
+                <div
+                  style="display: flex; justify-content: space-between; align-items: center; background: rgba(167, 189, 242, 0.10); padding: 1.1cqh 1.2cqw; border-radius: 7px; border-left: 3.5px solid #A7BDF2;">
+                  <span style="color: #A7BDF2; font-weight: 600;">Productionize Core Solvers</span>
+                  <strong
+                    style="color: #FFFFFF; font-family: var(--font-mono); font-size: clamp(0.88rem, 1.7cqh, 1.3rem);">$540k
+                    (27%)</strong>
                 </div>
-                <div style="display: flex; justify-content: space-between; background: rgba(245, 197, 66, 0.08); padding: 4px 10px; border-radius: 5px;">
-                  <span style="color: var(--accent-gold); font-weight: 600;">● Pilot Infrastructure:</span>
-                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.98rem;">$150,000 (20%)</strong>
-                  <strong style="color: #fff; font-family: var(--font-mono); font-size: 0.98rem;">$400,000 (20%)</strong>
+                <div
+                  style="display: flex; justify-content: space-between; align-items: center; background: rgba(255, 245, 204, 0.08); padding: 1.1cqh 1.2cqw; border-radius: 7px; border-left: 3.5px solid #FFF5CC;">
+                  <span style="color: #FFF5CC; font-weight: 600;">Pilot Infrastructure &amp; Compute</span>
+                  <strong
+                    style="color: #FFFFFF; font-family: var(--font-mono); font-size: clamp(0.88rem, 1.7cqh, 1.3rem);">$400k
+                    (20%)</strong>
                 </div>
               </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 0.6rem; margin-top: 0.6rem;">
-              <span style="font-family: var(--font-primary); font-size: 1.15rem; color: var(--accent-gold); font-weight: 600;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 1.0cqh;">
+              <span
+                style="font-family: var(--font-primary); font-size: clamp(1.0rem, 2.0cqh, 1.55rem); color: #F8DF98; font-weight: 600;">
                 +$75,000 Federal Grant Allotment
               </span>
-              <span style="font-family: var(--font-primary); font-style: italic; font-size: 0.98rem; color: var(--text-muted);">
+              <span
+                style="font-family: var(--font-primary); font-style: italic; font-size: clamp(0.9rem, 1.75cqh, 1.35rem); color: #9BB2EA;">
                 Non-Dilutive Federal Award
               </span>
             </div>
           </div>
 
-          <!-- Card 2: Strategic Milestones & Financing Summary -->
-          <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem 1.6rem; border: 2px solid var(--accent-emerald); background: rgba(53, 255, 130, 0.04); box-shadow: 0 0 30px rgba(53, 255, 130, 0.12);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem;">
+          <!-- Card 2: Strategic Milestones (Classic PRS Sapphire & Gold Border) -->
+          <div class="card"
+            style="display: flex; flex-direction: column; justify-content: space-between; padding: 2.2cqh 2.4cqw; border-radius: 14px; border: 1.5px solid rgba(248, 223, 152, 0.55); background: linear-gradient(135deg, rgba(16, 40, 112, 0.78), rgba(9, 25, 74, 0.92)); box-shadow: 0 0 32px rgba(248, 223, 152, 0.08);">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.9cqh;">
               <div>
-                <div style="font-family: var(--font-mono); color: var(--accent-gold); font-size: 0.85rem; font-weight: 700; letter-spacing: 1px;">
-                  SEED FINANCING ROUND
-                  PRE-SEED FINANCING ROUND
+                <div
+                  style="font-family: var(--font-mono); color: #F8DF98; font-size: clamp(0.68rem, 1.25cqh, 0.96rem); font-weight: 700; letter-spacing: 1.5px;">
+                  24-MONTH EXECUTION ROADMAP
                 </div>
-                <div style="font-family: var(--font-primary); font-size: 1.7rem; font-weight: 600; color: #fff;">
-                  $750,000 on $6.0M Cap
-                  $2,000,000 on $16.0M Cap
+                <div
+                  style="font-family: var(--font-serif); font-size: clamp(1.35rem, 2.8cqh, 2.2rem); font-weight: 600; color: #FFFFFF;">
+                  Strategic Milestones
                 </div>
               </div>
-              <span style="background: var(--accent-emerald); color: #030704; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 16px; letter-spacing: 0.5px;">
-                SEED ROUND
-                PRE-SEED ROUND
+              <span
+                style="background: #F8DF98; color: #09194A; font-family: var(--font-mono); font-size: clamp(0.7rem, 1.3cqh, 0.98rem); font-weight: 700; padding: 5px 14px; border-radius: 16px; letter-spacing: 0.6px;">
+                12.5% EQUITY
               </span>
             </div>
 
-            <div style="font-family: var(--font-primary); font-size: 1.15rem; line-height: 1.5; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.75rem; flex: 1; justify-content: center;">
-              <div style="display: flex; align-items: flex-start; gap: 10px;">
-                <span style="color: var(--accent-emerald); font-weight: 700; font-family: var(--font-mono); font-size: 1rem;">01</span>
+            <div
+              style="font-family: var(--font-primary); font-size: clamp(1.1rem, 2.25cqh, 1.8rem); line-height: 1.48; color: #C7D8FF; display: flex; flex-direction: column; gap: 1.8cqh; flex: 1; justify-content: center; padding: 0.8cqh 0;">
+              <div style="display: flex; align-items: flex-start; gap: 1.2cqw;">
+                <span
+                  style="color: #F8DF98; font-weight: 700; font-family: var(--font-mono); font-size: clamp(0.95rem, 1.9cqh, 1.45rem);">01</span>
                 <div>
-                  <strong style="color: #fff;">Full-Time Compiler Engineer Hire:</strong> Dedicated kernel engineer.
-                  <strong style="color: #fff;">Compiler &amp; GPU Kernel Team:</strong> Dedicated compiler and CUDA/Tensor Core kernel engineers.
+                  <strong style="color: #FFFFFF;">Compiler &amp; GPU Kernel Team:</strong> Dedicated compiler and
+                  CUDA/Tensor Core kernel engineers.
                 </div>
               </div>
-              <div style="display: flex; align-items: flex-start; gap: 10px;">
-                <span style="color: var(--accent-cyan); font-weight: 700; font-family: var(--font-mono); font-size: 1rem;">02</span>
+              <div style="display: flex; align-items: flex-start; gap: 1.2cqw;">
+                <span
+                  style="color: #A7BDF2; font-weight: 700; font-family: var(--font-mono); font-size: clamp(0.95rem, 1.9cqh, 1.45rem);">02</span>
                 <div>
-                  <strong style="color: #fff;">Productionize Open-Source Solver:</strong> Package core shared library (<span class="code-text">libqbescf.so</span>).
+                  <strong style="color: #FFFFFF;">Productionize Core Solvers:</strong> Package production GPU-native
+                  electronic structure solvers for enterprise licensing.
                 </div>
               </div>
-              <div style="display: flex; align-items: flex-start; gap: 10px;">
-                <span style="color: var(--accent-gold); font-weight: 700; font-family: var(--font-mono); font-size: 1rem;">03</span>
+              <div style="display: flex; align-items: flex-start; gap: 1.2cqw;">
+                <span
+                  style="color: #FFF5CC; font-weight: 700; font-family: var(--font-mono); font-size: clamp(0.95rem, 1.9cqh, 1.45rem);">03</span>
                 <div>
-                  <strong style="color: #fff;">3 Pilot-Ready Deployments:</strong> Foundry partners in sub-2 nanometer transistor architectures.
+                  <strong style="color: #FFFFFF;">3 Pilot-Ready Deployments:</strong> Foundry partners in sub-2
+                  nanometer transistor architectures.
                 </div>
               </div>
             </div>
 
-            <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.6rem; font-family: var(--font-primary); font-size: 1.1rem; color: var(--accent-emerald); font-weight: 500;">
-              ✓ 18-Month Operating Runway to $1.5M+ commercial revenue
-              ✓ 24-Month Operating Runway to $1.5M+ commercial revenue
+            <div
+              style="border-top: 1px solid var(--border-subtle); padding-top: 1.0cqh; font-family: var(--font-primary); font-size: clamp(0.98rem, 1.9cqh, 1.45rem); color: #F8DF98; font-weight: 500; display: flex; justify-content: space-between; align-items: center;">
+              <span>Pure-software equity (zero debt)</span>
+              <span style="color: #9BB2EA; font-size: clamp(0.85rem, 1.6cqh, 1.2rem);">Comps: Synopsys · Cadence · Ansys
+                ($35B)</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Centered Apple Music Aesthetic Play Button (Slide 6 Voiceover) -->
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0.35rem auto 0.15rem;">
-        <button class="apple-music-play-btn" id="btn-play-deck-slide6" onclick="handleSlide6PlayClick()" title="Play Slide 6 Voiceover" aria-label="Play Slide 6 Voiceover" style="width: clamp(44px, 4.8cqh, 54px); height: clamp(44px, 4.8cqh, 54px);">
-          <svg id="slide6-play-icon" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </button>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span id="slide6-play-label" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; pointer-events: none;">VOICEOVER · 0:09</span>
-          <button id="slide6-replay-btn" onclick="replaySlide6Voiceover(event)" style="display: none; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.45)';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.borderColor='rgba(255,255,255,0.22)';" title="Replay Slide 6 Voiceover">↺ Replay</button>
+      <!-- Editorial Thesis & San Francisco Colophon -->
+      <div
+        style="text-align: center; margin: 0.4cqh auto 0.3cqh; display: flex; flex-direction: column; align-items: center; gap: 0.35cqh; padding-right: 1.8%;">
+        <div
+          style="font-family: var(--font-primary); font-size: clamp(1.05rem, 2.15cqh, 1.7rem); color: #E3ECFF; letter-spacing: 0.2px;">
+          Solver margins in a $35B market, de-risked by <em>J. Chem. Phys.</em> scientific validation and AWS Pilot.
         </div>
-        <audio id="slide6-voiceover-audio" preload="auto">
-          <source src="./a16z_slide6_voiceover.mp3" type="audio/mpeg">
-          <source src="/a16z_slide6_voiceover.mp3" type="audio/mpeg">
-        </audio>
+        <div
+          style="font-family: var(--font-sans); font-size: clamp(0.68rem, 1.25cqh, 0.96rem); color: #9BB2EA; letter-spacing: 0.8px;">
+          <a href="mailto:romit@pointreyessound.com"
+            style="color: #F8DF98; text-decoration: none;">romit@pointreyessound.com</a>
+          &nbsp;·&nbsp;
+          <a href="mailto:directors@pointreyessound.com"
+            style="color: #C7D8FF; text-decoration: none;">directors@pointreyessound.com</a>
+          &nbsp;·&nbsp;
+          2261 Market Street, Suite 72927, San Francisco, California 94114
+        </div>
       </div>
 
-      <div class="footer">
-        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS" style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;" onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
-        <span>Seed Financing &amp; Strategic Milestones</span>
+      <div class="footer" style="padding-right: 1.8%;">
+        <span style="display: inline-flex; align-items: center; gap: 7px;"><img src="/prs_logo_64.png" alt="PRS"
+            style="width: 14px; height: 14px; border-radius: 3px; object-fit: cover; opacity: 0.85;"
+            onerror="this.onerror=null; this.src='/PRS_logo_v2.jpeg';" />Point Reyes Sound, Inc. © 2026</span>
         <span>Pre-Seed Financing &amp; Strategic Milestones</span>
       </div>
     </section>
@@ -1952,9 +2260,12 @@
     <button class="deck-btn" id="btn-prev" onclick="prevSlide()">◀ Prev</button>
     <div class="deck-status" id="deck-status">01 / 06</div>
     <button class="deck-btn" id="btn-next" onclick="nextSlide()">Next ▶</button>
-    <a href="/a16z-appendix" class="deck-btn" style="text-decoration: none; display: inline-flex; align-items: center;" title="Open Appendix Slide Set">Appendix ↗</a>
+    <a href="/a16z-appendix" class="deck-btn" style="text-decoration: none; display: inline-flex; align-items: center;"
+      title="Open Appendix Slide Set">Appendix ↗</a>
     <button class="deck-btn" onclick="window.print()" title="Export / Print 16:9 PDF">🖨️ PDF</button>
-    <a href="/point_reyes_sound_a16z_deck.pdf" download="Point_Reyes_Sound_Seed_Deck.pdf" class="deck-btn" style="text-decoration: none; display: inline-flex; align-items: center;" title="Download Pre-rendered 16:9 PDF">📥 PDF</a>
+    <a href="/point_reyes_sound_a16z_deck.pdf" download="Point_Reyes_Sound_PreSeed_Deck.pdf" class="deck-btn"
+      style="text-decoration: none; display: inline-flex; align-items: center;"
+      title="Download Pre-rendered 16:9 PDF">📥 PDF</a>
   </div>
 
   <script>
@@ -1970,7 +2281,7 @@
 
     // Ensure robust video source fallback
     if (film) {
-      film.addEventListener('error', function(e) {
+      film.addEventListener('error', function (e) {
         console.warn("Retrying video source fallback...", e);
         if (!film.currentSrc.includes('point_reyes_sound_complete_film.mp4')) {
           film.src = './point_reyes_sound_complete_film.mp4';
@@ -2004,7 +2315,7 @@
           url.searchParams.set('slide', currentSlide);
           window.history.replaceState(null, '', url.toString());
         }
-      } catch (e) {}
+      } catch (e) { }
 
       if (currentSlide === 1 && typeof window.updateHero3DSize === 'function') {
         window.updateHero3DSize();
@@ -2114,7 +2425,7 @@
         currentSlide = requestedSlide;
         updateSlide();
       }
-    } catch (e) {}
+    } catch (e) { }
 
     function goToSlide(n) {
       currentSlide = Math.max(1, Math.min(totalSlides, n));
@@ -2141,7 +2452,7 @@
         icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
         icon.style.marginLeft = '3px';
         if (label) {
-          label.innerHTML = '<span style="color: #35ff82; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">PLAY EXECUTIVE FILM ▶</span>';
+          label.innerHTML = '<span style="color: #F8DF98; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">PLAY EXECUTIVE FILM ▶</span>';
         }
         if (replayBtn) replayBtn.style.display = 'inline-flex';
         return;
@@ -2159,7 +2470,7 @@
         icon.style.marginLeft = '0';
         if (label) {
           label.textContent = 'PLAYING · 0:50';
-          label.style.color = '#35ff82';
+          label.style.color = '#F8DF98';
         }
       } else {
         btn.classList.remove('is-playing');
@@ -2446,7 +2757,7 @@
         icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
         icon.style.marginLeft = '3px';
         if (label) {
-          label.innerHTML = '<span style="color: #35ff82; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">QUANTUM SUPREMACY ▶</span>';
+          label.innerHTML = '<span style="color: #F8DF98; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">QUANTUM SUPREMACY ▶</span>';
         }
         if (replayBtn) replayBtn.style.display = 'inline-flex';
         return;
@@ -2464,7 +2775,7 @@
         icon.style.marginLeft = '0';
         if (label) {
           label.textContent = 'PLAYING · 0:08';
-          label.style.color = '#35ff82';
+          label.style.color = '#F8DF98';
         }
       } else {
         btn.classList.remove('is-playing');
@@ -2606,7 +2917,7 @@
         icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
         icon.style.marginLeft = '3px';
         if (label) {
-          label.innerHTML = '<span style="color: #35ff82; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">NEXT SLIDE ▶</span>';
+          label.innerHTML = '<span style="color: #F8DF98; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">NEXT SLIDE ▶</span>';
         }
         if (replayBtn) replayBtn.style.display = 'inline-flex';
         return;
@@ -2624,7 +2935,7 @@
         icon.style.marginLeft = '0';
         if (label) {
           label.textContent = 'PLAYING · 0:57';
-          label.style.color = '#35ff82';
+          label.style.color = '#F8DF98';
         }
       } else {
         btn.classList.remove('is-playing');
@@ -2943,7 +3254,7 @@
         icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
         icon.style.marginLeft = '3px';
         if (label) {
-          label.innerHTML = '<span style="color: #35ff82; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">FINANCING ▶</span>';
+          label.innerHTML = '<span style="color: #F8DF98; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">FINANCING ▶</span>';
         }
         if (replayBtn) replayBtn.style.display = 'inline-flex';
         return;
@@ -2961,7 +3272,7 @@
         icon.style.marginLeft = '0';
         if (label) {
           label.textContent = 'PLAYING · 0:27';
-          label.style.color = '#35ff82';
+          label.style.color = '#F8DF98';
         }
       } else {
         btn.classList.remove('is-playing');
@@ -3102,7 +3413,7 @@
         icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
         icon.style.marginLeft = '3px';
         if (label) {
-          label.innerHTML = '<span style="color: #35ff82; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">APPENDIX ▶</span>';
+          label.innerHTML = '<span style="color: #F8DF98; font-weight: 700; text-shadow: 0 0 10px rgba(53,255,130,0.5);">APPENDIX ▶</span>';
         }
         if (replayBtn) replayBtn.style.display = 'inline-flex';
         return;
@@ -3120,7 +3431,7 @@
         icon.style.marginLeft = '0';
         if (label) {
           label.textContent = 'PLAYING · 0:09';
-          label.style.color = '#35ff82';
+          label.style.color = '#F8DF98';
         }
       } else {
         btn.classList.remove('is-playing');
@@ -3532,7 +3843,7 @@
     }
 
     function resetSlide4Step() {
-      slide4Step = 1;
+      slide4Step = 10;
       updateSlide4Step();
     }
 
@@ -3638,7 +3949,7 @@
           const u = (i / uSegments) * (Math.PI / 2);
           for (let j = 0; j <= vSegments; j++) {
             const v = (j / vSegments) * Math.PI * 2;
-            
+
             // Slender quantum p-wave teardrop profile
             const cosU = Math.cos(u);
             const sinU = Math.sin(u);
@@ -3841,7 +4152,7 @@
         if (!container || heroCircleState !== 0) return;
         const rect = container.getBoundingClientRect();
         if (rect.width <= 0 || rect.height <= 0) return;
-        
+
         // Normalized coordinates relative to circular center (-1 to +1)
         const nx = (clientX - (rect.left + rect.width * 0.5)) / (rect.width * 0.5);
         const ny = (clientY - (rect.top + rect.height * 0.5)) / (rect.height * 0.5);
@@ -4534,4 +4845,5 @@
     window.addEventListener('load', initAll3D);
   </script>
 </body>
+
 </html>

@@ -193,10 +193,10 @@ def build_svg(wigner_b64, logo_b64, vlim):
 
   <!-- Editorial Hero Typography -->
   <g id="hero-copy">
-    <text x="76" y="230" font-family="'EB Garamond', Georgia, serif" font-size="158" font-weight="600" letter-spacing="-2.6" fill="#FFFFFF">QBE-SCF</text>
-    <text x="78" y="314" font-family="'EB Garamond', Georgia, serif" font-size="50" font-weight="400" letter-spacing="-0.4" fill="#F8DF98">Free Electrons for the AI economy</text>
-    <text x="78" y="358" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="21" font-weight="400" letter-spacing="0.5" fill="#A7BDF2">Quantum Boltzmann Equation Self-Consistent Field</text>
-    <text x="78" y="394" font-family="'EB Garamond', Georgia, serif" font-style="italic" font-size="24" font-weight="400" letter-spacing="0.2" fill="#DCE6FF">Accepted for publication, The Journal of Chemical Physics (2026).</text>
+    <text x="523" y="230" text-anchor="middle" font-family="'EB Garamond', Georgia, serif" font-size="158" font-weight="600" letter-spacing="-2.6" fill="#FFFFFF">QBE-SCF</text>
+    <text x="523" y="314" text-anchor="middle" font-family="'EB Garamond', Georgia, serif" font-size="50" font-weight="400" letter-spacing="-0.4" fill="#F8DF98">Free Electrons for the AI economy</text>
+    <text x="523" y="358" text-anchor="middle" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="21" font-weight="400" letter-spacing="0.5" fill="#A7BDF2">Quantum Boltzmann Equation Self-Consistent Field</text>
+    <text x="523" y="394" text-anchor="middle" font-family="'EB Garamond', Georgia, serif" font-style="italic" font-size="24" font-weight="400" letter-spacing="0.2" fill="#DCE6FF">Accepted for publication, The Journal of Chemical Physics (2026).</text>
   </g>
 
   <!-- Hero Wigner Distribution (~2/3 of composition) -->
@@ -222,7 +222,7 @@ def build_svg(wigner_b64, logo_b64, vlim):
 
   <!-- Image Caption & Quiet Footer -->
   <g id="footer">
-    <text x="78" y="1256" font-family="'EB Garamond', Georgia, serif" font-size="26" fill="#E3ECFF">Electronic structure in phase space.</text>
+    <text x="523" y="1256" text-anchor="middle" font-family="'EB Garamond', Georgia, serif" font-size="26" fill="#E3ECFF">Electronic structure in phase space.</text>
     <line x1="78" y1="1282" x2="968" y2="1282" stroke="#9BB4F0" stroke-opacity="0.26" stroke-width="1"/>
     <text x="78" y="1314" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="16" font-weight="500" letter-spacing="0.6" fill="#9BB2EA">pointreyessound.com</text>
     <text x="968" y="1314" text-anchor="end" font-family="'Avenir Next', 'Helvetica Neue', sans-serif" font-size="16" font-weight="500" letter-spacing="0.4" fill="#9BB2EA">BeH<tspan dy="4" font-size="12">2</tspan><tspan dy="-4">&#8201;&#183;&#8201;T = 0.06 Ha&#8201;&#183;&#8201;arXiv:2608.14979</tspan></text>
