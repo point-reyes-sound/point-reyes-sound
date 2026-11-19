@@ -1248,9 +1248,21 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
       { label: "H₄", key: "h4_square", prompt: QUICK_QUERY_PROMPTS[3].prompt }
     ];
 
+    const isBeH2 = activeBenchmarkKey === "beh2_ci";
+    const activeMolFormula =
+      activeBenchmarkKey === "beh2_ci" ? (
+        <>BeH<sub>2</sub></>
+      ) : activeBenchmarkKey === "h3_d3h" ? (
+        <>H<sub>3</sub></>
+      ) : activeBenchmarkKey === "h4_square" ? (
+        <>H<sub>4</sub></>
+      ) : (
+        <>H<sub>2</sub></>
+      );
+
     return (
-      <div className="prs-phone-preview-shell prs-unified-fullscreen">
-        {/* Single Unified Quantum Instrument (Full-screen 100vw x 100dvh on desktop & phone) */}
+      <div className="prs-phone-preview-shell prs-unified-fullscreen prs-gallery-black">
+        {/* Single Unified Quantum Gallery Instrument (Pure #000 Black Canvas on Desktop & Mobile) */}
         <div className="prs-phone-bezel">
           {/* 1. Compact Header + Molecule Switcher */}
           <div className="prs-phone-topbar">
@@ -1260,8 +1272,8 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
               onClick={() => handleReturnHome()}
               title="Back to Point Reyes Sound"
             >
-              <img src="/PRS_logo_v2.jpeg?v=5" alt="PRS" />
-              <span>Q-BOLTZ</span>
+              <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+              <span className="prs-gallery-wordmark">Point Reyes Sound</span>
             </button>
             <div className="prs-phone-mol-pills">
               {molButtons.map((item) => {
@@ -1304,90 +1316,83 @@ export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null })
             </div>
           </div>
 
-          {/* 3. ONE GIANT UNIFIED HERO STAGE (~80% height) */}
-          <div className="prs-unified-stage mode-lens">
-            <button
-              type="button"
-              className={`prs-phi-toggle ${showOrbitals ? "active" : ""}`}
-              onClick={() => {
-                setShowPhaseLayer(true);
-                setShowOrbLayer((v) => !v);
-              }}
-              aria-pressed={showOrbitals}
-              aria-label={showOrbitals ? "Hide orbital overlay in phase space" : "Open orbital overlay in phase space"}
-              title={showOrbitals ? "Phase Space + Orbital Overlay (click for Phase Space)" : "Open Orbital Overlay in Phase Space (Φ)"}
-            >
-              <span className="prs-phi-glyph">Φ</span>
-            </button>
+          {/* 3. PURE-BLACK FRAMED GALLERY STAGE WITH EB GARAMOND POSITION & MOMENTUM AXES */}
+          <div className="prs-gallery-frame-grid">
+            {/* Left Vertical Momentum Axis */}
+            <div className="prs-axis-y-col" aria-hidden="true">
+              <span className="prs-axis-line-v prs-axis-arrow-up" />
+              <span className="prs-axis-label-v">
+                Momentum{" "}
+                {isBeH2 ? (
+                  <>
+                    <i>k</i>
+                    <sub>y</sub>
+                  </>
+                ) : (
+                  <>
+                    <i>p</i>
+                    <sub>z</sub>
+                  </>
+                )}{" "}
+                (a.u.)
+              </span>
+              <span className="prs-axis-line-v" />
+            </div>
 
-            {/* Layer 1: Full-Bleed Wigner Phase-Space Field */}
-            {showWigner && (
-              <div className={`prs-stage-layer prs-layer-wigner ${showOrbitals ? "is-backdrop" : ""}`}>
+            {/* Framed WebGL Wigner + 3D Real-Space Density Viewport */}
+            <div className="prs-unified-stage prs-gallery-viewport mode-lens">
+              <button
+                type="button"
+                className={`prs-phi-toggle ${showOrbitals ? "active" : ""}`}
+                onClick={() => {
+                  setShowPhaseLayer(true);
+                  setShowOrbLayer((v) => !v);
+                }}
+                aria-pressed={showOrbitals}
+                aria-label={showOrbitals ? "Hide real-space density overlay" : "Open real-space density overlay in phase space"}
+                title={showOrbitals ? "Phase Space + Real-Space Density (click for pure Phase Space)" : "Open Real-Space Density in Phase Space (Φ)"}
+              >
+                <span className="prs-phi-glyph">Φ</span>
+              </button>
+
+              <div className="prs-stage-layer prs-layer-wigner">
                 <WebGlWignerPlot
                   r={currentR}
                   nBond={nBondVal}
                   nAntibond={nAntibondVal}
                   coordUnit={coordUnit}
+                  moleculeId={activeBenchmarkKey}
+                  showDensityOverlay={showOrbitals}
+                  hideInternalChrome={true}
                 />
               </div>
-            )}
+            </div>
 
-            {/* Layer 2: Unified Molecular Orbitals */}
-            {showOrbitals && (
-              <div className="prs-stage-layer prs-layer-orbitals">
-                {primaryStageOrbital ? (
-                  <PureThreeOrbitalCanvas
-                    orbital={primaryStageOrbital}
-                    secondaryOrbital={secondaryStageOrbital}
-                    primaryOpacity={bondOpacity}
-                    secondaryOpacity={antibondOpacity}
-                    atoms={activeAtoms}
-                    bonds={activeBonds}
-                  />
-                ) : (
-                  <div className="prs-stage-loading">Solving phase-space manifold...</div>
-                )}
-              </div>
-            )}
-
-            {/* Scrollable Orbital Carousel with Symmetry Point Group Badge */}
-            {showOrbitals && (
-              <div className="prs-orb-carousel-bar" role="region" aria-label="Orbital symmetry carousel">
-                <span className="prs-pg-badge" title="Molecular Symmetry Point Group">
-                  {renderPointGroup(pointGroupLabel)}
+            {/* Bottom Horizontal Position Axis + Embedded System Caption */}
+            <div className="prs-axis-x-row">
+              <div className="prs-axis-x-guide" aria-hidden="true">
+                <span className="prs-axis-line-h" />
+                <span className="prs-axis-label-h">
+                  Position{" "}
+                  {isBeH2 ? (
+                    <>
+                      <i>y</i> (<i>a</i>
+                      <sub>0</sub>)
+                    </>
+                  ) : (
+                    <>
+                      <i>z</i> (Å)
+                    </>
+                  )}
                 </span>
-                <div className="prs-orb-carousel-track">
-                  {activeOrbitals.map((orb, idx) => {
-                    const occ =
-                      idx === safeBondingIdx
-                        ? nBondVal
-                        : idx === safeAntibondingIdx
-                          ? nAntibondVal
-                          : orb?.occupation;
-                    return (
-                      <button
-                        key={`orb-car-${idx}`}
-                        type="button"
-                        className={`prs-orb-chip ${safeSelectedIdx === idx ? "active" : ""}`}
-                        onClick={() => setSelectedOrbitalIdx(idx)}
-                      >
-                        <span className="prs-orb-irrep">{renderOrbitalLabel(orb?.label || `φ_${idx + 1}`)}</span>
-                        {occ !== undefined && (
-                          <span className="prs-orb-occ">n={Number(occ).toFixed(2)}</span>
-                        )}
-                      </button>
-                    );
-                  })}
-                  <button
-                    type="button"
-                    className={`prs-orb-chip ${safeSelectedIdx === -1 ? "active" : ""}`}
-                    onClick={() => setSelectedOrbitalIdx(-1)}
-                  >
-                    <span className="prs-orb-irrep">All</span>
-                  </button>
-                </div>
+                <span className="prs-axis-line-h prs-axis-arrow-right" />
               </div>
-            )}
+              <div className="prs-gallery-system-caption">
+                <span>{activeMolFormula}</span>
+                <span className="prs-sys-dot">·</span>
+                <span>{renderPointGroup(pointGroupLabel)}</span>
+              </div>
+            </div>
           </div>
 
           {/* 4. Slim Thumb-Intuitive Geometry Scrubber Dock */}
