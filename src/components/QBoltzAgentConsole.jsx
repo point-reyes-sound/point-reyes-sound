@@ -64,7 +64,14 @@ const REGIME_MILESTONES = {
 // ---------------------------------------------------------------------------
 // Pure Three.js 3D Orbital Canvas (Blue & Red Lobes, Zero Fiber dependency)
 // ---------------------------------------------------------------------------
-function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
+function PureThreeOrbitalCanvas({
+  orbital,
+  secondaryOrbital = null,
+  primaryOpacity = 0.86,
+  secondaryOpacity = 0.72,
+  atoms = [],
+  bonds = []
+}) {
   const mountRef = useRef(null);
   const rendererRef = useRef(null);
   const sceneRef = useRef(null);
@@ -146,9 +153,31 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
       camera.userData.customZoomed = true;
     };
 
+    const onTouchStart = (e) => {
+      if (e.touches.length !== 1) return;
+      isDraggingRef.current = true;
+      prevMouseRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    };
+
+    const onTouchMove = (e) => {
+      if (!isDraggingRef.current || !group || e.touches.length !== 1) return;
+      const dx = e.touches[0].clientX - prevMouseRef.current.x;
+      const dy = e.touches[0].clientY - prevMouseRef.current.y;
+      group.rotation.y += dx * 0.012;
+      group.rotation.x += dy * 0.012;
+      prevMouseRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    };
+
+    const onTouchEnd = () => {
+      isDraggingRef.current = false;
+    };
+
     mount.addEventListener("mousedown", onMouseDown);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
+    mount.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd);
     mount.addEventListener("wheel", onWheel, { passive: true });
 
     const resizeObserver = new ResizeObserver(() => {
@@ -168,6 +197,9 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
       mount.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onMouseUp);
+      mount.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
       mount.removeEventListener("wheel", onWheel);
       if (renderer.domElement && mount.contains(renderer.domElement)) {
         mount.removeChild(renderer.domElement);
@@ -191,8 +223,8 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
       }
     }
 
-    const addLobe = (lobeData, colorHex, emissiveHex) => {
-      if (!lobeData?.vertices?.length || !lobeData?.faces?.length) return;
+    const addLobe = (lobeData, colorHex, emissiveHex, opacityVal = 0.86) => {
+      if (!lobeData?.vertices?.length || !lobeData?.faces?.length || opacityVal <= 0.02) return;
       const geom = new THREE.BufferGeometry();
       geom.setAttribute(
         "position",
@@ -212,17 +244,20 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
         transmission: 0.36,
         ior: 1.38,
         transparent: true,
-        opacity: 0.86,
+        opacity: opacityVal,
         side: THREE.DoubleSide,
         depthWrite: false
       });
       group.add(new THREE.Mesh(geom, mat));
     };
 
-    // Positive lobe: Luminous Sapphire Blue (+ψ)
-    if (orbital?.pos_lobe) addLobe(orbital.pos_lobe, 0x1a8cff, 0x06388a);
-    // Negative lobe: Point Reyes Crimson Red (-ψ)
-    if (orbital?.neg_lobe) addLobe(orbital.neg_lobe, 0xf43f5e, 0x820c22);
+    // Primary orbital: Luminous Sapphire Blue (+ψ) & Point Reyes Crimson (-ψ)
+    if (orbital?.pos_lobe) addLobe(orbital.pos_lobe, 0x1a8cff, 0x06388a, primaryOpacity);
+    if (orbital?.neg_lobe) addLobe(orbital.neg_lobe, 0xf43f5e, 0x820c22, primaryOpacity);
+
+    // Optional superimposed secondary orbital (occupation-weighted champagne gold / violet)
+    if (secondaryOrbital?.pos_lobe) addLobe(secondaryOrbital.pos_lobe, 0xf8df98, 0x7c5a10, secondaryOpacity);
+    if (secondaryOrbital?.neg_lobe) addLobe(secondaryOrbital.neg_lobe, 0xa78bfa, 0x3b1d7a, secondaryOpacity);
 
     // Render atomic spheres
     atoms.forEach((atom) => {
@@ -284,7 +319,7 @@ function PureThreeOrbitalCanvas({ orbital, atoms = [], bonds = [] }) {
         cameraRef.current.lookAt(0, 0, 0);
       }
     }
-  }, [orbital, atoms, bonds]);
+  }, [orbital, secondaryOrbital, primaryOpacity, secondaryOpacity, atoms, bonds]);
 
   return (
     <div
@@ -608,7 +643,22 @@ function DissociationCurvePlot({ curveData, currentPoint, coordUnit = "Å", canS
 // Main Fullscreen Q-BOLTZ Interactive Discovery Workstation
 // Aligned with Point Reyes Sound Landing Page Aesthetic
 // ---------------------------------------------------------------------------
-export default function QBoltzAgentConsole({ onClose }) {
+export default function QBoltzAgentConsole({ onClose, initialPhoneMode = null }) {
+  const [isMobileViewport, setIsMobileViewport] = useState(
+    () => typeof window !== "undefined" && window.innerWidth <= 768
+  );
+  const useUnifiedPhoneUI = Boolean(initialPhoneMode) || isMobileViewport;
+  const [phoneLens, setPhoneLens] = useState("overlay"); // "overlay" | "wigner" | "orbitals"
+  const [selectedOrbitalIdx, setSelectedOrbitalIdx] = useState(0); // -1 = All (superposition), 0..N-1 = specific orbital
+  const [fullWidthPreview, setFullWidthPreview] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const onResize = () => setIsMobileViewport(window.innerWidth <= 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   const [query, setQuery] = useState("Conceptualize and envision the dissociation of H2 in phase space.");
   const [loading, setLoading] = useState(false);
   const [hasResult, setHasResult] = useState(false);
@@ -893,7 +943,9 @@ export default function QBoltzAgentConsole({ onClose }) {
     setAntibondingIdx(orbs.length > 1 ? orbs.length - 1 : 0);
 
     if (data.simulation?.trajectory?.length) {
-      const defaultTarget = data.simulation.benchmark?.key === "beh2_ci" ? 2.54 : 1.6;
+      const bKey = data.simulation.benchmark?.key;
+      const defaultTarget =
+        bKey === "beh2_ci" ? 2.54 : bKey === "h3_d3h" ? 1.52 : bKey === "h4_square" ? 1.23 : 1.6;
       const targetR = requestedCoord !== null ? requestedCoord : defaultTarget;
       const initIdx = data.simulation.trajectory.findIndex((f) => f.r >= targetR);
       setCurrentFrameIdx(initIdx >= 0 ? initIdx : 0);
@@ -1051,6 +1103,277 @@ export default function QBoltzAgentConsole({ onClose }) {
   const activeMilestones = REGIME_MILESTONES[activeBenchmarkKey] || [];
   const trajMinR = hasTrajectory ? trajectory[0].r : 0.5;
   const trajMaxR = hasTrajectory ? trajectory[trajectory.length - 1].r : 3.5;
+
+  // Auto-launch default H2 simulation when opened in unified phone UI
+  const phoneBootedRef = useRef(false);
+  useEffect(() => {
+    if (useUnifiedPhoneUI && !phoneBootedRef.current && !hasResult && !loading) {
+      phoneBootedRef.current = true;
+      executeQuery("Conceptualize and envision the dissociation of H2 in phase space.");
+    }
+  }, [useUnifiedPhoneUI, hasResult, loading]);
+
+  // Unified Single-Screen Phone Interface (Option B: Giant Stage + Lens + Orbital Symmetry Carousel + Geometry Scrubber)
+  if (useUnifiedPhoneUI) {
+    const showWigner = phoneLens === "wigner" || phoneLens === "overlay";
+    const showOrbitals = phoneLens === "orbitals" || phoneLens === "overlay";
+
+    const POINT_GROUP_MAP = {
+      h2: "D∞h",
+      h2_dissociation: "D∞h",
+      beh2: "C₂v",
+      beh2_ci: "C₂v",
+      beh2_c2v: "C₂v",
+      h3_d3h: "D₃h",
+      h3: "D₃h",
+      h4_square: "D₄h",
+      h4: "D₄h",
+      h4_d4h: "D₄h",
+      h2o: "C₂v",
+      n2: "D∞h"
+    };
+    const pointGroupLabel =
+      activeFrame?.point_group ||
+      simulation?.point_group ||
+      POINT_GROUP_MAP[activeBenchmarkKey] ||
+      "D∞h";
+
+    const safeSelectedIdx =
+      selectedOrbitalIdx >= 0 && selectedOrbitalIdx < activeOrbitals.length
+        ? selectedOrbitalIdx
+        : selectedOrbitalIdx === -1
+          ? -1
+          : 0;
+
+    const primaryStageOrbital =
+      safeSelectedIdx === -1
+        ? bondingOrbital
+        : activeOrbitals[safeSelectedIdx] || bondingOrbital;
+    const secondaryStageOrbital =
+      safeSelectedIdx === -1 ? antibondingOrbital : null;
+
+    const bondOpacity =
+      safeSelectedIdx === -1
+        ? Math.min(0.88, Math.max(0.24, 0.24 + 0.34 * Number(nBondVal || 1)))
+        : 0.88;
+    const antibondOpacity =
+      safeSelectedIdx === -1
+        ? Math.min(0.86, Math.max(0.20, 0.18 + 0.42 * Number(nAntibondVal || 0.1)))
+        : 0;
+
+    const stretchLabel =
+      activeBenchmarkKey === "h4_square"
+        ? "AUTOMERIZATION"
+        : activeBenchmarkKey === "beh2_ci"
+          ? "INSERTION COORD"
+          : "BOND STRETCH";
+
+    const molButtons = [
+      { label: "H₂", key: "h2", prompt: QUICK_QUERY_PROMPTS[0].prompt },
+      { label: "BeH₂", key: "beh2_ci", prompt: QUICK_QUERY_PROMPTS[1].prompt },
+      { label: "H₃", key: "h3_d3h", prompt: QUICK_QUERY_PROMPTS[2].prompt },
+      { label: "H₄", key: "h4_square", prompt: QUICK_QUERY_PROMPTS[3].prompt }
+    ];
+
+    return (
+      <div className={`prs-phone-preview-shell ${fullWidthPreview ? "is-full-width" : ""}`}>
+        {/* Quiet Desktop Phone-Frame Toggle (auto-hidden on phones <= 768px) */}
+        <div className="prs-phone-ab-bar">
+          <span className="prs-ab-label">Q-BOLTZ · Mobile View</span>
+          <button
+            type="button"
+            className="prs-ab-btn subtle"
+            onClick={() => setFullWidthPreview((v) => !v)}
+          >
+            {fullWidthPreview ? "Phone Frame" : "Expand"}
+          </button>
+        </div>
+
+        {/* Single Unified Phone Instrument (100dvh, Zero Scroll) */}
+        <div className="prs-phone-bezel">
+          {/* 1. Compact Header + Molecule Switcher */}
+          <div className="prs-phone-topbar">
+            <button
+              type="button"
+              className="prs-phone-brand"
+              onClick={() => handleReturnHome()}
+              title="Back to Point Reyes Sound"
+            >
+              <img src="/PRS_logo_v2.jpeg?v=5" alt="PRS" />
+              <span>Q-BOLTZ</span>
+            </button>
+            <div className="prs-phone-mol-pills">
+              {molButtons.map((item) => {
+                const isActive = activeBenchmarkKey === item.key;
+                return (
+                  <button
+                    key={item.key}
+                    type="button"
+                    className={`prs-mol-pill ${isActive ? "active" : ""}`}
+                    onClick={() => {
+                      setSelectedOrbitalIdx(0);
+                      setQuery(item.prompt);
+                      executeQuery(item.prompt);
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 2. Quiet Live Telemetry Strip */}
+          <div className="prs-phone-telemetry">
+            <div className="prs-tel-item">
+              <span className="prs-tel-k">R</span>
+              <span className="prs-tel-v gold">{Number(currentR || 0.74).toFixed(2)} {coordUnit}</span>
+            </div>
+            <div className="prs-tel-item">
+              <span className="prs-tel-k">E</span>
+              <span className="prs-tel-v">{activeEqbeEv !== undefined ? `${Number(activeEqbeEv).toFixed(2)} eV` : "-22.84 eV"}</span>
+            </div>
+            <div className="prs-tel-item">
+              <span className="prs-tel-k">S</span>
+              <span className="prs-tel-v ice">{activeEntropy !== undefined ? `${Number(activeEntropy).toFixed(2)} b` : "0.99 b"}</span>
+            </div>
+            <div className="prs-tel-item">
+              <span className="prs-tel-k">SYM</span>
+              <span className="prs-tel-v gold">{pointGroupLabel}</span>
+            </div>
+          </div>
+
+          {/* 3. ONE GIANT UNIFIED HERO STAGE (~80% height) */}
+          <div className="prs-unified-stage mode-lens">
+            <div className="prs-lens-bar" role="tablist" aria-label="View lens">
+              <button
+                type="button"
+                className={`prs-lens-pill ${phoneLens === "overlay" ? "active" : ""}`}
+                onClick={() => setPhoneLens("overlay")}
+              >
+                Overlay
+              </button>
+              <button
+                type="button"
+                className={`prs-lens-pill ${phoneLens === "wigner" ? "active" : ""}`}
+                onClick={() => setPhoneLens("wigner")}
+              >
+                Phase
+              </button>
+              <button
+                type="button"
+                className={`prs-lens-pill ${phoneLens === "orbitals" ? "active" : ""}`}
+                onClick={() => setPhoneLens("orbitals")}
+              >
+                Orb
+              </button>
+            </div>
+
+            {/* Layer 1: Full-Bleed Wigner Phase-Space Field */}
+            {showWigner && (
+              <div className={`prs-stage-layer prs-layer-wigner ${showOrbitals ? "is-backdrop" : ""}`}>
+                <WebGlWignerPlot
+                  r={currentR}
+                  nBond={nBondVal}
+                  nAntibond={nAntibondVal}
+                  coordUnit={coordUnit}
+                />
+              </div>
+            )}
+
+            {/* Layer 2: Unified Molecular Orbitals */}
+            {showOrbitals && (
+              <div className="prs-stage-layer prs-layer-orbitals">
+                {primaryStageOrbital ? (
+                  <PureThreeOrbitalCanvas
+                    orbital={primaryStageOrbital}
+                    secondaryOrbital={secondaryStageOrbital}
+                    primaryOpacity={bondOpacity}
+                    secondaryOpacity={antibondOpacity}
+                    atoms={activeAtoms}
+                    bonds={activeBonds}
+                  />
+                ) : (
+                  <div className="prs-stage-loading">Solving phase-space manifold...</div>
+                )}
+              </div>
+            )}
+
+            {/* Scrollable Orbital Carousel with Symmetry Point Group Badge */}
+            {showOrbitals && (
+              <div className="prs-orb-carousel-bar" role="region" aria-label="Orbital symmetry carousel">
+                <span className="prs-pg-badge" title="Molecular Symmetry Point Group">
+                  {pointGroupLabel}
+                </span>
+                <div className="prs-orb-carousel-track">
+                  {activeOrbitals.map((orb, idx) => {
+                    const occ =
+                      idx === safeBondingIdx
+                        ? nBondVal
+                        : idx === safeAntibondingIdx
+                          ? nAntibondVal
+                          : orb?.occupation;
+                    const shortLabel = (orb?.label || `φ_${idx + 1}`).split(" ")[0];
+                    return (
+                      <button
+                        key={`orb-car-${idx}`}
+                        type="button"
+                        className={`prs-orb-chip ${safeSelectedIdx === idx ? "active" : ""}`}
+                        onClick={() => setSelectedOrbitalIdx(idx)}
+                      >
+                        <span className="prs-orb-irrep">{shortLabel}</span>
+                        {occ !== undefined && (
+                          <span className="prs-orb-occ">n={Number(occ).toFixed(2)}</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                  <button
+                    type="button"
+                    className={`prs-orb-chip ${safeSelectedIdx === -1 ? "active" : ""}`}
+                    onClick={() => setSelectedOrbitalIdx(-1)}
+                  >
+                    <span className="prs-orb-irrep">All</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 4. Slim Thumb-Intuitive Geometry Scrubber Dock */}
+          <div className="prs-stretch-dock">
+            <button
+              type="button"
+              className={`prs-play-circle ${isPlaying ? "playing" : ""}`}
+              onClick={() => setIsPlaying((p) => !p)}
+              title={isPlaying ? "Pause trajectory" : "Play trajectory"}
+              aria-label={isPlaying ? "Pause" : "Play"}
+            >
+              {isPlaying ? "❚❚" : "▶"}
+            </button>
+            <div className="prs-stretch-slider-wrap">
+              <div className="prs-stretch-labels">
+                <span>{stretchLabel}</span>
+                <span className="gold">{Number(currentR || 0.74).toFixed(2)} {coordUnit}</span>
+              </div>
+              <input
+                type="range"
+                className="prs-stretch-range"
+                min={trajMinR}
+                max={trajMaxR}
+                step={0.01}
+                value={Number(currentR || trajMinR)}
+                onChange={(e) => {
+                  setIsPlaying(false);
+                  jumpToCoordinate(parseFloat(e.target.value));
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="qboltz-agent-overlay is-activated-fullscreen">
