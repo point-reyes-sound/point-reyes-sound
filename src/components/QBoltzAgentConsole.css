@@ -2437,3 +2437,19 @@
     max-width: 680px;
   }
 }
+
+/* Publication-grade molecular orbital & point group subscript/superscript typography */
+.prs-pg-badge sub,
+.prs-orb-irrep sub,
+.prs-tel-v sub {
+  font-size: 0.7em;
+  line-height: 0;
+  vertical-align: -0.22em;
+  font-style: normal;
+}
+
+.prs-orb-irrep sup {
+  font-size: 0.72em;
+  line-height: 0;
+  vertical-align: 0.35em;
+}
