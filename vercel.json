@@ -46,7 +46,11 @@
   "rewrites": [
     {
       "source": "/deck",
-      "destination": "/public-deck.html"
+      "destination": "/point-reyes-sound-deck.html"
+    },
+    {
+      "source": "/point-reyes-sound-deck",
+      "destination": "/point-reyes-sound-deck.html"
     },
     {
       "source": "/public-deck",

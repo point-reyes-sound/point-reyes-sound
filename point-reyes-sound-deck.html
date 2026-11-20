@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Point Reyes Sound — Investor Deck</title>
+  <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg?v=5" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/prs_favicon_32.png?v=5" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/prs_favicon_180.png?v=5" />
+  <link rel="shortcut icon" href="/favicon.ico?v=5" />
+
+  <meta name="description" content="Point Reyes Sound, Inc. — Electronic Design Automation at Scale. Deterministic O(N³) GPU-native phase-space kinetics for sub-2nm semiconductor design." />
+  <meta property="og:title" content="Point Reyes Sound — Investor Deck" />
+  <meta property="og:description" content="Deterministic O(N³) GPU-native EDA solver capturing the $35B Electronic Design Automation market through Tier-1 chipmaker design partnerships." />
+  <meta property="og:image" content="https://www.pointreyessound.com/PRS_logo_v2.jpeg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-void: #020510;
+      --bg-night: #071338;
+      --bg-deep: #09194A;
+      --bg-card: rgba(13, 33, 94, 0.78);
+      --bg-card-strong: rgba(10, 26, 76, 0.92);
+
+      --gold: #F8DF98;
+      --champagne: #FFF5CC;
+      --crimson: #B81838;
+      --crimson-soft: rgba(184, 24, 56, 0.16);
+      --ice: #A7BDF2;
+      --mist: #C7D8FF;
+      --text-main: #FFFFFF;
+      --text-body: #DCE7FF;
+      --text-muted: #9BB2EA;
+      --rule: rgba(79, 114, 198, 0.36);
+      --rule-gold: rgba(248, 223, 152, 0.38);
+
+      --font-serif: "EB Garamond", Georgia, serif;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg-void);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Centered 16:9 Stage Wrapper */
+    .deck-viewport {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 20px 64px;
+      position: relative;
+    }
+
+    .deck-stage {
+      position: relative;
+      width: min(calc((100vh - 84px) * 16 / 9), calc(100vw - 40px));
+      aspect-ratio: 16 / 9;
+      container-type: size;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(79, 114, 198, 0.32);
+      background: var(--bg-deep);
+    }
+
+    /* Slide Base */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      padding: 3.4cqh 4.0cqw 2.8cqh;
+      background:
+        radial-gradient(ellipse 85% 65% at 50% -12%, rgba(28, 66, 176, 0.48), transparent 68%),
+        radial-gradient(circle 42% at 96% 96%, rgba(168, 16, 56, 0.22), transparent 72%),
+        linear-gradient(165deg, #0B1E58 0%, #09194A 52%, #061030 100%);
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    /* Top Header Bar */
+    .slide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.5cqh;
+      border-bottom: 1px solid var(--rule);
+      flex-shrink: 0;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 0.9cqw;
+    }
+
+    .brand-lockup img {
+      width: 2.3cqw;
+      height: 2.3cqw;
+      border-radius: 4px;
+      border: 1px solid rgba(248, 223, 152, 0.35);
+      object-fit: cover;
+    }
+
+    .brand-name {
+      font-family: var(--font-mono);
+      font-size: 1.25cqh;
+      font-weight: 600;
+      letter-spacing: 0.20em;
+      color: var(--mist);
+      text-transform: uppercase;
+    }
+
+    .brand-sep {
+      color: rgba(167, 189, 242, 0.38);
+      font-size: 1.4cqh;
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 1.15cqh;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .slide-num {
+      font-family: var(--font-mono);
+      font-size: 1.25cqh;
+      letter-spacing: 0.12em;
+      color: #E9C7D1;
+    }
+
+    /* Slide Titles */
+    .slide-headline-block {
+      margin: 2.0cqh 0 1.8cqh;
+      flex-shrink: 0;
+    }
+
+    .slide-headline-block.centered {
+      text-align: center;
+    }
+
+    .slide-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 4.6cqh;
+      line-height: 1.06;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .slide-sub {
+      font-family: var(--font-serif);
+      font-size: 2.15cqh;
+      color: var(--gold);
+      margin-top: 0.55cqh;
+      line-height: 1.25;
+    }
+
+    .slide-kicker {
+      font-family: var(--font-mono);
+      font-size: 1.2cqh;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ice);
+      margin-top: 0.55cqh;
+    }
+
+    /* Main Content Body */
+    .slide-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.8cqh;
+    }
+
+    /* Footer */
+    .slide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1.2cqh;
+      margin-top: 1.4cqh;
+      border-top: 1px solid var(--rule);
+      font-family: var(--font-mono);
+      font-size: 1.1cqh;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .slide-footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .slide-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Reusable Editorial Cards & Grids */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.0cqw; min-height: 0; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8cqw; min-height: 0; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4cqw; min-height: 0; }
+
+    .card {
+      background: linear-gradient(155deg, rgba(16, 40, 112, 0.78), rgba(9, 25, 74, 0.90));
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 2.2cqh 1.8cqw;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 1.8cqh;
+      min-height: 0;
+    }
+
+    .card.gold-rim {
+      border-color: var(--rule-gold);
+      background: linear-gradient(155deg, rgba(24, 52, 130, 0.84), rgba(9, 25, 74, 0.94));
+    }
+
+    .card-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 1.1cqh;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.7cqh;
+    }
+
+    .card-title {
+      font-family: var(--font-serif);
+      font-size: 2.5cqh;
+      font-weight: 600;
+      color: #FFFFFF;
+      line-height: 1.15;
+    }
+
+    .card-text {
+      font-family: var(--font-sans);
+      font-size: 1.55cqh;
+      line-height: 1.48;
+      color: var(--text-body);
+    }
+
+    .metric-big {
+      font-family: var(--font-serif);
+      font-size: 4.8cqh;
+      font-weight: 700;
+      line-height: 1.02;
+      color: var(--gold);
+    }
+
+    .metric-big.champagne { color: var(--champagne); }
+    .metric-big.ice { color: var(--ice); }
+
+    .metric-label {
+      font-family: var(--font-mono);
+      font-size: 1.12cqh;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mist);
+      margin-top: 0.55cqh;
+    }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.05cqh;
+    }
+
+    .bullet-list li {
+      position: relative;
+      padding-left: 1.4cqw;
+      font-size: 1.55cqh;
+      line-height: 1.44;
+      color: var(--text-body);
+    }
+
+    .bullet-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.82cqh;
+      width: 0.52cqw;
+      height: 0.52cqw;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .bullet-list strong {
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    /* Cover Slide Specifics */
+    .cover-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 2.8cqw;
+      align-items: center;
+      min-height: 0;
+      padding: 1.4cqh 0;
+    }
+
+    .cover-hero-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 7.4cqh;
+      line-height: 1.02;
+      color: #FFFFFF;
+      letter-spacing: -0.015em;
+    }
+
+    .cover-hero-sub {
+      font-family: var(--font-serif);
+      font-size: 3.1cqh;
+      color: var(--gold);
+      margin-top: 1.4cqh;
+      line-height: 1.22;
+    }
+
+    .cover-hero-desc {
+      font-family: var(--font-sans);
+      font-size: 1.65cqh;
+      line-height: 1.55;
+      color: var(--text-body);
+      margin-top: 2.0cqh;
+      max-width: 94%;
+    }
+
+    .cover-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9cqw;
+      margin-top: 2.4cqh;
+    }
+
+    .pill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45cqw;
+      padding: 0.85cqh 1.25cqw;
+      border-radius: 999px;
+      border: 1px solid var(--rule-gold);
+      background: rgba(248, 223, 152, 0.10);
+      color: var(--gold);
+      font-family: var(--font-mono);
+      font-size: 1.18cqh;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+
+    .pill-link.secondary {
+      border-color: var(--rule);
+      background: rgba(167, 189, 242, 0.08);
+      color: var(--mist);
+    }
+
+    .cover-plate {
+      background: var(--bg-card-strong);
+      border: 1px solid var(--rule-gold);
+      border-radius: 14px;
+      padding: 1.5cqh 1.3cqw 1.3cqh;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1cqh;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    .cover-plate img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 9px;
+      border: 1px solid var(--rule);
+    }
+
+    .cover-plate-cap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 1.12cqh;
+      color: var(--mist);
+    }
+
+    /* Comparison Table */
+    .eda-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.48cqh;
+    }
+
+    .eda-table th {
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 1.12cqh;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 1.1cqh 1.1cqw;
+      border-bottom: 1px solid var(--rule-gold);
+    }
+
+    .eda-table td {
+      padding: 1.25cqh 1.1cqw;
+      border-bottom: 1px solid rgba(79, 114, 198, 0.22);
+      color: var(--text-body);
+      vertical-align: top;
+    }
+
+    .eda-table tr.highlight td {
+      background: rgba(248, 223, 152, 0.09);
+      color: #FFFFFF;
+      font-weight: 500;
+    }
+
+    .eda-table tr.highlight td:first-child {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* Vertical Image Cards (Slide 4) */
+    .vertical-card-img {
+      width: 100%;
+      height: 28cqh;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--rule);
+      margin-top: 1.2cqh;
+    }
+
+    /* Revenue Tier Badge */
+    .tier-badge {
+      display: inline-block;
+      padding: 0.45cqh 0.85cqw;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 1.05cqh;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      background: rgba(248, 223, 152, 0.14);
+      color: var(--gold);
+      border: 1px solid var(--rule-gold);
+      margin-bottom: 0.9cqh;
+      align-self: flex-start;
+    }
+
+    /* Team Portraits */
+    .portrait-ring {
+      width: 11.5cqh;
+      height: 11.5cqh;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
+    }
+
+    .portrait-ring.advisor {
+      width: 9.8cqh;
+      height: 9.8cqh;
+      border-color: var(--ice);
+    }
+
+    /* Slide 2: Executive Film (Interactive Video on Screen -> Clickable Cinema Poster in PDF) */
+    .film-stage {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--rule-gold);
+      background: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .film-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .film-print-cover {
+      display: none;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+    }
+
+    .film-print-poster {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.62);
+    }
+
+    .film-print-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.8cqh;
+      background: radial-gradient(circle at center, rgba(6, 16, 48, 0.25), rgba(2, 5, 16, 0.72));
+      text-align: center;
+      padding: 4cqh 6cqw;
+    }
+
+    .film-play-badge {
+      width: 10.5cqh;
+      height: 10.5cqh;
+      border-radius: 50%;
+      background: rgba(248, 223, 152, 0.94);
+      box-shadow: 0 0 42px rgba(248, 223, 152, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .film-print-title {
+      font-family: var(--font-mono);
+      font-size: 2.1cqh;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+    }
+
+    .film-print-sub {
+      font-family: var(--font-serif);
+      font-size: 3.4cqh;
+      color: #FFFFFF;
+    }
+
+    .film-print-url {
+      font-family: var(--font-mono);
+      font-size: 1.4cqh;
+      color: var(--mist);
+      padding: 0.85cqh 1.6cqw;
+      border-radius: 999px;
+      border: 1px solid var(--rule-gold);
+      background: rgba(9, 25, 74, 0.85);
+    }
+
+    /* Interactive Bottom Controls (Hidden in Print/PDF) */
+    .deck-controls {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(7, 19, 56, 0.92);
+      border: 1px solid rgba(79, 114, 198, 0.45);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .ctrl-btn {
+      background: rgba(167, 189, 242, 0.10);
+      border: 1px solid rgba(167, 189, 242, 0.28);
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+    }
+
+    .ctrl-btn:hover {
+      background: rgba(248, 223, 152, 0.18);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .ctrl-btn.primary {
+      background: rgba(184, 24, 56, 0.20);
+      border-color: #C42038;
+      color: #FFD6DE;
+    }
+
+    .ctrl-btn.primary:hover {
+      background: #C42038;
+      color: #FFFFFF;
+    }
+
+    .ctrl-dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 6px;
+    }
+
+    .ctrl-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(167, 189, 242, 0.35);
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.2s ease;
+    }
+
+    .ctrl-dot.active {
+      width: 22px;
+      background: var(--gold);
+    }
+
+    .ctrl-counter {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--mist);
+      min-width: 48px;
+      text-align: center;
+    }
+
+    /* =====================================================================
+       EXACT 16:9 STANDALONE PDF PRINT MODE (1920px x 1080px per slide)
+       ===================================================================== */
+    @page {
+      size: 1920px 1080px;
+      margin: 0;
+    }
+
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      html, body {
+        width: 1920px !important;
+        height: auto !important;
+        overflow: visible !important;
+        background: #061030 !important;
+      }
+
+      .deck-controls {
+        display: none !important;
+      }
+
+      .deck-viewport {
+        display: block !important;
+        width: 1920px !important;
+        height: auto !important;
+        padding: 0 !important;
+      }
+
+      .deck-stage {
+        width: 1920px !important;
+        height: auto !important;
+        aspect-ratio: auto !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        container-type: normal !important;
+      }
+
+      .slide {
+        position: relative !important;
+        display: flex !important;
+        width: 1920px !important;
+        height: 1080px !important;
+        container-type: size !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        overflow: hidden !important;
+      }
+
+      .slide:last-child {
+        page-break-after: auto !important;
+        break-after: auto !important;
+      }
+
+      .film-video {
+        display: none !important;
+      }
+
+      .film-print-cover {
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-viewport">
+    <main class="deck-stage" id="deck-stage">
+
+      <!-- =================================================================
+           SLIDE 01 / 08 — COVER & COMMERCIAL THESIS
+           ================================================================= -->
+      <section class="slide active" id="slide-1" data-slide="1">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Investor Deck</span>
+          </div>
+          <span class="slide-num">01 / 09</span>
+        </header>
+
+        <div class="cover-grid">
+          <div>
+            <h1 class="cover-hero-title">Point Reyes Sound</h1>
+            <div class="cover-hero-sub">Electronic Design Automation at Scale</div>
+            <p class="cover-hero-desc">
+              Deterministic <strong style="color:#fff;">O(N³) GPU-native phase-space kinetics</strong> replacing empirical TCAD fitting in sub-2nm semiconductor design—built to capture a sizeable share of the <strong style="color:var(--gold);">$35B EDA &amp; simulation market</strong> through paid Tier-1 chipmaker design partnerships.
+            </p>
+            <div class="cover-pill-row">
+              <a class="pill-link" href="https://www.pointreyessound.com/preview" target="_blank" rel="noopener">Interactive Preview ↗</a>
+              <a class="pill-link secondary" href="https://www.pointreyessound.com/film" target="_blank" rel="noopener">Executive Film (0:58) ↗</a>
+              <a class="pill-link secondary" href="https://arxiv.org/abs/2608.14979" target="_blank" rel="noopener">J. Chem. Phys. Paper ↗</a>
+            </div>
+          </div>
+
+          <div class="cover-plate">
+            <img src="/vertical_semiconductors.jpg" alt="Sub-2nm Semiconductor Kinetic Relaxation" />
+            <div class="cover-plate-cap">
+              <span>Sub-2nm GAAFET Kinetic Relaxation</span>
+              <span style="color:var(--gold);">U.S. Prov. Patent 64/033,274</span>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. · 2261 Market St, Suite 72927, San Francisco, CA 94114</span>
+          <span>Confidential — Pre-Seed Financing · <a href="https://www.pointreyessound.com" target="_blank" rel="noopener">pointreyessound.com</a></span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 02 / 09 — EXECUTIVE FILM (Interactive Video -> Clickable PDF Poster)
+           ================================================================= -->
+      <section class="slide" id="slide-2" data-slide="2">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Executive Film</span>
+          </div>
+          <span class="slide-num">02 / 09</span>
+        </header>
+
+        <div class="slide-body" style="padding-top:1.4cqh;">
+          <div class="film-stage">
+            <video class="film-video" id="deck-film" controls playsinline preload="metadata" poster="/film_watch_poster.jpg">
+              <source src="/point_reyes_sound_complete_film.mp4" type="video/mp4" />
+              Your browser does not support HTML5 video.
+            </video>
+            <a class="film-print-cover" href="https://www.pointreyessound.com/film?autoplay=1" target="_blank" rel="noopener">
+              <img class="film-print-poster" src="/film_watch_poster.jpg" alt="Point Reyes Sound Executive Film" />
+              <div class="film-print-overlay">
+                <div class="film-play-badge">
+                  <svg viewBox="0 0 24 24" width="44" height="44" fill="#09194A" style="margin-left:5px;">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+                <div class="film-print-title">EXECUTIVE FILM · 0:58</div>
+                <div class="film-print-sub">Continuous Phase-Space Kinetics &amp; Electronic Design Automation</div>
+                <div class="film-print-url">▶ Watch Online · https://www.pointreyessound.com/film ↗</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>Executive Film · <a href="https://www.pointreyessound.com/film" target="_blank" rel="noopener">pointreyessound.com/film ↗</a></span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 03 / 09 — THE SUB-2nm EDA WALL
+           ================================================================= -->
+      <section class="slide" id="slide-3" data-slide="3">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">The Sub-2nm EDA Bottleneck</span>
+          </div>
+          <span class="slide-num">03 / 09</span>
+        </header>
+
+        <div class="slide-headline-block">
+          <h2 class="slide-title">Legacy EDA &amp; TCAD Tools Break Below 2 Nanometers</h2>
+          <div class="slide-sub">At atomic gate thicknesses, correlated electron kinetics govern yield, leakage, and tape-out risk.</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="card">
+              <div>
+                <div class="card-eyebrow">01 · Classical TCAD Wall</div>
+                <div class="metric-big">$50M+</div>
+                <div class="metric-label">Cost per Advanced-Node Tape-Out Respin</div>
+              </div>
+              <p class="card-text" style="margin-top:1.4cqh;">
+                Drift-diffusion and empirical TCAD models fail to predict quantum tunneling, gate-oxide trap kinetics, and hot-carrier relaxation in 2nm/1.4nm GAAFET nanosheets.
+              </p>
+            </div>
+
+            <div class="card">
+              <div>
+                <div class="card-eyebrow">02 · Quantum Scaling Wall</div>
+                <div class="metric-big champagne">O(N⁶–N⁷)</div>
+                <div class="metric-label">Conventional Correlated Solver Complexity</div>
+              </div>
+              <p class="card-text" style="margin-top:1.4cqh;">
+                Standard wavefunction methods (CCSD(T), CASPT2, NEGF) explode combinatorially with electron count—limiting accurate electronic structure to tiny toy fragments instead of real device stacks.
+              </p>
+            </div>
+
+            <div class="card gold-rim">
+              <div>
+                <div class="card-eyebrow">03 · Unmet Foundry Need</div>
+                <div class="metric-big ice">12–18 Mo</div>
+                <div class="metric-label">Empirical PDK Calibration Cycles</div>
+              </div>
+              <p class="card-text" style="margin-top:1.4cqh;">
+                Foundries and fabless leaders require a <strong style="color:#fff;">predictive, GPU-native quantum solver</strong> that plugs directly into TCAD &amp; EDA sign-off flows without waiting a decade for fault-tolerant hardware.
+              </p>
+            </div>
+          </div>
+
+          <div class="card" style="padding:1.6cqh 2.0cqw; flex-direction:row; align-items:center; justify-content:space-between; gap:2cqw;">
+            <span style="font-family:var(--font-serif); font-size:2.25cqh; color:#FFFFFF;">
+              Chipmakers cannot afford empirical guesswork below 2nm—they pay recurring enterprise software budgets for predictive physics sign-off.
+            </span>
+            <span style="font-family:var(--font-mono); font-size:1.2cqh; color:var(--gold); white-space:nowrap;">SUB-2nm · GAAFET · HBM</span>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>Problem Statement · Sub-2nm Electronic Design Automation</span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 03 / 08 — THE ENGINE: O(N³) PHASE-SPACE SOLVER & VALIDATION
+           ================================================================= -->
+      <section class="slide" id="slide-4" data-slide="4">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Core Technology &amp; Validation</span>
+          </div>
+          <span class="slide-num">04 / 09</span>
+        </header>
+
+        <div class="slide-headline-block">
+          <h2 class="slide-title">Deterministic O(N³) Phase-Space Kinetics on Commercial GPUs</h2>
+          <div class="slide-sub">Peer-reviewed electronic structure accuracy engineered for commercial EDA software margins today.</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-2" style="flex:1;">
+            <div class="card gold-rim">
+              <div>
+                <div class="card-eyebrow">QBE-SCF &amp; Q-BECK Architecture</div>
+                <div class="card-title">Phase-Space Electronic Structure Without Exponential Blowup</div>
+              </div>
+              <ul class="bullet-list" style="margin:1.6cqh 0;">
+                <li><strong>Deterministic O(N³) Scaling:</strong> Reformulates correlated electronic structure as a continuous quantum Boltzmann / Wigner phase-space kinetic flow, collapsing O(N⁶) correlation bottlenecks into dense GPU matrix operations.</li>
+                <li><strong>Strong Correlation &amp; Conical Seams:</strong> Captures bond breaking, interfacial defect states, and non-adiabatic relaxation where standard DFT systematically fails.</li>
+                <li><strong>Mathematical Efficiency Proof:</strong> The same phase-space formulation achieves a <strong>1,748× Toffoli gate reduction</strong> in fault-tolerant benchmarks—validating the compactness of our representation while our commercial product runs immediately on standard NVIDIA GPUs.</li>
+              </ul>
+              <div style="font-family:var(--font-mono); font-size:1.15cqh; color:var(--gold);">
+                AWS Pilot Compute · CUDA / C++ / Python SDK · Patent Pending
+              </div>
+            </div>
+
+            <div class="card" style="justify-content:space-between;">
+              <div>
+                <div class="card-eyebrow">Solver Comparison</div>
+                <table class="eda-table">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Scaling</th>
+                      <th>Strong Corr.</th>
+                      <th>EDA Ready</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Classical TCAD / DFT</td>
+                      <td>O(N³)</td>
+                      <td>Fails at defects</td>
+                      <td>Empirical fit</td>
+                    </tr>
+                    <tr>
+                      <td>CCSD(T) / CASPT2</td>
+                      <td>O(N⁶–N⁷)</td>
+                      <td>Accurate</td>
+                      <td>Too slow</td>
+                    </tr>
+                    <tr class="highlight">
+                      <td>Point Reyes (Q-BOLTZ)</td>
+                      <td>O(N³) GPU</td>
+                      <td>Exact fractional</td>
+                      <td>Production SDK</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="border-top:1px solid var(--rule); padding-top:1.4cqh; display:flex; flex-direction:column; gap:0.8cqh;">
+                <div class="card-eyebrow" style="margin-bottom:0;">Peer-Reviewed Scientific De-Risking</div>
+                <div class="card-text" style="font-size:1.42cqh;">
+                  • <strong style="color:#fff;">QBE-SCF</strong> accepted in <em>The Journal of Chemical Physics</em> (zero revisions) — <a href="https://arxiv.org/abs/2608.14979" target="_blank" style="color:var(--gold); text-decoration:none;">arXiv:2608.14979 ↗</a>
+                </div>
+                <div class="card-text" style="font-size:1.42cqh;">
+                  • <strong style="color:#fff;">Q-BECK</strong> continuous phase-space kinetics preprint — <a href="https://arxiv.org/abs/2611.17245" target="_blank" style="color:var(--gold); text-decoration:none;">arXiv:2611.17245 ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>U.S. Provisional Patent 64/033,274 · Peer-Reviewed in J. Chem. Phys.</span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 04 / 08 — THE $35B EDA MARKET & PLATFORM EXPANSION
+           ================================================================= -->
+      <section class="slide" id="slide-5" data-slide="5">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Market Opportunity</span>
+          </div>
+          <span class="slide-num">05 / 09</span>
+        </header>
+
+        <div class="slide-headline-block centered">
+          <h2 class="slide-title">Capturing a Sizeable Share of the $35B EDA Market</h2>
+          <div class="slide-sub">Beachhead in Sub-2nm Semiconductor EDA — expanding across high-margin physical simulation verticals.</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-3" style="flex:1;">
+            <div class="card gold-rim">
+              <div>
+                <div class="card-eyebrow">Primary Beachhead · 80% Focus</div>
+                <div class="card-title">Semiconductor EDA &amp; TCAD</div>
+                <p class="card-text" style="margin-top:0.7cqh;">
+                  Kinetic relaxation, gate-oxide reliability, and interconnect resistance in the sub-2nm GAAFET &amp; HBM regime.
+                </p>
+              </div>
+              <img class="vertical-card-img" src="/vertical_semiconductors.jpg" alt="Semiconductor EDA" />
+            </div>
+
+            <div class="card">
+              <div>
+                <div class="card-eyebrow">Expansion Vertical 02</div>
+                <div class="card-title">Solid-State Batteries</div>
+                <p class="card-text" style="margin-top:0.7cqh;">
+                  Solid-electrolyte interphase (SEI) degradation and interfacial lithium-ion transport kinetics.
+                </p>
+              </div>
+              <img class="vertical-card-img" src="/vertical_batteries.jpg" alt="Solid-State Batteries" />
+            </div>
+
+            <div class="card">
+              <div>
+                <div class="card-eyebrow">Expansion Vertical 03</div>
+                <div class="card-title">Industrial Catalysis</div>
+                <p class="card-text" style="margin-top:0.7cqh;">
+                  Strongly correlated transition-state searches for next-generation specialty chemicals &amp; fuels.
+                </p>
+              </div>
+              <img class="vertical-card-img" src="/vertical_catalysis.jpg" alt="Catalysis" />
+            </div>
+          </div>
+
+          <div class="card" style="padding:1.3cqh 1.8cqw; flex-direction:row; justify-content:space-between; align-items:center;">
+            <span style="font-family:var(--font-mono); font-size:1.22cqh; color:var(--mist);">
+              STRATEGIC COMPS: <strong style="color:#fff;">Synopsys · Cadence · Ansys ($35B acquisition) · Siemens EDA · Schrödinger</strong>
+            </span>
+            <span style="font-family:var(--font-mono); font-size:1.22cqh; color:var(--gold);">
+              85%+ PURE-SOFTWARE GROSS MARGINS
+            </span>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>Electronic Design Automation · $35B USD Global Market</span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 05 / 08 — EDA REVENUE MODEL & UNIT ECONOMICS
+           ================================================================= -->
+      <section class="slide" id="slide-6" data-slide="6">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">EDA Revenue Model</span>
+          </div>
+          <span class="slide-num">06 / 09</span>
+        </header>
+
+        <div class="slide-headline-block">
+          <h2 class="slide-title">Land-and-Expand EDA Software Revenue Model</h2>
+          <div class="slide-sub">Paid chipmaker design partnerships convert directly into recurring seat-cluster &amp; fab-wide EDA licenses.</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-3" style="flex:1;">
+            <div class="card gold-rim">
+              <div>
+                <span class="tier-badge">Stage 1 · Months 1–12</span>
+                <div class="card-title">Chipmaker Design Partnership</div>
+                <div class="metric-big" style="margin-top:1.1cqh;">$250K–$500K</div>
+                <div class="metric-label">Paid JDA / NRE per Partner</div>
+              </div>
+              <ul class="bullet-list" style="margin-top:1.4cqh;">
+                <li><strong>Deliverable:</strong> Calibrate GPU-native Q-BOLTZ solver on partner's proprietary sub-2nm PDK &amp; gate-stack test structures.</li>
+                <li><strong>Target:</strong> 1–2 Tier-1 foundry or fabless partners → <strong>$500K–$1.0M</strong> initial commercial bookings.</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div>
+                <span class="tier-badge">Stage 2 · Months 12–24</span>
+                <div class="card-title">TCAD / EDA Seat-Cluster License</div>
+                <div class="metric-big champagne" style="margin-top:1.1cqh;">$1.5M ARR</div>
+                <div class="metric-label">Target Foundry Pilot ARR (Mo 24)</div>
+              </div>
+              <ul class="bullet-list" style="margin-top:1.4cqh;">
+                <li><strong>Pricing:</strong> $150K–$300K / seat-cluster / year + GPU compute usage tier via Synopsys/Cadence API bridge.</li>
+                <li><strong>Target:</strong> Convert flagship partner + 3–4 additional logic/memory/equipment pilots.</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div>
+                <span class="tier-badge">Stage 3 · 2027–2029+</span>
+                <div class="card-title">Enterprise Fab Site Licenses</div>
+                <div class="metric-big ice" style="margin-top:1.1cqh;">$15M → $100M+</div>
+                <div class="metric-label">2028 ARR Target → Scale Path</div>
+              </div>
+              <ul class="bullet-list" style="margin-top:1.4cqh;">
+                <li><strong>Pricing:</strong> $2M–$5M / fab / year multi-year enterprise site licenses across 2nm/1.4nm logic, HBM/DRAM &amp; packaging.</li>
+                <li><strong>Market Share:</strong> Capturing <strong>1–3% of the $35B EDA market</strong> yields $350M–$1B+ long-term ARR potential.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="grid-4">
+            <div class="card" style="padding:1.2cqh 1.2cqw; text-align:center;">
+              <div style="font-family:var(--font-serif); font-size:2.9cqh; font-weight:700; color:var(--gold);">85%+</div>
+              <div class="metric-label">Target Software Gross Margin</div>
+            </div>
+            <div class="card" style="padding:1.2cqh 1.2cqw; text-align:center;">
+              <div style="font-family:var(--font-serif); font-size:2.9cqh; font-weight:700; color:var(--champagne);">3–5 Yr</div>
+              <div class="metric-label">Standard EDA Contract Lock-In</div>
+            </div>
+            <div class="card" style="padding:1.2cqh 1.2cqw; text-align:center;">
+              <div style="font-family:var(--font-serif); font-size:2.9cqh; font-weight:700; color:var(--ice);">130%+</div>
+              <div class="metric-label">Projected Net Dollar Retention</div>
+            </div>
+            <div class="card" style="padding:1.2cqh 1.2cqw; text-align:center;">
+              <div style="font-family:var(--font-serif); font-size:2.9cqh; font-weight:700; color:#FFFFFF;">Zero CapEx</div>
+              <div class="metric-label">Pure GPU Software Deployment</div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>Revenue Model · Pure-Software EDA Economics</span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 06 / 08 — CHIPMAKER DESIGN PARTNERSHIP EXECUTION PLAN
+           ================================================================= -->
+      <section class="slide" id="slide-7" data-slide="7">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Go-To-Market &amp; Design Partnership</span>
+          </div>
+          <span class="slide-num">07 / 09</span>
+        </header>
+
+        <div class="slide-headline-block">
+          <h2 class="slide-title">24-Month Path to Flagship Chipmaker Design Partnership</h2>
+          <div class="slide-sub">Co-developing our production EDA solver directly inside a Tier-1 semiconductor partner's sub-2nm workflow.</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-4" style="flex:1;">
+            <div class="card">
+              <div>
+                <div class="card-eyebrow">Months 1–6 · Q1–Q2</div>
+                <div class="card-title">GPU Solver SDK &amp; Blind Benchmark</div>
+              </div>
+              <ul class="bullet-list" style="margin-top:1.2cqh;">
+                <li>Hire senior CUDA/C++ compiler &amp; kernel engineers.</li>
+                <li>Publish blind sub-2nm GAAFET dielectric &amp; hot-carrier benchmark vs. legacy DFT/NEGF on AWS Pilot GPUs.</li>
+                <li>Deliver containerized Python/C++ EDA SDK.</li>
+              </ul>
+            </div>
+
+            <div class="card gold-rim">
+              <div>
+                <div class="card-eyebrow">Months 7–12 · Q3–Q4</div>
+                <div class="card-title">Sign Flagship Chipmaker JDA</div>
+              </div>
+              <ul class="bullet-list" style="margin-top:1.2cqh;">
+                <li>Execute <strong>$250K–$500K Paid Design Partnership</strong> with a Tier-1 foundry, memory maker, or fabless leader.</li>
+                <li>Validate on proprietary 2nm/1.4nm PDK structures under mutual NDA.</li>
+                <li>Co-specify TCAD sign-off API hooks.</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div>
+                <div class="card-eyebrow">Months 13–18 · Q5–Q6</div>
+                <div class="card-title">Pilot Conversion &amp; Expansion</div>
+              </div>
+              <ul class="bullet-list" style="margin-top:1.2cqh;">
+                <li>Convert flagship design partner into annual multi-seat TCAD solver subscription.</li>
+                <li>Onboard 2nd &amp; 3rd semiconductor / equipment pilots across HBM &amp; interconnect reliability.</li>
+                <li>Cross <strong>$1.0M+ ARR</strong> run-rate.</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div>
+                <div class="card-eyebrow">Months 19–24 · Q7–Q8</div>
+                <div class="card-title">Enterprise Release &amp; Series A</div>
+              </div>
+              <ul class="bullet-list" style="margin-top:1.2cqh;">
+                <li>Ship production Enterprise EDA Suite v1.0 with Synopsys/Cadence workflow connectors.</li>
+                <li>Reach <strong>$1.5M Foundry Pilot ARR</strong> across 3–5 enterprise accounts.</li>
+                <li>Raise Series A to scale toward <strong>$15M ARR (2028)</strong>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card" style="padding:1.5cqh 2.0cqw; flex-direction:row; justify-content:space-between; align-items:center; gap:2cqw;">
+            <div>
+              <div class="card-eyebrow" style="margin-bottom:0.35cqh;">Target Design Partner Ecosystem</div>
+              <div class="card-text" style="font-size:1.52cqh;">
+                <strong style="color:#fff;">Foundries &amp; IDMs:</strong> TSMC, Intel Foundry, Samsung Foundry, Micron &nbsp;·&nbsp;
+                <strong style="color:#fff;">Fabless &amp; Equipment:</strong> NVIDIA, AMD, Applied Materials, Lam Research
+              </div>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:1.15cqh; color:var(--gold); white-space:nowrap;">18-MO SERIES A TRIGGER</span>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>Go-To-Market · Tier-1 Chipmaker Design Partnership</span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 07 / 08 — LEADERSHIP & SCIENTIFIC ADVISORY BOARD
+           ================================================================= -->
+      <section class="slide" id="slide-9" data-slide="9">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Leadership &amp; Advisors</span>
+          </div>
+          <span class="slide-num">08 / 09</span>
+        </header>
+
+        <div class="slide-headline-block centered">
+          <h2 class="slide-title">Built by Quantum Electronic Structure &amp; Solver Pioneers</h2>
+          <div class="slide-sub">Deep domain pedigree across Q-Chem, PsiQuantum, University of Chicago, and Stanford.</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="grid-2" style="flex:1; grid-template-columns: 1.08fr 0.92fr;">
+            <!-- Founder Card -->
+            <div class="card gold-rim" style="justify-content:center; gap:1.8cqh;">
+              <div style="display:flex; align-items:center; gap:1.6cqw;">
+                <img class="portrait-ring" src="/deck_assets/romit_circle.png" alt="Romit Chakraborty, Ph.D." />
+                <div>
+                  <div class="card-eyebrow" style="margin-bottom:0.35cqh;">Founder &amp; CEO</div>
+                  <div style="font-family:var(--font-serif); font-size:3.2cqh; font-weight:600; color:#fff; line-height:1.08;">
+                    Romit Chakraborty, Ph.D.
+                  </div>
+                  <div style="font-family:var(--font-mono); font-size:1.15cqh; color:var(--ice); margin-top:0.5cqh;">
+                    PsiQuantum · UC Berkeley · UChicago Ph.D. · Alchemist Chicago
+                  </div>
+                </div>
+              </div>
+              <ul class="bullet-list">
+                <li><strong>Production Quantum Chemistry Software:</strong> Core contributor to <strong>Q-Chem 5</strong> (UC Berkeley), shipping commercial electronic structure solvers used worldwide.</li>
+                <li><strong>Fault-Tolerant &amp; Semiconductor Algorithms:</strong> Former Staff Scientist at <strong>PsiQuantum</strong>; inventor of the QBE-SCF &amp; Q-BECK phase-space architecture (<em>J. Chem. Phys.</em> 2026).</li>
+                <li><strong>Commercial Focus:</strong> Leading Alchemist Chicago accelerator cohort and direct Tier-1 semiconductor &amp; AWS pilot engagements.</li>
+              </ul>
+            </div>
+
+            <!-- Scientific Advisory Board -->
+            <div class="card" style="justify-content:space-between;">
+              <div class="card-eyebrow" style="margin-bottom:0;">Scientific Advisory Board</div>
+
+              <div style="display:flex; align-items:center; gap:1.4cqw; padding:1.4cqh 0; border-bottom:1px solid var(--rule);">
+                <img class="portrait-ring advisor" src="/deck_assets/mazziotti_circle.png" alt="Prof. David Mazziotti" />
+                <div>
+                  <div style="font-family:var(--font-serif); font-size:2.65cqh; font-weight:600; color:#fff;">Prof. David Mazziotti</div>
+                  <div style="font-family:var(--font-mono); font-size:1.12cqh; color:var(--gold); margin:0.3cqh 0 0.5cqh;">University of Chicago · Reduced Density Matrix Theory</div>
+                  <p class="card-text" style="font-size:1.42cqh;">
+                    World authority in correlated 2-RDM electronic structure, convex semidefinite optimization, and non-equilibrium quantum chemistry.
+                  </p>
+                </div>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:1.4cqw; padding:1.4cqh 0;">
+                <img class="portrait-ring advisor" src="/deck_assets/schuster_circle.png" alt="Prof. David Schuster" />
+                <div>
+                  <div style="font-family:var(--font-serif); font-size:2.65cqh; font-weight:600; color:#fff;">Prof. David Schuster</div>
+                  <div style="font-family:var(--font-mono); font-size:1.12cqh; color:var(--gold); margin:0.3cqh 0 0.5cqh;">Stanford University · Applied Physics &amp; Quantum Hardware</div>
+                  <p class="card-text" style="font-size:1.42cqh;">
+                    Pioneering experimental physicist in superconducting circuits, semiconductor quantum interfaces, and deep-tech commercialization.
+                  </p>
+                </div>
+              </div>
+
+              <div style="font-family:var(--font-mono); font-size:1.12cqh; color:var(--mist); border-top:1px solid var(--rule); padding-top:1.0cqh;">
+                <a href="https://rchakraborty.dev/cv.pdf" target="_blank" style="color:var(--gold); text-decoration:none;">Founder CV ↗</a> &nbsp;·&nbsp;
+                Alchemist Chicago Cohort &nbsp;·&nbsp; AWS Pilot Partner
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>Team · Scientific &amp; Commercial Execution</span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 08 / 08 — PRE-SEED FINANCING & DESIGN PARTNERSHIP ASK
+           ================================================================= -->
+      <section class="slide" id="slide-8" data-slide="8">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Pre-Seed Financing</span>
+          </div>
+          <span class="slide-num">09 / 09</span>
+        </header>
+
+        <div class="slide-headline-block centered" style="margin:1.3cqh 0 1.3cqh;">
+          <h2 class="slide-title">Pre-Seed Financing</h2>
+          <div class="slide-sub">$2.0M on $16.0M Post-Money Cap &nbsp;·&nbsp; 12.5% Equity &nbsp;·&nbsp; 24-Month Runway (+$75K Federal Grant)</div>
+        </div>
+
+        <div class="slide-body" style="gap:1.5cqh;">
+          <div class="grid-3">
+            <div class="card gold-rim" style="padding:1.3cqh 1.4cqw; text-align:center;">
+              <div class="metric-big">$2.0M</div>
+              <div class="metric-label">Pre-Seed Round ($16.0M Post Cap)</div>
+            </div>
+            <div class="card" style="padding:1.3cqh 1.4cqw; text-align:center;">
+              <div class="metric-big champagne">$1.5M</div>
+              <div class="metric-label">Target Foundry Pilot ARR (24 Mo)</div>
+            </div>
+            <div class="card" style="padding:1.3cqh 1.4cqw; text-align:center;">
+              <div class="metric-big ice">$15M</div>
+              <div class="metric-label">Target Enterprise EDA ARR (2028)</div>
+            </div>
+          </div>
+
+          <div class="grid-2" style="flex:1;">
+            <!-- Capital Allocation Donut -->
+            <div class="card" style="justify-content:space-between;">
+              <div class="card-eyebrow" style="margin-bottom:0;">Capital Allocation ($2,000,000 · 24 Months)</div>
+              <div style="display:flex; align-items:center; gap:2.0cqw; flex:1;">
+                <div style="width:19cqh; height:19cqh; position:relative; flex-shrink:0;">
+                  <svg viewBox="0 0 42 42" style="width:100%; height:100%; transform:rotate(-90deg);">
+                    <circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="#18327A" stroke-width="6.2"></circle>
+                    <circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="#F8DF98" stroke-width="6.2" stroke-dasharray="53 47" stroke-dashoffset="0"></circle>
+                    <circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="#A7BDF2" stroke-width="6.2" stroke-dasharray="27 73" stroke-dashoffset="-53"></circle>
+                    <circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="#FFF5CC" stroke-width="6.2" stroke-dasharray="20 80" stroke-dashoffset="-80"></circle>
+                  </svg>
+                  <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                    <span style="font-family:var(--font-serif); font-size:2.6cqh; font-weight:700; color:#fff;">$2.0M</span>
+                    <span style="font-family:var(--font-mono); font-size:0.95cqh; color:var(--ice);">24 MO</span>
+                  </div>
+                </div>
+                <div style="flex:1; display:flex; flex-direction:column; gap:1.1cqh;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:0.9cqh 1.0cqw; border-radius:7px; background:rgba(248,223,152,0.10); border-left:3.5px solid #F8DF98;">
+                    <span style="font-size:1.45cqh; color:#F8DF98; font-weight:600;">Compiler &amp; GPU Kernel Team</span>
+                    <strong style="font-family:var(--font-mono); font-size:1.25cqh; color:#fff;">$1,060K (53%)</strong>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:0.9cqh 1.0cqw; border-radius:7px; background:rgba(167,189,242,0.10); border-left:3.5px solid #A7BDF2;">
+                    <span style="font-size:1.45cqh; color:#A7BDF2; font-weight:600;">Productionize Core EDA Solvers</span>
+                    <strong style="font-family:var(--font-mono); font-size:1.25cqh; color:#fff;">$540K (27%)</strong>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:0.9cqh 1.0cqw; border-radius:7px; background:rgba(255,245,204,0.08); border-left:3.5px solid #FFF5CC;">
+                    <span style="font-size:1.45cqh; color:#FFF5CC; font-weight:600;">Chipmaker Pilot Compute &amp; Infra</span>
+                    <strong style="font-family:var(--font-mono); font-size:1.25cqh; color:#fff;">$400K (20%)</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Funded Milestones & Direct Contact -->
+            <div class="card gold-rim" style="justify-content:space-between;">
+              <div>
+                <div class="card-eyebrow">What This Round Unlocks</div>
+                <ul class="bullet-list" style="margin-top:0.8cqh;">
+                  <li><strong>Production GPU-Native EDA SDK:</strong> Commercial CUDA/C++ solver engineered for sub-2nm GAAFET &amp; interconnect sign-off.</li>
+                  <li><strong>Flagship Chipmaker Design Partnership:</strong> Close and deliver $250K–$500K paid JDA with a Tier-1 semiconductor partner on proprietary PDKs.</li>
+                  <li><strong>Series A Inflection:</strong> Convert flagship partner + 3–4 foundry pilots to <strong>$1.5M ARR</strong>, positioning Point Reyes Sound to capture the $35B EDA market.</li>
+                </ul>
+              </div>
+              <div style="border-top:1px solid var(--rule-gold); padding-top:1.1cqh; display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-family:var(--font-mono); font-size:1.2cqh; color:var(--gold);">
+                  <a href="mailto:romit@pointreyessound.com" style="color:var(--gold); text-decoration:none;">romit@pointreyessound.com</a>
+                </div>
+                <div style="font-family:var(--font-mono); font-size:1.12cqh; color:var(--mist);">
+                  <a href="https://www.pointreyessound.com/preview" target="_blank" style="color:var(--mist); text-decoration:none;">Preview ↗</a> &nbsp;·&nbsp;
+                  <a href="https://www.pointreyessound.com/film" target="_blank" style="color:var(--mist); text-decoration:none;">Film ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026 · Pure-Software Equity (Zero Debt)</span>
+          <span><a href="mailto:directors@pointreyessound.com">directors@pointreyessound.com</a> · <a href="https://www.pointreyessound.com" target="_blank" rel="noopener">pointreyessound.com</a></span>
+        </footer>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Clean Floating Presentation Controls (Automatically Hidden in PDF Print) -->
+  <nav class="deck-controls" aria-label="Deck Navigation">
+    <button class="ctrl-btn" id="btn-prev" type="button" aria-label="Previous Slide">← Prev</button>
+    <div class="ctrl-dots" id="ctrl-dots"></div>
+    <span class="ctrl-counter" id="ctrl-counter">01 / 09</span>
+    <button class="ctrl-btn" id="btn-next" type="button" aria-label="Next Slide">Next →</button>
+    <a class="ctrl-btn primary" href="/Point_Reyes_Sound_Deck.pdf" download="Point_Reyes_Sound_Deck.pdf">Download PDF ↓</a>
+  </nav>
+
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      const dotsWrap = document.getElementById("ctrl-dots");
+      const counter = document.getElementById("ctrl-counter");
+      const btnPrev = document.getElementById("btn-prev");
+      const btnNext = document.getElementById("btn-next");
+      let current = 0;
+
+      slides.forEach((_, idx) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "ctrl-dot" + (idx === 0 ? " active" : "");
+        dot.setAttribute("aria-label", `Go to slide ${idx + 1}`);
+        dot.addEventListener("click", () => goTo(idx));
+        dotsWrap.appendChild(dot);
+      });
+
+      const dots = Array.from(dotsWrap.querySelectorAll(".ctrl-dot"));
+
+      function goTo(idx) {
+        const filmEl = document.getElementById("deck-film");
+        if (filmEl && idx !== 1 && !filmEl.paused) filmEl.pause();
+        current = Math.max(0, Math.min(slides.length - 1, idx));
+        slides.forEach((s, i) => s.classList.toggle("active", i === current));
+        dots.forEach((d, i) => d.classList.toggle("active", i === current));
+        counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
+      }
+
+      btnPrev.addEventListener("click", () => goTo(current - 1));
+      btnNext.addEventListener("click", () => goTo(current + 1));
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+          e.preventDefault();
+          goTo(current + 1);
+        } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+          e.preventDefault();
+          goTo(current - 1);
+        } else if (e.key === "Home") {
+          goTo(0);
+        } else if (e.key === "End") {
+          goTo(slides.length - 1);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
