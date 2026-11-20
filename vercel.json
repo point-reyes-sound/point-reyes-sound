@@ -41,13 +41,14 @@
       "source": "/contact",
       "destination": "/#contact",
       "permanent": false
+    },
+    {
+      "source": "/deck",
+      "destination": "/point-reyes-sound-deck",
+      "permanent": false
     }
   ],
   "rewrites": [
-    {
-      "source": "/deck",
-      "destination": "/point-reyes-sound-deck.html"
-    },
     {
       "source": "/point-reyes-sound-deck",
       "destination": "/point-reyes-sound-deck.html"
