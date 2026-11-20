@@ -40,6 +40,9 @@ export default defineConfig({
           if (req.url === '/pre-seed-deck' || req.url === '/pre-seed-deck/') {
             req.url = '/pre-seed-deck.html';
           }
+          if (req.url === '/point-reyes-sound-deck' || req.url === '/point-reyes-sound-deck/' || req.url === '/deck' || req.url === '/deck/') {
+            req.url = '/point-reyes-sound-deck.html';
+          }
           if (
             req.url === '/preview' || req.url === '/preview/' ||
             req.url === '/q-boltz' || req.url === '/q-boltz/' ||
@@ -68,6 +71,7 @@ export default defineConfig({
         a16z_appendix: resolve(__dirname, 'a16z-appendix.html'),
         lynam: resolve(__dirname, 'lynam-deck.html'),
         preseed: resolve(__dirname, 'pre-seed-deck.html'),
+        prs_deck: resolve(__dirname, 'point-reyes-sound-deck.html'),
         news_alchemist: resolve(__dirname, 'news/alchemist-chicago-2026/index.html'),
         film: resolve(__dirname, 'film/index.html')
       }
