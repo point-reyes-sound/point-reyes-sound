@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Point Reyes Sound × AWS Braket</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --border: rgba(168, 198, 255, 0.18);
+    --border-strong: rgba(168, 198, 255, 0.34);
+    --text-main: #f4f7fc;
+    --text-muted: rgba(206, 222, 248, 0.72);
+    --silver: #cfe0ff;
+    --crimson: #e02454;
+    --crimson-soft: rgba(224, 36, 84, 0.16);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    background: #03091a;
+    color: var(--text-main);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+  }
+
+  .slide {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(ellipse 90% 85% at 50% 42%, #0c1d46 0%, #040c22 58%, #020612 100%);
+    padding: 4vh 5.5vw 3.2vh;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .slide.active { display: flex; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2vh;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .crest {
+    width: clamp(36px, 3vw, 48px);
+    height: clamp(36px, 3vw, 48px);
+    border-radius: 6px;
+    background: linear-gradient(135deg, #9a0d30, #d81b48);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: clamp(24px, 2vw, 32px);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(216, 27, 72, 0.38);
+  }
+  .brand-label {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: clamp(28px, 2.5vw, 44px);
+    letter-spacing: 0.01em;
+    color: #fff;
+  }
+  .kicker {
+    font-size: clamp(12px, 0.9vw, 15px);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--silver);
+    opacity: 0.85;
+  }
+
+  .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  /* 3-Row Full-Screen Executive Table */
+  table.exec {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table.exec td {
+    padding: 4.5vh 2.2vw;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  table.exec tr:first-child td {
+    border-top: 1px solid var(--border);
+  }
+  table.exec tr.credit-row td {
+    background: var(--crimson-soft);
+    border-top: 1px solid rgba(224, 36, 84, 0.45);
+    border-bottom: 1px solid rgba(224, 36, 84, 0.45);
+  }
+  .col-label {
+    width: 24%;
+    font-size: clamp(13px, 1.05vw, 18px);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--silver);
+  }
+  .col-num {
+    width: 34%;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: clamp(44px, 4.4vw, 76px);
+    font-weight: 500;
+    line-height: 1.0;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .col-num span {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(16px, 1.3vw, 24px);
+    font-weight: 400;
+    color: var(--silver);
+    margin-left: 8px;
+  }
+  .col-detail {
+    width: 42%;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(15px, 1.25vw, 22px);
+    line-height: 1.45;
+    color: rgba(236, 243, 255, 0.88);
+  }
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(13px, 1vw, 17px);
+    font-weight: 600;
+    background: rgba(74, 222, 128, 0.16);
+    color: #86efac;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+  .pill.crimson {
+    background: rgba(224, 36, 84, 0.25);
+    color: #ff8aa8;
+  }
+
+  /* Slide 2: Full-Height Film + Play Button */
+  .video-only {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.2vh;
+    min-height: 0;
+  }
+  .video-frame {
+    height: 74vh;
+    aspect-ratio: 9 / 16;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(207, 224, 255, 0.30);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.78), 0 0 44px rgba(100, 155, 255, 0.16);
+    background: #03091a;
+  }
+  .video-frame video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .play-btn {
+    background: linear-gradient(135deg, #b8123c, #e02454);
+    border: none;
+    color: #fff;
+    padding: 12px 36px;
+    border-radius: 7px;
+    font-size: clamp(15px, 1.1vw, 19px);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    box-shadow: 0 10px 28px rgba(224, 36, 84, 0.42);
+  }
+  .play-btn:hover { filter: brightness(1.08); }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+    padding-top: 1.6vh;
+    font-size: clamp(12px, 0.9vw, 15px);
+    color: var(--text-muted);
+  }
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .nav-btn {
+    background: rgba(207, 224, 255, 0.10);
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 5px;
+    font-size: clamp(12px, 0.9vw, 15px);
+    cursor: pointer;
+  }
+  .nav-btn:hover { background: rgba(207, 224, 255, 0.22); }
+</style>
+</head>
+<body>
+
+  <!-- ====================================================================== -->
+  <!-- SLIDE 1: N2 FILM ONLY (OPENING HOOK, FULL HEIGHT)                      -->
+  <!-- ====================================================================== -->
+  <section class="slide active" data-slide="1">
+    <div class="top-bar">
+      <div class="brand">
+        <div class="crest">Φ</div>
+        <div class="brand-label">N₂ Triple-Bond Dissociation</div>
+      </div>
+      <div class="kicker">Point Reyes Sound × AWS Braket</div>
+    </div>
+
+    <div class="body">
+      <div class="video-only">
+        <div class="video-frame">
+          <video id="n2-video"
+                 src="/aws-braket/n2_bach_loop.mp4"
+                 poster="/aws-braket/n2_moonlit_thumb.png"
+                 controls
+                 loop
+                 playsinline></video>
+        </div>
+        <button id="play-toggle" class="play-btn" onclick="toggleVideo()" aria-label="Play / Pause">▶</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>N₂</span>
+      <div class="nav-controls">
+        <span>1 / 3</span>
+        <button class="nav-btn" onclick="prevSlide()">← Prev</button>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================== -->
+  <!-- SLIDE 2: TRANCHE 1 · N2 (3 NUMBERS ONLY, FULL SCREEN)                  -->
+  <!-- ====================================================================== -->
+  <section class="slide" data-slide="2">
+    <div class="top-bar">
+      <div class="brand">
+        <div class="crest">Φ</div>
+        <div class="brand-label">Tranche 1 · N₂</div>
+      </div>
+      <div class="kicker">Point Reyes Sound × AWS Braket</div>
+    </div>
+
+    <div class="body">
+      <table class="exec">
+        <tbody>
+          <tr>
+            <td class="col-label">1 · Workload</td>
+            <td class="col-num">1.8 × 10⁶ <span>Toffolis</span></td>
+            <td class="col-detail">
+              CAS(6e,6o) · 38 Q<sub>log</sub> <span class="pill">~780×</span><br/>
+              Braket Hybrid Jobs · SV1 / DM1 · QPU
+            </td>
+          </tr>
+          <tr>
+            <td class="col-label">2 · Success Criterion</td>
+            <td class="col-num">≤ 1.6 <span>mEₕ</span></td>
+            <td class="col-detail">
+              vs. CASCI / DMRG on SV1<br/>
+              Reproducible Hybrid Job · Unlocks Tranche 2
+            </td>
+          </tr>
+          <tr class="credit-row">
+            <td class="col-label" style="color:#ff8aa8;">3 · Credit Estimate</td>
+            <td class="col-num">$15,000 <span>5 wks</span></td>
+            <td class="col-detail">
+              AWS Braket + Hybrid Jobs Credits
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <span>Tranche 1 · N₂</span>
+      <div class="nav-controls">
+        <span>2 / 3</span>
+        <button class="nav-btn" onclick="prevSlide()">← Prev</button>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================== -->
+  <!-- SLIDE 3: TRANCHE 2 · Cr2 (3 NUMBERS ONLY, FULL SCREEN)                 -->
+  <!-- ====================================================================== -->
+  <section class="slide" data-slide="3">
+    <div class="top-bar">
+      <div class="brand">
+        <div class="crest">Φ</div>
+        <div class="brand-label">Tranche 2 · Cr₂</div>
+      </div>
+      <div class="kicker">CAS(24e,24o) · Milestone-Gated</div>
+    </div>
+
+    <div class="body">
+      <table class="exec">
+        <tbody>
+          <tr>
+            <td class="col-label">1 · Workload</td>
+            <td class="col-num">1.45 × 10⁸ <span>Toffolis</span></td>
+            <td class="col-detail">
+              128 Q<sub>log</sub> (pVDZ → pVQZ) <span class="pill crimson">1,748×</span><br/>
+              Braket TN1 (≤48q) · QPU · Hybrid Jobs
+            </td>
+          </tr>
+          <tr>
+            <td class="col-label">2 · Success Criterion</td>
+            <td class="col-num">≤ 1.6 <span>mEₕ</span></td>
+            <td class="col-detail">
+              vs. DMRG-CASSCF / NEVPT2<br/>
+              Constant 128 Q<sub>log</sub> · Genesis Q Benchmark
+            </td>
+          </tr>
+          <tr class="credit-row">
+            <td class="col-label" style="color:#ff8aa8;">3 · Credit Estimate</td>
+            <td class="col-num">$35,000 <span>9 wks</span></td>
+            <td class="col-detail">
+              Gated on Tranche 1 · $50,000 Combined Total
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <span>Tranche 2 · Cr₂</span>
+      <div class="nav-controls">
+        <span>3 / 3</span>
+        <button class="nav-btn" onclick="prevSlide()">← Prev</button>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+      </div>
+    </div>
+  </section>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const vid = document.getElementById('n2-video');
+  const playBtn = document.getElementById('play-toggle');
+  let cur = 0;
+
+  function syncBtn() {
+    if (!vid || !playBtn) return;
+    playBtn.textContent = vid.paused ? '▶' : '❚❚';
+  }
+  function toggleVideo() {
+    if (!vid) return;
+    if (vid.paused) { vid.play(); } else { vid.pause(); }
+    syncBtn();
+  }
+  if (vid) {
+    vid.addEventListener('play', syncBtn);
+    vid.addEventListener('pause', syncBtn);
+  }
+
+  function show(i) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === cur));
+    if (vid && cur !== 0 && !vid.paused) {
+      vid.pause();
+      syncBtn();
+    }
+  }
+  function nextSlide() { show(cur + 1); }
+  function prevSlide() { show(cur - 1); }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevSlide(); }
+    if ((e.key === 'p' || e.key === 'P' || e.key === ' ') && cur === 0) {
+      e.preventDefault();
+      toggleVideo();
+    }
+  });
+</script>
+</body>
+</html>
