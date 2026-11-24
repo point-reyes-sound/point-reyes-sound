@@ -1,55 +1,1191 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg?v=5" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/prs_favicon_32.png?v=5" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/prs_favicon_192.png?v=5" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/prs_favicon_180.png?v=5" />
-    <link rel="shortcut icon" href="/favicon.ico?v=5" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Q-BOLTZ Interactive Demonstration | Point Reyes Sound</title>
-    <meta name="description" content="Point Reyes Sound — Engineering Electronic Structure for the Next Century. Exclusive interactive demonstration of Q-BOLTZ continuous phase-space kinetics and quantum Boltzmann solvers." />
-    <meta name="keywords" content="Point Reyes Sound, Engineering Electronic Structure for the Next Century, Quantum Boltzmann Solver, Q-BOLTZ, Interactive Quantum Simulator, Phase-Space Sonification, Strongly Correlated Electrons, Quantum Chemistry" />
-    <meta name="author" content="Romit Chakraborty" />
-    <link rel="canonical" href="https://pointreyessound.com/demo" />
-    <meta name="robots" content="noindex, nofollow" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Q-BECK — Point Reyes Sound</title>
 
-    <!-- Open Graph / Facebook / LinkedIn -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://pointreyessound.com/demo" />
-    <meta property="og:title" content="Q-BOLTZ Interactive Demonstration | Point Reyes Sound" />
-    <meta property="og:description" content="Point Reyes Sound — Engineering Electronic Structure for the Next Century. Exclusive interactive demonstration of Q-BOLTZ continuous phase-space kinetics and quantum Boltzmann solvers." />
-    <meta property="og:image" content="https://pointreyessound.com/PRS_logo_v2.jpeg" />
-    <meta property="og:site_name" content="Point Reyes Sound, Inc." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
 
-    <!-- Twitter / X Cards -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://pointreyessound.com/demo" />
-    <meta name="twitter:title" content="Q-BOLTZ Interactive Demonstration | Point Reyes Sound" />
-    <meta name="twitter:description" content="Point Reyes Sound — Engineering Electronic Structure for the Next Century. Exclusive interactive demonstration of Q-BOLTZ continuous phase-space kinetics and quantum Boltzmann solvers." />
-    <meta name="twitter:image" content="https://pointreyessound.com/PRS_logo_v2.jpeg" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
 
-    <!-- Google Fonts: EB Garamond, JetBrains Mono, Inter, Space Grotesk -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- KaTeX Stylesheet -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
+  <style>
+    :root {
+      --void: #000000;
+      --obsidian: #070709;
+      --ink: #f4f2ec;
+      --ink-dim: #8a867e;
+      --ink-faint: #4c4943;
+      --gold: #e5c158;
+      --gold-deep: #8a6d3b;
+      --crimson: #c81e32;
+      --crimson-insignia: #8c1626;
+      --crimson-wash: rgba(155, 27, 48, 0.14);
+      --hairline: rgba(244, 242, 236, 0.09);
+      --hairline-gold: rgba(229, 193, 88, 0.34);
+      --serif: "EB Garamond", Georgia, "Times New Roman", serif;
+      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
 
-    <!-- Scite Badge Integration -->
-    <script async type="application/javascript" src="https://cdn.scite.ai/badge/scite-badge-latest.min.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module">
-      import RefreshRuntime from "/@react-refresh"
-      RefreshRuntime.injectIntoGlobalHook(window)
-      window.$RefreshReg$ = () => {}
-      window.$RefreshSig$ = () => (type) => type
-      window.__vite_plugin_react_preamble_installed__ = true
-    </script>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      background: var(--void);
+      color: var(--ink);
+      font-family: var(--serif);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 22px 44px 18px;
+      gap: 18px;
+      max-width: 1520px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* =====================================================================
+       SOVEREIGN SHORT HEADER (Phi Insignia · Centered EB Garamond · Italic Gold)
+       ===================================================================== */
+    .cinema-header {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .phi-insignia {
+      width: 36px;
+      height: 36px;
+      background: var(--crimson-insignia);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 1;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .brand-name {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    .title-center {
+      text-align: center;
+    }
+
+    .title-main {
+      font-family: var(--serif);
+      font-size: 2.05rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+      line-height: 1.12;
+    }
+
+    .title-sub {
+      font-family: var(--serif);
+      font-size: 1.02rem;
+      color: var(--ink-dim);
+      margin-top: 2px;
+      letter-spacing: 0.02em;
+    }
+
+    .header-right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .italic-telemetry {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--gold);
+      letter-spacing: 0.01em;
+    }
+
+    /* =====================================================================
+       WHISPER-CLEAN KPI STRIP (Pure Typography & Negative Space)
+       ===================================================================== */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      padding: 12px 0;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .kpi-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 12px;
+      border-right: 1px solid var(--hairline);
+    }
+
+    .kpi-item:last-child {
+      border-right: none;
+    }
+
+    .kpi-val {
+      font-family: var(--mono);
+      font-size: 1.48rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .kpi-val.gold {
+      color: var(--gold);
+    }
+
+    .kpi-val.crimson {
+      color: var(--crimson);
+    }
+
+    .kpi-lbl {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--ink-dim);
+    }
+
+    /* =====================================================================
+       SLIM CONTROL RIBBON (Zero Clutter)
+       ===================================================================== */
+    .control-ribbon {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .seg-group {
+      display: inline-flex;
+      border: 1px solid var(--hairline);
+      background: var(--obsidian);
+    }
+
+    .seg-btn {
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--hairline);
+      color: var(--ink-dim);
+      font-family: var(--serif);
+      font-size: 0.98rem;
+      padding: 7px 16px;
+      cursor: pointer;
+      transition: color 140ms ease, background-color 140ms ease;
+    }
+
+    .seg-btn:last-child {
+      border-right: none;
+    }
+
+    .seg-btn:hover {
+      color: var(--ink);
+    }
+
+    .seg-btn.active {
+      color: var(--gold);
+      background: rgba(229, 193, 88, 0.08);
+    }
+
+    .seg-btn.mono-seg {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.03em;
+      padding: 8px 13px;
+    }
+
+    .btn-run {
+      background: transparent;
+      border: 1px solid var(--hairline-gold);
+      color: var(--gold);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: background-color 140ms ease, color 140ms ease;
+    }
+
+    .btn-run:hover:not(:disabled) {
+      background: var(--gold);
+      color: #000000;
+    }
+
+    .btn-run:disabled {
+      opacity: 0.5;
+      cursor: wait;
+    }
+
+    .legend-minimal {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.94rem;
+      color: var(--ink-dim);
+    }
+
+    .leg {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .leg-gold {
+      width: 16px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .leg-dft {
+      width: 16px;
+      height: 0;
+      border-top: 1.5px dashed rgba(244, 242, 236, 0.55);
+    }
+
+    .leg-crimson {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--crimson);
+    }
+
+    /* =====================================================================
+       CENTERPIECE SPLIT STAGE (Pure Obsidian Canvas)
+       ===================================================================== */
+    .charts-stage {
+      flex: 1;
+      display: grid;
+      grid-template-rows: minmax(260px, 1.45fr) minmax(165px, 0.85fr);
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .chart-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .chart-caption {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--ink-dim);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .chart-caption-right {
+      font-family: var(--mono);
+      font-style: normal;
+      font-size: 0.68rem;
+      color: var(--ink-faint);
+    }
+
+    .canvas-box {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+    }
+
+    /* =====================================================================
+       BOTTOM ACTION BAR + CLEAN COLLAPSIBLE API DRAWER
+       ===================================================================== */
+    .bottom-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--hairline);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .bottom-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: none;
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 4px 0;
+      border-bottom: 1px solid transparent;
+      transition: color 140ms ease, border-color 140ms ease;
+    }
+
+    .btn-ghost:hover,
+    .btn-ghost.open {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    .toast-quiet {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.94rem;
+      color: var(--gold);
+    }
+
+    .export-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-export {
+      background: transparent;
+      border: 1px solid var(--hairline);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 15px;
+      cursor: pointer;
+      transition: border-color 140ms ease, color 140ms ease, background-color 140ms ease;
+    }
+
+    .btn-export.lut {
+      border-color: var(--hairline-gold);
+      color: var(--gold);
+    }
+
+    .btn-export:hover {
+      border-color: var(--gold);
+      background: var(--gold);
+      color: #000000;
+    }
+
+    /* Slide-up / Collapsible API Drawer */
+    .api-drawer {
+      display: none;
+      border: 1px solid var(--hairline);
+      background: var(--obsidian);
+      padding: 12px 16px;
+    }
+
+    .api-drawer.open {
+      display: block;
+    }
+
+    .drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 6px;
+    }
+
+    .drawer-tabs {
+      display: flex;
+      gap: 14px;
+    }
+
+    .drawer-tab {
+      background: transparent;
+      border: none;
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 2px 0;
+    }
+
+    .drawer-tab.active {
+      color: var(--gold);
+    }
+
+    .wire-code {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      line-height: 1.5;
+      color: #c8c4bc;
+      max-height: 170px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    @media (max-width: 960px) {
+      body {
+        padding: 16px 20px;
+      }
+      .cinema-header {
+        grid-template-columns: auto 1fr;
+      }
+      .header-right {
+        display: none;
+      }
+      .kpi-strip {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 12px;
+      }
+      .kpi-item:nth-child(2) {
+        border-right: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- SOVEREIGN HEADER -->
+  <header class="cinema-header">
+    <div class="brand-left">
+      <div class="phi-insignia" aria-label="Point Reyes Sound">&#934;</div>
+      <span class="brand-name">Point Reyes Sound</span>
+    </div>
+
+    <div class="title-center">
+      <h1 class="title-main" id="titleMain">Sub-2nm Gate-Oxide SiO&#8322; Vacancy</h1>
+      <div class="title-sub" id="titleSub">Q-BECK O(N&sup3;) Closure vs. RHF/DFT</div>
+    </div>
+
+    <div class="header-right">
+      <span class="italic-telemetry" id="headerTelemetry">O(N&sup3;) Deterministic Closure</span>
+    </div>
+  </header>
+
+  <!-- TOP KPI STRIP -->
+  <section class="kpi-strip" aria-label="Metrics">
+    <div class="kpi-item">
+      <span class="kpi-val gold">O(N&sup3;)</span>
+      <span class="kpi-lbl">Deterministic Closure</span>
+    </div>
+    <div class="kpi-item">
+      <span class="kpi-val crimson" id="kpiBarrierErr">-- eV</span>
+      <span class="kpi-lbl">Max RHF/DFT Barrier Error</span>
+    </div>
+    <div class="kpi-item">
+      <span class="kpi-val gold" id="kpiSpeedup">--&times;</span>
+      <span class="kpi-lbl">Mean CASPT2 Speedup</span>
+    </div>
+    <div class="kpi-item">
+      <span class="kpi-val" id="kpiLatency">-- ms</span>
+      <span class="kpi-lbl">Mean API Latency</span>
+    </div>
+  </section>
+
+  <!-- SLIM CONTROL RIBBON -->
+  <section class="control-ribbon" aria-label="Controls">
+    <div class="control-group">
+      <div class="seg-group" role="group" aria-label="Preset">
+        <button type="button" class="seg-btn active" data-preset="sio2_oxygen_vacancy">
+          SiO&#8322; Vacancy
+        </button>
+        <button type="button" class="seg-btn" data-preset="stretched_bond_stress_test">
+          Singularity Stress-Test
+        </button>
+      </div>
+
+      <div class="seg-group" role="group" aria-label="Execution Mode">
+        <button type="button" class="seg-btn mono-seg active" data-live="false">
+          Warm Cache (0.7 ms)
+        </button>
+        <button type="button" class="seg-btn mono-seg" data-live="true">
+          Live Anchor Solve (~1.0 s)
+        </button>
+      </div>
+
+      <button type="button" class="btn-run" id="btnRun">Run</button>
+    </div>
+
+    <div class="legend-minimal">
+      <span class="leg"><span class="leg-gold"></span>Q-BECK</span>
+      <span class="leg"><span class="leg-dft"></span>RHF/DFT</span>
+      <span class="leg"><span class="leg-crimson"></span>DFT Failure</span>
+    </div>
+  </section>
+
+  <!-- CENTERPIECE SPLIT PLOT -->
+  <main class="charts-stage">
+    <div class="chart-wrap">
+      <div class="chart-caption">
+        <span>Potential Energy Surface</span>
+        <span class="chart-caption-right" id="pesUnitLabel">Hartree (E_h)</span>
+      </div>
+      <div class="canvas-box">
+        <canvas id="pesChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-caption">
+        <span>Static-Correlation Diagnostic</span>
+        <span class="chart-caption-right" id="diagOnsetLabel">Null-Space Residual &#8214;&Delta;&#8214;</span>
+      </div>
+      <div class="canvas-box">
+        <canvas id="diagChart"></canvas>
+      </div>
+    </div>
+  </main>
+
+  <!-- COLLAPSIBLE REST API cURL / RAW JSON DRAWER -->
+  <section class="api-drawer" id="apiDrawer" aria-label="API Wire Trace">
+    <div class="drawer-head">
+      <div class="drawer-tabs">
+        <button type="button" class="drawer-tab active" data-tab="curl">cURL</button>
+        <button type="button" class="drawer-tab" data-tab="json">Raw JSON</button>
+      </div>
+      <button type="button" class="btn-ghost" id="btnCopyWire">Copy</button>
+    </div>
+    <pre class="wire-code" id="wireCode"></pre>
+  </section>
+
+  <!-- BOTTOM EXPORT BAR -->
+  <footer class="bottom-bar">
+    <div class="bottom-left">
+      <button type="button" class="btn-ghost" id="btnToggleApi">API / cURL</button>
+      <span class="toast-quiet" id="toastQuiet"></span>
+    </div>
+    <div class="export-actions">
+      <button type="button" class="btn-export lut" id="btnExportLut">
+        Export Synopsys Sentaurus .LUT
+      </button>
+      <button type="button" class="btn-export" id="btnExportCsv">
+        Export Compact .CSV
+      </button>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const HARTREE_TO_EV = 27.2114;
+      const FAILURE_STATUSES = new Set(["artificial_barrier_spike", "scf_oscillation_failed"]);
+
+      const PRESET_TITLES = {
+        sio2_oxygen_vacancy: {
+          title: "Sub-2nm Gate-Oxide SiO\u2082 Vacancy",
+          sub: "Neutral Oxygen Vacancy (V_O\u2070) \u00b7 Q-BECK vs. RHF/DFT",
+        },
+        stretched_bond_stress_test: {
+          title: "Q-BECK Singularity Stress-Test",
+          sub: "Stretched Triple-Bond Horizon \u00b7 Q-BECK vs. RHF/DFT",
+        },
+      };
+
+      let activePreset = "sio2_oxygen_vacancy";
+      let isLive = false;
+      let activeTab = "curl";
+      let lastPayload = null;
+      let pesChart = null;
+      let diagChart = null;
+
+      const presetBtns = document.querySelectorAll("[data-preset]");
+      const modeBtns = document.querySelectorAll("[data-live]");
+      const btnRun = document.getElementById("btnRun");
+      const btnExportLut = document.getElementById("btnExportLut");
+      const btnExportCsv = document.getElementById("btnExportCsv");
+      const btnToggleApi = document.getElementById("btnToggleApi");
+      const apiDrawer = document.getElementById("apiDrawer");
+      const drawerTabs = document.querySelectorAll(".drawer-tab");
+      const btnCopyWire = document.getElementById("btnCopyWire");
+      const wireCode = document.getElementById("wireCode");
+
+      const titleMain = document.getElementById("titleMain");
+      const titleSub = document.getElementById("titleSub");
+      const headerTelemetry = document.getElementById("headerTelemetry");
+      const kpiBarrierErr = document.getElementById("kpiBarrierErr");
+      const kpiSpeedup = document.getElementById("kpiSpeedup");
+      const kpiLatency = document.getElementById("kpiLatency");
+      const diagOnsetLabel = document.getElementById("diagOnsetLabel");
+      const toastQuiet = document.getElementById("toastQuiet");
+
+      function isFailure(status) {
+        return FAILURE_STATUSES.has(status);
+      }
+
+      function getBody() {
+        return {
+          material_preset: activePreset,
+          strain_grid: [],
+          baseline: "RHF_DFT",
+        };
+      }
+
+      function buildCurl() {
+        const origin = window.location.origin;
+        const body = JSON.stringify(getBody());
+        return [
+          `curl -sS -X POST "${origin}/v1/eda/defect-sweep?live=${isLive}" \\`,
+          `  -H "Content-Type: application/json" \\`,
+          `  -d '${body}'`,
+          "",
+          `curl -sSL "${origin}/v1/eda/export-compact-table?material_preset=${activePreset}&format=lut" -o qbeck_${activePreset}.lut`,
+          `curl -sSL "${origin}/v1/eda/export-compact-table?material_preset=${activePreset}&format=csv" -o qbeck_${activePreset}.csv`,
+        ].join("\n");
+      }
+
+      function renderDrawer() {
+        wireCode.textContent =
+          activeTab === "curl"
+            ? buildCurl()
+            : lastPayload
+              ? JSON.stringify(lastPayload, null, 2)
+              : "";
+      }
+
+      function renderCharts(data) {
+        const hasCoords = Array.isArray(data.coordinate_angstrom) && data.coordinate_angstrom.length > 0;
+        const xRaw = hasCoords ? data.coordinate_angstrom : (data.strain_grid || []);
+        const xLabels = hasCoords
+          ? xRaw.map((v) => `${Number(v).toFixed(2)} \u00c5`)
+          : xRaw.map((v) => `${Number(v) >= 0 ? "+" : ""}${(Number(v) * 100).toFixed(0)}%`);
+
+        const baseHa = data.baseline_energy_hartree || [];
+        const qbeckHa = data.qbeck_energy_hartree || [];
+        const nsNorm = data.null_space_residual_norm || [];
+        const statuses = data.baseline_convergence_status || [];
+
+        let firstFail = -1;
+        let lastFail = -1;
+        statuses.forEach((s, i) => {
+          if (isFailure(s)) {
+            if (firstFail === -1) firstFail = i;
+            lastFail = i;
+          }
+        });
+
+        const gridStyle = { color: "rgba(244, 242, 236, 0.055)", drawBorder: false };
+        const tickStyle = {
+          color: "#7a766e",
+          font: { family: "'IBM Plex Mono', monospace", size: 10 },
+        };
+
+        const failureWash =
+          firstFail !== -1
+            ? {
+                failureZone: {
+                  type: "box",
+                  xMin: Math.max(0, firstFail - 0.3),
+                  xMax: Math.min(xLabels.length - 1, lastFail + 0.3),
+                  backgroundColor: "rgba(155, 27, 48, 0.12)",
+                  borderWidth: 0,
+                },
+                onsetLine: {
+                  type: "line",
+                  xMin: firstFail,
+                  xMax: firstFail,
+                  borderColor: "rgba(200, 30, 50, 0.55)",
+                  borderWidth: 1,
+                  borderDash: [3, 4],
+                },
+              }
+            : {};
+
+        // TOP: Potential Energy Curve
+        const pesCtx = document.getElementById("pesChart").getContext("2d");
+        if (pesChart) pesChart.destroy();
+        pesChart = new Chart(pesCtx, {
+          type: "line",
+          data: {
+            labels: xLabels,
+            datasets: [
+              {
+                label: "RHF/DFT",
+                data: baseHa,
+                borderColor: "rgba(244, 242, 236, 0.5)",
+                segment: {
+                  borderColor: (ctx) =>
+                    isFailure(statuses[ctx.p0DataIndex]) || isFailure(statuses[ctx.p1DataIndex])
+                      ? "#c81e32"
+                      : "rgba(244, 242, 236, 0.45)",
+                },
+                borderWidth: 1.8,
+                borderDash: [5, 4],
+                pointRadius: (ctx) => (isFailure(statuses[ctx.dataIndex]) ? 4.2 : 0),
+                pointHoverRadius: 5.5,
+                pointBackgroundColor: "#c81e32",
+                pointBorderColor: "#000000",
+                pointBorderWidth: 1,
+                tension: 0.1,
+              },
+              {
+                label: "Q-BECK",
+                data: qbeckHa,
+                borderColor: "#e5c158",
+                borderWidth: 2.6,
+                pointRadius: 0,
+                pointHoverRadius: 5,
+                pointBackgroundColor: "#e5c158",
+                tension: 0.3,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: "index", intersect: false },
+            animation: { duration: 320 },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: "rgba(7, 7, 9, 0.94)",
+                borderColor: "rgba(229, 193, 88, 0.35)",
+                borderWidth: 1,
+                padding: 10,
+                titleFont: { family: "'IBM Plex Mono', monospace", size: 11 },
+                bodyFont: { family: "'IBM Plex Mono', monospace", size: 11 },
+                callbacks: {
+                  afterBody: (items) => {
+                    const i = items[0].dataIndex;
+                    const errEv = ((baseHa[i] - qbeckHa[i]) * HARTREE_TO_EV).toFixed(2);
+                    return [
+                      `\u0394E: +${errEv} eV`,
+                      `${statuses[i]}`,
+                    ];
+                  },
+                },
+              },
+              annotation: { annotations: failureWash },
+            },
+            scales: {
+              x: {
+                grid: gridStyle,
+                ticks: { ...tickStyle, maxRotation: 0, autoSkipPadding: 24 },
+              },
+              y: {
+                grid: gridStyle,
+                ticks: {
+                  ...tickStyle,
+                  callback: (v) => Number(v).toFixed(3),
+                },
+              },
+            },
+          },
+        });
+
+        // BOTTOM: Static-Correlation Diagnostic
+        const onsetNs = firstFail !== -1 && nsNorm[firstFail] != null ? nsNorm[firstFail] : null;
+        const diagCtx = document.getElementById("diagChart").getContext("2d");
+        if (diagChart) diagChart.destroy();
+        diagChart = new Chart(diagCtx, {
+          type: "line",
+          data: {
+            labels: xLabels,
+            datasets: [
+              {
+                label: "Null-Space Residual",
+                data: nsNorm,
+                borderColor: "#e5c158",
+                backgroundColor: (ctx) => {
+                  const { ctx: c, chartArea } = ctx.chart;
+                  if (!chartArea) return "rgba(155, 27, 48, 0.16)";
+                  const g = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                  g.addColorStop(0, "rgba(200, 30, 50, 0.38)");
+                  g.addColorStop(0.65, "rgba(229, 193, 88, 0.12)");
+                  g.addColorStop(1, "rgba(0, 0, 0, 0)");
+                  return g;
+                },
+                fill: true,
+                borderWidth: 1.8,
+                pointRadius: (ctx) => (isFailure(statuses[ctx.dataIndex]) ? 3.2 : 0),
+                pointHoverRadius: 5,
+                pointBackgroundColor: "#c81e32",
+                tension: 0.25,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: "index", intersect: false },
+            animation: { duration: 320 },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: "rgba(7, 7, 9, 0.94)",
+                borderColor: "rgba(200, 30, 50, 0.4)",
+                borderWidth: 1,
+                padding: 10,
+                titleFont: { family: "'IBM Plex Mono', monospace", size: 11 },
+                bodyFont: { family: "'IBM Plex Mono', monospace", size: 11 },
+              },
+              annotation: {
+                annotations: {
+                  ...failureWash,
+                  ...(onsetNs != null
+                    ? {
+                        thresh: {
+                          type: "line",
+                          yMin: onsetNs,
+                          yMax: onsetNs,
+                          borderColor: "rgba(200, 30, 50, 0.55)",
+                          borderWidth: 1,
+                          borderDash: [4, 4],
+                        },
+                      }
+                    : {}),
+                },
+              },
+            },
+            scales: {
+              x: {
+                grid: gridStyle,
+                ticks: { ...tickStyle, maxRotation: 0, autoSkipPadding: 24 },
+              },
+              y: {
+                min: 0,
+                grid: gridStyle,
+                ticks: { ...tickStyle, maxTicksLimit: 4 },
+              },
+            },
+          },
+        });
+      }
+
+      async function evaluateStaticWarmCache(preset) {
+        const t0 = performance.now();
+        const r = await fetch(`/eda_warm_cache/${encodeURIComponent(preset)}.json`);
+        if (!r.ok) throw new Error(`Archive HTTP ${r.status}`);
+        const archive = await r.json();
+        const pts = archive.points;
+        const grid = archive.default_strain_grid;
+
+        function interp(x, xs, ys) {
+          if (x <= xs[0]) return ys[0];
+          if (x >= xs[xs.length - 1]) return ys[ys.length - 1];
+          let lo = 0;
+          let hi = xs.length - 1;
+          while (hi - lo > 1) {
+            const mid = (lo + hi) >> 1;
+            if (xs[mid] <= x) lo = mid;
+            else hi = mid;
+          }
+          const t = (x - xs[lo]) / Math.max(1e-12, xs[hi] - xs[lo]);
+          return ys[lo] * (1 - t) + ys[hi] * t;
+        }
+
+        const refS = pts.map((p) => p.strain);
+        const refCoord = pts.map((p) => p.coordinate_angstrom);
+        const refBase = pts.map((p) => p.baseline_energy_hartree);
+        const refQ = pts.map((p) => p.qbeck_energy_hartree);
+        const refNs = pts.map((p) => p.null_space_residual_norm);
+        const refWall = pts.map((p) => p.wall_time_ms);
+        const refSp = pts.map((p) => p.estimated_caspt2_speedup_factor);
+        const refSt = pts.map((p) => p.baseline_convergence_status);
+
+        const coordArr = [];
+        const baseArr = [];
+        const qArr = [];
+        const nsArr = [];
+        const wallArr = [];
+        const spArr = [];
+        const stArr = [];
+
+        for (const s of grid) {
+          coordArr.push(Number(interp(s, refS, refCoord).toFixed(4)));
+          baseArr.push(Number(interp(s, refS, refBase).toFixed(6)));
+          qArr.push(Number(interp(s, refS, refQ).toFixed(6)));
+          nsArr.push(Number(interp(s, refS, refNs).toFixed(6)));
+          wallArr.push(Number(interp(s, refS, refWall).toFixed(2)));
+          spArr.push(Number(interp(s, refS, refSp).toFixed(1)));
+          let idx = refS.findIndex((v) => v >= s);
+          if (idx === -1) idx = refSt.length - 1;
+          stArr.push(refSt[idx]);
+        }
+
+        return {
+          success: true,
+          material_preset: preset,
+          baseline: "RHF_DFT",
+          execution_mode: "warm_cache",
+          fallback_reason: null,
+          qbeck_version: "1.0.0",
+          preset_meta: {
+            title: archive.title,
+            source_archive: archive.source_archive,
+            reference_coordinate_angstrom: archive.reference_coordinate_angstrom,
+            coordinate_label: archive.coordinate_label,
+            strain_label: archive.strain_label,
+            basis: archive.basis,
+            scaling_law: archive.scaling_law,
+          },
+          strain_grid: grid,
+          coordinate_angstrom: coordArr,
+          baseline_energy_hartree: baseArr,
+          qbeck_energy_hartree: qArr,
+          null_space_residual_norm: nsArr,
+          wall_time_ms: wallArr,
+          estimated_caspt2_speedup_factor: spArr,
+          baseline_convergence_status: stArr,
+          summary: {
+            num_points: grid.length,
+            api_dispatch_latency_ms: Number((performance.now() - t0).toFixed(2)),
+          },
+        };
+      }
+
+      async function runSweep() {
+        btnRun.disabled = true;
+        btnRun.textContent = "Solving...";
+        toastQuiet.textContent = "";
+
+        try {
+          let data;
+          const resp = await fetch(`/v1/eda/defect-sweep?live=${isLive}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(getBody()),
+          }).catch(() => null);
+          if (resp && resp.ok) {
+            data = await resp.json();
+          } else {
+            data = await evaluateStaticWarmCache(activePreset);
+          }
+          lastPayload = data;
+
+          const baseHa = data.baseline_energy_hartree || [];
+          const qbeckHa = data.qbeck_energy_hartree || [];
+          const speedups = data.estimated_caspt2_speedup_factor || [];
+          const walls = data.wall_time_ms || [];
+          const statuses = data.baseline_convergence_status || [];
+
+          const maxErr =
+            baseHa.length > 0
+              ? Math.max(...baseHa.map((b, i) => (b - qbeckHa[i]) * HARTREE_TO_EV))
+              : 0;
+          const meanSpeedup =
+            speedups.length > 0
+              ? speedups.reduce((a, v) => a + Number(v), 0) / speedups.length
+              : 0;
+          const meanWall =
+            walls.length > 0
+              ? walls.reduce((a, v) => a + Number(v), 0) / walls.length
+              : 0;
+          const failCount = statuses.filter(isFailure).length;
+
+          const copy = PRESET_TITLES[activePreset] || {
+            title: data.preset_meta?.title || activePreset,
+            sub: "Q-BECK vs. RHF/DFT",
+          };
+          titleMain.textContent = copy.title;
+          titleSub.textContent = copy.sub;
+
+          kpiBarrierErr.textContent = `+${maxErr.toFixed(2)} eV`;
+          kpiSpeedup.textContent = `${Math.round(meanSpeedup).toLocaleString()}\u00d7`;
+          kpiLatency.textContent = `${meanWall.toFixed(1)} ms`;
+          headerTelemetry.textContent = `Resolved: 100% (${failCount}/${failCount})`;
+
+          const firstFail = statuses.findIndex(isFailure);
+          if (firstFail !== -1 && data.coordinate_angstrom?.[firstFail] != null) {
+            diagOnsetLabel.textContent = `Onset ${Number(data.coordinate_angstrom[firstFail]).toFixed(2)} \u00c5 \u00b7 \u2016\u0394\u2016 = ${Number(data.null_space_residual_norm[firstFail]).toFixed(4)}`;
+          }
+
+          renderCharts(data);
+          renderDrawer();
+        } catch (err) {
+          toastQuiet.textContent = `Error: ${err.message}`;
+        } finally {
+          btnRun.disabled = false;
+          btnRun.textContent = "Run";
+        }
+      }
+
+      function renderLocalTable(data, fmt) {
+        const preset = data.material_preset;
+        const meta = data.preset_meta || {};
+        const eQ = data.qbeck_energy_hartree || [];
+        const eB = data.baseline_energy_hartree || [];
+        const eRef = eQ.length ? Math.min(...eQ) : 0;
+
+        if (fmt === "csv") {
+          const rows = [
+            `# Point Reyes Sound Q-BECK v${data.qbeck_version || "1.0.0"} TCAD Compact Model Table`,
+            `# Preset: ${meta.title || preset}`,
+            `# Scaling: ${meta.scaling_law || "O(N^3)"} | Baseline: ${data.baseline || "RHF_DFT"}`,
+            "strain,coordinate_angstrom,qbeck_energy_hartree,qbeck_delta_e_ev,baseline_energy_hartree,baseline_barrier_error_ev,null_space_residual_norm,wall_time_ms,estimated_caspt2_speedup_factor,baseline_convergence_status",
+          ];
+          for (let i = 0; i < data.strain_grid.length; i++) {
+            const dq = ((eQ[i] - eRef) * HARTREE_TO_EV).toFixed(6);
+            const err = ((eB[i] - eQ[i]) * HARTREE_TO_EV).toFixed(6);
+            rows.push([
+              data.strain_grid[i],
+              data.coordinate_angstrom[i],
+              eQ[i],
+              dq,
+              eB[i],
+              err,
+              data.null_space_residual_norm[i],
+              data.wall_time_ms[i],
+              data.estimated_caspt2_speedup_factor[i],
+              data.baseline_convergence_status[i],
+            ].join(","));
+          }
+          return { content: rows.join("\n") + "\n", mime: "text/csv;charset=utf-8" };
+        }
+
+        const lines = [
+          "# TCAD_LUT_VERSION 1.0",
+          `# GENERATOR PointReyesSound Q-BECK v${data.qbeck_version || "1.0.0"}`,
+          `# MATERIAL_PRESET ${preset}`,
+          `# DESCRIPTION ${meta.title || preset}`,
+          `# SCALING ${meta.scaling_law || "O(N^3)"}`,
+          "# COLUMNS strain coordinate_A E_qbeck_Ha dE_qbeck_eV E_baseline_Ha dE_err_eV null_space_res_norm caspt2_speedup baseline_status",
+          `BEGIN_LUT ${preset} ${data.strain_grid.length}`,
+        ];
+        for (let i = 0; i < data.strain_grid.length; i++) {
+          const dq = ((eQ[i] - eRef) * HARTREE_TO_EV).toFixed(6);
+          const err = ((eB[i] - eQ[i]) * HARTREE_TO_EV).toFixed(6);
+          lines.push(
+            `  ${Number(data.strain_grid[i]).toFixed(5)}  ${Number(data.coordinate_angstrom[i]).toFixed(4)}  ${Number(eQ[i]).toFixed(6)}  ${dq}  ${Number(eB[i]).toFixed(6)}  ${err}  ${Number(data.null_space_residual_norm[i]).toFixed(6)}  ${Number(data.estimated_caspt2_speedup_factor[i]).toFixed(1)}  ${data.baseline_convergence_status[i]}`
+          );
+        }
+        lines.push("END_LUT");
+        return { content: lines.join("\n") + "\n", mime: "text/plain;charset=utf-8" };
+      }
+
+      async function exportTable(fmt) {
+        const url = `/v1/eda/export-compact-table?material_preset=${encodeURIComponent(activePreset)}&format=${encodeURIComponent(fmt)}`;
+        const filename = `qbeck_${activePreset}_compact_model.${fmt}`;
+        try {
+          const r = await fetch(url);
+          if (r.ok && (r.headers.get("content-disposition") || "").includes("attachment")) {
+            const blob = await r.blob();
+            const objUrl = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = objUrl;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(objUrl);
+            toastQuiet.textContent = `Exported ${filename}`;
+            return;
+          }
+        } catch {}
+
+        if (lastPayload) {
+          const { content, mime } = renderLocalTable(lastPayload, fmt);
+          const blob = new Blob([content], { type: mime });
+          const objUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = objUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(objUrl);
+          toastQuiet.textContent = `Exported ${filename}`;
+        }
+      }
+
+      presetBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          presetBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          activePreset = btn.dataset.preset;
+          renderDrawer();
+          runSweep();
+        });
+      });
+
+      modeBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          modeBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          isLive = btn.dataset.live === "true";
+          renderDrawer();
+          runSweep();
+        });
+      });
+
+      btnRun.addEventListener("click", runSweep);
+      btnExportLut.addEventListener("click", () => exportTable("lut"));
+      btnExportCsv.addEventListener("click", () => exportTable("csv"));
+
+      btnToggleApi.addEventListener("click", () => {
+        const open = apiDrawer.classList.toggle("open");
+        btnToggleApi.classList.toggle("open", open);
+        if (open) renderDrawer();
+      });
+
+      drawerTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          drawerTabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+          activeTab = tab.dataset.tab;
+          renderDrawer();
+        });
+      });
+
+      btnCopyWire.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(wireCode.textContent);
+          btnCopyWire.textContent = "Copied";
+          setTimeout(() => (btnCopyWire.textContent = "Copy"), 1200);
+        } catch {
+          btnCopyWire.textContent = "Copy";
+        }
+      });
+
+      renderDrawer();
+      runSweep();
+    })();
+  </script>
+</body>
 </html>

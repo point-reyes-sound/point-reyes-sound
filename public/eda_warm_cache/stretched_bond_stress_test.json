@@ -1,0 +1,1225 @@
+{
+  "preset": "stretched_bond_stress_test",
+  "title": "Stretched Triple-Bond Multireference Stress Test (N2 CAS(6,6) Horizon)",
+  "source_archive": "Q-BECK v1.0.0 verified preset (public/qboltz_presets/n2_triple.json)",
+  "reference_coordinate_angstrom": 1.0977,
+  "coordinate_label": "Bond Stretch Coordinate R (Angstrom)",
+  "strain_label": "Normalized Bond Strain (R - R_eq) / R_eq",
+  "basis": "sto-3g / active-space cumulant closure",
+  "scaling_law": "O(N^2.981) empirical / O(N^3) formal",
+  "default_strain_grid": [
+    -0.15,
+    -0.05,
+    0.0,
+    0.1,
+    0.25,
+    0.4,
+    0.55,
+    0.75,
+    1.0,
+    1.25,
+    1.5
+  ],
+  "points": [
+    {
+      "strain": -0.1801,
+      "coordinate_angstrom": 0.9,
+      "baseline_energy_hartree": -109.08359,
+      "qbeck_energy_hartree": -109.08359,
+      "null_space_residual_norm": 0.005523,
+      "wall_time_ms": 18.56,
+      "estimated_caspt2_speedup_factor": 666.0,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.16553,
+      "coordinate_angstrom": 0.916,
+      "baseline_energy_hartree": -109.11765,
+      "qbeck_energy_hartree": -109.11765,
+      "null_space_residual_norm": 0.005785,
+      "wall_time_ms": 18.56,
+      "estimated_caspt2_speedup_factor": 666.0,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.15104,
+      "coordinate_angstrom": 0.9319,
+      "baseline_energy_hartree": -109.14687,
+      "qbeck_energy_hartree": -109.14687,
+      "null_space_residual_norm": 0.006064,
+      "wall_time_ms": 18.56,
+      "estimated_caspt2_speedup_factor": 666.0,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.13647,
+      "coordinate_angstrom": 0.9479,
+      "baseline_energy_hartree": -109.17171,
+      "qbeck_energy_hartree": -109.17171,
+      "null_space_residual_norm": 0.006364,
+      "wall_time_ms": 18.56,
+      "estimated_caspt2_speedup_factor": 666.0,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.12189,
+      "coordinate_angstrom": 0.9639,
+      "baseline_energy_hartree": -109.19263,
+      "qbeck_energy_hartree": -109.19263,
+      "null_space_residual_norm": 0.006683,
+      "wall_time_ms": 18.56,
+      "estimated_caspt2_speedup_factor": 666.0,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.10741,
+      "coordinate_angstrom": 0.9798,
+      "baseline_energy_hartree": -109.21003,
+      "qbeck_energy_hartree": -109.21003,
+      "null_space_residual_norm": 0.007022,
+      "wall_time_ms": 18.56,
+      "estimated_caspt2_speedup_factor": 666.0,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.09283,
+      "coordinate_angstrom": 0.9958,
+      "baseline_energy_hartree": -109.22426,
+      "qbeck_energy_hartree": -109.22426,
+      "null_space_residual_norm": 0.007385,
+      "wall_time_ms": 18.56,
+      "estimated_caspt2_speedup_factor": 666.0,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.07825,
+      "coordinate_angstrom": 1.0118,
+      "baseline_energy_hartree": -109.23566,
+      "qbeck_energy_hartree": -109.23566,
+      "null_space_residual_norm": 0.007785,
+      "wall_time_ms": 18.59,
+      "estimated_caspt2_speedup_factor": 670.9,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.06377,
+      "coordinate_angstrom": 1.0277,
+      "baseline_energy_hartree": -109.24454,
+      "qbeck_energy_hartree": -109.24454,
+      "null_space_residual_norm": 0.008212,
+      "wall_time_ms": 18.63,
+      "estimated_caspt2_speedup_factor": 677.6,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.04919,
+      "coordinate_angstrom": 1.0437,
+      "baseline_energy_hartree": -109.25117,
+      "qbeck_energy_hartree": -109.25117,
+      "null_space_residual_norm": 0.008668,
+      "wall_time_ms": 18.67,
+      "estimated_caspt2_speedup_factor": 684.3,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.03462,
+      "coordinate_angstrom": 1.0597,
+      "baseline_energy_hartree": -109.25579,
+      "qbeck_energy_hartree": -109.25579,
+      "null_space_residual_norm": 0.009151,
+      "wall_time_ms": 18.71,
+      "estimated_caspt2_speedup_factor": 691.0,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.02013,
+      "coordinate_angstrom": 1.0756,
+      "baseline_energy_hartree": -109.25863,
+      "qbeck_energy_hartree": -109.25863,
+      "null_space_residual_norm": 0.00966,
+      "wall_time_ms": 18.75,
+      "estimated_caspt2_speedup_factor": 697.7,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": -0.00556,
+      "coordinate_angstrom": 1.0916,
+      "baseline_energy_hartree": -109.25989,
+      "qbeck_energy_hartree": -109.25989,
+      "null_space_residual_norm": 0.010203,
+      "wall_time_ms": 18.8,
+      "estimated_caspt2_speedup_factor": 704.4,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.00902,
+      "coordinate_angstrom": 1.1076,
+      "baseline_energy_hartree": -109.25977,
+      "qbeck_energy_hartree": -109.25977,
+      "null_space_residual_norm": 0.010777,
+      "wall_time_ms": 18.84,
+      "estimated_caspt2_speedup_factor": 711.0,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.0235,
+      "coordinate_angstrom": 1.1235,
+      "baseline_energy_hartree": -109.25843,
+      "qbeck_energy_hartree": -109.25843,
+      "null_space_residual_norm": 0.01138,
+      "wall_time_ms": 18.88,
+      "estimated_caspt2_speedup_factor": 717.7,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.03808,
+      "coordinate_angstrom": 1.1395,
+      "baseline_energy_hartree": -109.25601,
+      "qbeck_energy_hartree": -109.25601,
+      "null_space_residual_norm": 0.01202,
+      "wall_time_ms": 18.92,
+      "estimated_caspt2_speedup_factor": 724.4,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.05266,
+      "coordinate_angstrom": 1.1555,
+      "baseline_energy_hartree": -109.25267,
+      "qbeck_energy_hartree": -109.25267,
+      "null_space_residual_norm": 0.012697,
+      "wall_time_ms": 18.96,
+      "estimated_caspt2_speedup_factor": 731.1,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.06714,
+      "coordinate_angstrom": 1.1714,
+      "baseline_energy_hartree": -109.24851,
+      "qbeck_energy_hartree": -109.24851,
+      "null_space_residual_norm": 0.013405,
+      "wall_time_ms": 19.0,
+      "estimated_caspt2_speedup_factor": 737.8,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.08172,
+      "coordinate_angstrom": 1.1874,
+      "baseline_energy_hartree": -109.24366,
+      "qbeck_energy_hartree": -109.24366,
+      "null_space_residual_norm": 0.014156,
+      "wall_time_ms": 19.04,
+      "estimated_caspt2_speedup_factor": 744.5,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.09629,
+      "coordinate_angstrom": 1.2034,
+      "baseline_energy_hartree": -109.23821,
+      "qbeck_energy_hartree": -109.23821,
+      "null_space_residual_norm": 0.014945,
+      "wall_time_ms": 19.08,
+      "estimated_caspt2_speedup_factor": 751.2,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.11078,
+      "coordinate_angstrom": 1.2193,
+      "baseline_energy_hartree": -109.23226,
+      "qbeck_energy_hartree": -109.23226,
+      "null_space_residual_norm": 0.01577,
+      "wall_time_ms": 19.13,
+      "estimated_caspt2_speedup_factor": 757.8,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.12535,
+      "coordinate_angstrom": 1.2353,
+      "baseline_energy_hartree": -109.22588,
+      "qbeck_energy_hartree": -109.22588,
+      "null_space_residual_norm": 0.01664,
+      "wall_time_ms": 19.17,
+      "estimated_caspt2_speedup_factor": 764.5,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.13993,
+      "coordinate_angstrom": 1.2513,
+      "baseline_energy_hartree": -109.21915,
+      "qbeck_energy_hartree": -109.21915,
+      "null_space_residual_norm": 0.017551,
+      "wall_time_ms": 19.21,
+      "estimated_caspt2_speedup_factor": 771.2,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.15441,
+      "coordinate_angstrom": 1.2672,
+      "baseline_energy_hartree": -109.21214,
+      "qbeck_energy_hartree": -109.21214,
+      "null_space_residual_norm": 0.018499,
+      "wall_time_ms": 19.25,
+      "estimated_caspt2_speedup_factor": 777.9,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.16899,
+      "coordinate_angstrom": 1.2832,
+      "baseline_energy_hartree": -109.2049,
+      "qbeck_energy_hartree": -109.2049,
+      "null_space_residual_norm": 0.019495,
+      "wall_time_ms": 19.29,
+      "estimated_caspt2_speedup_factor": 784.6,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.18357,
+      "coordinate_angstrom": 1.2992,
+      "baseline_energy_hartree": -109.19748,
+      "qbeck_energy_hartree": -109.19748,
+      "null_space_residual_norm": 0.020534,
+      "wall_time_ms": 19.33,
+      "estimated_caspt2_speedup_factor": 791.3,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.19805,
+      "coordinate_angstrom": 1.3151,
+      "baseline_energy_hartree": -109.18994,
+      "qbeck_energy_hartree": -109.18994,
+      "null_space_residual_norm": 0.021608,
+      "wall_time_ms": 19.37,
+      "estimated_caspt2_speedup_factor": 798.0,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.21263,
+      "coordinate_angstrom": 1.3311,
+      "baseline_energy_hartree": -109.1823,
+      "qbeck_energy_hartree": -109.1823,
+      "null_space_residual_norm": 0.022732,
+      "wall_time_ms": 19.41,
+      "estimated_caspt2_speedup_factor": 804.7,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.2272,
+      "coordinate_angstrom": 1.3471,
+      "baseline_energy_hartree": -109.17462,
+      "qbeck_energy_hartree": -109.17462,
+      "null_space_residual_norm": 0.023897,
+      "wall_time_ms": 19.45,
+      "estimated_caspt2_speedup_factor": 811.4,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.24169,
+      "coordinate_angstrom": 1.363,
+      "baseline_energy_hartree": -109.16692,
+      "qbeck_energy_hartree": -109.16692,
+      "null_space_residual_norm": 0.025096,
+      "wall_time_ms": 19.5,
+      "estimated_caspt2_speedup_factor": 818.0,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.25626,
+      "coordinate_angstrom": 1.379,
+      "baseline_energy_hartree": -109.15923,
+      "qbeck_energy_hartree": -109.15923,
+      "null_space_residual_norm": 0.026343,
+      "wall_time_ms": 19.54,
+      "estimated_caspt2_speedup_factor": 824.7,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.27084,
+      "coordinate_angstrom": 1.395,
+      "baseline_energy_hartree": -109.15157,
+      "qbeck_energy_hartree": -109.15157,
+      "null_space_residual_norm": 0.027628,
+      "wall_time_ms": 19.58,
+      "estimated_caspt2_speedup_factor": 831.4,
+      "baseline_convergence_status": "converged"
+    },
+    {
+      "strain": 0.28532,
+      "coordinate_angstrom": 1.4109,
+      "baseline_energy_hartree": -109.13775,
+      "qbeck_energy_hartree": -109.14398,
+      "null_space_residual_norm": 0.028942,
+      "wall_time_ms": 19.62,
+      "estimated_caspt2_speedup_factor": 838.1,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.2999,
+      "coordinate_angstrom": 1.4269,
+      "baseline_energy_hartree": -109.12134,
+      "qbeck_energy_hartree": -109.13646,
+      "null_space_residual_norm": 0.0303,
+      "wall_time_ms": 19.66,
+      "estimated_caspt2_speedup_factor": 844.8,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.31448,
+      "coordinate_angstrom": 1.4429,
+      "baseline_energy_hartree": -109.10527,
+      "qbeck_energy_hartree": -109.12903,
+      "null_space_residual_norm": 0.03169,
+      "wall_time_ms": 19.7,
+      "estimated_caspt2_speedup_factor": 851.5,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.32896,
+      "coordinate_angstrom": 1.4588,
+      "baseline_energy_hartree": -109.08956,
+      "qbeck_energy_hartree": -109.12171,
+      "null_space_residual_norm": 0.033102,
+      "wall_time_ms": 19.74,
+      "estimated_caspt2_speedup_factor": 858.2,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.34354,
+      "coordinate_angstrom": 1.4748,
+      "baseline_energy_hartree": -109.07421,
+      "qbeck_energy_hartree": -109.11452,
+      "null_space_residual_norm": 0.034551,
+      "wall_time_ms": 19.78,
+      "estimated_caspt2_speedup_factor": 864.9,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.35811,
+      "coordinate_angstrom": 1.4908,
+      "baseline_energy_hartree": -109.05922,
+      "qbeck_energy_hartree": -109.10745,
+      "null_space_residual_norm": 0.036024,
+      "wall_time_ms": 19.83,
+      "estimated_caspt2_speedup_factor": 871.6,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.3726,
+      "coordinate_angstrom": 1.5067,
+      "baseline_energy_hartree": -109.04459,
+      "qbeck_energy_hartree": -109.10052,
+      "null_space_residual_norm": 0.037509,
+      "wall_time_ms": 19.87,
+      "estimated_caspt2_speedup_factor": 878.3,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.38717,
+      "coordinate_angstrom": 1.5227,
+      "baseline_energy_hartree": -109.03032,
+      "qbeck_energy_hartree": -109.09373,
+      "null_space_residual_norm": 0.039021,
+      "wall_time_ms": 19.91,
+      "estimated_caspt2_speedup_factor": 884.9,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.40175,
+      "coordinate_angstrom": 1.5387,
+      "baseline_energy_hartree": -109.01642,
+      "qbeck_energy_hartree": -109.0871,
+      "null_space_residual_norm": 0.040547,
+      "wall_time_ms": 19.95,
+      "estimated_caspt2_speedup_factor": 891.6,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.41623,
+      "coordinate_angstrom": 1.5546,
+      "baseline_energy_hartree": -109.00288,
+      "qbeck_energy_hartree": -109.08063,
+      "null_space_residual_norm": 0.042074,
+      "wall_time_ms": 19.99,
+      "estimated_caspt2_speedup_factor": 898.3,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.43081,
+      "coordinate_angstrom": 1.5706,
+      "baseline_energy_hartree": -108.98971,
+      "qbeck_energy_hartree": -109.07431,
+      "null_space_residual_norm": 0.043616,
+      "wall_time_ms": 20.03,
+      "estimated_caspt2_speedup_factor": 905.0,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.44539,
+      "coordinate_angstrom": 1.5866,
+      "baseline_energy_hartree": -108.97688,
+      "qbeck_energy_hartree": -109.06816,
+      "null_space_residual_norm": 0.045161,
+      "wall_time_ms": 20.07,
+      "estimated_caspt2_speedup_factor": 911.7,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.45987,
+      "coordinate_angstrom": 1.6025,
+      "baseline_energy_hartree": -108.96441,
+      "qbeck_energy_hartree": -109.06217,
+      "null_space_residual_norm": 0.046695,
+      "wall_time_ms": 20.11,
+      "estimated_caspt2_speedup_factor": 918.4,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.47445,
+      "coordinate_angstrom": 1.6185,
+      "baseline_energy_hartree": -108.95229,
+      "qbeck_energy_hartree": -109.05634,
+      "null_space_residual_norm": 0.048233,
+      "wall_time_ms": 20.15,
+      "estimated_caspt2_speedup_factor": 925.1,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.48902,
+      "coordinate_angstrom": 1.6345,
+      "baseline_energy_hartree": -108.94051,
+      "qbeck_energy_hartree": -109.05068,
+      "null_space_residual_norm": 0.049761,
+      "wall_time_ms": 20.2,
+      "estimated_caspt2_speedup_factor": 931.8,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.50351,
+      "coordinate_angstrom": 1.6504,
+      "baseline_energy_hartree": -108.92907,
+      "qbeck_energy_hartree": -109.04518,
+      "null_space_residual_norm": 0.051267,
+      "wall_time_ms": 20.24,
+      "estimated_caspt2_speedup_factor": 938.5,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.51808,
+      "coordinate_angstrom": 1.6664,
+      "baseline_energy_hartree": -108.91796,
+      "qbeck_energy_hartree": -109.03985,
+      "null_space_residual_norm": 0.052764,
+      "wall_time_ms": 20.28,
+      "estimated_caspt2_speedup_factor": 945.1,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.53266,
+      "coordinate_angstrom": 1.6824,
+      "baseline_energy_hartree": -108.90718,
+      "qbeck_energy_hartree": -109.03468,
+      "null_space_residual_norm": 0.054241,
+      "wall_time_ms": 20.32,
+      "estimated_caspt2_speedup_factor": 951.8,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.54714,
+      "coordinate_angstrom": 1.6983,
+      "baseline_energy_hartree": -108.89671,
+      "qbeck_energy_hartree": -109.02967,
+      "null_space_residual_norm": 0.055685,
+      "wall_time_ms": 20.36,
+      "estimated_caspt2_speedup_factor": 958.5,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.56172,
+      "coordinate_angstrom": 1.7143,
+      "baseline_energy_hartree": -108.88656,
+      "qbeck_energy_hartree": -109.02481,
+      "null_space_residual_norm": 0.057111,
+      "wall_time_ms": 20.4,
+      "estimated_caspt2_speedup_factor": 965.2,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.5763,
+      "coordinate_angstrom": 1.7303,
+      "baseline_energy_hartree": -108.87671,
+      "qbeck_energy_hartree": -109.02012,
+      "null_space_residual_norm": 0.058507,
+      "wall_time_ms": 20.44,
+      "estimated_caspt2_speedup_factor": 971.9,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.59078,
+      "coordinate_angstrom": 1.7462,
+      "baseline_energy_hartree": -108.86717,
+      "qbeck_energy_hartree": -109.01557,
+      "null_space_residual_norm": 0.059862,
+      "wall_time_ms": 20.48,
+      "estimated_caspt2_speedup_factor": 978.6,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.60536,
+      "coordinate_angstrom": 1.7622,
+      "baseline_energy_hartree": -108.85791,
+      "qbeck_energy_hartree": -109.01118,
+      "null_space_residual_norm": 0.061191,
+      "wall_time_ms": 20.52,
+      "estimated_caspt2_speedup_factor": 985.3,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.61993,
+      "coordinate_angstrom": 1.7782,
+      "baseline_energy_hartree": -108.84894,
+      "qbeck_energy_hartree": -109.00693,
+      "null_space_residual_norm": 0.062483,
+      "wall_time_ms": 20.57,
+      "estimated_caspt2_speedup_factor": 992.0,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.63442,
+      "coordinate_angstrom": 1.7941,
+      "baseline_energy_hartree": -108.84025,
+      "qbeck_energy_hartree": -109.00283,
+      "null_space_residual_norm": 0.063729,
+      "wall_time_ms": 20.61,
+      "estimated_caspt2_speedup_factor": 998.7,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.64899,
+      "coordinate_angstrom": 1.8101,
+      "baseline_energy_hartree": -108.83183,
+      "qbeck_energy_hartree": -108.99887,
+      "null_space_residual_norm": 0.064943,
+      "wall_time_ms": 20.65,
+      "estimated_caspt2_speedup_factor": 1005.4,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.66357,
+      "coordinate_angstrom": 1.8261,
+      "baseline_energy_hartree": -108.82367,
+      "qbeck_energy_hartree": -108.99505,
+      "null_space_residual_norm": 0.066115,
+      "wall_time_ms": 20.69,
+      "estimated_caspt2_speedup_factor": 1012.0,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.67805,
+      "coordinate_angstrom": 1.842,
+      "baseline_energy_hartree": -108.81577,
+      "qbeck_energy_hartree": -108.99136,
+      "null_space_residual_norm": 0.067239,
+      "wall_time_ms": 20.73,
+      "estimated_caspt2_speedup_factor": 1018.7,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.69263,
+      "coordinate_angstrom": 1.858,
+      "baseline_energy_hartree": -108.80812,
+      "qbeck_energy_hartree": -108.9878,
+      "null_space_residual_norm": 0.068328,
+      "wall_time_ms": 20.77,
+      "estimated_caspt2_speedup_factor": 1025.4,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.70711,
+      "coordinate_angstrom": 1.8739,
+      "baseline_energy_hartree": -108.80072,
+      "qbeck_energy_hartree": -108.98437,
+      "null_space_residual_norm": 0.069368,
+      "wall_time_ms": 20.81,
+      "estimated_caspt2_speedup_factor": 1032.1,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.72169,
+      "coordinate_angstrom": 1.8899,
+      "baseline_energy_hartree": -108.79354,
+      "qbeck_energy_hartree": -108.98106,
+      "null_space_residual_norm": 0.070372,
+      "wall_time_ms": 20.85,
+      "estimated_caspt2_speedup_factor": 1038.8,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.73627,
+      "coordinate_angstrom": 1.9059,
+      "baseline_energy_hartree": -108.7866,
+      "qbeck_energy_hartree": -108.97787,
+      "null_space_residual_norm": 0.071333,
+      "wall_time_ms": 20.9,
+      "estimated_caspt2_speedup_factor": 1045.5,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.75075,
+      "coordinate_angstrom": 1.9218,
+      "baseline_energy_hartree": -108.77988,
+      "qbeck_energy_hartree": -108.9748,
+      "null_space_residual_norm": 0.072246,
+      "wall_time_ms": 20.94,
+      "estimated_caspt2_speedup_factor": 1052.2,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.76533,
+      "coordinate_angstrom": 1.9378,
+      "baseline_energy_hartree": -108.77338,
+      "qbeck_energy_hartree": -108.97184,
+      "null_space_residual_norm": 0.073124,
+      "wall_time_ms": 20.98,
+      "estimated_caspt2_speedup_factor": 1058.9,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.7799,
+      "coordinate_angstrom": 1.9538,
+      "baseline_energy_hartree": -108.76709,
+      "qbeck_energy_hartree": -108.96899,
+      "null_space_residual_norm": 0.073961,
+      "wall_time_ms": 21.02,
+      "estimated_caspt2_speedup_factor": 1065.6,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.79439,
+      "coordinate_angstrom": 1.9697,
+      "baseline_energy_hartree": -108.761,
+      "qbeck_energy_hartree": -108.96625,
+      "null_space_residual_norm": 0.074752,
+      "wall_time_ms": 21.06,
+      "estimated_caspt2_speedup_factor": 1072.2,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.80896,
+      "coordinate_angstrom": 1.9857,
+      "baseline_energy_hartree": -108.75511,
+      "qbeck_energy_hartree": -108.96361,
+      "null_space_residual_norm": 0.07551,
+      "wall_time_ms": 21.1,
+      "estimated_caspt2_speedup_factor": 1078.9,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.82354,
+      "coordinate_angstrom": 2.0017,
+      "baseline_energy_hartree": -108.74941,
+      "qbeck_energy_hartree": -108.96107,
+      "null_space_residual_norm": 0.076229,
+      "wall_time_ms": 21.14,
+      "estimated_caspt2_speedup_factor": 1085.6,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.83802,
+      "coordinate_angstrom": 2.0176,
+      "baseline_energy_hartree": -108.7439,
+      "qbeck_energy_hartree": -108.95862,
+      "null_space_residual_norm": 0.076908,
+      "wall_time_ms": 21.18,
+      "estimated_caspt2_speedup_factor": 1092.3,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.8526,
+      "coordinate_angstrom": 2.0336,
+      "baseline_energy_hartree": -108.73856,
+      "qbeck_energy_hartree": -108.95627,
+      "null_space_residual_norm": 0.077555,
+      "wall_time_ms": 21.22,
+      "estimated_caspt2_speedup_factor": 1099.0,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.86718,
+      "coordinate_angstrom": 2.0496,
+      "baseline_energy_hartree": -108.7334,
+      "qbeck_energy_hartree": -108.95401,
+      "null_space_residual_norm": 0.078168,
+      "wall_time_ms": 21.27,
+      "estimated_caspt2_speedup_factor": 1105.7,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.88166,
+      "coordinate_angstrom": 2.0655,
+      "baseline_energy_hartree": -108.72841,
+      "qbeck_energy_hartree": -108.95184,
+      "null_space_residual_norm": 0.078744,
+      "wall_time_ms": 21.31,
+      "estimated_caspt2_speedup_factor": 1112.4,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.89624,
+      "coordinate_angstrom": 2.0815,
+      "baseline_energy_hartree": -108.72359,
+      "qbeck_energy_hartree": -108.94975,
+      "null_space_residual_norm": 0.079292,
+      "wall_time_ms": 21.35,
+      "estimated_caspt2_speedup_factor": 1119.0,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.91081,
+      "coordinate_angstrom": 2.0975,
+      "baseline_energy_hartree": -108.71892,
+      "qbeck_energy_hartree": -108.94774,
+      "null_space_residual_norm": 0.079809,
+      "wall_time_ms": 21.39,
+      "estimated_caspt2_speedup_factor": 1125.7,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.9253,
+      "coordinate_angstrom": 2.1134,
+      "baseline_energy_hartree": -108.7144,
+      "qbeck_energy_hartree": -108.94581,
+      "null_space_residual_norm": 0.080295,
+      "wall_time_ms": 21.43,
+      "estimated_caspt2_speedup_factor": 1132.4,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.93987,
+      "coordinate_angstrom": 2.1294,
+      "baseline_energy_hartree": -108.71004,
+      "qbeck_energy_hartree": -108.94395,
+      "null_space_residual_norm": 0.080755,
+      "wall_time_ms": 21.47,
+      "estimated_caspt2_speedup_factor": 1139.1,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.95445,
+      "coordinate_angstrom": 2.1454,
+      "baseline_energy_hartree": -108.70582,
+      "qbeck_energy_hartree": -108.94217,
+      "null_space_residual_norm": 0.08119,
+      "wall_time_ms": 21.51,
+      "estimated_caspt2_speedup_factor": 1145.8,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.96894,
+      "coordinate_angstrom": 2.1613,
+      "baseline_energy_hartree": -108.70173,
+      "qbeck_energy_hartree": -108.94045,
+      "null_space_residual_norm": 0.081596,
+      "wall_time_ms": 21.55,
+      "estimated_caspt2_speedup_factor": 1152.5,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.98351,
+      "coordinate_angstrom": 2.1773,
+      "baseline_energy_hartree": -108.69778,
+      "qbeck_energy_hartree": -108.93881,
+      "null_space_residual_norm": 0.081982,
+      "wall_time_ms": 21.59,
+      "estimated_caspt2_speedup_factor": 1159.2,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 0.99809,
+      "coordinate_angstrom": 2.1933,
+      "baseline_energy_hartree": -108.69397,
+      "qbeck_energy_hartree": -108.93723,
+      "null_space_residual_norm": 0.082345,
+      "wall_time_ms": 21.64,
+      "estimated_caspt2_speedup_factor": 1165.8,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 1.01257,
+      "coordinate_angstrom": 2.2092,
+      "baseline_energy_hartree": -108.69027,
+      "qbeck_energy_hartree": -108.93571,
+      "null_space_residual_norm": 0.082684,
+      "wall_time_ms": 21.68,
+      "estimated_caspt2_speedup_factor": 1172.5,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 1.02715,
+      "coordinate_angstrom": 2.2252,
+      "baseline_energy_hartree": -108.6867,
+      "qbeck_energy_hartree": -108.93425,
+      "null_space_residual_norm": 0.083005,
+      "wall_time_ms": 21.72,
+      "estimated_caspt2_speedup_factor": 1179.2,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 1.04172,
+      "coordinate_angstrom": 2.2412,
+      "baseline_energy_hartree": -108.68325,
+      "qbeck_energy_hartree": -108.93285,
+      "null_space_residual_norm": 0.083307,
+      "wall_time_ms": 21.76,
+      "estimated_caspt2_speedup_factor": 1185.9,
+      "baseline_convergence_status": "artificial_barrier_spike"
+    },
+    {
+      "strain": 1.05621,
+      "coordinate_angstrom": 2.2571,
+      "baseline_energy_hartree": -108.67991,
+      "qbeck_energy_hartree": -108.9315,
+      "null_space_residual_norm": 0.083589,
+      "wall_time_ms": 21.8,
+      "estimated_caspt2_speedup_factor": 1192.6,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.07078,
+      "coordinate_angstrom": 2.2731,
+      "baseline_energy_hartree": -108.67668,
+      "qbeck_energy_hartree": -108.93021,
+      "null_space_residual_norm": 0.083856,
+      "wall_time_ms": 21.84,
+      "estimated_caspt2_speedup_factor": 1199.3,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.08536,
+      "coordinate_angstrom": 2.2891,
+      "baseline_energy_hartree": -108.67356,
+      "qbeck_energy_hartree": -108.92897,
+      "null_space_residual_norm": 0.084106,
+      "wall_time_ms": 21.88,
+      "estimated_caspt2_speedup_factor": 1206.0,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.09985,
+      "coordinate_angstrom": 2.305,
+      "baseline_energy_hartree": -108.67054,
+      "qbeck_energy_hartree": -108.92779,
+      "null_space_residual_norm": 0.084341,
+      "wall_time_ms": 21.92,
+      "estimated_caspt2_speedup_factor": 1212.7,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.11442,
+      "coordinate_angstrom": 2.321,
+      "baseline_energy_hartree": -108.66762,
+      "qbeck_energy_hartree": -108.92664,
+      "null_space_residual_norm": 0.084562,
+      "wall_time_ms": 21.97,
+      "estimated_caspt2_speedup_factor": 1219.3,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.129,
+      "coordinate_angstrom": 2.337,
+      "baseline_energy_hartree": -108.6648,
+      "qbeck_energy_hartree": -108.92555,
+      "null_space_residual_norm": 0.08477,
+      "wall_time_ms": 22.01,
+      "estimated_caspt2_speedup_factor": 1226.0,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.14348,
+      "coordinate_angstrom": 2.3529,
+      "baseline_energy_hartree": -108.66207,
+      "qbeck_energy_hartree": -108.9245,
+      "null_space_residual_norm": 0.084965,
+      "wall_time_ms": 22.05,
+      "estimated_caspt2_speedup_factor": 1232.7,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.15806,
+      "coordinate_angstrom": 2.3689,
+      "baseline_energy_hartree": -108.65943,
+      "qbeck_energy_hartree": -108.92349,
+      "null_space_residual_norm": 0.085149,
+      "wall_time_ms": 22.09,
+      "estimated_caspt2_speedup_factor": 1239.4,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.17263,
+      "coordinate_angstrom": 2.3849,
+      "baseline_energy_hartree": -108.65688,
+      "qbeck_energy_hartree": -108.92252,
+      "null_space_residual_norm": 0.085322,
+      "wall_time_ms": 22.13,
+      "estimated_caspt2_speedup_factor": 1246.1,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.18712,
+      "coordinate_angstrom": 2.4008,
+      "baseline_energy_hartree": -108.65441,
+      "qbeck_energy_hartree": -108.92159,
+      "null_space_residual_norm": 0.085483,
+      "wall_time_ms": 22.17,
+      "estimated_caspt2_speedup_factor": 1252.8,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.20169,
+      "coordinate_angstrom": 2.4168,
+      "baseline_energy_hartree": -108.65202,
+      "qbeck_energy_hartree": -108.9207,
+      "null_space_residual_norm": 0.085636,
+      "wall_time_ms": 22.21,
+      "estimated_caspt2_speedup_factor": 1259.5,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.21627,
+      "coordinate_angstrom": 2.4328,
+      "baseline_energy_hartree": -108.64971,
+      "qbeck_energy_hartree": -108.91985,
+      "null_space_residual_norm": 0.08578,
+      "wall_time_ms": 22.25,
+      "estimated_caspt2_speedup_factor": 1266.1,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.23076,
+      "coordinate_angstrom": 2.4487,
+      "baseline_energy_hartree": -108.64748,
+      "qbeck_energy_hartree": -108.91903,
+      "null_space_residual_norm": 0.085915,
+      "wall_time_ms": 22.29,
+      "estimated_caspt2_speedup_factor": 1272.8,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.24533,
+      "coordinate_angstrom": 2.4647,
+      "baseline_energy_hartree": -108.64532,
+      "qbeck_energy_hartree": -108.91824,
+      "null_space_residual_norm": 0.086042,
+      "wall_time_ms": 22.34,
+      "estimated_caspt2_speedup_factor": 1279.5,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.25991,
+      "coordinate_angstrom": 2.4807,
+      "baseline_energy_hartree": -108.64323,
+      "qbeck_energy_hartree": -108.91748,
+      "null_space_residual_norm": 0.086162,
+      "wall_time_ms": 22.38,
+      "estimated_caspt2_speedup_factor": 1286.2,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.27439,
+      "coordinate_angstrom": 2.4966,
+      "baseline_energy_hartree": -108.64121,
+      "qbeck_energy_hartree": -108.91676,
+      "null_space_residual_norm": 0.086275,
+      "wall_time_ms": 22.42,
+      "estimated_caspt2_speedup_factor": 1292.9,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.28897,
+      "coordinate_angstrom": 2.5126,
+      "baseline_energy_hartree": -108.63926,
+      "qbeck_energy_hartree": -108.91607,
+      "null_space_residual_norm": 0.086382,
+      "wall_time_ms": 22.46,
+      "estimated_caspt2_speedup_factor": 1299.6,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.30354,
+      "coordinate_angstrom": 2.5286,
+      "baseline_energy_hartree": -108.63737,
+      "qbeck_energy_hartree": -108.9154,
+      "null_space_residual_norm": 0.086482,
+      "wall_time_ms": 22.5,
+      "estimated_caspt2_speedup_factor": 1306.3,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.31803,
+      "coordinate_angstrom": 2.5445,
+      "baseline_energy_hartree": -108.63554,
+      "qbeck_energy_hartree": -108.91476,
+      "null_space_residual_norm": 0.086577,
+      "wall_time_ms": 22.54,
+      "estimated_caspt2_speedup_factor": 1313.0,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.3326,
+      "coordinate_angstrom": 2.5605,
+      "baseline_energy_hartree": -108.63377,
+      "qbeck_energy_hartree": -108.91415,
+      "null_space_residual_norm": 0.086667,
+      "wall_time_ms": 22.58,
+      "estimated_caspt2_speedup_factor": 1319.7,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.34718,
+      "coordinate_angstrom": 2.5765,
+      "baseline_energy_hartree": -108.63206,
+      "qbeck_energy_hartree": -108.91356,
+      "null_space_residual_norm": 0.086752,
+      "wall_time_ms": 22.62,
+      "estimated_caspt2_speedup_factor": 1326.3,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.36167,
+      "coordinate_angstrom": 2.5924,
+      "baseline_energy_hartree": -108.63041,
+      "qbeck_energy_hartree": -108.913,
+      "null_space_residual_norm": 0.086831,
+      "wall_time_ms": 22.66,
+      "estimated_caspt2_speedup_factor": 1333.0,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.37624,
+      "coordinate_angstrom": 2.6084,
+      "baseline_energy_hartree": -108.62881,
+      "qbeck_energy_hartree": -108.91246,
+      "null_space_residual_norm": 0.086907,
+      "wall_time_ms": 22.71,
+      "estimated_caspt2_speedup_factor": 1339.7,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.39082,
+      "coordinate_angstrom": 2.6244,
+      "baseline_energy_hartree": -108.62726,
+      "qbeck_energy_hartree": -108.91194,
+      "null_space_residual_norm": 0.086979,
+      "wall_time_ms": 22.75,
+      "estimated_caspt2_speedup_factor": 1346.4,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.4053,
+      "coordinate_angstrom": 2.6403,
+      "baseline_energy_hartree": -108.62577,
+      "qbeck_energy_hartree": -108.91145,
+      "null_space_residual_norm": 0.087047,
+      "wall_time_ms": 22.79,
+      "estimated_caspt2_speedup_factor": 1353.1,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.41988,
+      "coordinate_angstrom": 2.6563,
+      "baseline_energy_hartree": -108.62432,
+      "qbeck_energy_hartree": -108.91097,
+      "null_space_residual_norm": 0.087112,
+      "wall_time_ms": 22.83,
+      "estimated_caspt2_speedup_factor": 1359.8,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.43445,
+      "coordinate_angstrom": 2.6723,
+      "baseline_energy_hartree": -108.62292,
+      "qbeck_energy_hartree": -108.91052,
+      "null_space_residual_norm": 0.087174,
+      "wall_time_ms": 22.87,
+      "estimated_caspt2_speedup_factor": 1366.5,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.44894,
+      "coordinate_angstrom": 2.6882,
+      "baseline_energy_hartree": -108.62156,
+      "qbeck_energy_hartree": -108.91008,
+      "null_space_residual_norm": 0.087232,
+      "wall_time_ms": 22.91,
+      "estimated_caspt2_speedup_factor": 1373.2,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.46351,
+      "coordinate_angstrom": 2.7042,
+      "baseline_energy_hartree": -108.62025,
+      "qbeck_energy_hartree": -108.90966,
+      "null_space_residual_norm": 0.087288,
+      "wall_time_ms": 22.95,
+      "estimated_caspt2_speedup_factor": 1379.9,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.47809,
+      "coordinate_angstrom": 2.7202,
+      "baseline_energy_hartree": -108.61898,
+      "qbeck_energy_hartree": -108.90926,
+      "null_space_residual_norm": 0.087341,
+      "wall_time_ms": 22.99,
+      "estimated_caspt2_speedup_factor": 1386.6,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.49258,
+      "coordinate_angstrom": 2.7361,
+      "baseline_energy_hartree": -108.61776,
+      "qbeck_energy_hartree": -108.90887,
+      "null_space_residual_norm": 0.087392,
+      "wall_time_ms": 23.04,
+      "estimated_caspt2_speedup_factor": 1393.2,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.50715,
+      "coordinate_angstrom": 2.7521,
+      "baseline_energy_hartree": -108.61657,
+      "qbeck_energy_hartree": -108.9085,
+      "null_space_residual_norm": 0.08744,
+      "wall_time_ms": 23.08,
+      "estimated_caspt2_speedup_factor": 1399.9,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.52173,
+      "coordinate_angstrom": 2.7681,
+      "baseline_energy_hartree": -108.61542,
+      "qbeck_energy_hartree": -108.90815,
+      "null_space_residual_norm": 0.087486,
+      "wall_time_ms": 23.12,
+      "estimated_caspt2_speedup_factor": 1406.6,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.53621,
+      "coordinate_angstrom": 2.784,
+      "baseline_energy_hartree": -108.61431,
+      "qbeck_energy_hartree": -108.90781,
+      "null_space_residual_norm": 0.087531,
+      "wall_time_ms": 23.16,
+      "estimated_caspt2_speedup_factor": 1413.3,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    },
+    {
+      "strain": 1.55079,
+      "coordinate_angstrom": 2.8,
+      "baseline_energy_hartree": -108.61323,
+      "qbeck_energy_hartree": -108.90748,
+      "null_space_residual_norm": 0.087573,
+      "wall_time_ms": 23.2,
+      "estimated_caspt2_speedup_factor": 1420.0,
+      "baseline_convergence_status": "scf_oscillation_failed"
+    }
+  ]
+}
