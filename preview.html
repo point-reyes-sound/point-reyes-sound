@@ -1,41 +1,299 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg?v=5" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/prs_favicon_32.png?v=5" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/prs_favicon_192.png?v=5" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/prs_favicon_180.png?v=5" />
-    <link rel="shortcut icon" href="/favicon.ico?v=5" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Preview | Point Reyes Sound</title>
-    <meta name="description" content="Point Reyes Sound — Real-space electron density over Wigner phase space. Interactive preview of BeH₂, H₂, H₃, and H₄ electronic structure dynamics." />
-    <meta name="author" content="Point Reyes Sound, Inc." />
-    <link rel="canonical" href="https://www.pointreyessound.com/preview" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg?v=5" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/prs_favicon_32.png?v=5" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/prs_favicon_192.png?v=5" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/prs_favicon_180.png?v=5" />
+  <link rel="shortcut icon" href="/favicon.ico?v=5" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preview | Point Reyes Sound</title>
+  <meta name="description" content="Point Reyes Sound — Electronic Quantum Fluid in Phase Space. Automated cinema preview of Triple-Bond Dissociation, Symmetric Stretch, Automerization, Conical Intersection, and Conical Seam." />
+  <meta name="author" content="Point Reyes Sound, Inc." />
+  <link rel="canonical" href="https://www.pointreyessound.com/preview" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.pointreyessound.com/preview" />
+  <meta property="og:title" content="Preview | Point Reyes Sound" />
+  <meta property="og:description" content="Electronic Quantum Fluid in Phase Space — Automated cinema preview." />
+  <meta property="og:image" content="https://www.pointreyessound.com/preview-films/n2_poster.png" />
+  <meta property="og:site_name" content="Point Reyes Sound, Inc." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-black: #000000;
+      --border-frame: rgba(214, 232, 255, 0.24);
+      --text-main: #f8fafc;
+      --text-muted: rgba(206, 220, 242, 0.58);
+    }
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.pointreyessound.com/preview" />
-    <meta property="og:title" content="Preview | Point Reyes Sound" />
-    <meta property="og:description" content="Real-space electron density over Wigner phase space — BeH₂, H₂, H₃, and H₄." />
-    <meta property="og:image" content="https://www.pointreyessound.com/PRS_logo_v2.jpeg" />
-    <meta property="og:site_name" content="Point Reyes Sound, Inc." />
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg-black);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
+    }
 
-    <!-- Twitter / X -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://www.pointreyessound.com/preview" />
-    <meta name="twitter:title" content="Preview | Point Reyes Sound" />
-    <meta name="twitter:description" content="Real-space electron density over Wigner phase space — BeH₂, H₂, H₃, and H₄." />
-    <meta name="twitter:image" content="https://www.pointreyessound.com/PRS_logo_v2.jpeg" />
+    .page {
+      width: 100vw;
+      height: 100vh;
+      background: #000000;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 36px 22px;
+      position: relative;
+    }
 
-    <!-- Google Fonts: EB Garamond, JetBrains Mono, Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  </head>
-  <body style="background:#000000;margin:0;">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 20;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      text-decoration: none;
+      color: #fff;
+    }
+    .crest {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      object-fit: cover;
+      box-shadow: 0 4px 16px rgba(180, 18, 58, 0.35);
+    }
+    .brand-name {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 23px;
+      font-weight: 400;
+      letter-spacing: 0.015em;
+      color: #fff;
+    }
+
+    .stage {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+    }
+
+    .video-frame {
+      height: min(78vh, 740px);
+      aspect-ratio: 9 / 16;
+      background: #010306;
+      border: 1px solid var(--border-frame);
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.96),
+                  0 0 38px rgba(130, 180, 255, 0.12);
+      transition: opacity 0.38s ease, transform 0.38s ease;
+    }
+
+    .video-frame.is-fading {
+      opacity: 0;
+      transform: scale(0.985);
+    }
+
+    .video-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: #010306;
+    }
+
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 30;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(14, 18, 28, 0.68);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .nav-arrow:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.42);
+      transform: translateY(-50%) scale(1.06);
+    }
+    .nav-arrow.prev { left: max(20px, 6vw); }
+    .nav-arrow.next { right: max(20px, 6vw); }
+
+    .bottom-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      z-index: 20;
+    }
+    .caption-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 21px;
+      font-weight: 400;
+      color: #ffffff;
+      letter-spacing: 0.015em;
+    }
+    .dots {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.24);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .dot.active {
+      width: 28px;
+      background: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="/">
+        <img class="crest" src="/PRS_logo_v2.jpeg" alt="Point Reyes Sound" />
+        <span class="brand-name">Point Reyes Sound</span>
+      </a>
+    </header>
+
+    <main class="stage">
+      <button class="nav-arrow prev" onclick="step(-1)" aria-label="Previous">‹</button>
+
+      <div class="video-frame" id="video-frame">
+        <video id="player" autoplay muted playsinline controls></video>
+      </div>
+
+      <button class="nav-arrow next" onclick="step(1)" aria-label="Next">›</button>
+    </main>
+
+    <footer class="bottom-bar">
+      <div class="caption-title" id="cap-title"></div>
+      <div class="dots" id="dots"></div>
+    </footer>
+  </div>
+
+  <script>
+    const FILMS = [
+      {
+        title: "Triple-Bond Dissociation",
+        src: "/preview-films/n2_beethoven.mp4",
+        poster: "/preview-films/n2_poster.png"
+      },
+      {
+        title: "Symmetric Stretch",
+        src: "/preview-films/h2o_debussy.mp4",
+        poster: "/preview-films/h2o_poster.png"
+      },
+      {
+        title: "Automerization",
+        src: "/preview-films/h4_automerization.mp4",
+        poster: ""
+      },
+      {
+        title: "Conical Intersection",
+        src: "/preview-films/beh2_conical.mp4",
+        poster: ""
+      },
+      {
+        title: "Conical Seam",
+        src: "/preview-films/h3_conical_seam.mp4",
+        poster: ""
+      }
+    ];
+
+    const frame = document.getElementById("video-frame");
+    const player = document.getElementById("player");
+    const capTitle = document.getElementById("cap-title");
+    const dotsEl = document.getElementById("dots");
+
+    let activeIdx = 0;
+    let userMuted = true;
+    let userVolume = 1.0;
+
+    player.addEventListener("volumechange", () => {
+      userMuted = player.muted;
+      userVolume = player.volume;
+    });
+
+    player.addEventListener("ended", () => {
+      step(1);
+    });
+
+    const dots = FILMS.map((f, idx) => {
+      const d = document.createElement("button");
+      d.className = "dot";
+      d.setAttribute("aria-label", f.title);
+      d.addEventListener("click", () => goTo(idx));
+      dotsEl.appendChild(d);
+      return d;
+    });
+
+    function loadFilm(idx, animate = true) {
+      const f = FILMS[idx];
+      const apply = () => {
+        player.src = f.src;
+        if (f.poster) player.poster = f.poster;
+        else player.removeAttribute("poster");
+        player.muted = userMuted;
+        player.volume = userVolume;
+        player.load();
+        player.play().catch(() => {});
+        capTitle.textContent = f.title;
+        dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+        frame.classList.remove("is-fading");
+      };
+      if (animate) {
+        frame.classList.add("is-fading");
+        setTimeout(apply, 260);
+      } else {
+        apply();
+      }
+    }
+
+    function goTo(i) {
+      const next = ((i % FILMS.length) + FILMS.length) % FILMS.length;
+      if (next === activeIdx) return;
+      activeIdx = next;
+      loadFilm(activeIdx, true);
+    }
+    function step(delta) { goTo(activeIdx + delta); }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    });
+
+    loadFilm(0, false);
+  </script>
+</body>
 </html>

@@ -758,8 +758,8 @@ export default function App() {
           <nav className="header-nav">
             <button 
               className="nav-header-tab"
-              onClick={() => openAppView("orbitals")}
-              title="Launch Interactive Molecular Orbital Workstation"
+              onClick={() => { stopAudioIfPlaying(); window.location.href = "/preview"; }}
+              title="Electronic Quantum Fluid in Phase Space — Preview"
             >
               Preview
             </button>
