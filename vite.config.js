@@ -72,6 +72,7 @@ export default defineConfig({
         lynam: resolve(__dirname, 'lynam-deck.html'),
         preseed: resolve(__dirname, 'pre-seed-deck.html'),
         prs_deck: resolve(__dirname, 'point-reyes-sound-deck.html'),
+        mighty_capital: resolve(__dirname, 'mighty-capital-deck.html'),
         news_alchemist: resolve(__dirname, 'news/alchemist-chicago-2026/index.html'),
         film: resolve(__dirname, 'film/index.html')
       }

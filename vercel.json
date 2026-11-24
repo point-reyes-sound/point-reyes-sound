@@ -50,6 +50,14 @@
   ],
   "rewrites": [
     {
+      "source": "/mighty-capital-deck",
+      "destination": "/mighty-capital-deck.html"
+    },
+    {
+      "source": "/mighty-capital",
+      "destination": "/mighty-capital-deck.html"
+    },
+    {
       "source": "/point-reyes-sound-deck",
       "destination": "/point-reyes-sound-deck.html"
     },
