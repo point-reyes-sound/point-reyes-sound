@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Point Reyes Sound — Speciale Invest Deck</title>
+  <link rel="icon" type="image/svg+xml" href="/prs_favicon.svg?v=5" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/prs_favicon_32.png?v=5" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/prs_favicon_180.png?v=5" />
+  <link rel="shortcut icon" href="/favicon.ico?v=5" />
+
+  <meta name="description" content="Point Reyes Sound, Inc. — Electronic Design Automation at Scale. Deterministic O(N³) Q-BOLTZ phase-space kinetics for sub-2nm semiconductor design." />
+  <meta property="og:title" content="Point Reyes Sound — Investor Deck" />
+  <meta property="og:description" content="Deterministic O(N³) Q-BOLTZ EDA solver capturing the $35B Electronic Design Automation market through Tier-1 chipmaker design partnerships." />
+  <meta property="og:image" content="https://www.pointreyessound.com/PRS_logo_v2.jpeg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-void: #020510;
+      --bg-night: #071338;
+      --bg-deep: #09194A;
+      --bg-card: rgba(13, 33, 94, 0.78);
+      --bg-card-strong: rgba(10, 26, 76, 0.92);
+
+      --gold: #F8DF98;
+      --champagne: #FFF5CC;
+      --crimson: #B81838;
+      --crimson-soft: rgba(184, 24, 56, 0.16);
+      --ice: #A7BDF2;
+      --mist: #C7D8FF;
+      --text-main: #FFFFFF;
+      --text-body: #DCE7FF;
+      --text-muted: #9BB2EA;
+      --rule: rgba(79, 114, 198, 0.36);
+      --rule-gold: rgba(248, 223, 152, 0.38);
+
+      --font-serif: "EB Garamond", Georgia, serif;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg-void);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Centered 16:9 Stage Wrapper */
+    .deck-viewport {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 20px 64px;
+      position: relative;
+    }
+
+    .deck-stage {
+      position: relative;
+      width: min(calc((100vh - 84px) * 16 / 9), calc(100vw - 40px));
+      aspect-ratio: 16 / 9;
+      container-type: size;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(79, 114, 198, 0.32);
+      background: var(--bg-deep);
+    }
+
+    /* Slide Base */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      padding: 3.4cqh 4.0cqw 2.8cqh;
+      background:
+        radial-gradient(ellipse 85% 65% at 50% -12%, rgba(28, 66, 176, 0.48), transparent 68%),
+        radial-gradient(circle 42% at 96% 96%, rgba(168, 16, 56, 0.22), transparent 72%),
+        linear-gradient(165deg, #0B1E58 0%, #09194A 52%, #061030 100%);
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    /* Top Header Bar */
+    .slide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.5cqh;
+      border-bottom: 1px solid var(--rule);
+      flex-shrink: 0;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 0.9cqw;
+    }
+
+    .brand-lockup img {
+      width: 2.3cqw;
+      height: 2.3cqw;
+      border-radius: 4px;
+      border: 1px solid rgba(248, 223, 152, 0.35);
+      object-fit: cover;
+    }
+
+    .brand-name {
+      font-family: var(--font-mono);
+      font-size: 1.25cqh;
+      font-weight: 600;
+      letter-spacing: 0.20em;
+      color: var(--mist);
+      text-transform: uppercase;
+    }
+
+    .brand-sep {
+      color: rgba(167, 189, 242, 0.38);
+      font-size: 1.4cqh;
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 1.15cqh;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .slide-num {
+      font-family: var(--font-mono);
+      font-size: 1.25cqh;
+      letter-spacing: 0.12em;
+      color: #E9C7D1;
+    }
+
+    /* Slide Titles */
+    .slide-headline-block {
+      margin: 2.0cqh 0 1.8cqh;
+      flex-shrink: 0;
+    }
+
+    .slide-headline-block.centered {
+      text-align: center;
+    }
+
+    .slide-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 4.6cqh;
+      line-height: 1.06;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .slide-sub {
+      font-family: var(--font-serif);
+      font-size: 2.15cqh;
+      color: var(--gold);
+      margin-top: 0.55cqh;
+      line-height: 1.25;
+    }
+
+    .slide-kicker {
+      font-family: var(--font-mono);
+      font-size: 1.2cqh;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ice);
+      margin-top: 0.55cqh;
+    }
+
+    /* Main Content Body */
+    .slide-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.8cqh;
+    }
+
+    /* Footer */
+    .slide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1.2cqh;
+      margin-top: 1.4cqh;
+      border-top: 1px solid var(--rule);
+      font-family: var(--font-mono);
+      font-size: 1.1cqh;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .slide-footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .slide-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Reusable Editorial Cards & Grids */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.0cqw; min-height: 0; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8cqw; min-height: 0; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4cqw; min-height: 0; }
+
+    .card {
+      background: linear-gradient(155deg, rgba(16, 40, 112, 0.78), rgba(9, 25, 74, 0.90));
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 2.2cqh 1.8cqw;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 1.8cqh;
+      min-height: 0;
+    }
+
+    .card.gold-rim {
+      border-color: var(--rule-gold);
+      background: linear-gradient(155deg, rgba(24, 52, 130, 0.84), rgba(9, 25, 74, 0.94));
+    }
+
+    .card-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 1.1cqh;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.7cqh;
+    }
+
+    .card-title {
+      font-family: var(--font-serif);
+      font-size: 2.5cqh;
+      font-weight: 600;
+      color: #FFFFFF;
+      line-height: 1.15;
+    }
+
+    .card-text {
+      font-family: var(--font-sans);
+      font-size: 1.55cqh;
+      line-height: 1.48;
+      color: var(--text-body);
+    }
+
+    .metric-big {
+      font-family: var(--font-serif);
+      font-size: 4.8cqh;
+      font-weight: 700;
+      line-height: 1.02;
+      color: var(--gold);
+    }
+
+    .metric-big.champagne { color: var(--champagne); }
+    .metric-big.ice { color: var(--ice); }
+
+    .metric-label {
+      font-family: var(--font-mono);
+      font-size: 1.12cqh;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mist);
+      margin-top: 0.55cqh;
+    }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.05cqh;
+    }
+
+    .bullet-list li {
+      position: relative;
+      padding-left: 1.4cqw;
+      font-size: 1.55cqh;
+      line-height: 1.44;
+      color: var(--text-body);
+    }
+
+    .bullet-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.82cqh;
+      width: 0.52cqw;
+      height: 0.52cqw;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .bullet-list strong {
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    /* Cover Slide Specifics */
+    .cover-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 2.8cqw;
+      align-items: center;
+      min-height: 0;
+      padding: 1.4cqh 0;
+    }
+
+    .cover-hero-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 7.4cqh;
+      line-height: 1.02;
+      color: #FFFFFF;
+      letter-spacing: -0.015em;
+    }
+
+    .cover-hero-sub {
+      font-family: var(--font-serif);
+      font-size: 3.1cqh;
+      color: var(--gold);
+      margin-top: 1.4cqh;
+      line-height: 1.22;
+    }
+
+    .cover-hero-desc {
+      font-family: var(--font-sans);
+      font-size: 1.65cqh;
+      line-height: 1.55;
+      color: var(--text-body);
+      margin-top: 2.0cqh;
+      max-width: 94%;
+    }
+
+    .cover-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9cqw;
+      margin-top: 2.4cqh;
+    }
+
+    .pill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45cqw;
+      padding: 0.85cqh 1.25cqw;
+      border-radius: 999px;
+      border: 1px solid var(--rule-gold);
+      background: rgba(248, 223, 152, 0.10);
+      color: var(--gold);
+      font-family: var(--font-mono);
+      font-size: 1.18cqh;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+
+    .pill-link.secondary {
+      border-color: var(--rule);
+      background: rgba(167, 189, 242, 0.08);
+      color: var(--mist);
+    }
+
+    .cover-plate {
+      background: var(--bg-card-strong);
+      border: 1px solid var(--rule-gold);
+      border-radius: 14px;
+      padding: 1.5cqh 1.3cqw 1.3cqh;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1cqh;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    .cover-plate img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 9px;
+      border: 1px solid var(--rule);
+    }
+
+    .cover-plate-cap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 1.12cqh;
+      color: var(--mist);
+    }
+
+    /* Comparison Table */
+    .eda-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.48cqh;
+    }
+
+    .eda-table th {
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 1.12cqh;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 1.1cqh 1.1cqw;
+      border-bottom: 1px solid var(--rule-gold);
+    }
+
+    .eda-table td {
+      padding: 1.25cqh 1.1cqw;
+      border-bottom: 1px solid rgba(79, 114, 198, 0.22);
+      color: var(--text-body);
+      vertical-align: top;
+    }
+
+    .eda-table tr.highlight td {
+      background: rgba(248, 223, 152, 0.09);
+      color: #FFFFFF;
+      font-weight: 500;
+    }
+
+    .eda-table tr.highlight td:first-child {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* Vertical Image Cards (Slide 4) */
+    .vertical-card-img {
+      width: 100%;
+      height: 28cqh;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--rule);
+      margin-top: 1.2cqh;
+    }
+
+    /* Revenue Tier Badge */
+    .tier-badge {
+      display: inline-block;
+      padding: 0.45cqh 0.85cqw;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 1.05cqh;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      background: rgba(248, 223, 152, 0.14);
+      color: var(--gold);
+      border: 1px solid var(--rule-gold);
+      margin-bottom: 0.9cqh;
+      align-self: flex-start;
+    }
+
+    /* Team Portraits */
+    .portrait-ring {
+      width: 11.5cqh;
+      height: 11.5cqh;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
+    }
+
+    .portrait-ring.advisor {
+      width: 9.8cqh;
+      height: 9.8cqh;
+      border-color: var(--ice);
+    }
+
+    /* Slide 2: Executive Film (Interactive Video on Screen -> Clickable Cinema Poster in PDF) */
+    .film-stage {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--rule-gold);
+      background: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .film-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .film-print-cover {
+      display: none;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+    }
+
+    .film-print-poster {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.62);
+    }
+
+    .film-print-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.8cqh;
+      background: radial-gradient(circle at center, rgba(6, 16, 48, 0.25), rgba(2, 5, 16, 0.72));
+      text-align: center;
+      padding: 4cqh 6cqw;
+    }
+
+    .film-play-badge {
+      width: 10.5cqh;
+      height: 10.5cqh;
+      border-radius: 50%;
+      background: rgba(248, 223, 152, 0.94);
+      box-shadow: 0 0 42px rgba(248, 223, 152, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .film-print-title {
+      font-family: var(--font-mono);
+      font-size: 2.1cqh;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+    }
+
+    .film-print-sub {
+      font-family: var(--font-serif);
+      font-size: 3.4cqh;
+      color: #FFFFFF;
+    }
+
+    .film-print-url {
+      font-family: var(--font-mono);
+      font-size: 1.4cqh;
+      color: var(--mist);
+      padding: 0.85cqh 1.6cqw;
+      border-radius: 999px;
+      border: 1px solid var(--rule-gold);
+      background: rgba(9, 25, 74, 0.85);
+    }
+
+    /* Interactive Bottom Controls (Hidden in Print/PDF) */
+    .deck-controls {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(7, 19, 56, 0.92);
+      border: 1px solid rgba(79, 114, 198, 0.45);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .ctrl-btn {
+      background: rgba(167, 189, 242, 0.10);
+      border: 1px solid rgba(167, 189, 242, 0.28);
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+    }
+
+    .ctrl-btn:hover {
+      background: rgba(248, 223, 152, 0.18);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .ctrl-btn.primary {
+      background: rgba(184, 24, 56, 0.20);
+      border-color: #C42038;
+      color: #FFD6DE;
+    }
+
+    .ctrl-btn.primary:hover {
+      background: #C42038;
+      color: #FFFFFF;
+    }
+
+    .ctrl-dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 6px;
+    }
+
+    .ctrl-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(167, 189, 242, 0.35);
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.2s ease;
+    }
+
+    .ctrl-dot.active {
+      width: 22px;
+      background: var(--gold);
+    }
+
+    .ctrl-counter {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--mist);
+      min-width: 48px;
+      text-align: center;
+    }
+
+    /* =====================================================================
+       EXACT 16:9 STANDALONE PDF PRINT MODE (1920px x 1080px per slide)
+       ===================================================================== */
+    @page {
+      size: 1920px 1080px;
+      margin: 0;
+    }
+
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      html, body {
+        width: 1920px !important;
+        height: auto !important;
+        overflow: visible !important;
+        background: #061030 !important;
+      }
+
+      .deck-controls {
+        display: none !important;
+      }
+
+      .deck-viewport {
+        display: block !important;
+        width: 1920px !important;
+        height: auto !important;
+        padding: 0 !important;
+      }
+
+      .deck-stage {
+        width: 1920px !important;
+        height: auto !important;
+        aspect-ratio: auto !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        container-type: normal !important;
+      }
+
+      .slide {
+        position: relative !important;
+        display: flex !important;
+        width: 1920px !important;
+        height: 1080px !important;
+        container-type: size !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        overflow: hidden !important;
+      }
+
+      .slide:last-child {
+        page-break-after: auto !important;
+        break-after: auto !important;
+      }
+
+      .film-video {
+        display: none !important;
+      }
+
+      .film-print-cover {
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-viewport">
+    <main class="deck-stage" id="deck-stage">
+
+      <!-- =================================================================
+           SLIDE 01 / 08 — COVER & COMMERCIAL THESIS
+           ================================================================= -->
+      <section class="slide active" id="slide-1" data-slide="1">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Investor Deck</span>
+          </div>
+          <span class="slide-num">01 / 08</span>
+        </header>
+
+        <div class="cover-grid">
+          <div>
+            <h1 class="cover-hero-title">Point Reyes Sound</h1>
+            <div class="cover-hero-sub">Electronic Design Automation at Scale</div>
+            <div class="cover-pill-row" style="margin-top:3.0cqh;">
+              <a class="pill-link" href="https://www.pointreyessound.com/preview" target="_blank" rel="noopener">Interactive Preview ↗</a>
+              <a class="pill-link secondary" href="https://www.pointreyessound.com/film" target="_blank" rel="noopener">Executive Film (0:58) ↗</a>
+              <a class="pill-link secondary" href="https://arxiv.org/abs/2608.14979" target="_blank" rel="noopener">J. Chem. Phys. Paper ↗</a>
+            </div>
+          </div>
+
+          <div class="cover-plate">
+            <img src="/vertical_semiconductors.jpg" alt="Sub-2nm Semiconductor Kinetic Relaxation" />
+            <div class="cover-plate-cap">
+              <span>Sub-2nm GAAFET Kinetic Relaxation</span>
+              <span style="color:var(--gold);">2 U.S. Provisional Patents Filed</span>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. · <strong style="color:var(--gold); font-weight:600;">2 U.S. Provisional Patents Filed</strong> (QBE-SCF 64/033,274 &amp; Q-BECK)</span>
+          <span>Confidential — Speciale Invest · <a href="https://www.pointreyessound.com" target="_blank" rel="noopener">pointreyessound.com</a></span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 02 / 09 — EXECUTIVE FILM (Interactive Video -> Clickable PDF Poster)
+           ================================================================= -->
+      <!-- =================================================================
+           SLIDE 02 / 08 — Q-BECK SCALING, PREPRINTS & PROVISIONAL PATENTS
+           ================================================================= -->
+      <section class="slide" id="slide-2" data-slide="2">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Scientific Moat · Publications &amp; IP</span>
+          </div>
+          <span class="slide-num">02 / 08</span>
+        </header>
+
+        <div class="slide-body" style="padding-top:1.0cqh; align-items:center; justify-content:center; position:relative;">
+          <!-- Centered Hero 2-Preprint Chrome Carousel (Zero side text tiles; clicking plate -> arXiv preprint) -->
+          <button type="button" class="pc-nav pc-prev" aria-label="Previous Preprint" onclick="window.__stepPreprintCarousel(-1)" style="position:absolute; left:18cqw; top:48%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; border:1px solid rgba(248,223,152,0.42); background:rgba(5,12,36,0.68); color:#f8df98; font-size:26px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:4;">&lsaquo;</button>
+
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.1cqh;">
+            <div class="preprint-carousel" id="preprint-carousel" style="position:relative; height:74cqh; aspect-ratio:1080 / 1350; border-radius:10px; overflow:hidden; border:1px solid var(--rule-gold); box-shadow:0 24px 64px rgba(0,0,0,0.65); background:#09194A;">
+              <a class="pc-slide active" href="https://arxiv.org/abs/2608.14979" target="_blank" rel="noopener" title="Read QBE-SCF Preprint (arXiv:2608.14979)" style="position:absolute; inset:0; display:block; text-decoration:none; transition:opacity 320ms ease;">
+                <img src="/deck_assets/QBESCF-slide1.png" alt="QBE-SCF — arXiv:2608.14979" style="width:100%; height:100%; object-fit:cover; display:block;" />
+              </a>
+              <a class="pc-slide" href="https://arxiv.org/abs/2611.17245" target="_blank" rel="noopener" title="Read Q-BECK Preprint (arXiv:2611.17245)" style="position:absolute; inset:0; display:block; text-decoration:none; opacity:0; pointer-events:none; transition:opacity 320ms ease;">
+                <img src="/deck_assets/QBECK_Promo_Slide2_Scaling.png" alt="Q-BECK — arXiv:2611.17245" style="width:100%; height:100%; object-fit:cover; display:block;" />
+              </a>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:1.0cqh; color:var(--mist);">
+              <button type="button" class="pc-dot" onclick="window.__goPreprintCarousel(0)" style="width:22px; height:5px; border-radius:3px; border:none; background:var(--gold); cursor:pointer; transition:all 200ms ease;"></button>
+              <button type="button" class="pc-dot" onclick="window.__goPreprintCarousel(1)" style="width:8px; height:5px; border-radius:3px; border:none; background:rgba(255,255,255,0.28); cursor:pointer; transition:all 200ms ease;"></button>
+              <span id="pc-caption" style="margin-left:6px; color:var(--champagne);">Click plate &rarr; arXiv:2608.14979 ↗</span>
+            </div>
+          </div>
+
+          <button type="button" class="pc-nav pc-next" aria-label="Next Preprint" onclick="window.__stepPreprintCarousel(1)" style="position:absolute; right:18cqw; top:48%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; border:1px solid rgba(248,223,152,0.42); background:rgba(5,12,36,0.68); color:#f8df98; font-size:26px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:4;">&rsaquo;</button>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. &copy; 2026 &middot; Sole Assignee</span>
+          <span>Publications &amp; IP &middot; <a href="https://arxiv.org/abs/2611.17245" target="_blank" rel="noopener">arXiv:2611.17245 ↗</a></span>
+        </footer>
+      </section>
+
+      <section class="slide" id="slide-3" data-slide="3">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Executive Film</span>
+          </div>
+          <span class="slide-num">03 / 08</span>
+        </header>
+
+        <div class="slide-body" style="padding-top:1.4cqh;">
+          <div class="film-stage">
+            <video class="film-video" id="deck-film" controls playsinline preload="metadata" poster="/film_watch_poster.jpg">
+              <source src="/point_reyes_sound_complete_film.mp4" type="video/mp4" />
+              Your browser does not support HTML5 video.
+            </video>
+            <a class="film-print-cover" href="https://www.pointreyessound.com/film?autoplay=1" target="_blank" rel="noopener">
+              <img class="film-print-poster" src="/film_watch_poster.jpg" alt="Point Reyes Sound Executive Film" />
+              <div class="film-print-overlay">
+                <div class="film-play-badge">
+                  <svg viewBox="0 0 24 24" width="44" height="44" fill="#09194A" style="margin-left:5px;">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+                <div class="film-print-title">EXECUTIVE FILM · 0:58</div>
+                <div class="film-print-sub">Electronic Design Automation at Scale</div>
+                <div class="film-print-url">▶ Watch Online · https://www.pointreyessound.com/film ↗</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>Executive Film · <a href="https://www.pointreyessound.com/film" target="_blank" rel="noopener">pointreyessound.com/film ↗</a></span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 03 / 08 — THE SUB-2nm EDA ENGINE (NUMBERS & PROPOSITION ONLY)
+           ================================================================= -->
+      <section class="slide" id="slide-4" data-slide="4">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Sub-2nm EDA Engine</span>
+          </div>
+          <span class="slide-num">04 / 08</span>
+        </header>
+
+        <div class="slide-headline-block centered">
+          <h2 class="slide-title">Electronic Design Automation at Scale</h2>
+          <div class="slide-sub">Replacing $50M+ tape-out guesswork with peer-reviewed phase-space physics.</div>
+        </div>
+
+        <div class="slide-body" style="gap:2.2cqh;">
+          <!-- 3 Hero Business & Technical Metrics — Zero Paragraphs -->
+          <div class="grid-3">
+            <div class="card" style="text-align:center; align-items:center; justify-content:center; padding:2.6cqh 1.6cqw;">
+              <div class="metric-big">$50M+</div>
+              <div class="metric-label">Sub-2nm Tape-Out Respin Cost</div>
+            </div>
+
+            <div class="card gold-rim" style="text-align:center; align-items:center; justify-content:center; padding:2.6cqh 1.6cqw;">
+              <div class="metric-big champagne">O(N⁶) → O(N³)</div>
+              <div class="metric-label">Q-BOLTZ Complexity Collapse</div>
+            </div>
+
+            <div class="card" style="text-align:center; align-items:center; justify-content:center; padding:2.6cqh 1.6cqw;">
+              <div class="metric-big ice">1,748×</div>
+              <div class="metric-label">Toffoli Gate Reduction Proof</div>
+            </div>
+          </div>
+
+          <!-- Curated Dual-Panel Scientific Plate: O(N⁶)→O(N³) Scaling + Sovereign Gold & Sapphire Wigner Surface -->
+          <div class="card" style="padding:1.0cqh 1.0cqw; flex:1; justify-content:center; align-items:center; overflow:hidden; background:#071338;">
+            <img src="/deck_assets/slide3_eda_engine_plate.png" alt="O(N⁶) to O(N³) Q-BOLTZ Scaling Curve" style="width:100%; height:100%; object-fit:contain; border-radius:8px; display:block;" />
+          </div>
+
+          <!-- Single-Line Validation Bar -->
+          <div class="card gold-rim" style="padding:1.4cqh 2.0cqw; flex-direction:row; align-items:center; justify-content:space-between;">
+            <span style="font-family:var(--font-mono); font-size:1.22cqh; color:var(--mist);">
+              <strong style="color:#fff;">J. Chem. Phys.</strong> (Accepted, Zero Revisions) · <a href="https://arxiv.org/abs/2608.14979" target="_blank" style="color:var(--gold); text-decoration:none;">arXiv:2608.14979 ↗</a>
+              &nbsp;&nbsp;|&nbsp;&nbsp;
+              <strong style="color:#fff;">Q-BECK</strong> · <a href="https://arxiv.org/abs/2611.17245" target="_blank" style="color:var(--gold); text-decoration:none;">arXiv:2611.17245 ↗</a>
+            </span>
+            <span style="font-family:var(--font-mono); font-size:1.18cqh; color:var(--gold); white-space:nowrap;">U.S. Prov. Patent 64/033,274</span>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>Deterministic O(N³) Phase-Space Kinetics · AWS Pilot Compute</span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 04 / 06 — THE $35B EDA MARKET & REVENUE NUMBERS
+           ================================================================= -->
+      <!-- =================================================================
+           SLIDE 04 / 07 — INTERACTIVE PREVIEW CAROUSEL
+           ================================================================= -->
+      <section class="slide" id="slide-5" data-slide="5">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Interactive Preview</span>
+          </div>
+          <span class="slide-num">05 / 08</span>
+        </header>
+
+        <div class="slide-body" style="padding-top:1.4cqh;">
+          <div class="film-stage" style="background:#000000;">
+            <!-- Native Black Cinema Preview Carousel (Zero iframe / Zero CSP blocks) -->
+            <div class="film-video" id="s5-carousel" style="width:100%; height:100%; background:#000000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; padding:1.6cqh 4cqw 2.0cqh;">
+              <button type="button" onclick="window.__stepS5Preview(-1)" aria-label="Previous film" style="position:absolute; left:2.2cqw; top:48%; transform:translateY(-50%); width:42px; height:42px; border-radius:50%; border:1px solid rgba(255,255,255,0.22); background:rgba(255,255,255,0.06); color:#ffffff; font-size:24px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:4;">&lsaquo;</button>
+
+              <div style="height:86%; aspect-ratio:9 / 16; border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,0.14); background:#000000; box-shadow:0 18px 50px rgba(0,0,0,0.85);">
+                <video
+                  id="s5-preview-video"
+                  src="/preview-films/sio2_vacancy_satie.mp4"
+                  poster="/preview-films/sio2_vacancy_poster.png"
+                  muted
+                  playsinline
+                  controls
+                  preload="metadata"
+                  style="width:100%; height:100%; object-fit:cover; display:block; background:#000000;"
+                ></video>
+              </div>
+
+              <button type="button" onclick="window.__stepS5Preview(1)" aria-label="Next film" style="position:absolute; right:2.2cqw; top:48%; transform:translateY(-50%); width:42px; height:42px; border-radius:50%; border:1px solid rgba(255,255,255,0.22); background:rgba(255,255,255,0.06); color:#ffffff; font-size:24px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:4;">&rsaquo;</button>
+
+              <div style="margin-top:1.1cqh; display:flex; flex-direction:column; align-items:center; gap:0.65cqh;">
+                <div id="s5-cap-title" style="font-family:var(--font-serif); font-size:1.95cqh; color:#ffffff; letter-spacing:0.01em;">Oxygen Vacancy in Silicon</div>
+                <div id="s5-dots" style="display:flex; align-items:center; gap:8px;"></div>
+              </div>
+            </div>
+            <a class="film-print-cover" href="https://www.pointreyessound.com/preview" target="_blank" rel="noopener" style="background:#000000;">
+              <div style="width:100%; height:100%; background:#000000; display:flex; align-items:center; justify-content:center; gap:2.4cqw; padding:3.2cqh 4cqw;">
+                <img src="/preview-films/sio2_vacancy_poster.png" alt="Oxygen Vacancy in Silicon" style="height:86%; width:auto; border-radius:14px; border:1px solid rgba(229,193,88,0.45); object-fit:contain; display:block;" />
+                <img src="/preview-films/n2_poster.png" alt="Triple-Bond Dissociation" style="height:86%; width:auto; border-radius:14px; border:1px solid rgba(255,255,255,0.14); object-fit:contain; display:block;" />
+                <img src="/preview-films/h2o_poster.png" alt="Symmetric Stretch" style="height:86%; width:auto; border-radius:14px; border:1px solid rgba(255,255,255,0.14); object-fit:contain; display:block;" />
+              </div>
+              <div class="film-print-overlay" style="background:linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.18) 65%, rgba(0,0,0,0.78) 100%); justify-content:flex-end; padding-bottom:3.2cqh; gap:1.0cqh;">
+                <div class="film-print-title">ELECTRONIC QUANTUM FLUID · 6-SYSTEM CINEMA CAROUSEL</div>
+                <div class="film-print-url">▶ Launch Live Preview · https://www.pointreyessound.com/preview ↗</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>Interactive Preview · <a href="https://www.pointreyessound.com/preview" target="_blank" rel="noopener">pointreyessound.com/preview ↗</a></span>
+        </footer>
+      </section>
+
+      <section class="slide" id="slide-6" data-slide="6">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Market &amp; EDA Revenue</span>
+          </div>
+          <span class="slide-num">06 / 08</span>
+        </header>
+
+        <div class="slide-headline-block centered" style="margin:1.4cqh 0 1.6cqh;">
+          <h2 class="slide-title">The $35B EDA Market</h2>
+        </div>
+
+        <div class="slide-body" style="gap:1.8cqh; justify-content:space-between;">
+          <!-- 3 Tight Vertical Image Cards: One-Word Heading + Picture Directly Beneath (Zero Dead Whitespace) -->
+          <!-- Centered Hero Semiconductors Centerpiece (Click -> Live Q-BECK EDA Demo) -->
+          <div style="display:flex; justify-content:center; width:100%;">
+            <a class="card gold-rim" id="semi-demo-link" href="https://www.pointreyessound.com/demo" target="_blank" rel="noopener" title="Launch Q-BECK Semiconductor Defect-Sweep Demo" style="width:52cqw; padding:1.4cqh 1.6cqw; gap:1.0cqh; align-items:center; text-align:center; text-decoration:none; color:inherit; cursor:pointer; transition:transform 160ms ease, box-shadow 160ms ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 0 28px rgba(212,175,55,0.34)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+              <div style="width:100%; display:flex; align-items:baseline; justify-content:space-between;">
+                <div class="card-title" style="font-size:2.85cqh; color:var(--gold);">Semiconductors</div>
+                <span style="font-family:var(--font-mono); font-size:1.1cqh; color:var(--champagne); letter-spacing:0.08em;">LIVE Q-BECK EDA DEMO ↗</span>
+              </div>
+              <img src="/vertical_semiconductors.jpg" alt="Semiconductors" style="width:100%; aspect-ratio:16/8.2; object-fit:cover; border-radius:8px; border:1px solid var(--rule); display:block;" />
+            </a>
+          </div>
+
+          <!-- Large, Commanding Revenue & Market-Share Number Tiles Right Underneath Pictures -->
+          <div class="grid-4" style="flex:1;">
+            <div class="card gold-rim" style="padding:2.2cqh 1.2cqw; text-align:center; gap:0.8cqh; align-items:center; justify-content:center;">
+              <div style="font-family:var(--font-serif); font-size:4.4cqh; font-weight:700; color:var(--gold); line-height:1.02;">$250K–$500K</div>
+              <div class="metric-label" style="font-size:1.25cqh; margin-top:0.2cqh;">Paid Chipmaker JDA (Mo 1–12)</div>
+            </div>
+
+            <div class="card" style="padding:2.2cqh 1.2cqw; text-align:center; gap:0.8cqh; align-items:center; justify-content:center;">
+              <div style="font-family:var(--font-serif); font-size:4.4cqh; font-weight:700; color:var(--champagne); line-height:1.02;">$1.5M ARR</div>
+              <div class="metric-label" style="font-size:1.25cqh; margin-top:0.2cqh;">Foundry Pilots (Mo 24)</div>
+            </div>
+
+            <div class="card gold-rim" style="padding:2.2cqh 1.2cqw; text-align:center; gap:0.8cqh; align-items:center; justify-content:center;">
+              <div style="font-family:var(--font-serif); font-size:4.4cqh; font-weight:700; color:var(--gold); line-height:1.02;">0.04% · $15M</div>
+              <div class="metric-label" style="font-size:1.25cqh; margin-top:0.2cqh;">of $35B EDA Market by 2028</div>
+            </div>
+
+            <div class="card" style="padding:2.2cqh 1.2cqw; text-align:center; gap:0.8cqh; align-items:center; justify-content:center;">
+              <div style="font-family:var(--font-serif); font-size:4.4cqh; font-weight:700; color:var(--ice); line-height:1.02;">85%+</div>
+              <div class="metric-label" style="font-size:1.25cqh; margin-top:0.2cqh;">Software Margin · 1–3% → $350M+</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:1.05cqh 1.8cqw; flex-direction:row; justify-content:space-between; align-items:center;">
+            <span style="font-family:var(--font-mono); font-size:1.15cqh; color:var(--mist);">
+              COMPS: <strong style="color:#fff;">Synopsys · Cadence · Ansys ($35B) · Siemens EDA · Schrödinger</strong>
+            </span>
+            <span style="font-family:var(--font-mono); font-size:1.15cqh; color:var(--gold);">
+              $150K–$300K SEAT-CLUSTER · $2M–$5M FAB SITE LICENSE
+            </span>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>Electronic Design Automation · Pure-Software Economics</span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 05 / 06 — LEADERSHIP & SCIENTIFIC ADVISORY BOARD (PORTRAITS + INSTITUTIONS ONLY)
+           ================================================================= -->
+      <section class="slide" id="slide-7" data-slide="7">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Leadership &amp; Advisors</span>
+          </div>
+          <span class="slide-num">07 / 08</span>
+        </header>
+
+        <div class="slide-headline-block centered" style="margin:1.6cqh 0 2.0cqh;">
+          <h2 class="slide-title">Leadership &amp; Scientific Advisory Board</h2>
+        </div>
+
+        <div class="slide-body" style="gap:1.6cqh; justify-content:space-between;">
+          <!-- Tier 1: Founder & CEO Centered at Top -->
+          <div class="card gold-rim" style="align-items:center; justify-content:center; text-align:center; gap:1.1cqh; padding:2.0cqh 2.2cqw;">
+            <img src="/deck_assets/romit_circle.png" alt="Romit Chakraborty, Ph.D." style="width:17.5cqh; height:17.5cqh; border-radius:50%; object-fit:cover; border:2.5px solid var(--gold); box-shadow:0 12px 34px rgba(0,0,0,0.55);" />
+            <div>
+              <div class="card-eyebrow" style="margin-bottom:0.25cqh;">Founder &amp; CEO</div>
+              <div style="font-family:var(--font-serif); font-size:3.5cqh; font-weight:600; color:#FFFFFF; line-height:1.05;">
+                Romit Chakraborty, Ph.D.
+              </div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:0.65cqw; margin-top:0.2cqh;">
+              <span style="padding:0.5cqh 1.0cqw; border-radius:999px; border:1px solid var(--rule-gold); background:rgba(248,223,152,0.12); font-family:var(--font-serif); font-size:1.85cqh; color:var(--gold);">PsiQuantum</span>
+              <span style="padding:0.5cqh 1.0cqw; border-radius:999px; border:1px solid var(--rule); background:rgba(167,189,242,0.08); font-family:var(--font-serif); font-size:1.85cqh; color:#FFFFFF;">UC Berkeley</span>
+              <span style="padding:0.5cqh 1.0cqw; border-radius:999px; border:1px solid var(--rule); background:rgba(167,189,242,0.08); font-family:var(--font-serif); font-size:1.85cqh; color:#FFFFFF;">University of Chicago</span>
+              <span style="padding:0.5cqh 1.0cqw; border-radius:999px; border:1px solid var(--rule); background:rgba(167,189,242,0.08); font-family:var(--font-serif); font-size:1.85cqh; color:var(--mist);">Q-Chem</span>
+              <span style="padding:0.5cqh 1.0cqw; border-radius:999px; border:1px solid var(--rule); background:rgba(167,189,242,0.08); font-family:var(--font-serif); font-size:1.85cqh; color:var(--mist);">Alchemist Chicago</span>
+            </div>
+          </div>
+
+          <!-- Tier 2: Scientific Advisory Board Centered Side-by-Side Below -->
+          <div class="grid-2" style="flex:1; gap:2.0cqw;">
+            <div class="card" style="flex-direction:row; align-items:center; justify-content:center; gap:2.0cqw; padding:1.8cqh 2.2cqw;">
+              <img src="/deck_assets/mazziotti_circle.png" alt="David Mazziotti, Ph.D." style="width:14.5cqh; height:14.5cqh; border-radius:50%; object-fit:cover; border:2px solid var(--ice); box-shadow:0 10px 28px rgba(0,0,0,0.50); flex-shrink:0;" />
+              <div style="text-align:left;">
+                <div class="card-eyebrow" style="margin-bottom:0.35cqh; color:var(--ice);">Scientific Advisory Board</div>
+                <div style="font-family:var(--font-serif); font-size:3.1cqh; font-weight:600; color:#FFFFFF; line-height:1.08;">
+                  David Mazziotti, Ph.D.
+                </div>
+                <div style="margin-top:0.9cqh;">
+                  <span style="display:inline-block; padding:0.45cqh 1.05cqw; border-radius:999px; border:1px solid var(--rule-gold); background:rgba(248,223,152,0.10); font-family:var(--font-serif); font-size:1.85cqh; color:var(--gold);">University of Chicago</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="flex-direction:row; align-items:center; justify-content:center; gap:2.0cqw; padding:1.8cqh 2.2cqw;">
+              <img src="/deck_assets/schuster_circle.png" alt="David Schuster, Ph.D." style="width:14.5cqh; height:14.5cqh; border-radius:50%; object-fit:cover; border:2px solid var(--ice); box-shadow:0 10px 28px rgba(0,0,0,0.50); flex-shrink:0;" />
+              <div style="text-align:left;">
+                <div class="card-eyebrow" style="margin-bottom:0.35cqh; color:var(--ice);">Scientific Advisory Board</div>
+                <div style="font-family:var(--font-serif); font-size:3.1cqh; font-weight:600; color:#FFFFFF; line-height:1.08;">
+                  David Schuster, Ph.D.
+                </div>
+                <div style="margin-top:0.9cqh;">
+                  <span style="display:inline-block; padding:0.45cqh 1.05cqw; border-radius:999px; border:1px solid var(--rule-gold); background:rgba(248,223,152,0.10); font-family:var(--font-serif); font-size:1.85cqh; color:var(--gold);">Stanford University</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pure Institutional Name Recognition Strip -->
+          <div class="card" style="padding:1.15cqh 2.2cqw; flex-direction:row; justify-content:space-between; align-items:center;">
+            <span style="font-family:var(--font-serif); font-size:2.0cqh; color:#FFFFFF; letter-spacing:0.02em;">
+              PsiQuantum &nbsp;·&nbsp; UC Berkeley &nbsp;·&nbsp; University of Chicago &nbsp;·&nbsp; Stanford University &nbsp;·&nbsp; Q-Chem &nbsp;·&nbsp; Alchemist Chicago &nbsp;·&nbsp; AWS &nbsp;·&nbsp; <em>J. Chem. Phys.</em>
+            </span>
+            <a href="https://rchakraborty.dev/cv.pdf" target="_blank" style="font-family:var(--font-mono); font-size:1.15cqh; color:var(--gold); text-decoration:none; white-space:nowrap;">Founder CV ↗</a>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026</span>
+          <span>Team · Scientific &amp; Commercial Execution</span>
+        </footer>
+      </section>
+
+      <!-- =================================================================
+           SLIDE 06 / 06 — PRE-SEED FINANCING & DESIGN PARTNERSHIP ASK
+           ================================================================= -->
+      <section class="slide" id="slide-8" data-slide="8">
+        <header class="slide-header">
+          <div class="brand-lockup">
+            <img src="/PRS_logo_v2.jpeg?v=5" alt="Point Reyes Sound" />
+            <span class="brand-name">Point Reyes Sound, Inc.</span>
+            <span class="brand-sep">|</span>
+            <span class="section-tag">Pre-Seed Financing</span>
+          </div>
+          <span class="slide-num">08 / 08</span>
+        </header>
+
+        <div class="slide-headline-block centered" style="margin:1.3cqh 0 1.3cqh;">
+          <h2 class="slide-title">Pre-Seed Financing</h2>
+          <div class="slide-sub">$2.0M on $16.0M Post-Money Cap &nbsp;·&nbsp; 12.5% Equity &nbsp;·&nbsp; 24-Month Runway (+$75K Federal Grant)</div>
+        </div>
+
+        <div class="slide-body" style="gap:1.5cqh;">
+          <div class="grid-3">
+            <div class="card gold-rim" style="padding:1.3cqh 1.4cqw; text-align:center;">
+              <div class="metric-big">$2.0M</div>
+              <div class="metric-label">Pre-Seed Round ($16.0M Post Cap)</div>
+            </div>
+            <div class="card" style="padding:1.3cqh 1.4cqw; text-align:center;">
+              <div class="metric-big champagne">$1.5M</div>
+              <div class="metric-label">Target Foundry Pilot ARR (24 Mo)</div>
+            </div>
+            <div class="card" style="padding:1.3cqh 1.4cqw; text-align:center;">
+              <div class="metric-big ice">$15M</div>
+              <div class="metric-label">Target Enterprise EDA ARR (2028)</div>
+            </div>
+          </div>
+
+          <div class="grid-2" style="flex:1;">
+            <!-- Capital Allocation Donut -->
+            <div class="card" style="justify-content:space-between;">
+              <div class="card-eyebrow" style="margin-bottom:0;">Capital Allocation ($2,000,000 · 24 Months)</div>
+              <div style="display:flex; align-items:center; gap:2.0cqw; flex:1;">
+                <div style="width:19cqh; height:19cqh; position:relative; flex-shrink:0;">
+                  <svg viewBox="0 0 42 42" style="width:100%; height:100%; transform:rotate(-90deg);">
+                    <circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="#18327A" stroke-width="6.2"></circle>
+                    <circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="#F8DF98" stroke-width="6.2" stroke-dasharray="53 47" stroke-dashoffset="0"></circle>
+                    <circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="#A7BDF2" stroke-width="6.2" stroke-dasharray="27 73" stroke-dashoffset="-53"></circle>
+                    <circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="#FFF5CC" stroke-width="6.2" stroke-dasharray="20 80" stroke-dashoffset="-80"></circle>
+                  </svg>
+                  <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                    <span style="font-family:var(--font-serif); font-size:2.6cqh; font-weight:700; color:#fff;">$2.0M</span>
+                    <span style="font-family:var(--font-mono); font-size:0.95cqh; color:var(--ice);">24 MO</span>
+                  </div>
+                </div>
+                <div style="flex:1; display:flex; flex-direction:column; gap:1.1cqh;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:0.9cqh 1.0cqw; border-radius:7px; background:rgba(248,223,152,0.10); border-left:3.5px solid #F8DF98;">
+                    <span style="font-size:1.45cqh; color:#F8DF98; font-weight:600;">Compiler &amp; Solver Kernel Team</span>
+                    <strong style="font-family:var(--font-mono); font-size:1.25cqh; color:#fff;">$1,060K (53%)</strong>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:0.9cqh 1.0cqw; border-radius:7px; background:rgba(167,189,242,0.10); border-left:3.5px solid #A7BDF2;">
+                    <span style="font-size:1.45cqh; color:#A7BDF2; font-weight:600;">Productionize Core EDA Solvers</span>
+                    <strong style="font-family:var(--font-mono); font-size:1.25cqh; color:#fff;">$540K (27%)</strong>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:0.9cqh 1.0cqw; border-radius:7px; background:rgba(255,245,204,0.08); border-left:3.5px solid #FFF5CC;">
+                    <span style="font-size:1.45cqh; color:#FFF5CC; font-weight:600;">Chipmaker Pilot Compute &amp; Infra</span>
+                    <strong style="font-family:var(--font-mono); font-size:1.25cqh; color:#fff;">$400K (20%)</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Funded Milestones & Direct Contact -->
+            <div class="card gold-rim" style="justify-content:space-between; gap:1.4cqh;">
+              <div class="card-eyebrow" style="margin-bottom:0;">What This Round Unlocks</div>
+              <div style="flex:1; display:flex; flex-direction:column; gap:1.2cqh;">
+                <div style="flex:1; display:flex; align-items:center; gap:1.3cqw; padding:0 1.5cqw; border-radius:9px; background:rgba(248,223,152,0.09); border-left:4px solid var(--gold);">
+                  <span style="width:0.75cqh; height:0.75cqh; border-radius:50%; background:var(--gold); flex-shrink:0;"></span>
+                  <strong style="font-family:var(--font-serif); font-size:2.65cqh; font-weight:700; color:#FFFFFF; line-height:1.15;">Production Q-BOLTZ EDA SDK</strong>
+                </div>
+                <div style="flex:1; display:flex; align-items:center; gap:1.3cqw; padding:0 1.5cqw; border-radius:9px; background:rgba(248,223,152,0.09); border-left:4px solid var(--gold);">
+                  <span style="width:0.75cqh; height:0.75cqh; border-radius:50%; background:var(--gold); flex-shrink:0;"></span>
+                  <strong style="font-family:var(--font-serif); font-size:2.65cqh; font-weight:700; color:#FFFFFF; line-height:1.15;">Flagship Chipmaker Design Partnership</strong>
+                </div>
+                <div style="flex:1; display:flex; align-items:center; justify-content:space-between; gap:1.3cqw; padding:0 1.5cqw; border-radius:9px; background:rgba(248,223,152,0.12); border-left:4px solid var(--gold);">
+                  <div style="display:flex; align-items:center; gap:1.3cqw;">
+                    <span style="width:0.75cqh; height:0.75cqh; border-radius:50%; background:var(--gold); flex-shrink:0;"></span>
+                    <strong style="font-family:var(--font-serif); font-size:2.65cqh; font-weight:700; color:#FFFFFF; line-height:1.15;">Series A Inflection</strong>
+                  </div>
+                  <strong style="font-family:var(--font-serif); font-size:2.65cqh; font-weight:700; color:var(--gold); white-space:nowrap;">$1.5M ARR</strong>
+                </div>
+              </div>
+              <div style="border-top:1px solid var(--rule-gold); padding-top:1.1cqh; display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-family:var(--font-mono); font-size:1.2cqh; color:var(--gold);">
+                  <a href="mailto:romit@pointreyessound.com" style="color:var(--gold); text-decoration:none;">romit@pointreyessound.com</a>
+                </div>
+                <div style="font-family:var(--font-mono); font-size:1.12cqh; color:var(--mist);">
+                  <a href="https://www.pointreyessound.com/preview" target="_blank" style="color:var(--mist); text-decoration:none;">Preview ↗</a> &nbsp;·&nbsp;
+                  <a href="https://www.pointreyessound.com/film" target="_blank" style="color:var(--mist); text-decoration:none;">Film ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <span>Point Reyes Sound, Inc. © 2026 · Pure-Software Equity (Zero Debt)</span>
+          <span><a href="mailto:directors@pointreyessound.com">directors@pointreyessound.com</a> · <a href="https://www.pointreyessound.com" target="_blank" rel="noopener">pointreyessound.com</a></span>
+        </footer>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Clean Floating Presentation Controls (Automatically Hidden in PDF Print) -->
+  <nav class="deck-controls" aria-label="Deck Navigation">
+    <button class="ctrl-btn" id="btn-prev" type="button" aria-label="Previous Slide">← Prev</button>
+    <div class="ctrl-dots" id="ctrl-dots"></div>
+    <span class="ctrl-counter" id="ctrl-counter">01 / 08</span>
+    <button class="ctrl-btn" id="btn-next" type="button" aria-label="Next Slide">Next →</button>
+    <a class="ctrl-btn primary" href="/point-reyes-sound-speciale.pdf" download="point-reyes-sound-speciale.pdf">Download PDF ↓</a>
+  </nav>
+
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      const dotsWrap = document.getElementById("ctrl-dots");
+      const counter = document.getElementById("ctrl-counter");
+      const btnPrev = document.getElementById("btn-prev");
+      const btnNext = document.getElementById("btn-next");
+      let current = 0;
+
+      slides.forEach((_, idx) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "ctrl-dot" + (idx === 0 ? " active" : "");
+        dot.setAttribute("aria-label", `Go to slide ${idx + 1}`);
+        dot.addEventListener("click", () => goTo(idx));
+        dotsWrap.appendChild(dot);
+      });
+
+      const dots = Array.from(dotsWrap.querySelectorAll(".ctrl-dot"));
+
+      function goTo(idx) {
+        const filmEl = document.getElementById("deck-film");
+        if (filmEl && idx !== 2 && !filmEl.paused) filmEl.pause();
+        const s5El = document.getElementById("s5-preview-video");
+        if (s5El) {
+          if (idx === 4) s5El.play().catch(() => {});
+          else if (!s5El.paused) s5El.pause();
+        }
+        current = Math.max(0, Math.min(slides.length - 1, idx));
+        slides.forEach((s, i) => s.classList.toggle("active", i === current));
+        dots.forEach((d, i) => d.classList.toggle("active", i === current));
+        counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
+      }
+
+      btnPrev.addEventListener("click", () => goTo(current - 1));
+      btnNext.addEventListener("click", () => goTo(current + 1));
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+          e.preventDefault();
+          goTo(current + 1);
+        } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+          e.preventDefault();
+          goTo(current - 1);
+        } else if (e.key === "Home") {
+          goTo(0);
+        } else if (e.key === "End") {
+          goTo(slides.length - 1);
+        }
+      });
+
+      // Slide 5: Native 6-Film Preview Carousel (opens on Oxygen Vacancy in Silicon)
+      const S5_FILMS = [
+        { title: "Oxygen Vacancy in Silicon", src: "/preview-films/sio2_vacancy_satie.mp4", poster: "/preview-films/sio2_vacancy_poster.png" },
+        { title: "Triple-Bond Dissociation", src: "/preview-films/n2_beethoven.mp4", poster: "/preview-films/n2_poster.png" },
+        { title: "Symmetric Stretch", src: "/preview-films/h2o_debussy.mp4", poster: "/preview-films/h2o_poster.png" },
+        { title: "Automerization", src: "/preview-films/h4_automerization.mp4", poster: "" },
+        { title: "Conical Intersection", src: "/preview-films/beh2_conical.mp4", poster: "" },
+        { title: "Conical Seam", src: "/preview-films/h3_conical_seam.mp4", poster: "" }
+      ];
+      const s5Vid = document.getElementById("s5-preview-video");
+      const s5Cap = document.getElementById("s5-cap-title");
+      const s5DotsWrap = document.getElementById("s5-dots");
+      let s5Idx = 0;
+
+      if (s5Vid && s5DotsWrap) {
+        const s5Dots = S5_FILMS.map((f, i) => {
+          const d = document.createElement("button");
+          d.type = "button";
+          d.setAttribute("aria-label", f.title);
+          d.style.cssText = `height:5px; border-radius:3px; border:none; cursor:pointer; transition:all 200ms ease; width:${i === 0 ? "22px" : "6px"}; background:${i === 0 ? "#ffffff" : "rgba(255,255,255,0.28)"};`;
+          d.addEventListener("click", () => loadS5(i, true));
+          s5DotsWrap.appendChild(d);
+          return d;
+        });
+
+        function loadS5(idx, shouldPlay = true) {
+          s5Idx = (idx + S5_FILMS.length) % S5_FILMS.length;
+          const f = S5_FILMS[s5Idx];
+          s5Vid.src = f.src;
+          if (f.poster) s5Vid.poster = f.poster;
+          else s5Vid.removeAttribute("poster");
+          s5Vid.load();
+          if (s5Cap) s5Cap.textContent = f.title;
+          s5Dots.forEach((d, i) => {
+            d.style.width = i === s5Idx ? "22px" : "6px";
+            d.style.background = i === s5Idx ? "#ffffff" : "rgba(255,255,255,0.28)";
+          });
+          if (shouldPlay) s5Vid.play().catch(() => {});
+        }
+
+        s5Vid.addEventListener("ended", () => loadS5(s5Idx + 1, true));
+        window.__stepS5Preview = (delta) => loadS5(s5Idx + delta, true);
+      }
+
+
+      // Slide 2: 2-Preprint Chrome Carousel (QBE-SCF & Q-BECK)
+      const pcSlides = Array.from(document.querySelectorAll("#preprint-carousel .pc-slide"));
+      const pcDots = Array.from(document.querySelectorAll(".pc-dot"));
+      const pcCaption = document.getElementById("pc-caption");
+      const pcLabels = ["Click plate → arXiv:2608.14979 ↗", "Click plate → arXiv:2611.17245 ↗"];
+      let pcIdx = 0;
+
+      function setPreprintSlide(idx) {
+        if (!pcSlides.length) return;
+        pcIdx = (idx + pcSlides.length) % pcSlides.length;
+        pcSlides.forEach((el, i) => {
+          const active = i === pcIdx;
+          el.style.opacity = active ? "1" : "0";
+          el.style.pointerEvents = active ? "auto" : "none";
+        });
+        pcDots.forEach((d, i) => {
+          d.style.width = i === pcIdx ? "22px" : "8px";
+          d.style.background = i === pcIdx ? "var(--gold)" : "rgba(255,255,255,0.28)";
+        });
+        if (pcCaption) pcCaption.textContent = pcLabels[pcIdx] || "";
+      }
+
+      window.__stepPreprintCarousel = (delta) => setPreprintSlide(pcIdx + delta);
+      window.__goPreprintCarousel = (idx) => setPreprintSlide(idx);
+
+      let pcTimer = setInterval(() => setPreprintSlide(pcIdx + 1), 6000);
+      const pcWrap = document.getElementById("preprint-carousel");
+      if (pcWrap) {
+        pcWrap.addEventListener("mouseenter", () => clearInterval(pcTimer));
+        pcWrap.addEventListener("mouseleave", () => {
+          clearInterval(pcTimer);
+          pcTimer = setInterval(() => setPreprintSlide(pcIdx + 1), 6000);
+        });
+      }
+
+
+      const semiLink = document.getElementById("semi-demo-link");
+      if (semiLink && !window.matchMedia("print").matches && (location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
+        // keep production demo URL
+      }
+
+    })();
+  </script>
+</body>
+</html>

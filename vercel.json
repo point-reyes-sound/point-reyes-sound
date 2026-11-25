@@ -50,6 +50,14 @@
   ],
   "rewrites": [
     {
+      "source": "/speciale-deck",
+      "destination": "/speciale-deck.html"
+    },
+    {
+      "source": "/speciale",
+      "destination": "/speciale-deck.html"
+    },
+    {
       "source": "/mighty-capital-deck",
       "destination": "/mighty-capital-deck.html"
     },
